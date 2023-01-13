@@ -1,7 +1,7 @@
 import React from "react";
 import { Public, Stars, Work } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-
+import './css/Sidebar.css'
 function Sidebar() {
   return (
     <div className="sidebar">
