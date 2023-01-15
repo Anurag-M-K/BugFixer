@@ -1,0 +1,25 @@
+.loginPage{
+    width: 40%;
+    margin: auto;
+    min-width: 450px;
+}
+.loginPage--form{
+    background-color: rgba(185,185,183,0.233);
+    border-radius:5px ;
+    box-shadow: 2px 3px 10px gray;
+}
+.loginPage--form--img{
+    text-align: center;
+    display: block;
+}
+h3{
+    position:relative;
+    bottom: 1.5rem;
+    font-weight: bold;
+}
+body{
+    overflow-x: hidden;
+}
+#root{
+    overflow-x: hidden;
+}

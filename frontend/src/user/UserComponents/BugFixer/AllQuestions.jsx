@@ -6,7 +6,7 @@ import './css/AllQuestions.css';
 
 function AllQuestions() {
   return (
-    <div className="all-questions">
+    <div className=" all-questions">
       <div className="all-questions-container">
         <div className="all-questions-left">
           <div className="all-options">
