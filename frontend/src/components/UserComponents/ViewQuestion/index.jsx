@@ -1,7 +1,7 @@
 import React from 'react';
 import '../BugFixer/css/index.css';
 import MainQuestion from './MainQuestion';
-import Sidebar from "../BugFixer/Sidebar";
+import Sidebar from "../../../components/UserComponents/BugFixer/Sidebar";
 
 function index() {
   return (

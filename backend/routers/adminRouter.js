@@ -1,10 +1,10 @@
-const { Router } = require('express');
 const express = require('express')
-const route = express.Router();
+const router = express.Router();
+const { adminLogin } = require('../controller/adminLoginController')
 
 
-const adminRouter = express.Router();
+router.post('/adminLogin',(req,res)=>{
+    res.json('hey its woriking')
+})
 
-
-
-module.exports = adminRouter;
+module.exports = router;

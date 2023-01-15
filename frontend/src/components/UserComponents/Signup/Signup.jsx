@@ -1,9 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import Logo from "../Images/download.png";
 import gLogo from "../Images/g.png";
-
-
+import { useState } from "react";
+import axios from 'axios'
 
 const info = [
   {
@@ -45,6 +45,36 @@ const info = [
 ];
 
 const Signup = () => {
+  const [data , setData] = useState({
+    firstName:"",
+    lastName:"",
+    email:"",
+    password:""
+  });
+
+  const [error,setError] = useState('')
+
+  const navigate = useNavigate();
+
+  const handleChange = ({currentTarget:input})=>{
+    setData({...data,[input.name]:input.value});
+  }
+
+  const handleSubmit = async(e)=>{
+    e.preventDefault();
+    try {
+      const url = 'http://localhost:8080/userSignup'  ;
+      const {data:res}= await axios.post(url,data);
+      navigate('/userLogin')
+      console.log(res.message)
+    } catch (error) {
+      if(error.response && error.response.status >= 400 && 
+        error.response.status <= 500
+        ){
+          setError(error.response.data.message)
+        }
+    }
+  }
   return (
     <>
       <div className="signupPage">
@@ -90,7 +120,7 @@ const Signup = () => {
                   Sign up
                 </h2>
                 <p className="text-center pb-1">~~~~~~~~~~~</p>
-                <form>
+                <form onSubmit={handleSubmit}>  
                   <div className="form-outline mb-4">
                     <label className="form-label" for="form1Example13">
                       Full Name
@@ -111,7 +141,11 @@ const Signup = () => {
                       <input
                         type="text"
                         class="form-control"
-                        placeholder="Username"
+                        placeholder="firstName"
+                        name="firstName"
+                        onChange={handleChange}
+                        value={data.firstName}
+                        required
                         aria-label="Username"
                         aria-describedby="addon-wrapping"
                       
@@ -120,7 +154,38 @@ const Signup = () => {
                   </div>
                   <div className="form-outline mb-4">
                     <label className="form-label" for="form1Example23">
-                      Email
+                     Last Name
+                    </label>
+                    <div class="input-group flex-nowrap">
+                      <div class="input-group-prepend">
+                        <span
+                          class="input-group-text"
+                          id="addon-wrapping"
+                          style={{
+                            color: "rgb(242, 116, 13)",
+                            backgroundColor: "rgba(242, 116, 13, 0.308)",
+                          }}
+                        >
+                           <i class="fas fa-user"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="last name"
+                        name="lastName"
+                        onChange={handleChange}
+                        value={data.lastName}
+                        required
+                        aria-label="Username"
+                        aria-describedby="addon-wrapping"
+                      
+                      />
+                    </div>
+                  </div>
+                  <div className="form-outline mb-4">
+                    <label className="form-label" for="form1Example23">
+                     Email
                     </label>
                     <div class="input-group flex-nowrap">
                       <div class="input-group-prepend">
@@ -133,14 +198,21 @@ const Signup = () => {
                           }}
                         >
                           <i class="fas fa-envelope"></i>
+
+                          
                         </span>
                       </div>
                       <input
-                        type="text"
+                        type="email"
                         class="form-control"
-                        placeholder="hello@gmail.com"
-                        aria-label="gmail"
+                        placeholder="email"
+                        name="email"
+                        onChange={handleChange}
+                        value={data.email}
+                        required
+                        aria-label="Username"
                         aria-describedby="addon-wrapping"
+                      
                       />
                     </div>
                   </div>
@@ -162,28 +234,22 @@ const Signup = () => {
                         </span>
                       </div>
                       <input
-                        type="text"
+                        type="password"
                         class="form-control"
-                        placeholder="Password"
+                        placeholder="password"
+                        name="password"
+                        onChange={handleChange}
+                        value={data.password}
+                        required
                         aria-label="Username"
                         aria-describedby="addon-wrapping"
+                      
                       />
                     </div>
-                  </div>
+                  </div>  
 
-                  <div className="form-check mb-2">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="form1Example3"
-                    />
-                    <label className="form-check-label" for="form1Example3">
-                      {" "}
-                      Remember me{" "}
-                    </label>
-                  </div>
-
+                
+                          {error && <div className={styles.error_msg} >{error} </div>}
                   <button
                     type="submit"
                     className="btn btn-block text-light"
