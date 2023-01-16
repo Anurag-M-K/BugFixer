@@ -5,10 +5,8 @@ import { Link } from "react-router-dom";
 // import Logo from "../Images/download.png";
 
 function Login() {
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
+  const [isUserLoggedIn , setIsUserLoggedIn] = useState(false);
+  const [data, setData] = useState({   email: "", password: "" });
   const [error, setError] = useState("");
 
   const handleChange = ({ currentTarget: input }) => {
@@ -16,22 +14,24 @@ function Login() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const url = "http://localhost:8080/userLogin";
-      const { data: res } = await axios.post(url, data);
-      localStorage.setItem("token", res.data);
-      window.location = "/";
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
-        setError(error.response.data.message);
-      }
-    }
-  };
+		e.preventDefault();
+		try {
+			const url = "http://localhost:8080/userLogin";
+			const { data: res } = await axios.post(url, data);
+			localStorage.setItem("token", res.data);
+      setIsUserLoggedIn(true);
+			window.location = "/";
+      
+		} catch (error) {
+			if (
+				error.response &&
+				error.response.status >= 400 &&
+				error.response.status <= 500
+			) {
+				setError(error.response.data.message);
+			}
+		}
+	};
   return (
     <>
       <div
@@ -109,9 +109,9 @@ function Login() {
               />
             </div>
           </div>
-          {error && <div className={styles.error_msg}>{error}</div>}
+          {error && <div className='error_msg'>{error}</div>}
 
-          <button
+         <button
             type="submit"
             className="btn btn-lg btn-block btn-sm text-light"
             style={{

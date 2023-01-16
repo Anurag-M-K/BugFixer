@@ -9,7 +9,7 @@ const info = [
   {
     icon: (
       <i
-        class="fas fa-question-circle text-primary mr-2"
+      className="fas fa-question-circle text-primary mr-2"
         style={{ fontSize: "20px", color: "rgb(10, 149, 255)" }}
       ></i>
     ),
@@ -18,7 +18,7 @@ const info = [
   {
     icon: (
       <i
-        class="fas fa-sort text-primary mr-2"
+      className="fas fa-sort text-primary mr-2"
         style={{ fontSize: "25px", color: "rgb(10, 149, 255)" }}
       ></i>
     ),
@@ -27,7 +27,7 @@ const info = [
   {
     icon: (
       <i
-        class="fas fa-tags text-primary mr-2"
+      className="fas fa-tags text-primary mr-2"
         style={{ fontSize: "20px", color: "rgb(10, 149, 255)" }}
       ></i>
     ),
@@ -36,7 +36,7 @@ const info = [
   {
     icon: (
       <i
-        class="fas fa-trophy text-primary mr-2"
+      className="fas fa-trophy text-primary mr-2"
         style={{ fontSize: "20px", color: "rgb(10, 149, 255)" }}
       ></i>
     ),
@@ -65,7 +65,7 @@ const Signup = () => {
     try {
       const url = 'http://localhost:8080/userSignup'  ;
       const {data:res}= await axios.post(url,data);
-      navigate('/userLogin')
+      navigate('/login-page')
       console.log(res.message)
     } catch (error) {
       if(error.response && error.response.status >= 400 && 
@@ -101,7 +101,7 @@ const Signup = () => {
                     Collaborate and share knowledge with a private group for
                     FREE. <br />
                     <Link to="/">
-                      Get Stack Overflow for Teams free for up to 50 users.
+                      Get Bugfixer for Teams free for up to 50 users.
                     </Link>
                   </small>
                 </div>
@@ -125,22 +125,22 @@ const Signup = () => {
                     <label className="form-label" for="form1Example13">
                       Full Name
                     </label>
-                    <div class="input-group flex-nowrap">
-                      <div class="input-group-prepend">
+                    <div className="input-group flex-nowrap">
+                      <div className="input-group-prepend">
                         <span
-                          class="input-group-text"
+                          className="input-group-text"
                           id="addon-wrapping"
                           style={{
                             color: "rgb(242, 116, 13)",
                             backgroundColor: "rgba(242, 116, 13, 0.308)",
                           }}
                         >
-                          <i class="fas fa-user"></i>
+                          <i className="fas fa-user"></i>
                         </span>
                       </div>
                       <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         placeholder="firstName"
                         name="firstName"
                         onChange={handleChange}
@@ -156,22 +156,22 @@ const Signup = () => {
                     <label className="form-label" for="form1Example23">
                      Last Name
                     </label>
-                    <div class="input-group flex-nowrap">
-                      <div class="input-group-prepend">
+                    <div className="input-group flex-nowrap">
+                      <div className="input-group-prepend">
                         <span
-                          class="input-group-text"
+                          className="input-group-text"
                           id="addon-wrapping"
                           style={{
                             color: "rgb(242, 116, 13)",
                             backgroundColor: "rgba(242, 116, 13, 0.308)",
                           }}
                         >
-                           <i class="fas fa-user"></i>
+                           <i className="fas fa-user"></i>
                         </span>
                       </div>
                       <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         placeholder="last name"
                         name="lastName"
                         onChange={handleChange}
@@ -187,24 +187,24 @@ const Signup = () => {
                     <label className="form-label" for="form1Example23">
                      Email
                     </label>
-                    <div class="input-group flex-nowrap">
-                      <div class="input-group-prepend">
+                    <div className="input-group flex-nowrap">
+                      <div className="input-group-prepend">
                         <span
-                          class="input-group-text"
+                          className="input-group-text"
                           id="addon-wrapping"
                           style={{
                             color: "rgb(242, 116, 13)",
                             backgroundColor: "rgba(242, 116, 13, 0.308)",
                           }}
                         >
-                          <i class="fas fa-envelope"></i>
+                          <i className="fas fa-envelope"></i>
 
                           
                         </span>
                       </div>
                       <input
                         type="email"
-                        class="form-control"
+                        className="form-control"
                         placeholder="email"
                         name="email"
                         onChange={handleChange}
@@ -220,22 +220,22 @@ const Signup = () => {
                     <label className="form-label" for="form1Example23">
                       Password
                     </label>
-                    <div class="input-group flex-nowrap">
-                      <div class="input-group-prepend">
+                    <div className="input-group flex-nowrap">
+                      <div className="input-group-prepend">
                         <span
-                          class="input-group-text"
+                          className="input-group-text"
                           id="addon-wrapping"
                           style={{
                             color: "rgb(242, 116, 13)",
                             backgroundColor: "rgba(242, 116, 13, 0.308)",
                           }}
                         >
-                          <i class="fas fa-key"></i>
+                          <i className="fas fa-key"></i>
                         </span>
                       </div>
                       <input
                         type="password"
-                        class="form-control"
+                        className="form-control"
                         placeholder="password"
                         name="password"
                         onChange={handleChange}
@@ -249,7 +249,7 @@ const Signup = () => {
                   </div>  
 
                 
-                          {error && <div className={styles.error_msg} >{error} </div>}
+                          {error && <div >{error} </div>}
                   <button
                     type="submit"
                     className="btn btn-block text-light"
@@ -265,7 +265,7 @@ const Signup = () => {
                     Google
                   </button>
                   <button type="submit" className="btn btn-dark btn-block">
-                    <i class="fab fa-github mr-1"></i>
+                    <i className="fab fa-github mr-1"></i>
                     Github
                   </button>
                   <button
@@ -273,7 +273,7 @@ const Signup = () => {
                     className="btn bt btn-lg btn-block text-light"
                     style={{ backgroundColor: "rgb(56, 84, 153)" }}
                   >
-                    <i class="fab fa-facebook-square mr-2"></i>
+                    <i className="fab fa-facebook-square mr-2"></i>
                     Facebook
                   </button>
                 </form>

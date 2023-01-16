@@ -31,7 +31,7 @@ function Header() {
                   About <span className="sr-only">(current)</span>
                 </Link>
               </li>
-              <li lassName="nav-item mr-4">
+              <li className="nav-item mr-4">
                 <Link to="/" className="nav-link">
                   Products
                 </Link>

@@ -18,7 +18,7 @@ const userSignup = async(req,res)=>{
 
     } catch (error) {
         res.status(500).send({message:'internal server error'})
-        
+        console.log(error)
     }
 }
 
