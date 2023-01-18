@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 8080
 const path = require('path');
 const db = require('./config/connection');
 require('dotenv').config();
-// const adminRouter = require('./routers/adminRouter')
+const adminRouter = require('./routers/adminRouter')
 const userRouter = require('./routers/userRouter')
 
 //db connection
@@ -58,7 +58,7 @@ app.get('*',(req,res)=>{
 app.use(express.json({limit: '50mb'}));
 
 app.use('/',userRouter);
-// app.use('/admin',adminRouter);
+app.use('/admin',adminRouter);
 //server listen
 app.listen(PORT,()=>{
     console.log(`bugfixer is running on PORT no - ${PORT}`)

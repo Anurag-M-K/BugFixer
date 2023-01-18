@@ -109,7 +109,7 @@ function Login() {
               />
             </div>
           </div>
-          {error && <div className='error_msg'>{error}</div>}
+          {error && <div  ><p className="error-show">{error}</p></div>}
 
          <button
             type="submit"
@@ -127,12 +127,12 @@ function Login() {
             <img src="" alt="" width="15px" className="mr-1" />
             Create a new Account
           </button></Link> 
-          <button
-            type="submit"
-            className="btn bt btn-lg btn-block btn-sm text-light"
-            style={{
-              backgroundColor: "rgb(565,84,153)",
-            }}
+            <button
+              type="submit"
+              className="btn bt btn-lg btn-block btn-sm text-light"
+              style={{
+                backgroundColor: "rgb(565,84,153)",
+              }}
           >
             Facebook
           </button>

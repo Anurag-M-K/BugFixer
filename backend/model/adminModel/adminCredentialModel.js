@@ -1,9 +1,21 @@
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const Joi = require('joi');
 
 const adminCredential = mongoose.Schema({
-    username:String,
-    password:String
+   username:{type:String,required:true},
+   password:{type:String,required:true}
 });
 
-const AdminCredential = mongoose .model('admin',adminCredential)
-module.exports = AdminCredential;
+adminCredential.methods.generateAuthToken = function(){
+    const token = jwt.sign({
+        id:this._id
+    },"adminSecret",
+    process.env.JWTADMINPRIVATEKEY,{expiresIn:"7d"});
+    return token;
+};
+
+const Admin = mongoose.model('admin',adminCredential);
+
+
+module.exports = {Admin};

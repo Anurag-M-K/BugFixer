@@ -22,16 +22,16 @@ const userLogin = async (req, res) => {
     res.status(200).send({ data: token, message: "Logged in successfully" });
   } catch (error) {
     res.status(500).send({ message: "internal server error" });
-    console.log(error)
+    console.log(error);
   }
 };
 
 const validate = (data) => {
-	const schema = Joi.object({
-		email: Joi.string().email().required().label("Email"),
-		password: Joi.string().required().label("Password"),
-	});
-	return schema.validate(data);
+  const schema = Joi.object({
+    email: Joi.string().email().required().label("Email"),
+    password: Joi.string().required().label("Password"),
+  });
+  return schema.validate(data);
 };
 
 module.exports = {
