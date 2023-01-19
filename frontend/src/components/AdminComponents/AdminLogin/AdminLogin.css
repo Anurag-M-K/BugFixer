@@ -175,3 +175,14 @@ html {
     background: linear-gradient(#141e30, #243b55);
     /* margin-top: 100PX; */
 }
+.spinner{
+  height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 100;
+   position: absolute;
+   color: white;
+   margin-left: 50%;
+  
+}

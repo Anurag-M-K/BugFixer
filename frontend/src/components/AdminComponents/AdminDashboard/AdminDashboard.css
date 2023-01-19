@@ -288,3 +288,7 @@
     background: var(--dark);
     border-color: var(--primary);
 }
+.searchbar{
+    width: 23rem;
+    height: 4rem;
+}

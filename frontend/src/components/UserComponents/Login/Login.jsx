@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./Login.css";
-import { Link } from "react-router-dom";
-// import Logo from "../Images/download.png";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserDetails, userState } from "../../../redux/features/userSlice";
 
 function Login() {
-  const [isUserLoggedIn , setIsUserLoggedIn] = useState(false);
+  const navigate = useNavigate()
   const [data, setData] = useState({   email: "", password: "" });
   const [error, setError] = useState("");
+
+  const dispatch = useDispatch()
+  const {userDetails} = useSelector(userState)
+
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
@@ -18,9 +23,19 @@ function Login() {
 		try {
 			const url = "http://localhost:8080/userLogin";
 			const { data: res } = await axios.post(url, data);
-			localStorage.setItem("token", res.data);
-      setIsUserLoggedIn(true);
-			window.location = "/";
+			localStorage.setItem("userToken", res.data);
+      console.log(data)
+      try {
+        dispatch(setUserDetails(data))
+        
+
+        navigate("/");
+        
+      } catch (error) {
+        console.log(error.message);
+        
+      }
+    
       
 		} catch (error) {
 			if (

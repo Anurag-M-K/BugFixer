@@ -1,17 +1,16 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import BugFixer from '../../components/UserComponents/BugFixer'
 import Header from '../../components/UserComponents/Header/Header'
-import AllQuestions from '../UserComponents/BugFixer/AllQuestions'
-import Index from '../UserComponents/BugFixer/index'
-import Main from '../UserComponents/BugFixer/Main'
-import Sidebar from '../UserComponents/BugFixer/Sidebar'
+
+
 function Home() {
+  const {userDetails} = useSelector(state => state.user)
   return (
     <div>
+     
       <Header/>
-        <AllQuestions/>
-        <Index />
-        <Main/>
-        <Sidebar/>
+    <BugFixer/>
     </div>
   )
 }

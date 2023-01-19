@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { BiSearch } from "react-icons/bi";
+
 export default function Navbar() {
   return (
-    <Nav>
+    <Nav >
       <div className="title">
-        <h4>Hi Kishan,</h4>
+        <h5>Hi Admin,</h5>
         <h1>
-          Welcome to <span>MY TAXI DASHBOARD</span>
+          Welcome to <span>Bugfixer </span>
         </h1>
       </div>
       <div className="search">
@@ -21,6 +22,9 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   color: white;
+  body{
+    background: black;
+  }
   .title {
     h1 {
       span {
@@ -36,6 +40,8 @@ const Nav = styled.nav`
     display: flex;
     align-items: center;
     gap: 1rem;
+    width: 23rem;
+    height: 4rem;
     padding: 1rem 8rem 1rem 1rem;
     border-radius: 1rem;
     svg {
