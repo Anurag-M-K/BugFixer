@@ -39,3 +39,11 @@ body{
     text-align: center;
 
 }
+.createAcc{
+    text-align: end;
+    color: royalblue;
+    padding-top: 1rem;
+}
+.gbtn{
+padding-top: 1rem;
+}

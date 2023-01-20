@@ -8,16 +8,18 @@ export const userSlice = createSlice({
         userDetails:[]
     },
     reducers:{
-        setUserDetails:(state,response)=>{
-            console.log("first",state.response)
+        setUserDetails:(state,action)=>{
+           
+            state.userDetails =  action.payload
           
-            state.userDetails =  response.payload
-          
-            console.log(state.userDetails , 'state')
+        },
+        setUserLogout:(state)=>{
+            state.user = null;
         }
+
     }
 })
 
 export const userState = (state)=>state.user;
 
-export const {setUserDetails} = userSlice.actions
+export const {setUserDetails,setUserLogout} = userSlice.actions

@@ -4,6 +4,7 @@ import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails, userState } from "../../../redux/features/userSlice";
+import gLogo from '../Images/g.png'
 
 function Login() {
   const navigate = useNavigate()
@@ -135,22 +136,16 @@ function Login() {
           >
             Login
           </button>
-         <Link className="m-1" to={'/signup-page'}><button
-            type="submit"
-            className="btn btn-lg btn-block bg-light btn-sm border"
-          >
-            <img src="" alt="" width="15px" className="mr-1" />
-            Create a new Account
-          </button></Link> 
-            <button
-              type="submit"
-              className="btn bt btn-lg btn-block btn-sm text-light"
-              style={{
-                backgroundColor: "rgb(565,84,153)",
-              }}
-          >
-            Facebook
-          </button>
+        <div className="gbtn">
+          <button 
+                    type="submit"
+                    className="btn btn-block bg-light border "
+                  >
+                    <img src={gLogo} alt="" width="20px" className="mr-1" />
+                    Google
+                  </button></div>
+                  <Link to={'/signup-page'} >
+          <h6 className="createAcc">Create new Account</h6></Link> 
         </form>
       </div>
     </>

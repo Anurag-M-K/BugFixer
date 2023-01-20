@@ -87,7 +87,7 @@ console.log(error.message)
                     navigate('/admin-Dashboard')
                   }} >
                   <MdSpaceDashboard />
-                  <span  > Dashboard</span>
+                  <span className="buttonsDashboard"  > Dashboard</span>
                 </a>
               </li>
               <li
@@ -98,7 +98,7 @@ console.log(error.message)
                     navigate('/user-manage')
                   }}>
                   <HiUsers />
-                  <span  > Users</span>
+                  <span className="buttonsDashboard"   > Users</span>
                 </a>
               </li>
               <li
@@ -107,7 +107,7 @@ console.log(error.message)
               >
                 <a href="#">
                   <FaAddressCard />
-                  <span> Payment Details</span>
+                  <span className="buttonsDashboard" > Payment Details</span>
                 </a>
               </li>
               <li
@@ -116,7 +116,7 @@ console.log(error.message)
               >
                 <a href="#">
                   <GiTwirlCenter />
-                  <span> Learning Center</span>
+                  <span className="buttonsDashboard" > Learning Center</span>
                 </a>
               </li>
               <li
@@ -125,7 +125,7 @@ console.log(error.message)
               >
                 <a href="#">
                   <BsFillChatTextFill />
-                  <span> FAQs</span>
+                  <span className="buttonsDashboard" > FAQs</span>
                 </a>
               </li>
               <li
@@ -134,7 +134,7 @@ console.log(error.message)
               >
                 <a href="#">
                   <IoSettings />
-                  <span> Settings</span>
+                  <span className="buttonsDashboard" > Settings</span>
                 </a>
               </li>
             </ul>
@@ -231,6 +231,9 @@ const Section = styled.section`
     .toggle {
       display: none;
     }
+    .buttonsDashboard{
+      cursor:pointer;
+    } 
     .brand {
       width: 100%;
       display: flex;

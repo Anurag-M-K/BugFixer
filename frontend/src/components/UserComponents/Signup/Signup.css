@@ -1,0 +1,11 @@
+.alreadyAcc{
+    text-align: end;
+    color: blue;
+    cursor: pointer;
+    padding-top: 1rem;
+    text-decoration: none;
+}
+.errorShow{
+    color: red;
+    padding-bottom:1rem ;
+}

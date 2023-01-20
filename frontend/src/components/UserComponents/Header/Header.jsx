@@ -7,10 +7,10 @@ function Header() {
 
   return (
     <nav className="app navbar navbar-expand-lg navbar-light bg-light px-5">
-          <span className="navbar-toggler-icon mx-2 ml-5"></span>
+          {/* <span className="navbar-toggler-icon mx-2 ml-5" ></span> */}
 
           <Link to="/" className="navbar-brand">
-            <img src='https://res.cloudinary.com/dmvxmurxw/image/upload/v1673192608/download_j88afa.png' alt="" width="160px" />
+            <img src='https://res.cloudinary.com/dmvxmurxw/image/upload/v1674187605/logo4_g8zbar.png' alt="" width="160px" />
           </Link>
           <button
             className="navbar-toggler"

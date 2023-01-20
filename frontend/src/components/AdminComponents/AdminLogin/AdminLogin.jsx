@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../../../redux/features/alertSlice";
 import { alertState } from "../../../redux/features/alertSlice";
 import { adminState, setAdminDetails } from "../../../redux/features/adminSlice";
-import { Navigate } from "react-router-dom";
 
 function AdminLogin() {
 

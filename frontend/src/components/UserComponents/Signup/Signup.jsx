@@ -3,7 +3,8 @@ import { Link,useNavigate } from "react-router-dom";
 import Logo from "../Images/download.png";
 import gLogo from "../Images/g.png";
 import { useState } from "react";
-import axios from 'axios'
+import axios from 'axios';
+import './Signup.css';
 
 const info = [
   {
@@ -85,7 +86,7 @@ const Signup = () => {
               <div className="col-md-8 col-lg-7 col-xl-6 ml-3">
                 <img src={Logo} alt="" width="250px" />
                 <h3 className="font-weight-normal my-3">
-                  Join the Stack Overflow community
+                  Join the Bugfixer community
                 </h3>
 
                 {info.map((text) => {
@@ -246,10 +247,11 @@ const Signup = () => {
                       
                       />
                     </div>
-                  </div>  
+                  </div >
 
-                
-                          {error && <div >{error} </div>}
+                 
+                          {error && <div  className="errorShow">{error} </div>}
+                 
                   <button
                     type="submit"
                     className="btn btn-block text-light"
@@ -264,18 +266,8 @@ const Signup = () => {
                     <img src={gLogo} alt="" width="20px" className="mr-1" />
                     Google
                   </button>
-                  <button type="submit" className="btn btn-dark btn-block">
-                    <i className="fab fa-github mr-1"></i>
-                    Github
-                  </button>
-                  <button
-                    type="submit"
-                    className="btn bt btn-lg btn-block text-light"
-                    style={{ backgroundColor: "rgb(56, 84, 153)" }}
-                  >
-                    <i className="fab fa-facebook-square mr-2"></i>
-                    Facebook
-                  </button>
+              
+                <Link to={"/login-page"}><h6 className="alreadyAcc" >Already have an account?</h6></Link>
                 </form>
               </div>
               {/* Signup form Ends */}
