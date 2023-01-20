@@ -34,6 +34,7 @@ const Nav = styled.nav`
         letter-spacing: 0.2rem;
       }
     }
+    margin-top:0rem;
   }
   .search {
     background-color: #212121;

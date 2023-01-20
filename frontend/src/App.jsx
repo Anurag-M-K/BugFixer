@@ -13,10 +13,10 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import Home from "./pages/user/Home";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "./components/AdminComponents/Spinner";
-import UserManagePage from "./pages/admin/UserManagePage";
 import AddQuestionPage from "./pages/user/AddQuestionPage";
 import { userState } from "./redux/features/userSlice";
-import PublicRoute from "./Routes/PublicRoute";
+import PublicRoute from "./Routes/UserPublicRoute";
+import AdminPublicRoute from './Routes/AdminPublicRoute'
 
 function App() {
   const user = useSelector(userState);
@@ -56,13 +56,17 @@ function App() {
                 <Signup />
               </PublicRoute>
             }
-          />
-          <Route exact path="/add-question" element={<AddQuestionPage />} />
-          <Route exact path="/question" element={<ViewQuestion />} />
 
-          <Route exact path="/admin-login" element={<AdminLoginPage />} />
-          <Route exact path="/admin-dashboard" element={<AdminDashboard />} />
-          <Route exact path="/user-manage" element={<UserManagePage />} />
+            
+          />
+          <Route exact path="/add-question" element={<PublicRoute><AddQuestionPage /></PublicRoute>} />
+          <Route exact path="/question" element={<PublicRoute><ViewQuestion /></PublicRoute>} />
+
+
+
+          <Route exact path="/admin-login" element={ <AdminPublicRoute><AdminLoginPage /></AdminPublicRoute>} />
+          <Route exact path="/admin-dashboard" element={<AdminPublicRoute><AdminDashboard /></AdminPublicRoute>} />
+          {/* <Route exact path="/user-manage" element={<UserManagePage />} /> */}
         </Routes>
       </Router>
     </>

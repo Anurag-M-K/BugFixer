@@ -79,12 +79,12 @@ const Signup = () => {
   return (
     <>
       <div className="signupPage">
-        <section className="vh-100">
+        <section className="vh-100 bodySection">
           <div className="container py-5">
             <div className="row d-flex align-items-center justify-content-center h-100">
               {/* left Side Stack Overflow community part started*/}
               <div className="col-md-8 col-lg-7 col-xl-6 ml-3">
-                <img src={Logo} alt="" width="250px" />
+                <img src="https://res.cloudinary.com/dmvxmurxw/image/upload/v1674187605/logo4_g8zbar.png" alt="" width="250px" />
                 <h3 className="font-weight-normal my-3">
                   Join the Bugfixer community
                 </h3>

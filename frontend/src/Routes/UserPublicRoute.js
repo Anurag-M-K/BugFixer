@@ -10,11 +10,10 @@ export default function PublicRoute({children}) {
 
   
     }else{
-    return navigate('login-page')
+    return navigate('/login-page')
     }
     
   },[])
-     console.log("hello")
   return children
 
  

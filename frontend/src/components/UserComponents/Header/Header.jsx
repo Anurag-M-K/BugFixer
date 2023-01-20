@@ -1,9 +1,17 @@
 import React from "react";
 import "./css/Header.css";
 
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { message } from "antd";
 function Header() {
-
+ 
+  const hndleLogout = ()=>{
+    localStorage.clear()
+    window.location.reload('/login-page')
+    message.success("logout successfully")
+    
+    
+  }
 
   return (
     <nav className="app navbar navbar-expand-lg navbar-light bg-light px-5">
@@ -27,8 +35,8 @@ function Header() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item mx-4 active">
-                <Link to="/about" className="nav-link">
-                  About <span className="sr-only">(current)</span>
+                <Link className="nav-link">
+                <span onClick={hndleLogout}>Logout</span>  <span className="sr-only">(current)</span>
                 </Link>
               </li>
               <li className="nav-item mr-4">

@@ -1,15 +1,19 @@
-import React from 'react'
-import Dashboard from '../../components/AdminComponents/AdminDashboard/Dashboard'
-import Sidebar from '../../components/AdminComponents/AdminDashboard/Sidebar'
-// import Navbar from '../../components/AdminComponents/AdminDashboard/Navbar'
 
-function AdminDashboard() {
+import React from 'react'
+import styled from 'styled-components';
+import Dashboard from '../../components/AdminComponents/AdminDashboard/Dashboard'
+import Sidebar from '../../components/AdminComponents/AdminDashboard/Sidebar';
+import './Admin.css'
+export default function AdminDashboard() {
   return (
-    <div  style={{backgroundColor:'black'}}>
-        <Sidebar/>
-        <Dashboard />
-    </div>
+    <Div  style={{backgroundColor:'black'}} >
+             <Sidebar/>
+             <Dashboard />
+        </Div>
   )
 }
 
-export default AdminDashboard
+const Div = styled.div`
+position:relative
+
+`

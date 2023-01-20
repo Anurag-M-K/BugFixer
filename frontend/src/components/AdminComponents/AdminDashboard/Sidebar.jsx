@@ -12,8 +12,7 @@ import { VscChromeClose } from "react-icons/vsc";
 import scrollreveal from "scrollreveal";
 import {Link, useNavigate} from 'react-router-dom'
 import { HiUsers } from "react-icons/hi";
-
-
+import {message} from 'antd'
 
 export default function Sidebar() {
   const navigate = useNavigate()
@@ -48,15 +47,13 @@ export default function Sidebar() {
     );
   }, []);
 
-
-  const handleLogout =  () =>{
-    try {
-        localStorage.removeItem('adminToken')
-        navigate('/admin-login')
-    } catch (error) {
-console.log(error.message)            
-    }
+//logout function
+const handleLogout =()=>{
+  localStorage.clear()
+  message.success("Logout successfully")
+  window.location.reload('/admin-login')
 }
+
   return (
     <>
       <Section>
@@ -207,6 +204,7 @@ console.log(error.message)
           </ul>
         </div>
       </ResponsiveNav>
+     
     </>
   );
 }
