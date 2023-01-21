@@ -17,6 +17,7 @@ import AddQuestionPage from "./pages/user/AddQuestionPage";
 import { userState } from "./redux/features/userSlice";
 import PublicRoute from "./Routes/UserPublicRoute";
 import AdminPublicRoute from './Routes/AdminPublicRoute'
+import UserManagePage from "./pages/admin/UserManagePage";
 
 function App() {
   const user = useSelector(userState);
@@ -66,7 +67,7 @@ function App() {
 
           <Route exact path="/admin-login" element={ <AdminPublicRoute><AdminLoginPage /></AdminPublicRoute>} />
           <Route exact path="/admin-dashboard" element={<AdminPublicRoute><AdminDashboard /></AdminPublicRoute>} />
-          {/* <Route exact path="/user-manage" element={<UserManagePage />} /> */}
+          <Route exact path="/user-manage" element={<AdminPublicRoute><UserManagePage /></AdminPublicRoute>} />
         </Routes>
       </Router>
     </>

@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import './css/Sidebar.css'
 function Sidebar() {
   return (
-    <div className="sidebar">
+    
+    <div className="sidebar col-lg-4  col-sm-12 ">
       <div className="sidebar-container">
         <div className="sidebar-options">
           <div className="sidebar-option">

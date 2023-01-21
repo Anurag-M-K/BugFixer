@@ -1,8 +1,8 @@
 import React from 'react'
-
 function UserManage() {
   return (
-    <div>
+    <div className='container col-lg-8'>
+    
         <table className="table table-striped-columns">
         <thead>
     <tr>

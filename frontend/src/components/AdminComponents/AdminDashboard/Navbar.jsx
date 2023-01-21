@@ -5,7 +5,7 @@ import { BiSearch } from "react-icons/bi";
 export default function Navbar() {
   return (
     <Nav >
-      <div className="title">
+      <div className="title ">
         <h5>Hi Admin,</h5>
         <h1>
           Welcome to <span>Bugfixer </span>

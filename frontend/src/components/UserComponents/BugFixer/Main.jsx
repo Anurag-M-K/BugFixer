@@ -7,7 +7,7 @@ import './css/Main.css'
 function Main() {
 
   return (
-    <div className="main">
+    <div className="main col-lg-6 col-sm-12">
       <div className="main-container">
         <div className="main-top">
           <h2>All Questions</h2>

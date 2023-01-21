@@ -13,7 +13,7 @@ import scrollreveal from "scrollreveal";
 import {Link, useNavigate} from 'react-router-dom'
 import { HiUsers } from "react-icons/hi";
 import {message} from 'antd'
-
+import './Sidebar.css'
 export default function Sidebar() {
   const navigate = useNavigate()
   const [currentLink, setCurrentLink] = useState(1);
@@ -59,7 +59,7 @@ const handleLogout =()=>{
       <Section>
         <div className="top">
           <div className="brand">
-            <FaTaxi />
+           <img className="img1" src="https://res.cloudinary.com/dmvxmurxw/image/upload/v1674275344/d290aeb183e04eb79aff0417bcffaf57_4_ij8pl4.png" alt="" />
             <span>Bugfixer</span>
           </div>
           <div className="toggle">

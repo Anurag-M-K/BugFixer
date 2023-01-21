@@ -2,7 +2,7 @@ const express =require('express');
 const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 80
 const path = require('path');
 const db = require('./config/connection');
 require('dotenv').config();
@@ -36,28 +36,31 @@ app.use((req,res,next)=>{
     next()
 })
 
-//api
+
 
 
 
 //static resources
 app.use('upload',express.static(path.join(__dirname,'/../uploads')))
-app.use(express.static(path.join(__dirname,'/../frontend/build')))
+// app.use(express.static(path.join(__dirname,'/../frontend/build')))
 
-app.get('*',(req,res)=>{
-    try{
-        res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`))
+// app.get('*',(req,res)=>{
+//     try{
+//         res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`))
 
-    }catch(e){
-        res.send('oop! error occured')
-    }
+//     }catch(e){
+//         res.send('oop! error occured')
+        
+//     }
 
-})
+// })
 
 
 app.use(express.json({limit: '50mb'}));
 
-app.use('/',userRouter);
+
+//api
+app.use('/api',userRouter);
 app.use('/admin',adminRouter);
 //server listen
 app.listen(PORT,()=>{
