@@ -1,0 +1,55 @@
+
+
+.cards{
+    width: 40%;
+    padding: 2rem 10px;
+    padding-bottom: 0;
+    border-radius: 4px;
+    color: black;
+    text-align: center;
+    img, a{
+        margin: 5px;
+    }
+  }
+
+.publicPlatform {
+  display: flex;
+  position: relative;
+  bottom: 15rem;
+  margin-left: 15rem;
+  .publicPlatform--public {
+   @extend .cards;
+   background-image: linear-gradient(
+      0deg,
+      rgb(254, 227, 205) 30%,
+      rgb(255, 255, 255)
+    );
+    margin-right: 3rem;
+    .publicPlatform--public--btn{
+    background-color: rgb(242, 116, 13);
+    color: white;
+}
+  }
+
+
+@media screen and (max-width:1000px) {
+   .publicPlatform{
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+  }
+
+a{
+    text-decoration: underline;
+    color: gray
+}
+}
+.publicPlatform--private{
+    @extend .cards;
+    background-image: linear-gradient(0deg, rgb(205, 233, 254) 30%, rgb(255, 255, 255));
+}
+}
+
+
+

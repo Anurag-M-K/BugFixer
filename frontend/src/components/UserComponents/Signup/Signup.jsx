@@ -64,10 +64,9 @@ const Signup = () => {
   const handleSubmit = async(e)=>{
     e.preventDefault();
     try {
-      const url = 'http://localhost:8080/userSignup'  ;
+      const url = 'http://localhost:80/api/userSignup'  ;
       const {data:res}= await axios.post(url,data);
       navigate('/login-page')
-      console.log(res.message)
     } catch (error) {
       if(error.response && error.response.status >= 400 && 
         error.response.status <= 500

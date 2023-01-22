@@ -1,16 +1,34 @@
+import axios from 'axios';
 import React from 'react';
-import Header from '../Header/Header';
-import './css/index.css';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import Main from "./Main";
 import Sidebar from "./Sidebar";
 
 function index() {
+  const [questions , setQuestions ] = useState([])
+
+  useEffect( ()=>{
+async function findQuestions () {
+    axios.defaults.baseURL = "http://localhost:80"
+    await axios.get('/api/getQuestion').then(res => {
+      setQuestions(res.data.reverse())
+      return res.data
+    }).catch(err =>{
+      console.log(err);
+    })
+  }
+  findQuestions()
+  },[])
+ 
+
+
   return (
     <div className="bugfix-index">
       <div className="bugfix-index-content">
       
         <Sidebar />
-        <Main />
+        <Main key={questions._id} questions={questions} />
       </div>
     </div>
   );

@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import AllQuestions from "./AllQuestions";
 import './css/Main.css'
 
-function Main() {
+function Main({questions}) {
+
 
   return (
-    <div className="main col-lg-6 col-sm-12">
+    <div className="main col-lg-6 col-sm-12 col-xl-8">
       <div className="main-container">
         <div className="main-top">
           <h2>All Questions</h2>
@@ -17,7 +18,7 @@ function Main() {
            
         </div>
         <div className="main-desc">
-          <p>All questions stat</p>
+          <p>{questions && questions.length} Questions</p>
           <div className="main-filter">
             <div className="main-tabs">
               <div className="main-tab">
@@ -38,17 +39,14 @@ function Main() {
           </div>
         </div>
         <div className="questions">
-          <div className="questions">
-            <AllQuestions />
-            <AllQuestions />
-            <AllQuestions />
-            <AllQuestions />
-            <AllQuestions />
-            <AllQuestions />
-            <AllQuestions />
-            <AllQuestions />
+          {
+            questions.map((_q,index)=>(<>    <div key= {index} className="questions">
+            <AllQuestions question = {_q} />
+          
 
-          </div>
+          </div></>))
+          }
+      
         </div>
       </div>
     </div>

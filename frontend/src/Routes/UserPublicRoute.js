@@ -6,7 +6,7 @@ export default function PublicRoute({children}) {
   useEffect(()=>{
     if(localStorage.getItem('userToken')){
      
-      return navigate("/") 
+      return navigate("/home") 
 
   
     }else{

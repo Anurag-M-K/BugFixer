@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const  QuestionDB = require('../../model/userModel/Question');
 
 const questionAdd =  async(req,res)=>{
-    console.log("question add " + req.body)
+  
     const questoinData = new QuestionDB({
         title:req.body.title,
         body:req.body.body,
@@ -13,11 +13,12 @@ const questionAdd =  async(req,res)=>{
     await questoinData
     .save()
     .then((doc)=>{
-        res.status(201).send({
+        res.status(200).send({
             status:true,
             data:doc,
         });
     })
+  
     .catch((err)=>{
         res.status(400).send({
             status:false,
@@ -90,6 +91,7 @@ const getQuestion =  async(req,res)=>{
 
 
 const particularQuestion = async(req,res)=>{
+    console.log("first")
 try{
         QuestionDB.aggregate([
             {

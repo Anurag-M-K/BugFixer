@@ -1,0 +1,142 @@
+@import"../styles/colors";
+
+.homePage {
+  .homePage--innerDiv {
+    margin: 3%;
+    padding: 3%;
+    border-radius: 10px;
+    .homePage--innerDiv--sqere{
+      position: absolute;
+      left: 3rem;
+      top: 8rem;
+      z-index: 0;
+    }
+    .homePage--innerDiv--lineimg1{
+      position: absolute;
+      left: 5rem;
+      top: 23rem;
+      z-index: 0;
+    }
+    .homePage--innerDiv--lineimg2{
+      position: absolute;
+      right: 3rem;
+      top: 15;
+      z-index: 0;
+    }
+    .homePage--innerDiv--box {
+     
+      display: flex;
+      margin: 0 10%;
+        align-content: center;
+        align-items: center;
+      .homePage--innerDiv--box--find {
+        background-color: rgb(254, 227, 205);
+        color: black;
+        text-align: center;
+        width: 42%;
+        padding: 1rem 2rem;
+        border-radius: 10px;
+        margin: 3rem;
+
+        .homePage--innerDiv--box--find--btn {
+          color: white;
+          background-color: $orangeColor;
+        }
+      }
+      .homePage--innerDiv--box--secure {
+        background-color: rgb(205, 233, 254);
+        color: black;
+        text-align: center;
+        width: 40%;
+        padding: 1rem 2rem;
+        border-radius: 10px;
+      }
+    }
+    .homePage--innerDiv--header{
+      font-family: 'Roboto Slab Bold',serif;
+      font-size: 50px;
+      font-weight: 700;
+      text-align: center;
+      width: 60%;
+      margin: auto;
+
+      span{
+        color: $orangeColor;
+      }
+    }
+    .homePage--innerDiv--plain{
+      background-color: silver;
+      padding: 5px;
+      border-radius: 20px;
+      width: 10%;
+      margin: auto;
+      margin-top: 5rem;
+      margin-bottom: 5rem;
+    }
+    .homePage--innerDiv--reach{
+      width: 80%;
+     display: flex;
+     grid-gap: 4rem;
+     margin: auto;
+     line-height: 10px;
+     text-align: center;
+    padding-bottom: 20%;
+     p{
+       color: rgba(255, 255, 255, 0.829);
+     }
+    }
+  }
+}
+
+@media screen and (max-width:1000px) {
+  .middlePart{
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  
+}
+.middlePart{
+ min-width: 550px;
+}
+
+@media screen and (max-width:1450px) {
+    .imgLine{
+    display: none;
+  }
+}
+@media screen and (max-width:1450px) {
+  .imgLine2{
+  display: none;
+}
+}
+
+@media  screen and (max-width:550px) {
+  .finding{
+    margin-left: -20px;
+  }
+  
+}
+@media screen and (max-width:1000px) {
+  .square{
+    display: none;
+
+  }
+ 
+  
+}
+
+.middlePart{
+  align-items: center;
+  min-width: 0;
+  
+}
+.finding{
+  min-width:210px;
+}
+.secure{
+  min-width:210px;
+
+}

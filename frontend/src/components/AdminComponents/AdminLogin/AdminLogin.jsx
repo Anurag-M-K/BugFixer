@@ -6,7 +6,11 @@ import { showLoading, hideLoading } from "../../../redux/features/alertSlice";
 import { alertState } from "../../../redux/features/alertSlice";
 import { adminState, setAdminDetails } from "../../../redux/features/adminSlice";
 
+
+
 function AdminLogin() {
+
+
 
 
   const [data, setData] = useState({ username: "", password: "" });
@@ -19,17 +23,26 @@ function AdminLogin() {
   const { loading } = useSelector(alertState);
   const {adminDetails} = useSelector(adminState)
   const dispatch = useDispatch();
+
+//toast
+
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       dispatch(showLoading());
       setTimeout(async () => {
-        const url = "http://localhost:8080/admin/admin-login";
+        
+        const url = "http://localhost:80/admin/admin-login";
+      
         dispatch(hideLoading());
-
+        
         const { data: res } = await axios.post(url, data);
-        console.log(data);
+       
         localStorage.setItem("AdminToken", res.data);
+      
        try {
         dispatch(setAdminDetails(data))
         window.location= ('/admin-dashboard')
@@ -85,7 +98,8 @@ function AdminLogin() {
               </div>
             )}
             <a href="">
-              <button style={{ backgroundColor: "#243b55" }}>Submit</button>
+              <button  style={{ backgroundColor: "#243b55" }}>Submit</button>
+         
               <span></span>
               <span></span>
               <span></span>

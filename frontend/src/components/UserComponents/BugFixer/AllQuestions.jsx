@@ -2,9 +2,14 @@ import { Avatar } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import './css/AllQuestions.css';
+import ReactHtmlParser from 'react-html-parser'
 
+function AllQuestions({question}) {
+ var tags = question.tags
 
-function AllQuestions() {
+function truncate(str,n){
+  return str?.length > n ? str.substr(0,n-1)+ "..." :str
+}
   return (
     <div className=" all-questions">
       <div className="all-questions-container">
@@ -15,7 +20,7 @@ function AllQuestions() {
               <span>Votes</span>
             </div>
             <div className="all-option">
-              <p>0</p>
+              <p>{question?.answerDetails?.length}</p>
               <span>Answers</span>
             </div>
             <div className="all-option">
@@ -24,28 +29,36 @@ function AllQuestions() {
             </div>
           </div>
         </div>
-        <div className="question-answer">
-          <Link to='question'>How to use drag and drop in ant design ?</Link>
+        <div className="question-answer ">
+          <Link to={`/question?id=${question?._id}`} className="titleStyle">{question?.title}</Link>
           <div
             style={{
               width: "90%",
             }}
           >
             <div>
-              What i want is an example about how to make the drag and drop of
-              my tabke that works properly , but i cannot figure out how to make
-              it works
+            {ReactHtmlParser(truncate(question?.body,300))}
             </div>
           </div>
-          <div style={{ display: "flex" }}>
-          <span className="question-tags">react</span>
-          <span className="question-tags">and</span>
-          <span className="question-tags">frontend</span>
-        </div>
+       <div 
+       style={{
+        display:"flex",
+
+       }}
+       >
+        {tags.forEach((tag)=>(
+          
+          <>
+          <span className="question-tags">{tag}</span>
+          </>
+        ))}
+         </div>
+       
         <div className="author">
-            <small>Timestamp</small>
-            <span className="author-details"><Avatar/>
-            <p>Username</p>
+            <small>{new Date(question.created_at).toLocaleString()}</small>
+            <span className="author-details"><Avatar src={question?.user?.photo}/>
+            <p>{question?.user?.userDetails.email ? question?.user?.userDetails.email :String( question?.user?.email)
+            .split('@')[0]}</p>
             </span>
         </div>
         </div>

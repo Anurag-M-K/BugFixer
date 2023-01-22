@@ -18,6 +18,7 @@ import { userState } from "./redux/features/userSlice";
 import PublicRoute from "./Routes/UserPublicRoute";
 import AdminPublicRoute from './Routes/AdminPublicRoute'
 import UserManagePage from "./pages/admin/UserManagePage";
+import SuperHome from "./pages/user/SuperHomePage";
 
 function App() {
   const user = useSelector(userState);
@@ -32,7 +33,7 @@ function App() {
         <Routes>
           <Route
             exact
-            path="/"
+            path="/home"
             element={
               <PublicRoute>
                 <Home />
@@ -62,6 +63,7 @@ function App() {
           />
           <Route exact path="/add-question" element={<PublicRoute><AddQuestionPage /></PublicRoute>} />
           <Route exact path="/question" element={<PublicRoute><ViewQuestion /></PublicRoute>} />
+          <Route exact path="/" element={<SuperHome/>}/>
 
 
 

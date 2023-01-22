@@ -5,6 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails, userState } from "../../../redux/features/userSlice";
 import gLogo from '../Images/g.png'
+import {  alertState, hideLoading, showLoading } from "../../../redux/features/alertSlice";
+// import toast from 'react-hot-toast';
+
+
+
+
+
 
 function Login() {
   const navigate = useNavigate()
@@ -13,24 +20,27 @@ function Login() {
 
   const dispatch = useDispatch()
   const {userDetails} = useSelector(userState)
+  const {loading} = useSelector(alertState)
 
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
+  // const notify = () => toast('Login successfully');
 
   const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "http://localhost:8080/api/userLogin";
+      dispatch(showLoading())
+			const url = "http://localhost:80/api/userLogin";
+      dispatch(hideLoading())
 			const { data: res } = await axios.post(url, data);
 			localStorage.setItem("userToken", res.data);
-      console.log(data)
       try {
         dispatch(setUserDetails(data))
-        
 
-        navigate("/");
+        navigate("/home");
+
         
       } catch (error) {
         console.log(error.message);
@@ -57,7 +67,7 @@ function Login() {
         }}
       >
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit }
           className="border px-5 pb-5 m-5 loginPage--form"
         >
           <div className="loginPage--form--img">
@@ -137,7 +147,7 @@ function Login() {
             Login
           </button>
         <div className="gbtn">
-          <button 
+          <button  
                     type="submit"
                     className="btn btn-block bg-light border "
                   >

@@ -16,6 +16,6 @@ router.post('/question',questionAdd)
 router.post("/answer",answerAdd)
 router.post("/comment/:id",commentAdd)
 
-router.get('/',getQuestion);
-router.get('/:id',particularQuestion)
+router.get('/getQuestion',getQuestion);
+router.get('/question/:id',particularQuestion)
 module.exports = router;
