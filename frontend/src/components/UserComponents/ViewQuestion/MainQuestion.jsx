@@ -8,11 +8,22 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; //quills css important
 import "./index.css";
 import ReactHtmlParser from "react-html-parser";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { userState } from "../../../redux/features/userSlice";
 
 
 function MainQuestion() {
+
+
+  const [show, setShow] = useState(false);
+  const [answer, setAnswer] = useState(" ");
+  const [questionData, setQuestionData] = useState();
+  const user = useSelector(userState)
+const [comment , setComment] = useState('')
+
+console.log(user,"user coming")
+
+
   let search = window.location.search;
   const params = new URLSearchParams(search);
   const id = params.get("q");
@@ -23,16 +34,9 @@ function MainQuestion() {
     const _id = url.match(/[^\=]+$/)[0];
     set_Id(_id);
   },[])
-  console.log(_id);
   
 
 
-
-
-  const [show, setShow] = useState(false);
-  const [answer, setAnswer] = useState(" ");
-  const [questionData, setQuestionData] = useState();
-  const user = useSelector(userState)
 
 
 
@@ -45,7 +49,7 @@ useEffect(() => {
         .get(`/api/question/${_id}`)
         .then((res) => setQuestionData(res.data[0]))
         .catch((err) => console.log(err));
-    }
+    } 
     getQuestionDetails();
   }, [_id]);
 
@@ -91,6 +95,23 @@ useEffect(() => {
 
   }
 
+  const handleComment = async()=>{
+    if(comment != ""){
+      const body = {
+        question_id : id,
+        comment:comment,
+        user:user 
+      }
+      console.log(body,"sfsdsdfasd")
+
+      await axios.post(`/api/comment/${_id}`,body).then((res)=>{
+        setComment("")
+        setShow(false)
+        getUpdatedAnswer()
+      })
+    }
+  }
+
 
   return (
     <div className="main col-xl-8">
@@ -119,7 +140,7 @@ useEffect(() => {
                 <span className="arrow">
                   <svg
                     aria-hidden="true"
-                    class="svg-icon iconArrowUpLg"
+                    className="svg-icon iconArrowUpLg"
                     width="36"
                     height="36"
                     viewBox="0 0 36 36"
@@ -131,7 +152,7 @@ useEffect(() => {
                 <span className="arrow">
                   <svg
                     aria-hidden="true"
-                    class="svg-icon iconArrowDownLg"
+                    className="svg-icon iconArrowDownLg"
                     width="36"
                     height="36"
                     viewBox="0 0 36 36"
@@ -159,14 +180,21 @@ useEffect(() => {
                 </div>
               </div>
               <div className="comments">
+                {
+                  questionData?.comments && questionData?.comments?.map((_qd)=><p>
+                    {_qd?.comment}- <span>   {_qd?.user?.firstName
+                        ? _qd?.user?.firstName
+                        : String(_qd?.firstName).split("@")[0]}</span>
+                    <small>{new Date(_qd?.created_at).toLocaleString()}</small></p>)
+                }
                 <div className="comment">
-                  <p>
-                    This is comment - <span>User Name</span>
-                    <small>Timestamp</small>
+                  
                     <p onClick={() => setShow(!show)}>Add a comment</p>
                     {show && (
                       <div className="title">
-                        <textarea
+                        <textarea 
+                        value={comment}
+                        onChange={(e)=>setComment(e.target.value)}
                           style={{
                             margin: "5px 0px",
                             padding: "10px",
@@ -178,10 +206,10 @@ useEffect(() => {
                           placeholder="Add your comment..."
                           rows={5}
                         ></textarea>
-                        <button>Add comment</button>
+                        <button onClick={handleComment}>Add comment</button>
                       </div>
                     )}
-                  </p>
+                  
                 </div>
                 <br />
               </div>
@@ -210,7 +238,7 @@ useEffect(() => {
                   <span className="arrow">
                     <svg
                       aria-hidden="true"
-                      class="svg-icon iconArrowUpLg"
+                      className="svg-icon iconArrowUpLg"
                       width="36"
                       height="36"
                       viewBox="0 0 36 36"
@@ -222,7 +250,7 @@ useEffect(() => {
                   <span className="arrow">
                     <svg
                       aria-hidden="true"
-                      class="svg-icon iconArrowDownLg"
+                      className="svg-icon iconArrowDownLg"
                       width="36"
                       height="36"
                       viewBox="0 0 36 36"
@@ -267,7 +295,7 @@ useEffect(() => {
         <ReactQuill
           value={answer}
           onChange={handleQuill}
-          className="react-quill"
+          className="react-quill col-md-6 col-sm-8 col-lg-10 col-xl-12"
           theme="snow"
           style={{
             height: "200px",

@@ -1,6 +1,7 @@
 const CommentDB = require("../../model/userModel/Comment");
 
 const commentAdd = async (req, res) => {
+
   try {
     await CommentDB.create({
       question_id: req.params.id,

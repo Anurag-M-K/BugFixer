@@ -15,8 +15,8 @@
 .publicPlatform {
   display: flex;
   position: relative;
-  bottom: 15rem;
-  margin-left: 15rem;
+  bottom: 8rem;
+  margin-left: 12%;
   .publicPlatform--public {
    @extend .cards;
    background-image: linear-gradient(
@@ -34,9 +34,9 @@
 
 @media screen and (max-width:1000px) {
    .publicPlatform{
-    display: flex;
     flex-direction:column;
     align-items: center;
+    background-color: blue;
     justify-content: center;
   }
 
@@ -52,4 +52,9 @@ a{
 }
 
 
-
+.imageIcon{
+  width: 100%;
+}
+.logoImg{
+  width: 50%;
+}

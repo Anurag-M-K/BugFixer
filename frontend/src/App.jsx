@@ -5,6 +5,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+
 import ViewQuestion from "./components/UserComponents/ViewQuestion";
 import Signup from "./pages/user/UserSignupPage";
 import Login from "./pages/user/UserLogin";
@@ -19,6 +20,9 @@ import PublicRoute from "./Routes/UserPublicRoute";
 import AdminPublicRoute from './Routes/AdminPublicRoute'
 import UserManagePage from "./pages/admin/UserManagePage";
 import SuperHome from "./pages/user/SuperHomePage";
+import UserProfilePage from "./pages/user/UserProfilePage";
+import Test from './pages/user/Test'
+
 
 function App() {
   const user = useSelector(userState);
@@ -63,7 +67,9 @@ function App() {
           />
           <Route exact path="/add-question" element={<PublicRoute><AddQuestionPage /></PublicRoute>} />
           <Route exact path="/question" element={<PublicRoute><ViewQuestion /></PublicRoute>} />
+          <Route exact path="/profile" element={<UserProfilePage/>} />
           <Route exact path="/" element={<SuperHome/>}/>
+          <Route exact path="/test" element={<Test/>} />
 
 
 

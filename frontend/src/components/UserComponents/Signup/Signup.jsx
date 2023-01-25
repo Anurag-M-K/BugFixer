@@ -3,8 +3,9 @@ import { Link,useNavigate } from "react-router-dom";
 import Logo from "../Images/download.png";
 import gLogo from "../Images/g.png";
 import { useState } from "react";
-import axios from 'axios';
 import './Signup.css';
+import ModalComponent from "./ModalComponent";
+import axios from "axios";
 
 const info = [
   {
@@ -50,30 +51,41 @@ const Signup = () => {
     firstName:"",
     lastName:"",
     email:"",
+    phone:"",
     password:""
   });
 
   const [error,setError] = useState('')
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleChange = ({currentTarget:input})=>{
     setData({...data,[input.name]:input.value});
   }
 
-  const handleSubmit = async(e)=>{
-    e.preventDefault();
-    try {
-      const url = 'http://localhost:80/api/userSignup'  ;
-      const {data:res}= await axios.post(url,data);
-      navigate('/login-page')
-    } catch (error) {
-      if(error.response && error.response.status >= 400 && 
-        error.response.status <= 500
-        ){
-          setError(error.response.data.message)
-        }
-    }
+  console.log(data.phone)
+  // const handleSubmit = async(e)=>{
+  //   e.preventDefault();
+  //   try {
+  //     const url = 'http://localhost:80/api/userSignup'  ;
+  //     const {data:res}= await axios.post(url,data);
+  //     navigate('/login-page')
+  //   } catch (error) {
+  //     if(error.response && error.response.status >= 400 && 
+  //       error.response.status <= 500
+  //       ){
+  //         setError(error.response.data.message)
+  //         console.log()
+  //       }
+  //   }
+  // }
+
+
+  // generate otp
+  const handleClick = (e)=>{
+    e.preventDefault()
+    axios.post(`http://localhost:80/api/mobile`,data).then(res =>{
+    })
   }
   return (
     <>
@@ -120,7 +132,7 @@ const Signup = () => {
                   Sign up
                 </h2>
                 <p className="text-center pb-1">~~~~~~~~~~~</p>
-                <form onSubmit={handleSubmit}>  
+                <form >  
                   <div className="form-outline mb-4">
                     <label className="form-label" for="form1Example13">
                       Full Name
@@ -216,6 +228,40 @@ const Signup = () => {
                       />
                     </div>
                   </div>
+
+                  <div className="form-outline mb-4">
+                    <label className="form-label" for="form1Example23">
+                     Phone
+                    </label>
+                    <div className="input-group flex-nowrap">
+                      <div className="input-group-prepend">
+                        <span
+                          className="input-group-text"
+                          id="addon-wrapping"
+                          style={{
+                            color: "rgb(242, 116, 13)",
+                            backgroundColor: "rgba(242, 116, 13, 0.308)",
+                          }}
+                        >
+                          <i className="fas fa-envelope"></i>
+
+                          
+                        </span>
+                      </div>
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Phone"
+                        name="phone"
+                        onChange={handleChange}
+                        value={data.phone}
+                        required
+                        aria-label="Username"
+                        aria-describedby="addon-wrapping"
+                      
+                      />
+                    </div>
+                  </div>
                   <div className="form-outline mb-4">
                     <label className="form-label" for="form1Example23">
                       Password
@@ -251,20 +297,23 @@ const Signup = () => {
                  
                           {error && <div  className="errorShow">{error} </div>}
                  
-                  <button
-                    type="submit"
+                  {/* <button
+                    type="submit"y
                     className="btn btn-block text-light"
                     style={{ backgroundColor: "rgb(10, 149, 255)" }}
                   >
                     Sign up
-                  </button>
+                  </button> */}
+                  <button onClick={handleClick}><ModalComponent  data={data}/></button>
                   <button
                     type="submit"
                     className="btn btn-block bg-light border"
-                  >
+                    >
+                
                     <img src={gLogo} alt="" width="20px" className="mr-1" />
                     Google
                   </button>
+                
               
                 <Link to={"/login-page"}><h6 className="alreadyAcc" >Already have an account?</h6></Link>
                 </form>
@@ -272,7 +321,14 @@ const Signup = () => {
               {/* Signup form Ends */}
             </div>
           </div>
+          
         </section>
+
+
+
+        {/* modal */}
+        
+
       </div>
     </>
   );

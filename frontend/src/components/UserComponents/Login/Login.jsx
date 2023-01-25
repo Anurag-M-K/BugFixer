@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails, userState } from "../../../redux/features/userSlice";
 import gLogo from '../Images/g.png'
 import {  alertState, hideLoading, showLoading } from "../../../redux/features/alertSlice";
-// import toast from 'react-hot-toast';
 
 
 
@@ -19,15 +18,12 @@ function Login() {
   const [error, setError] = useState("");
 
   const dispatch = useDispatch()
-  const {userDetails} = useSelector(userState)
   const {loading} = useSelector(alertState)
 
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
-  // const notify = () => toast('Login successfully');
-
   const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {

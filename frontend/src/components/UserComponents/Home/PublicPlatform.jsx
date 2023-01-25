@@ -11,11 +11,11 @@ const PublicPlatform = () => {
       <div className="publicPlatform">
 
       {/* publicPlatform card started */}
-        <div class="publicPlatform--public" width="50px">
-          <img src={Logo} class="" alt="..." width="250px" />
-          <img src={publicImg} class="" alt="..." width="400px" />
+        <div class="publicPlatform--public" >
+          <img src={Logo} class="logoImg" alt="..."  />
+          <img src={publicImg} class="imageIcon" alt="..." />
           <div class="card-body">
-            <h3 class="card-title text-dark">A public platform building the definitive collection of coding questions & answers</h3>
+            <h4 class="card-title text-dark">A public platform building the definitive collection of coding questions & answers</h4>
             <p class="card-text">
             A community-based space to find and contribute answers to technical challenges, and one of the most popular websites in the world.
             </p>
@@ -28,11 +28,11 @@ const PublicPlatform = () => {
         {/* publicPlatform card ends */}
 
         {/* private card started */}
-        <div class="publicPlatform--private" width="50px">
-          <img src={Logo} class="" alt="..." width="250px" />
-          <img src={privateImg} class="" alt="..." width="400px" />
+        <div class="publicPlatform--private">
+          <img src={Logo}  alt="..."class="logoImg" />
+          <img src={privateImg}  alt="..."  class="imageIcon"/>
           <div class="card-body">
-            <h3 class="card-title text-dark">A private collaboration & knowledge sharing SaaS platform for companies</h3>
+            <h4 class="card-title text-dark">A private collaboration & knowledge sharing SaaS platform for companies</h4>
             <p class="card-text">
             A web-based platform to increase productivity, decrease cycle times, accelerate time to market, and protect institutional knowledge.
             </p>

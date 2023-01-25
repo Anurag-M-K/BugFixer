@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {userSignup} = require('../controllers/userController/userSignupController')
+const {userSignup,otpGenerate,otpInput} = require('../controllers/userController/userSignupController')
 const {userLogin} = require('../controllers/userController/userLoginController')
 const {questionAdd,getQuestion,particularQuestion} = require('../controllers/userController/questionController')
 const {answerAdd} = require("../controllers/userController/answerController")
@@ -18,4 +18,7 @@ router.post("/comment/:id",commentAdd)
 
 router.get('/getQuestion',getQuestion);
 router.get('/question/:id',particularQuestion)
+
+router.post('/mobile',otpGenerate);
+router.post('/otp',otpInput)
 module.exports = router;

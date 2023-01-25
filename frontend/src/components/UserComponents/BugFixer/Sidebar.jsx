@@ -5,7 +5,7 @@ import './css/Sidebar.css'
 function Sidebar() {
   return (
     
-    <div className="sidebar col-lg-4  col-sm-12 col-xl-4 ">
+    <div className="sidebar ">
       <div className="sidebar-container">
         <div className="sidebar-options">
           <div className="sidebar-option">

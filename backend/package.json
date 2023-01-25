@@ -20,7 +20,8 @@
     "joi-password-complexity": "^5.1.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.8.3",
-    "node": "^19.4.0"
+    "node": "^19.4.0",
+    "twilio": "^3.84.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
