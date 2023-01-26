@@ -50,7 +50,7 @@ useEffect(()=>{
             <div>
               <div className="d-flex justify-content-between my-3">
                 <h2 className="font-weight-normal">
-                  Questions tagged [javascript]
+                  Questions   
                 </h2>
                 <Link to='/add-question'><button
                   className="btn btn-primary btn-small"

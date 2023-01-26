@@ -1,26 +1,29 @@
 import React from "react";
 import "./css/Header.css";
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-import { Link, Navigate, useNavigate } from "react-router-dom";
+
+import { Link } from "react-router-dom";
 import { message } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 function Header() {
-  // const notify = () =>  toast.success("Log out successfully!",{
-  //   position:"top-right"
-  // });
+
+
+  const {userDetails} = useSelector(state=> state.user)
+
+  const [username, setUsername] = useState('');
+  console.log("here ethi ",userDetails);
+
+
+  
+
   const hndleLogout = ()=>{
     localStorage.clear()
-    // notify();
     window.location.reload('/')
-    message.success("logout successfully")
-    
-   
-    
+    message.success("logout successfully")    
   }
 
   return (
     <nav className="app navbar navbar-expand-lg navbar-light bg-light px-5">
-          {/* <span className="navbar-toggler-icon mx-2 ml-5" ></span> */}
 
           <Link to="/home" className="navbar-brand">
             <img src='https://res.cloudinary.com/dmvxmurxw/image/upload/v1674187605/logo4_g8zbar.png' alt="" width="160px" />
@@ -41,12 +44,13 @@ function Header() {
             <ul className="navbar-nav mr-auto">
               <li className="nav-item mx-4 active">
                 <Link className="nav-link">
-                <span onClick={hndleLogout} >Logout</span>  <span className="sr-only">(current)</span>
+                <span >Community</span>  <span className="sr-only">(current)</span>
                 </Link>
+                
               </li>
               <li className="nav-item mr-4">
                 <Link to="/" className="nav-link">
-                  Products
+                  Products 
                 </Link>
               </li>
               <li className="nav-item mr-4">
@@ -61,7 +65,6 @@ function Header() {
               </li>
               <li className="nav-item">
                 <Link to="/team" className="nav-link">
-                  Friends
                 </Link>
               </li>
             </ul>
@@ -74,8 +77,18 @@ function Header() {
                 aria-describedby="inputGroup-sizing-sm"
                 placeholder="Search..."
               />
-              <Link to="/login-page" className="nav-link">
-              <button
+
+              {userDetails.firstName ? (
+                < >
+                <Link to={'/profile'}><span className="ms-4"> {userDetails.firstName}</span></Link>
+                <Link className="nav-link">
+                <span onClick={hndleLogout} ><button className="btn btn-danger my-sm-0 btn-sm px-3">Logout</button> </span>  <span className="sr-only">(current)</span>
+                </Link>
+                </>
+              ) : (
+                <>
+                     <Link to="/login-page" className="nav-link">
+              <button 
                 className="btn btn-outline-primary my-sm-0 btn-sm px-3"
                 type="submit"
                 style={{ backgroundColor: "#e3f2fd", color: "gray" }}
@@ -83,8 +96,7 @@ function Header() {
                 Log in
               </button>
                 </Link>
-
-              <Link to="/signup-page" className="nav-link">
+                <Link to="/signup-page" className="nav-link">
               <button
                 className="btn btn-primary my-sm-0 btn-sm px-3"
                 type="submit"
@@ -93,6 +105,12 @@ function Header() {
                 Sign Up
               </button>
                 </Link>
+                </>
+
+              )}
+         
+
+             
                 {/* <ToastContainer/> */}
              
             </form>

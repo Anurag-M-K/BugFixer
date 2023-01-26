@@ -14,24 +14,21 @@ import {
   MDBListGroup,
   MDBListGroupItem
 } from 'mdb-react-ui-kit';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 export default function UserProfile() {
+
+
+  const {userDetails} = useSelector(state=> state.user);
+  console.log(userDetails , " profile page datas ");
+
+
+
   return (
     <section style={{ backgroundColor: '#eee' }}>
-      <MDBContainer className="py-5">
-        {/* <MDBRow>
-          <MDBCol>
-            <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-4">
-              <MDBBreadcrumbItem>
-                <a href='#'>Home</a>
-              </MDBBreadcrumbItem>
-              <MDBBreadcrumbItem>
-                <a href="#">User</a>
-              </MDBBreadcrumbItem>
-              <MDBBreadcrumbItem active>User Profile</MDBBreadcrumbItem>
-            </MDBBreadcrumb>
-          </MDBCol>
-        </MDBRow> */}
+      < MDBContainer className="py-5">
+      
 
         <MDBRow>
           <MDBCol lg="4">
@@ -46,8 +43,8 @@ export default function UserProfile() {
                 <p className="text-muted mb-1">Full Stack Developer</p>
                 <p className="text-muted mb-4">Bay Area, San Francisco, CA</p>
                 <div className="d-flex justify-content-center mb-2">
-                  <MDBBtn>Follow</MDBBtn>
-                  <MDBBtn outline className="ms-1">Message</MDBBtn>
+                  <Link to={'/edit-profile'}><MDBBtn>edit profile</MDBBtn></Link>
+                  {/* <MDBBtn outline className="ms-1">Message</MDBBtn> */}
                 </div>
               </MDBCardBody>
             </MDBCard>
@@ -61,6 +58,9 @@ export default function UserProfile() {
                   <MDBListGroupItem className=" d-flex  align-items-center justify-content-center p-3">
                     <MDBIcon/>
                     <MDBCardText><h5>Social medias</h5></MDBCardText>
+                    
+                    <button className="btn btn-warning mb-3 ml-5 " type="submit">add</button>
+                    
                   </MDBListGroupItem>
              
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
@@ -83,6 +83,7 @@ export default function UserProfile() {
                     <MDBIcon fab icon="facebook fa-lg" style={{ color: '#3b5998' }} />
                     <MDBCardText>mdbootstrap</MDBCardText>
                   </MDBListGroupItem>
+                
                 </MDBListGroup>
               </MDBCardBody>
             </MDBCard>
@@ -95,7 +96,7 @@ export default function UserProfile() {
                     <MDBCardText>Full Name</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">Johnatan Smith</MDBCardText>
+                    <MDBCardText className="text-muted">{userDetails?.firstName +" " }{ userDetails?.lastName}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -104,7 +105,7 @@ export default function UserProfile() {
                     <MDBCardText>Email</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">example@example.com</MDBCardText>
+                    <MDBCardText className="text-muted">{userDetails?.email}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -113,19 +114,12 @@ export default function UserProfile() {
                     <MDBCardText>Phone</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">(097) 234-5678</MDBCardText>
+                    <MDBCardText className="text-muted">{userDetails?.phone}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Mobile</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">(098) 765-4321</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
+               
+
                 <MDBRow>
                   <MDBCol sm="3">
                     <MDBCardText>Address</MDBCardText>

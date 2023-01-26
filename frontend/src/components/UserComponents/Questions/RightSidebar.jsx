@@ -52,7 +52,7 @@ const RightSidebar = () => {
       {/* Blog card ends */}
 
       {/* Collectives card started */}
-      <div className="card my-3 shadow-sm">
+      {/* <div className="card my-3 shadow-sm">
         <div className="card-header">Collectives</div>
         {apps.map((app) => {
           return (
@@ -81,7 +81,7 @@ const RightSidebar = () => {
             </div>
           );
         })}
-      </div>
+      </div> */}
       {/* Collectives card ends */}
 
       {/* Relative Tags part added */}

@@ -32,9 +32,9 @@ function Login() {
       dispatch(hideLoading())
 			const { data: res } = await axios.post(url, data);
 			localStorage.setItem("userToken", res.data);
+      console.log("res ",res.user)
       try {
-        dispatch(setUserDetails(data))
-
+        dispatch(setUserDetails(res.user))
         navigate("/home");
 
         

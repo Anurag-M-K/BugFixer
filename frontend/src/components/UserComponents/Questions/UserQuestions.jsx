@@ -1,11 +1,14 @@
 import React ,{useState,useEffect} from "react";
 import "./UserQuestions.scss";
+import ReactHtmlParser from 'react-html-parser';
 import { Link } from "react-router-dom";
 
 const UserQuestions = ({questions}) => {
 
 
-
+function truncate(str,n){
+  return str?.length > n ? str.substr(0,n-1)+ "..." : str
+}
 
   console.log("here ",questions)
 
@@ -33,8 +36,7 @@ const UserQuestions = ({questions}) => {
             </h5>
           </Link>
           <p>
-       
-          </p>
+          {ReactHtmlParser(truncate(questionData?.body,300))}          </p>
           <button
             className="btn btn-sm mr-1"
             style={{
@@ -87,7 +89,7 @@ kklmlkmkl
                 style={{ borderRadius: "1rem" }}
               />
               <div>
-                <Link to="/">user</Link>
+                <Link to="/">us</Link>
                 <div className="text-muted">
                   <b>score</b>
                   <span className="dot"></span>

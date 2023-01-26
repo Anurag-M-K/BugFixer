@@ -22,7 +22,7 @@ import UserManagePage from "./pages/admin/UserManagePage";
 import SuperHome from "./pages/user/SuperHomePage";
 import UserProfilePage from "./pages/user/UserProfilePage";
 import Test from './pages/user/Test'
-
+import UserEditProfilePage from "./pages/user/UserEditProfilePage";
 
 function App() {
   const user = useSelector(userState);
@@ -40,7 +40,7 @@ function App() {
             path="/home"
             element={
               <PublicRoute>
-                <Home />
+                <Test />
               </PublicRoute>
             }
           />
@@ -67,9 +67,10 @@ function App() {
           />
           <Route exact path="/add-question" element={<PublicRoute><AddQuestionPage /></PublicRoute>} />
           <Route exact path="/question" element={<PublicRoute><ViewQuestion /></PublicRoute>} />
-          <Route exact path="/profile" element={<UserProfilePage/>} />
           <Route exact path="/" element={<SuperHome/>}/>
-          <Route exact path="/test" element={<Test/>} />
+          <Route exact path="/home" element={<Test/>} />
+          <Route exact path="/profile" element={<UserProfilePage/>} />
+          <Route exact path="/edit-profile" element={<UserEditProfilePage/>} />
 
 
 

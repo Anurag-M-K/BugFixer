@@ -4,6 +4,9 @@ const {userLogin} = require('../controllers/userController/userLoginController')
 const {questionAdd,getQuestion,particularQuestion} = require('../controllers/userController/questionController')
 const {answerAdd} = require("../controllers/userController/answerController")
 const {commentAdd} = require("../controllers/userController/commentController")
+const {updateProfileController}  = require('../controllers/userController/userProfileController');
+
+
 
 router.post('/userSignup',userSignup)
 router.post('/userLogin',userLogin)
@@ -21,4 +24,9 @@ router.get('/question/:id',particularQuestion)
 
 router.post('/mobile',otpGenerate);
 router.post('/otp',otpInput)
+
+
+router.post('/profile',updateProfileController)
+
+
 module.exports = router;

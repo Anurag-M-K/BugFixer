@@ -6,6 +6,8 @@ import { useState } from "react";
 import './Signup.css';
 import ModalComponent from "./ModalComponent";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setUserDetails } from "../../../redux/features/userSlice";
 
 const info = [
   {
@@ -46,6 +48,8 @@ const info = [
   },
 ];
 
+
+
 const Signup = () => {
   const [data , setData] = useState({
     firstName:"",
@@ -54,39 +58,41 @@ const Signup = () => {
     phone:"",
     password:""
   });
+  const dispatch = useDispatch()
 
   const [error,setError] = useState('')
 
-  // const navigate = useNavigate();
 
   const handleChange = ({currentTarget:input})=>{
     setData({...data,[input.name]:input.value});
   }
 
   console.log(data.phone)
-  // const handleSubmit = async(e)=>{
-  //   e.preventDefault();
-  //   try {
-  //     const url = 'http://localhost:80/api/userSignup'  ;
-  //     const {data:res}= await axios.post(url,data);
-  //     navigate('/login-page')
-  //   } catch (error) {
-  //     if(error.response && error.response.status >= 400 && 
-  //       error.response.status <= 500
-  //       ){
-  //         setError(error.response.data.message)
-  //         console.log()
-  //       }
-  //   }
-  // }
+  const handleSubmit = async(e)=>{
+    e.preventDefault();
+    try {
+      const url = 'http://localhost:80/api/userSignup'  ;
+      const {data:res}= await axios.post(url,data);
+      console.log(data , "data from signup")
+      dispatch(setUserDetails(data))
+      navigate('/login-page')
+    } catch (error) {
+      if(error.response && error.response.status >= 400 && 
+        error.response.status <= 500
+        ){
+          setError(error.response.data.message)
+          console.log()
+        }
+    }
+  }
 
 
   // generate otp
-  const handleClick = (e)=>{
-    e.preventDefault()
-    axios.post(`http://localhost:80/api/mobile`,data).then(res =>{
-    })
-  }
+  // const handleClick = (e)=>{
+  //   e.preventDefault()
+  //   axios.post(`http://localhost:80/api/mobile`,data).then(res =>{
+  //   })
+  // }
   return (
     <>
       <div className="signupPage">
@@ -132,7 +138,7 @@ const Signup = () => {
                   Sign up
                 </h2>
                 <p className="text-center pb-1">~~~~~~~~~~~</p>
-                <form >  
+                <form onSubmit={handleSubmit} >  
                   <div className="form-outline mb-4">
                     <label className="form-label" for="form1Example13">
                       Full Name
@@ -304,7 +310,7 @@ const Signup = () => {
                   >
                     Sign up
                   </button> */}
-                  <button onClick={handleClick}><ModalComponent  data={data}/></button>
+                  <button type="submit">signup </button>
                   <button
                     type="submit"
                     className="btn btn-block bg-light border"
