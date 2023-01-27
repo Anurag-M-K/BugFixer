@@ -15,6 +15,5 @@ export const adminSlice = createSlice({
     }
 })
 
-export const adminState = (state)=> state.admin;
 
 export const {setAdminDetails} = adminSlice.actions;

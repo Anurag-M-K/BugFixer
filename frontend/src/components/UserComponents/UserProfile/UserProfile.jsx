@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios'
 import {
   MDBCol,
   MDBContainer,
@@ -14,16 +15,81 @@ import {
   MDBListGroup,
   MDBListGroupItem
 } from 'mdb-react-ui-kit';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ProfilePicAddModal from './ProfilePicAddModal';
+
 
 export default function UserProfile() {
 
-
   const {userDetails} = useSelector(state=> state.user);
-  console.log(userDetails , " profile page datas ");
+  const [previewSource, setPreviewSource] = useState();
+  const [fileInputState, setFileInpuyState] = useState("");
+  const [selectedFle, setSelectedFile] = useState("");
+const [response , setResponse] = useState([])
+const {userUpdatedDetails} = useSelector(state=>state.user)
+const dispatch = useDispatch()
 
 
+  const handleFileInput = (e) => {
+    const file = e.target.files[0];
+    
+    previewFile(file);
+  };
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+dispatch(userUpdatedDetails())
+    if (!previewSource) return;
+    uploadImage(previewSource);
+  };
+  const uploadImage = async (base64EncodedImage) => {
+    try {
+      await fetch(`http://localhost:80/api/profile/${userId}`, {
+        method: "POST",
+        body: JSON.stringify({ data: base64EncodedImage, userData,userId}),
+        headers: { "Content-type": "application/json" },
+      }).then((responseData) => {
+        console.log("response from fetch method ",responseData)
+        console.log(JSON.stringify(responseData, null, 4));
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+  
+
+  console.log("userdetails id ",userDetails._id);
+  const userId = userDetails._id
+  useEffect(()=>{
+    (async()=>{
+      axios.defaults.baseURL = "http://localhost:80"
+      const data =   await axios.get(`/api/getImage/${userId}`)
+      setResponse(data)
+      console.log("data ",data)
+    //  return data;
+
+    })()
+
+
+
+    // const getingFunction = async ()=>{
+    // }
+    // getingFunction();
+  },[])
+
+
+  console.log( "data   ", response)
 
   return (
     <section style={{ backgroundColor: '#eee' }}>
@@ -34,16 +100,20 @@ export default function UserProfile() {
           <MDBCol lg="4">
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
-                <MDBCardImage
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+               
+           <img
+              
+              src={response?.data?.imageUrl  }
+                // "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
                   alt="avatar"
                   className="rounded-circle"
                   style={{ width: '150px' }}
-                  fluid />
+                 
+                  fluid  />
                 <p className="text-muted mb-1">Full Stack Developer</p>
                 <p className="text-muted mb-4">Bay Area, San Francisco, CA</p>
                 <div className="d-flex justify-content-center mb-2">
-                  <Link to={'/edit-profile'}><MDBBtn>edit profile</MDBBtn></Link>
+                  <Link to={'/edit-profile'}><MDBBtn>edit profile</MDBBtn> </Link><ProfilePicAddModal/>
                   {/* <MDBBtn outline className="ms-1">Message</MDBBtn> */}
                 </div>
               </MDBCardBody>

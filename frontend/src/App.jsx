@@ -25,9 +25,8 @@ import Test from './pages/user/Test'
 import UserEditProfilePage from "./pages/user/UserEditProfilePage";
 
 function App() {
-  const user = useSelector(userState);
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.alerts);
+  const { loading } = useSelector(state => state.alerts);
 
   return (
     <>

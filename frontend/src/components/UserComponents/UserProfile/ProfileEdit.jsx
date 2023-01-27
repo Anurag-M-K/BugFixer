@@ -4,48 +4,81 @@ import { useSelector } from "react-redux";
 import "./ProfileEdit.css";
 
 function ProfileEdit() {
+  const { userDetails } = useSelector((state) => state.user);
+  console.log("hello userdetails from edit page ", userDetails);
 
 
-const {userDetails} = useSelector(state =>state.user)
 
-console.log(userDetails , "edit page")
-const [previewSource , setPreviewSource] = useState()
+const [userData, setUserData] = useState({
+  firstName:"",
+  phone:"",
+  email:"",
+  password:""
+})
 
-const [fileInputState , setFileInpuyState] = useState('')
-const [selectedFle,setSelectedFile] = useState('');
-const handleFileInput = (e)=>{
-    const file = e.target.files[0]
+
+
+
+
+  const [previewSource, setPreviewSource] = useState();
+  const [fileInputState, setFileInpuyState] = useState("");
+  const [selectedFle, setSelectedFile] = useState("");
+
+
+
+
+  const handleFileInput = (e) => {
+    const file = e.target.files[0];
+    
     previewFile(file);
-}
+  };
 
-const previewFile = (file)=>{
+  const previewFile = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onloadend = () =>{
-        setPreviewSource(reader.result)
-    }
-}
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
+  };
 
-const handleSubmit = (e)=>{
+  const handleChange = event=>{
+setUserData({
+ ...setUserData,
+  [event.target.name]:event.target.value
+});
+  }
+
+  console.log("userData ",userData);
+
+
+
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if(!previewSource ) return;
-   uploadImage(previewSource)
-}
+    if (!previewSource) return;
+    uploadImage(previewSource);
+  };
 
-const uploadImage =async (base64EncodedImage)=>{
-    console.log(base64EncodedImage)
+
+
+
+
+  const userId = userDetails._id
+  console.log(userId , "userId")
+  const uploadImage = async (base64EncodedImage) => {
     try {
-        await fetch('http://localhost:80/api/profile',{
-            method:"POST",
-            body:JSON.stringify({data: base64EncodedImage}),
-            headers:{'Content-type': 'application/json'},
-        }).then((responseData =>{
-            console.log(JSON.stringify(responseData,null,4))
-        }))
+      await fetch(`http://localhost:80/api/profile/${userId}`, {
+        method: "POST",
+        body: JSON.stringify({ data: base64EncodedImage, userData,userId}),
+        headers: { "Content-type": "application/json" },
+      }).then((responseData) => {
+        console.log("response from fetch method ",responseData)
+        console.log(JSON.stringify(responseData, null, 4));
+      });
     } catch (error) {
-        console.error(error)
+      console.error(error);
     }
-}
+  };
 
   return (
     <div>
@@ -53,12 +86,13 @@ const uploadImage =async (base64EncodedImage)=>{
         <div className="row">
           <div className="col-md-3 border-right">
             <div className="d-flex flex-column align-items-center text-center p-3 py-5">
-             {previewSource && (
-                 <img
-                className="rounded-circle mt-2 mb-2"
-                width="150px"
-                src={previewSource}
-              />)}
+              {previewSource && (
+                <img
+                  className="rounded-circle mt-2 mb-2"
+                  width="150px"
+                  src={previewSource}
+                />
+              )}
               <span className="font-weight-bold">Edogaru</span>
               <span className="text-black-50">edogaru@mail.com.my</span>
               <span> </span>
@@ -66,95 +100,77 @@ const uploadImage =async (base64EncodedImage)=>{
           </div>
           <div className="col-md-5 border-right">
             <div className="p-3 py-5">
-                <form onSubmit={handleSubmit} className="form" >
-
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <h4 className="text-right">Edit Profile</h4>
-              </div>
-              <div className="row mt-2">
-                <div className="col-md-12">
-
-                  <label class="labels">Name</label>
-                  <input
-                //   value={name}
-                //   onChange={(e)=> setName(e.target.value)}
-                    type="text"
-                    class="form-control"
-                    placeholder="first name"
-                  
-                  />
+              <form onSubmit={handleSubmit} className="form">
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <h4 className="text-right">Edit Profile</h4>
                 </div>
-               
-              </div>
-              <div className="row mt-3">
-                <div className="col-md-12">
-                  <label className="labels">Mobile Number</label>
-                  <input
-                //   value={mobile}
-                //   onChange={(e)=>setMobile(e.target.value)}
-                    type="text"
-                    className="form-control"
-                    placeholder="enter phone number"
-                    
+                <div className="row mt-2">
+                  <div className="col-md-12">
+                    <label class="labels">Name</label>
+                    <input
+                      value={userData.firstName}
+                      onChange={handleChange}
+                      type="text"
+                      class="form-control"
+                      placeholder="first name"
                     />
+                  </div>
                 </div>
-            
-                <div className="col-md-12">
-                  <label className="labels">Email ID</label>
-                  <input
-                    type="text"
-                    // value={email}
-                    // onChange={(e)=> setEmail(e.target.value)}
-                    className="form-control"
-                    placeholder="enter email id"
-                
+                <div className="row mt-3">
+                  <div className="col-md-12">
+                    <label className="labels">Mobile Number</label>
+                    <input
+                      value={userData.phone}
+                      onChange={handleChange}
+                      type="number"
+                      className="form-control"
+                      placeholder="enter phone number"
                     />
+                  </div>
+
+                  <div className="col-md-12">
+                    <label className="labels">Email ID</label>
+                    <input
+                      type="email"
+                      value={userData.email}
+                      onChange={handleChange}
+                      className="form-control"
+                      placeholder="enter email id"
+                    />
+                  </div>
+                  <div className="col-md-12">
+                    <label className="labels">Profile Pic</label>
+                    <input
+                      type="file"
+                      name="image"
+                      onChange={handleFileInput}
+                      value={fileInputState}
+                      className="form-input"
+                      placeholder="profile pic"
+                    />
+                  </div>
                 </div>
-                <div className="col-md-12">
-                  <label className="labels">Profile Pic</label>
-                  <input
-                
-                    type="file" name="image"
-                    onChange={handleFileInput}
-                    value={fileInputState}
-                    className="form-input"
-                    placeholder="profile pic"
-                    
-                  />
+                <div className="row mt-3">
+                  <div className="col-md-6">
+                    <label className="labels">Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      // placeholder="country"
+                      value={userData.password}
+                      onChange={handleChange}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="row mt-3">
-                <div className="col-md-6">
-                  <label className="labels">Password</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    // placeholder="country"
-                    // value={password}
-                    // onChange={(e)=>setPassword(e.target.value)}
-                  />
+                <div className="mt-5 text-center">
+                  <button
+                    className="btn btn-primary profile-button"
+                    type="submit"
+                  >
+                    Save Profile
+                  </button>
                 </div>
-                <div className="col-md-6">
-                  <label className="labels">State/Region</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    value=""
-                    placeholder="state"
-                  />
-                </div>
-              </div>
-              <div className="mt-5 text-center">
-                <button
-                  className="btn btn-primary profile-button"
-                  type="submit"
-                >
-                  Save Profile
-                </button>
-              </div> 
-           </form>
-        
-           
+              </form>
             </div>
           </div>
           <div className="col-md-4">

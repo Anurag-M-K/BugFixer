@@ -78,7 +78,7 @@ function Header() {
                 placeholder="Search..."
               />
 
-              {userDetails.firstName ? (
+              {userDetails?.firstName ? (
                 < >
                 <Link to={'/profile'}><span className="ms-4"> {userDetails.firstName}</span></Link>
                 <Link className="nav-link">

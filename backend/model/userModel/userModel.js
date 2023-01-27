@@ -10,6 +10,10 @@ const userSchema = new mongoose.Schema({
     email:{type:String,required:true},
     phone:{type:Number,required:true},
     password:{type:String,required:true},
+    imageUrl:{
+        type:String,
+    // default:"https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+    }
 });
 
 userSchema.methods.generateAuthToken = function(){

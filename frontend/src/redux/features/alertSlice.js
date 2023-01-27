@@ -17,6 +17,5 @@ export const alertSlice = createSlice({
 })
 
 
-export  const alertState = (state)=>state.alerts;
 
 export const {showLoading,hideLoading} = alertSlice.actions

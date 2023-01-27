@@ -3,8 +3,7 @@ import "./AdminLogin.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../../../redux/features/alertSlice";
-import { alertState } from "../../../redux/features/alertSlice";
-import { adminState, setAdminDetails } from "../../../redux/features/adminSlice";
+import {  setAdminDetails } from "../../../redux/features/adminSlice";
 
 
 
@@ -20,7 +19,7 @@ function AdminLogin() {
     setData({ ...data, [input.name]: input.value });
   };
 
-  const { loading } = useSelector(alertState);
+  const { loading } = useSelector(state=>state.admin);
   const {adminDetails} = useSelector(adminState)
   const dispatch = useDispatch();
 

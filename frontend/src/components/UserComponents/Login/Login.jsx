@@ -3,9 +3,9 @@ import axios from "axios";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserDetails, userState } from "../../../redux/features/userSlice";
+import { setUserDetails } from "../../../redux/features/userSlice";
 import gLogo from '../Images/g.png'
-import {  alertState, hideLoading, showLoading } from "../../../redux/features/alertSlice";
+import {  hideLoading, showLoading } from "../../../redux/features/alertSlice";
 
 
 
@@ -18,7 +18,7 @@ function Login() {
   const [error, setError] = useState("");
 
   const dispatch = useDispatch()
-  const {loading} = useSelector(alertState)
+  const {loading} = useSelector(state=>state.alerts)
 
 
   const handleChange = ({ currentTarget: input }) => {
