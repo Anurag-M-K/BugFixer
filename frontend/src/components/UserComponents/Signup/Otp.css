@@ -3,7 +3,7 @@
     height: 39px;
     border-radius: 8px;
 	}
-	.main-content{
+	.main-contents{
 	width: 50%;
 	border-radius: 20px;
 	box-shadow: 0 5px 5px rgba(0,0,0,.4);
@@ -64,7 +64,7 @@ form{
 	box-shadow: 0 0 5px rgba(0,80,80,.4); 
 	border-radius: 4px;
 }
-.btn{
+.btnbtn{
 	transition: all .5s ease;
 	width: 70%;
 	border-radius: 30px;
@@ -79,7 +79,7 @@ form{
 	background-color: #008080;
 	color:#fff;
 }
-.main-container{
+.main-containers{
 display: flex;
 justify-content: center;
 }

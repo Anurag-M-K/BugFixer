@@ -4,10 +4,12 @@ import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import { useDispatch } from "react-redux";
+import { setUserUpdatedDetails } from "../../../redux/features/userUpdatedSlice";
 
 function ProfileUpdate({ userDetails }) {
   const [show, setShow] = useState(false);
-
+  const dispatch = useDispatch()
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -16,6 +18,7 @@ function ProfileUpdate({ userDetails }) {
     email: userDetails.email,
     phone: userDetails.phone,
     job: "",
+    company:""
   };
   const [userData, setUsetData] = useState(initialValue);
 
@@ -29,16 +32,17 @@ function ProfileUpdate({ userDetails }) {
   };
 
   const id = userDetails._id;
-  console.log(id);
 
-console.log(userData);
-
+const updateData = {...userData,id}
+console.log("update data ",updateData)
 const handleSubmit =async (e)=>{
 e.preventDefault();
-console.log("submit ");
 try {
-  const url = `http://localhost:80/api/update-user/${id}`;
-  const {userData : res} = await axios.post(url,userData);
+  dispatch(setUserUpdatedDetails(userData))
+  axios.defaults.baseURL = "http://localhost:80"
+//  const url =  `/api/update-user/${id}`;
+ await axios.put('/api/update-user/',updateData);
+ console.log("here");
 
 } catch (error) {
   console.log("error from catch error ",error)
@@ -55,11 +59,11 @@ try {
       </Button>
 
       <Modal show={show} onHide={handleClose}>
+          <form onSubmit={handleSubmit} >
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit} >
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -88,7 +92,7 @@ try {
               <Form.Control
                 value={userData.phone}
                 onChange={handleChange}
-                type="email"
+                type="number"
                 name="phone"
                 placeholder="New Phone"
                 autoFocus
@@ -105,17 +109,32 @@ try {
                 autoFocus
               />
             </Form.Group>
-          </form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Company</Form.Label>
+              <Form.Control
+                value={userData.company}
+                onChange={handleChange}
+                type="text"
+                name="company"
+                placeholder="your job"
+                autoFocus
+              />
+            </Form.Group>
+         
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <button className="btn btn-primary" type="submit"> Update</button>
+          {/* <Button variant="primary" onClick={handleClose}>
             Save Changes
-          </Button>
+          </Button> */}
+
         </Modal.Footer>
+          </form>
       </Modal>
+
     </>
   );
 }

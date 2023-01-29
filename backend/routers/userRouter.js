@@ -29,7 +29,7 @@ router.get('/question/:id',particularQuestion)
 router.post('/profile/:id',updateProfileController)
 router.get('/profileData',getProfileData)
 router.get('/getImage/:id',getImage)
-router.put("/update-user/:id",updateUserDetails)
+router.put("/update-user",updateUserDetails)
 
 router.get("/user-details",getUsersDetails)
 router.post("/otp-check/:otp",otpVerify)

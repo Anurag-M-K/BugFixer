@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { setUserUpdatedDetails } from '../../../redux/features/userUpdatedSlice';
-
+import './ProfileEdit.css'
 function ProfilePicAddModal() {
     const [show, setShow] = useState(false);
   const [otp , setOtp] = useState("")
@@ -65,7 +65,7 @@ console.log(userId);
      Add Profile Pic
     </Button>
 
-    <Modal show={show} onHide={handleClose} animation={false}>
+    <Modal show={show} onHide={handleClose} className='modalImg' animation={false}>
       <Modal.Header closeButton>
         <Modal.Title>Modal heading</Modal.Title>
       </Modal.Header>

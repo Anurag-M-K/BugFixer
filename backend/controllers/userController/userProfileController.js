@@ -53,10 +53,28 @@ const getImage = async (req, res) => {
 
 
 const updateUserDetails =async (req,res)=>{
-const {id} = req.params;
-console.log("id from backend  ",req.params.id)
+  
+  console.log("req.body ",req.body)
 
-await User.findByIdAndUpdate({_id:req.params.id},{$set:{firstName:req.body.firstName}})
+try {
+  
+  await User.findByIdAndUpdate({_id:req.body.id},{$set:
+    {
+      firstName:req.body.firstName,
+      email : req.body.email,
+      phone:req.body.phone,
+      job:req.body.job,
+      company:req.body.company,
+  
+    }},{upsert:true}).then((res)=>{
+
+      res.send(200).send(res)
+      console.log("response ",res)
+    })
+} catch (error) {
+  
+}
+
 }
 
 module.exports = {

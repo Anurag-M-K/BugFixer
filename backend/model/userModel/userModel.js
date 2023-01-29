@@ -35,6 +35,13 @@ const userSchema = new mongoose.Schema({
   verified : {
     type:Number ,
      default:0
+    },
+    job :{
+      type:String,
+      
+    },
+    company:{
+      type:String
     }
 });
 

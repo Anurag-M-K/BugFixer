@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React from 'react'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -18,26 +17,10 @@ const updateInput = (e)=>{
   }
 
 
-// const handleSubmit = (e)=>{
-//     e.preventDefault();
-//     axios.defaults.baseURL = "http://localhost:80";
-//      axios.post("/api/otp-check/"+otp).then((res)=>{
-//         if(userDetails.data.otp === otp){
-//             alert("correct")
-//             navigate('/')
-//         }else{
-//             alert("otp wrong")
-//         }
-//         console.log(res)
-//      }).catch((err)=>{
-//         console.log(err);
-//      })
-// }
+
 
 let verifyOtp = userDetails.data.OTP
 const checkOtp = ()=>{
-    // axios.defaults.baseURL = "http://localhost:80";
-    // axios.post("/api/otp-check/"+otp).then((res)=>{
 console.log("here")
         if(verifyOtp === otp ){
             alert("correct")
@@ -52,7 +35,7 @@ console.log("here")
 
   return (
     <div className="d-flex justify-content-center">
-    <div className="container-fluid bg-light main-container	">
+    <div className="container-fluid bg-light main-containers	">
 		<div className="row main-content bg-success ">
 			<div className="col-md-4 text-center company__info">
 				<h4 className="company_title fw-bold">Cric Store</h4>
@@ -70,7 +53,7 @@ console.log("here")
 							
 							
 							<div className="row justify-content-center" >
-								<button type="submit" onClick={checkOtp} className="btn">ok</button>
+								<button type="submit" onClick={checkOtp} className="btnbtn">ok</button>
 							</div>
 						</form>
 					</div>
