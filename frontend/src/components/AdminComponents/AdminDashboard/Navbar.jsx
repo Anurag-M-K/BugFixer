@@ -5,7 +5,7 @@ import { BiSearch } from "react-icons/bi";
 export default function Navbar() {
   return (
     <Nav >
-      <div className="title ">
+      <div className="titleNav">
         <h5>Hi Admin,</h5>
         <h1>
           Welcome to <span>Bugfixer </span>
@@ -15,6 +15,7 @@ export default function Navbar() {
         <BiSearch />
         <input type="text" placeholder="Search" />
       </div>
+      
     </Nav>
   );
 }
@@ -25,7 +26,8 @@ const Nav = styled.nav`
   body{
     background: black;
   }
-  .title {
+  .titleNav {
+    
     h1 {
       span {
         margin-left: 0.5rem;

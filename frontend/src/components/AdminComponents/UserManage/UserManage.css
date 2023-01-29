@@ -1,0 +1,13 @@
+.userManage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    ;
+
+}
+.blockbtn:link{
+    color: green;
+}
+.blockbtn:visited{
+    color: red;
+}

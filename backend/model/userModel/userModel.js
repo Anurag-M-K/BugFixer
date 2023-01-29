@@ -1,40 +1,66 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const Joi = require('joi');
+const Joi = require("joi");
 const passwordComplexity = require("joi-password-complexity");
-const { schema } = require('../adminModel/adminCredentialModel');
+const { schema } = require("../adminModel/adminCredentialModel");
 
 const userSchema = new mongoose.Schema({
-    firstName:{type:String,required:true},
-    lastName:{type:String,required:true},
-    email:{type:String,required:true},
-    phone:{type:Number,required:true},
-    password:{type:String,required:true},
-    imageUrl:{
-        type:String,
-    // default:"https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+  firstName: {
+     type: String, 
+     required: true
+     },
+  lastName: {
+     type: String, 
+     required: true 
+    },
+  email: {
+     type: String, 
+     required: true
+     },
+  phone: {
+     type: Number,
+      required: true 
+    },
+  password: {
+     type: String,
+      required: true
+     },
+  imageUrl: {
+    type: String,
+  },
+  isBlocked: {
+     type: Boolean,
+      default: false
+     },
+  verified : {
+    type:Number ,
+     default:0
     }
 });
 
-userSchema.methods.generateAuthToken = function(){
-    const token = jwt.sign({
-        id:this._id
-    },"secrete",
-    process.env.JWTPRIVATEKEY,{expiresIn:'7d'});
-return token; 
+userSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign(
+    {
+      id: this._id,
+    },
+    "secrete",
+    process.env.JWTPRIVATEKEY,
+    { expiresIn: "7d" }
+  );
+  return token;
 };
 
-const User = mongoose.model('user',userSchema);
+const User = mongoose.model("user", userSchema);
 
 const validate = (data) => {
-	const schema = Joi.object({
-		firstName: Joi.string().required().label("First Name"),
-		lastName: Joi.string().required().label("Last Name"),
-		email: Joi.string().email().required().label("Email"),
-        phone:Joi.number().required().label("Phone number"),
-		password: passwordComplexity().required().label("Password"),
-	});
-	return schema.validate(data);
+  const schema = Joi.object({
+    firstName: Joi.string().required().label("First Name"),
+    lastName: Joi.string().required().label("Last Name"),
+    email: Joi.string().email().required().label("Email"),
+    phone: Joi.number().required().label("Phone number"),
+    password: passwordComplexity().required().label("Password"),
+  });
+  return schema.validate(data);
 };
 
-module.exports = {User,validate}
+module.exports = { User, validate };

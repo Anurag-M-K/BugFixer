@@ -18,6 +18,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProfilePicAddModal from './ProfilePicAddModal';
+import ProfileUpdate from './ProfileUpdate';
 
 
 export default function UserProfile() {
@@ -69,28 +70,21 @@ dispatch(userUpdatedDetails())
 
   
 
-  console.log("userdetails id ",userDetails._id);
   const userId = userDetails._id
   useEffect(()=>{
     (async()=>{
       axios.defaults.baseURL = "http://localhost:80"
       const data =   await axios.get(`/api/getImage/${userId}`)
       setResponse(data)
-      console.log("data ",data)
-    //  return data;
 
     })()
 
 
-
-    // const getingFunction = async ()=>{
-    // }
-    // getingFunction();
   },[])
 
 
-  console.log( "data   ", response)
 
+  let defaultUrl = "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
   return (
     <section style={{ backgroundColor: '#eee' }}>
       < MDBContainer className="py-5">
@@ -103,7 +97,7 @@ dispatch(userUpdatedDetails())
                
            <img
               
-              src={response?.data?.imageUrl  }
+              src={response ? response?.data?.imageUrl : defaultUrl  }
                 // "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
                   alt="avatar"
                   className="rounded-circle"
@@ -113,7 +107,8 @@ dispatch(userUpdatedDetails())
                 <p className="text-muted mb-1">Full Stack Developer</p>
                 <p className="text-muted mb-4">Bay Area, San Francisco, CA</p>
                 <div className="d-flex justify-content-center mb-2">
-                  <Link to={'/edit-profile'}><MDBBtn>edit profile</MDBBtn> </Link><ProfilePicAddModal/>
+                  {/* <Link to={'/edit-profile'}><MDBBtn>edit profile</MDBBtn> </Link> */}
+                 <ProfileUpdate userDetails = {userDetails}/> <ProfilePicAddModal/>
                   {/* <MDBBtn outline className="ms-1">Message</MDBBtn> */}
                 </div>
               </MDBCardBody>

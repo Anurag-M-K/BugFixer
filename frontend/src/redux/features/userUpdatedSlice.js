@@ -8,8 +8,7 @@ export const userUpdatedSlice = createSlice({
     },
     reducers:{
         setUserUpdatedDetails : (state,action)=>{
-            console.log("state checking ",state)
-            console.log("action checking ",action.payload)
+          
             state.userUpdatedDetails = action.payload;
 
         }

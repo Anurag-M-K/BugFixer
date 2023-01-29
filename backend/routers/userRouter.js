@@ -1,12 +1,12 @@
 const router = require('express').Router();
-const {userSignup,otpGenerate,otpInput} = require('../controllers/userController/userSignupController')
+const {userSignup,otpVerify} = require('../controllers/userController/userSignupController')
 const {userLogin} = require('../controllers/userController/userLoginController')
 const {questionAdd,getQuestion,particularQuestion} = require('../controllers/userController/questionController')
 const {answerAdd} = require("../controllers/userController/answerController")
 const {commentAdd} = require("../controllers/userController/commentController")
-const {updateProfileController,getProfileData,getImage}  = require('../controllers/userController/userProfileController');
+const {updateProfileController,getProfileData,getImage, updateUserDetails}  = require('../controllers/userController/userProfileController');
 // const authMiddleware = require('../middleware/authMiddleware')
-
+const {getUsersDetails} = require("../controllers/adminController/adminUsersDetailsController")
 
 router.post('/userSignup',userSignup)
 router.post('/userLogin',userLogin)
@@ -22,13 +22,16 @@ router.post("/comment/:id",commentAdd)
 router.get('/getQuestion',getQuestion);
 router.get('/question/:id',particularQuestion)
 
-router.post('/mobile',otpGenerate);
-router.post('/otp',otpInput)
+// router.post('/mobile',otpGenerate);
+// router.post('/otp',otpInput)
 
 
 router.post('/profile/:id',updateProfileController)
 router.get('/profileData',getProfileData)
 router.get('/getImage/:id',getImage)
+router.put("/update-user/:id",updateUserDetails)
 
+router.get("/user-details",getUsersDetails)
+router.post("/otp-check/:otp",otpVerify)
 
 module.exports = router;

@@ -6,8 +6,7 @@ import UserManage from '../../components/AdminComponents/UserManage/UserManage'
 function UserManagePage() {
   return (
     <div className='col-lg-12  ' >
-        <Sidebar/>
-        <Navbar/>
+        
         <UserManage/>
     </div>
   )

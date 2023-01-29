@@ -23,7 +23,8 @@ import SuperHome from "./pages/user/SuperHomePage";
 import UserProfilePage from "./pages/user/UserProfilePage";
 import Test from './pages/user/Test'
 import UserEditProfilePage from "./pages/user/UserEditProfilePage";
-
+import Otp from "./components/UserComponents/Signup/Otp";
+// import AdminLayout from '../src/components/src/layouts/Admin'
 function App() {
   const dispatch = useDispatch();
   const { loading } = useSelector(state => state.alerts);
@@ -57,9 +58,9 @@ function App() {
             exact
             path="/signup-page"
             element={
-              <PublicRoute>
+             
                 <Signup />
-              </PublicRoute>
+          
             }
 
             
@@ -70,12 +71,16 @@ function App() {
           <Route exact path="/home" element={<Test/>} />
           <Route exact path="/profile" element={<UserProfilePage/>} />
           <Route exact path="/edit-profile" element={<UserEditProfilePage/>} />
+          <Route exact path='/otp-page' element={<Otp/>} />
 
 
 
           <Route exact path="/admin-login" element={ <AdminPublicRoute><AdminLoginPage /></AdminPublicRoute>} />
           <Route exact path="/admin-dashboard" element={<AdminPublicRoute><AdminDashboard /></AdminPublicRoute>} />
           <Route exact path="/user-manage" element={<AdminPublicRoute><UserManagePage /></AdminPublicRoute>} />
+          {/* <Route exact path="/adminDashboard"  element={<Dashboard/>}/> */}
+
+
         </Routes>
       </Router>
     </>

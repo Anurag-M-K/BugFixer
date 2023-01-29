@@ -2,7 +2,6 @@ const { cloudinary } = require("../../utils/cloudinary");
 const { User } = require("../../model/userModel/userModel");
 
 const updateProfileController = async (req, res) => {
-  console.log("controller body ", req.body.userId);
   try {
     const fileStr = req.body.data;
     const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
@@ -13,8 +12,7 @@ const updateProfileController = async (req, res) => {
     let url = uploadedResponse.url;
     let id = req.body.userId;
 
-    console.log("url ", url);
-    console.log("id ", id);
+   
 
     const value = await User.findByIdAndUpdate(
       { _id: id },
@@ -39,12 +37,10 @@ const getProfileData = async (req, res) => {
 
 const getImage = async (req, res) => {
   const { userId } = req.params;
-  console.log("user id in contoller ", req.params.id);
   const id = req.params.id  ;
   try {
     await User.findById({ _id: id }).then((data) => {
       res.status(200).json(data);
-      console.log("res. from url ", data);
     }).then((res)=>{
       console.log("user data fetched successfully")
     })
@@ -54,8 +50,18 @@ const getImage = async (req, res) => {
   }
 };
 
+
+
+const updateUserDetails =async (req,res)=>{
+const {id} = req.params;
+console.log("id from backend  ",req.params.id)
+
+await User.findByIdAndUpdate({_id:req.params.id},{$set:{firstName:req.body.firstName}})
+}
+
 module.exports = {
   updateProfileController,
   getProfileData,
   getImage,
+  updateUserDetails
 };

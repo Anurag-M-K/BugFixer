@@ -20,7 +20,7 @@ function AdminLogin() {
   };
 
   const { loading } = useSelector(state=>state.admin);
-  const {adminDetails} = useSelector(adminState)
+  // const {adminDetails} = useSelector(adminState())     
   const dispatch = useDispatch();
 
 //toast

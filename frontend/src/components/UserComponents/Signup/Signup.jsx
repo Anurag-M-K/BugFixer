@@ -4,7 +4,6 @@ import Logo from "../Images/download.png";
 import gLogo from "../Images/g.png";
 import { useState } from "react";
 import './Signup.css';
-import ModalComponent from "./ModalComponent";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../../../redux/features/userSlice";
@@ -58,6 +57,10 @@ const Signup = () => {
     phone:"",
     password:""
   });
+
+
+
+
   const dispatch = useDispatch()
 
   const [error,setError] = useState('')
@@ -67,15 +70,19 @@ const Signup = () => {
     setData({...data,[input.name]:input.value});
   }
 
+
   console.log(data.phone)
   const handleSubmit = async(e)=>{
     e.preventDefault();
     try {
       const url = 'http://localhost:80/api/userSignup'  ;
-      const {data:res}= await axios.post(url,data);
-      console.log(data , "data from signup")
-      dispatch(setUserDetails(data))
-      navigate('/login-page')
+      const {data:res}= await axios.post(url,data).then((res)=>{
+        
+        
+        // dispatch(setUserDetails(res))
+        dispatch(setUserDetails(res,res.data.OTP))
+      })
+      // window.location.reload('/otp-page')
     } catch (error) {
       if(error.response && error.response.status >= 400 && 
         error.response.status <= 500
@@ -87,12 +94,6 @@ const Signup = () => {
   }
 
 
-  // generate otp
-  // const handleClick = (e)=>{
-  //   e.preventDefault()
-  //   axios.post(`http://localhost:80/api/mobile`,data).then(res =>{
-  //   })
-  // }
   return (
     <>
       <div className="signupPage">
@@ -310,7 +311,7 @@ const Signup = () => {
                   >
                     Sign up
                   </button> */}
-                  <button type="submit">signup </button>
+                  <button className="btn btn-block bg-primary border " type="submit">signup </button>
                   <button
                     type="submit"
                     className="btn btn-block bg-light border"
