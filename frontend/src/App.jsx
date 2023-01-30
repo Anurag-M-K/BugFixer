@@ -24,6 +24,8 @@ import UserProfilePage from "./pages/user/UserProfilePage";
 import Test from './pages/user/Test'
 import UserEditProfilePage from "./pages/user/UserEditProfilePage";
 import Otp from "./components/UserComponents/Signup/Otp";
+import Question from "./components/UserComponents/Add-Question/Question";
+import AdminQuestionPage from "./pages/admin/AdminQuestionPage";
 // import AdminLayout from '../src/components/src/layouts/Admin'
 function App() {
   const dispatch = useDispatch();
@@ -69,15 +71,16 @@ function App() {
           <Route exact path="/question" element={<PublicRoute><ViewQuestion /></PublicRoute>} />
           <Route exact path="/" element={<SuperHome/>}/>
           <Route exact path="/home" element={<Test/>} />
-          <Route exact path="/profile" element={<UserProfilePage/>} />
-          <Route exact path="/edit-profile" element={<UserEditProfilePage/>} />
-          <Route exact path='/otp-page' element={<Otp/>} />
+          <Route exact path="/profile" element={<PublicRoute><UserProfilePage/></PublicRoute>} />
+          <Route exact path="/edit-profile" element={<PublicRoute><UserEditProfilePage/></PublicRoute>} />
+          <Route exact path='/otp-page' element={<PublicRoute><Otp/></PublicRoute>} />
 
 
 
           <Route exact path="/admin-login" element={ <AdminPublicRoute><AdminLoginPage /></AdminPublicRoute>} />
           <Route exact path="/admin-dashboard" element={<AdminPublicRoute><AdminDashboard /></AdminPublicRoute>} />
           <Route exact path="/user-manage" element={<AdminPublicRoute><UserManagePage /></AdminPublicRoute>} />
+          <Route exact path="/Question-manage" element={<AdminPublicRoute><AdminQuestionPage/></AdminPublicRoute>} />
           {/* <Route exact path="/adminDashboard"  element={<Dashboard/>}/> */}
 
 

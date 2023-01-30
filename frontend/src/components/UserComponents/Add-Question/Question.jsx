@@ -14,8 +14,8 @@ import 'react-toastify/dist/ReactToastify.css';
 function Question() {
 
   const [loading, setLoading] = useState(false);
-  const user = useSelector(userState);
-  console.log("user",user)
+  const {userDetails} = useSelector(state=>state.user);
+  console.log("user",userDetails)
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [tag, setTag] = useState([]);
@@ -86,7 +86,7 @@ function Question() {
         title: title,
         body: body,
         tags: JSON.stringify(tag),
-        user: user,
+        user: userDetails,
       };
         
 

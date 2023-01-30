@@ -28,10 +28,11 @@ export default function UserProfile() {
   const [fileInputState, setFileInpuyState] = useState("");
   const [selectedFle, setSelectedFile] = useState("");
 const [response , setResponse] = useState([])
-const {userUpdatedDetails} = useSelector(state=>state.user)
+ const {userUpdatedDetails} = useSelector(state=>state.user)
+
 const dispatch = useDispatch()
 
-
+console.log("userdetails  here userprofile page",userDetails);
   const handleFileInput = (e) => {
     const file = e.target.files[0];
     
@@ -104,8 +105,8 @@ dispatch(userUpdatedDetails())
                   style={{ width: '150px' }}
                  
                   fluid  />
-                <p className="text-muted mb-1">Full Stack Developer</p>
-                <p className="text-muted mb-4">Bay Area, San Francisco, CA</p>
+                <p className="text-muted mt-2 mb-1">{userDetails?.job}</p>
+                <p className="text-muted mb-4">{userDetails?.company}</p>
                 <div className="d-flex justify-content-center mb-2">
                   {/* <Link to={'/edit-profile'}><MDBBtn>edit profile</MDBBtn> </Link> */}
                  <ProfileUpdate userDetails = {userDetails}/> <ProfilePicAddModal/>
@@ -124,9 +125,9 @@ dispatch(userUpdatedDetails())
                     <MDBIcon/>
                     <MDBCardText><h5>Social medias</h5></MDBCardText>
                     
-                    <button className="btn btn-warning mb-3 ml-5 " type="submit">add</button>
+                    <button className="btn btn-warning mb-3 ml-5  " type="submit">add</button>
                     
-                  </MDBListGroupItem>
+                  </MDBListGroupItem>``
              
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fas icon="globe fa-lg text-warning" />
@@ -187,10 +188,19 @@ dispatch(userUpdatedDetails())
 
                 <MDBRow>
                   <MDBCol sm="3">
-                    <MDBCardText>Address</MDBCardText>
+                    <MDBCardText>Job</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">Bay Area, San Francisco, CA</MDBCardText>
+                    <MDBCardText className="text-muted">{userDetails?.job}</MDBCardText>
+                  </MDBCol>
+                </MDBRow>
+                <hr />
+                <MDBRow>
+                  <MDBCol sm="3">
+                    <MDBCardText>Company</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                    <MDBCardText className="text-muted">{userDetails?.company}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
               </MDBCardBody>

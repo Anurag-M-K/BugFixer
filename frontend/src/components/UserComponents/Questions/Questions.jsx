@@ -6,10 +6,13 @@ import UserQuestions from "./UserQuestions";
 import Pagination from "./Pagination";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import {useDispatch}  from 'react-redux'
+import {filterQuestionDetails, setQuestionDetails} from '../../../redux/features/questionSlice'
 
 const Questions = () => {
-
+  const dispatch = useDispatch()
   const [questions,setQuestions] = useState([]);
+const [searchTerm , setSearchTerm] = useState('');
 
 
 
@@ -18,6 +21,7 @@ useEffect(()=>{
     axios.defaults.baseURL = "http://localhost:80"
     await axios.get("/api/getQuestion").then(res => {
       setQuestions(res.data.reverse())
+      dispatch(setQuestionDetails(res.data))
       return res.data
     }).catch(err =>{
       console.log(err)
@@ -27,7 +31,23 @@ useEffect(()=>{
 },[])
 
 
+questions.filter((val)=>{
+  if(searchTerm == ""){
+    console.log("val ",val)
+    // setQuestions(val)
+    return val
+  }else if(val.title.toLowerCase().includes(searchTerm.toLowerCase())){
+    // setQuestions(val)
+console.log("val 2 ",val);
+dispatch(filterQuestionDetails([val]))
 
+    return val
+  }
+}).map((val,key)=>{
+  // setQuestions(val)
+  // console.log("val 3 ",val)  
+  return val.title
+})
 
 
 
@@ -50,8 +70,10 @@ useEffect(()=>{
             <div>
               <div className="d-flex justify-content-between my-3">
                 <h2 className="font-weight-normal">
-                  Questions   
+                  Questions 
                 </h2>
+                <input className="searchInput" type="text" placeholder="search..." onChange={event => {setSearchTerm(event.target.value)}} />
+                
                 <Link to='/add-question'><button
                   className="btn btn-primary btn-small"
                   style={{ fontSize: "14px" }}
@@ -104,7 +126,7 @@ useEffect(()=>{
             </div>
             <hr />
             {/* Users Questionsadded */}
-            <UserQuestions questions={questions} />
+            <UserQuestions  />
 
             {/* Pagination added */}
             <Pagination />

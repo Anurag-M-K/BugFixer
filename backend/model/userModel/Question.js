@@ -12,7 +12,8 @@ const questionSchema = new mongoose.Schema({
     comment_id:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Comments"
-    }
+    },
+    vote:Number
 })
 
 module.exports = mongoose.model("Questions",questionSchema)

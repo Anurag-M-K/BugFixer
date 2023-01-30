@@ -6,7 +6,7 @@ import ReactHtmlParser from 'react-html-parser'
 
 function AllQuestions({question}) {
  var tags = question.tags
-
+console.log("question details ",question?.answerDetails?.length)
 function truncate(str,n){
   return str?.length > n ? str.substr(0,n-1)+ "..." :str
 }
@@ -56,7 +56,7 @@ function truncate(str,n){
        
         <div className="author">
             <small>{new Date(question.created_at).toLocaleString()}</small>
-            <span className="author-details"><Avatar src={question?.user?.photo}/>
+            <span className="author-details"><Avatar src={question?.user?.imageUr} alt="fronend"/>
             <p>{question?.user?.userDetails.email ? question?.user?.userDetails.email :String( question?.user?.email)
             .split('@')[0]}</p>
             </span>

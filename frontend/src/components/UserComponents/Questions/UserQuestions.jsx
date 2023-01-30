@@ -2,26 +2,30 @@ import React ,{useState,useEffect} from "react";
 import "./UserQuestions.scss";
 import ReactHtmlParser from 'react-html-parser';
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const UserQuestions = ({questions}) => {
+const UserQuestions = () => {
 
 
+  const {questionDetails} = useSelector(state=> state.question)
+  console.log("first",questionDetails)
 function truncate(str,n){
   return str?.length > n ? str.substr(0,n-1)+ "..." : str
 }
 
-  console.log("here ",questions)
+
+ 
 
   return (
     <>
     
-      {questions.map((questionData)=>{
+      {questionDetails.map((questionData)=>{
       
         return  <div className="userQuestions d-flex border-bottom py-2" style={{ fontSize: "12px" }}>
         <div className="left text-muted mr-3">
           <p className="">
             0<br />
-            <span>votes</span>
+            <span >0</span>
           </p>
           <p className="">
             0<br />
@@ -45,7 +49,7 @@ function truncate(str,n){
               fontSize: "10px",
             }}
           >
-         lknnkjn
+        javascript
           </button>
           <button
             className="btn btn-sm mr-1"
@@ -55,7 +59,7 @@ function truncate(str,n){
               fontSize: "10px",
             }}
           >
-kklmlkmkl
+react
           </button>
           <button
             className="btn btn-sm mr-1"
@@ -64,7 +68,7 @@ kklmlkmkl
               backgroundColor: "rgb(225, 236, 244)",
               fontSize: "10px",
             }}
-          >hashtag 3
+          >redux
             
           </button>
           <button
@@ -74,7 +78,7 @@ kklmlkmkl
               backgroundColor: "rgb(225, 236, 244)",
               fontSize: "10px",
             }}
-          >hashtag 4
+          >typescript
             
           </button>
           <div className="profile float-right mt-4">

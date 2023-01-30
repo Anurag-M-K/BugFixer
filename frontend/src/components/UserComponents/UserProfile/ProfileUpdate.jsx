@@ -34,13 +34,11 @@ function ProfileUpdate({ userDetails }) {
   const id = userDetails._id;
 
 const updateData = {...userData,id}
-console.log("update data ",updateData)
 const handleSubmit =async (e)=>{
 e.preventDefault();
 try {
-  dispatch(setUserUpdatedDetails(userData))
+  dispatch(setUserUpdatedDetails(updateData))
   axios.defaults.baseURL = "http://localhost:80"
-//  const url =  `/api/update-user/${id}`;
  await axios.put('/api/update-user/',updateData);
  console.log("here");
 

@@ -102,9 +102,11 @@ const handleLogout =()=>{
                 className={currentLink === 3 ? "active" : "none"}
                 onClick={() => setCurrentLink(3)}
               >
-                <a href="#">
+                <a onClick={()=>{
+                  navigate('/Question-manage')
+                }}>
                   <FaAddressCard />
-                  <span className="buttonsDashboard" > Payment Details</span>
+                  <span className="buttonsDashboard" > Questions</span>
                 </a>
               </li>
               <li

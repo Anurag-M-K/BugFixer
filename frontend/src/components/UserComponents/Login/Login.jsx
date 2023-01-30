@@ -59,12 +59,12 @@ function Login() {
       <div
         className="container loginPage"
         style={{
-          minwidth: "410px",
+          minwidth: "410px",maxWidth:"550px",marginTop:"8%",marginBottom:"5%"
         }}
       >
         <form
           onSubmit={handleSubmit }
-          className="border px-5 pb-5 m-5 loginPage--form"
+          className="border  pb-5  loginPage--form"
         >
           <div className="loginPage--form--img">
             <br />

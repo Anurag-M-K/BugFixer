@@ -169,8 +169,30 @@ try{
 }
 }
 
+
+const updateVote = (req,res)=>{
+
+    console.log("backnd questin details ",req.body)
+    const id = req.body.qid
+    const vote = req.body.vote
+    QuestionDB.findByIdAndUpdate(id,{$set:{vote:vote}},{upsert:true})
+    .then((response)=>{
+        console.log("response ",response)
+    })
+}
+const incrementVote = ()=>{
+    console.log("here backend ")
+    const id = req.body.qid
+    const vote = req.body.vote
+    QuestionDB.findByIdAndUpdate(id,{$set:{vote:vote}},{upsert:true})
+    .then((response)=>{
+        console.log("response ",response)
+    })}
+
 module.exports = {
     questionAdd,
     getQuestion,
-    particularQuestion
+    particularQuestion,
+    updateVote,
+    incrementVote
 }

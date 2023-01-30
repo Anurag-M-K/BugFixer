@@ -1,4 +1,4 @@
-import { Bookmark, History } from "@mui/icons-material";
+import { Bookmark, CloseOutlined, History } from "@mui/icons-material";
 import { Avatar, Link } from "@mui/material";
 import axios from "axios";
 import React from "react";
@@ -8,110 +8,121 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; //quills css important
 import "./index.css";
 import ReactHtmlParser from "react-html-parser";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { userState } from "../../../redux/features/userSlice";
 
-
 function MainQuestion() {
-
-
   const [show, setShow] = useState(false);
   const [answer, setAnswer] = useState(" ");
   const [questionData, setQuestionData] = useState();
-  const user = useSelector(userState)
-const [comment , setComment] = useState('')
-
-console.log(user,"user coming")
-
+  const { userDetails } = useSelector((state) => state.user);
+  const [comment, setComment] = useState("");
+  const [vote, setVote] = useState(0);
 
   let search = window.location.search;
   const params = new URLSearchParams(search);
   const id = params.get("q");
-  
-  const [_id,set_Id] = useState('');
-  useEffect(()=>{
+
+  const [_id, set_Id] = useState("");
+  useEffect(() => {
     const url = window.location.href;
     const _id = url.match(/[^\=]+$/)[0];
     set_Id(_id);
-  },[])
-  
-
-
-
-
+  }, []);
 
   const handleQuill = (value) => {
     setAnswer(value);
   };
-useEffect(() => {
+  useEffect(() => {
     async function getQuestionDetails() {
       await axios
         .get(`/api/question/${_id}`)
         .then((res) => setQuestionData(res.data[0]))
         .catch((err) => console.log(err));
-    } 
+    }
     getQuestionDetails();
   }, [_id]);
 
-
-  async function  getUpdatedAnswer(){
-    await axios.post(`/api/question/${_id}`)
-    .then((res)=>{
-      setQuestionData(res.data[0])
-    }).catch((err)=>{
-      console.log(err);
-    })
-  }
-
-
-
-
-
-
-
-  const handleSubmit = async()=>{
-   if(answer !==""){
-    const body = {
-      question_id:_id,
-      answer :answer,
-      user:user
-    }
-    const config = {
-      headers:{
-        'Content-type':"application/json"
-      }
-    }
-    await axios.post('/api/answer',body,config).then((res)=>{
-      console.log(res.data);
-      alert("answer added successfully");
-      setAnswer('')
-      getUpdatedAnswer();
-
-    }).catch((err)=>{
-      console.log(err)
-    })
-   }
-   
-
-  }
-
-  const handleComment = async()=>{
-    if(comment != ""){
-      const body = {
-        question_id : id,
-        comment:comment,
-        user:user 
-      }
-      console.log(body,"sfsdsdfasd")
-
-      await axios.post(`/api/comment/${_id}`,body).then((res)=>{
-        setComment("")
-        setShow(false)
-        getUpdatedAnswer()
+  async function getUpdatedAnswer() {
+    await axios
+      .post(`/api/question/${_id}`)
+      .then((res) => {
+        setQuestionData(res.data[0]);
       })
-    }
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
+  const handleSubmit = async () => {
+    if (answer !== "") {
+      const body = {
+        question_id: _id,
+        answer: answer,
+        user: user,
+      };
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+      await axios
+        .post("/api/answer", body, config)
+        .then((res) => {
+          console.log(res.data);
+          alert("answer added successfully");
+          setAnswer("");
+          getUpdatedAnswer();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const handleComment = async () => {
+    if (comment != "") {
+      const body = {
+        question_id: id,
+        comment: comment,
+        user: userDetails,
+      };
+      console.log(body, "sfsdsdfasd");
+
+      await axios.post(`/api/comment/${_id}`, body).then((res) => {
+        setComment("");
+        setShow(false);
+        getUpdatedAnswer();
+      });
+    }
+  };
+
+  console.log(questionData)
+  let qid = questionData?._id
+
+
+
+  const decVoting = async () => {
+    console.log("object", qid);
+    setVote(vote - 1);    
+    console.log("vot ", id);
+    axios.defaults.baseURL = "http://localhost:80";
+    await axios.put("/api/vote-updating", {vote:vote,qid});
+  } 
+
+
+
+const incVoting = async()=>{
+  setVote(vote + 1);
+  axios.defaults.baseURL = "http://localhost:80";
+  await axios.put("/api/vote-increment",{vote:vote,qid})
+} 
+
+
+
+
+
+  const questionDetails = { ...questionData, vote };
 
   return (
     <div className="main col-xl-8">
@@ -119,7 +130,7 @@ useEffect(() => {
         <div className="main-top">
           <h2 className="main-question">{questionData?.title}</h2>
           <Link top="/add-question">
-            <button>Ask Question</button>
+            <button className="btn btn-primary">Ask Question</button>
           </Link>
         </div>
         <div className="main-desc">
@@ -139,6 +150,8 @@ useEffect(() => {
               <div className="all-options">
                 <span className="arrow">
                   <svg
+                    type="submit"
+                    onClick={incVoting}
                     aria-hidden="true"
                     className="svg-icon iconArrowUpLg"
                     width="36"
@@ -148,9 +161,11 @@ useEffect(() => {
                     <path d="M2 25h32L18 9 2 25Z"></path>
                   </svg>
                 </span>
-                <p className="arrow">0</p>
+                <p className="arrow">{vote}</p>
                 <span className="arrow">
                   <svg
+                    type="submit"
+                    onClick={decVoting}
                     aria-hidden="true"
                     className="svg-icon iconArrowDownLg"
                     width="36"
@@ -171,7 +186,7 @@ useEffect(() => {
                   asked{new Date(questionData?.created_at).toLocaleString()}
                 </small>
                 <div className="auth-details">
-                  <Avatar src={questionData?.user?.photo} />
+                  <Avatar src={questionData?.user?.imageUrl} />
                   <p>
                     {questionData?.user?.firstName
                       ? questionData?.user?.firstName
@@ -180,36 +195,43 @@ useEffect(() => {
                 </div>
               </div>
               <div className="comments">
-                {
-                  questionData?.comments && questionData?.comments?.map((_qd)=><p>
-                    {_qd?.comment}- <span>   {_qd?.user?.firstName
-                        ? _qd?.user?.firstName
-                        : String(_qd?.firstName).split("@")[0]}</span>
-                    <small>{new Date(_qd?.created_at).toLocaleString()}</small></p>)
-                }
+                {questionData?.comments &&
+                  questionData?.comments?.map((_qd) => (
+                    <p>
+                      {_qd?.comment}-{" "}
+                      <span>
+                        {" "}
+                        {_qd?.user?.firstName
+                          ? _qd?.user?.firstName
+                          : String(_qd?.firstName).split("@")[0]}
+                      </span>{" "}
+                      {_qd?.user?.lastName ? _qd?.user?.lastName : ""}
+                      <small>
+                        {new Date(_qd?.created_at).toLocaleString()}
+                      </small>
+                    </p>
+                  ))}
                 <div className="comment">
-                  
-                    <p onClick={() => setShow(!show)}>Add a comment</p>
-                    {show && (
-                      <div className="title">
-                        <textarea 
+                  <p onClick={() => setShow(!show)}>Add a comment</p>
+                  {show && (
+                    <div className="title">
+                      <textarea
                         value={comment}
-                        onChange={(e)=>setComment(e.target.value)}
-                          style={{
-                            margin: "5px 0px",
-                            padding: "10px",
-                            border: "1px solid rgba(0,0,0,0.2)",
-                            borderRadius: "3px",
-                            outline: "none",
-                          }}
-                          type="text"
-                          placeholder="Add your comment..."
-                          rows={5}
-                        ></textarea>
-                        <button onClick={handleComment}>Add comment</button>
-                      </div>
-                    )}
-                  
+                        onChange={(e) => setComment(e.target.value)}
+                        style={{
+                          margin: "5px 0px",
+                          padding: "10px",
+                          border: "1px solid rgba(0,0,0,0.2)",
+                          borderRadius: "3px",
+                          outline: "none",
+                        }}
+                        type="text"
+                        placeholder="Add your comment..."
+                        rows={5}
+                      ></textarea>
+                      <button onClick={handleComment}>Add comment</button>
+                    </div>
+                  )}
                 </div>
                 <br />
               </div>
