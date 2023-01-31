@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 
 const UserQuestions = () => {
 
-
   const {questionDetails} = useSelector(state=> state.question)
   console.log("first",questionDetails)
 function truncate(str,n){
@@ -14,7 +13,7 @@ function truncate(str,n){
 }
 
 
- 
+ console.log("d",questionDetails.title);
 
   return (
     <>
@@ -82,10 +81,9 @@ react
             
           </button>
           <div className="profile float-right mt-4">
-            <span className="mb-1">asked 10320 ago</span>
             <div className="d-flex mr-3">
               <img
-                src=''
+                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
                 alt="User"
                 className="mr-2"
                 width="40px"
@@ -93,11 +91,11 @@ react
                 style={{ borderRadius: "1rem" }}
               />
               <div>
-                <Link to="/">us</Link>
-                <div className="text-muted">
-                  <b>score</b>
-                  <span className="dot"></span>
-                  <span className="dot2"></span> 
+                {/* <Link to="/">us</Link> */}
+                <div className="text-muted mt-3">
+                <span className="mb-1">asked 10320 ago</span>
+
+                 
                 </div>
               </div>
             </div>

@@ -180,7 +180,7 @@ const updateVote = (req,res)=>{
         console.log("response ",response)
     })
 }
-const incrementVote = ()=>{
+const incrementVote = (req,res)=>{
     console.log("here backend ")
     const id = req.body.qid
     const vote = req.body.vote
@@ -189,10 +189,21 @@ const incrementVote = ()=>{
         console.log("response ",response)
     })}
 
+
+
+    const reportQuestion =(req,res)=>{
+        const id = req.params.qid
+        console.log("id from haha",id)
+        QuestionDB.findByIdAndUpdate(id,{$set:{report:true}}).then((response)=>{
+            res.send({response})
+        })
+    }
+
 module.exports = {
     questionAdd,
     getQuestion,
     particularQuestion,
     updateVote,
-    incrementVote
+    incrementVote,
+    reportQuestion
 }

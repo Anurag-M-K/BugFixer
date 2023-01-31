@@ -10,6 +10,7 @@ import "./index.css";
 import ReactHtmlParser from "react-html-parser";
 import { useSelector } from "react-redux";
 import { userState } from "../../../redux/features/userSlice";
+import  toast,{Toaster}  from "react-hot-toast";
 
 function MainQuestion() {
   const [show, setShow] = useState(false);
@@ -87,7 +88,6 @@ function MainQuestion() {
         comment: comment,
         user: userDetails,
       };
-      console.log(body, "sfsdsdfasd");
 
       await axios.post(`/api/comment/${_id}`, body).then((res) => {
         setComment("");
@@ -103,9 +103,7 @@ function MainQuestion() {
 
 
   const decVoting = async () => {
-    console.log("object", qid);
     setVote(vote - 1);    
-    console.log("vot ", id);
     axios.defaults.baseURL = "http://localhost:80";
     await axios.put("/api/vote-updating", {vote:vote,qid});
   } 
@@ -119,6 +117,16 @@ const incVoting = async()=>{
 } 
 
 
+  
+  const reportQuestion =async ()=>{
+    toast.success("question reported !!")
+    axios.defaults.baseURL = "http://localhost:80";
+  
+    await axios.post(`/api/question-report/${qid}`).then((response)=>{
+      console.log("from qid ",response);
+    })
+  
+   } 
 
 
 
@@ -175,6 +183,7 @@ const incVoting = async()=>{
                     <path d="M2 11h32L18 27 2 11Z"></path>
                   </svg>
                 </span>
+                  <small className="reportBtn" onClick={reportQuestion}>Report</small>
                 <Bookmark />
                 <History />
               </div>
@@ -279,6 +288,7 @@ const incVoting = async()=>{
                     >
                       <path d="M2 11h32L18 27 2 11Z"></path>
                     </svg>
+                    
                   </span>
                   <Bookmark />
                   <History />
@@ -334,6 +344,7 @@ const incVoting = async()=>{
       >
         Post Your Answer{" "}
       </button>
+      <Toaster/>
     </div>
   );
 }

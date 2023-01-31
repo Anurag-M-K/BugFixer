@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { setUserUpdatedDetails } from '../../../redux/features/userUpdatedSlice';
 import './ProfileEdit.css'
+import toast,{Toaster} from 'react-hot-toast';
+
 function ProfilePicAddModal() {
     const [show, setShow] = useState(false);
   const [otp , setOtp] = useState("")
@@ -35,6 +37,7 @@ console.log("modal ",userDetails);
   };
 
   const handleSubmit = (e) => {
+    toast.success("profile pic updated")
     e.preventDefault();
     dispatch(setUserUpdatedDetails())
 
@@ -82,6 +85,7 @@ console.log(userId);
         </button>
       </Modal.Footer>   
       </form>
+
   
       
      

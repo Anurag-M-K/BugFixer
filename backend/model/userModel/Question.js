@@ -13,7 +13,11 @@ const questionSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"Comments"
     },
-    vote:Number
+    vote:Number,
+    report:{
+        type:Boolean,
+        default:false
+    }
 })
 
 module.exports = mongoose.model("Questions",questionSchema)

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../../redux/features/userSlice";
 import gLogo from '../Images/g.png'
 import {  hideLoading, showLoading } from "../../../redux/features/alertSlice";
-
+import toast , {Toaster} from "react-hot-toast"
 
 
 
@@ -25,13 +25,14 @@ function Login() {
     setData({ ...data, [input.name]: input.value });
   };
   const handleSubmit = async (e) => {
-		e.preventDefault();
+    e.preventDefault();
 		try {
       dispatch(showLoading())
 			const url = "http://localhost:80/api/userLogin";
       dispatch(hideLoading())
 			const { data: res } = await axios.post(url, data);
 			localStorage.setItem("userToken", res.data);
+      toast.success("login successfull")
       console.log("res ",res.user)
       try {
         dispatch(setUserDetails(res.user))
@@ -41,9 +42,7 @@ function Login() {
       } catch (error) {
         console.log(error.message);
         
-      }
-    
-      
+      }      
 		} catch (error) {
 			if (
 				error.response &&
@@ -153,6 +152,7 @@ function Login() {
                   <Link to={'/signup-page'} >
           <h6 className="createAcc">Create new Account</h6></Link> 
         </form>
+        <Toaster/>
       </div>
     </>
   );

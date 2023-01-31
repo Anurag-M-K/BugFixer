@@ -1,15 +1,19 @@
 import React from 'react'
-import Navbar from '../../components/AdminComponents/AdminDashboard/Navbar'
 import Sidebar from '../../components/AdminComponents/AdminDashboard/Sidebar'
 import UserManage from '../../components/AdminComponents/UserManage/UserManage'
+import styled from 'styled-components';
 
 function UserManagePage() {
   return (
-    <div className='col-lg-12  ' >
-        
+ <Div style={{backgroundColor:'black'}}>
+
+            <Sidebar/>
         <UserManage/>
-    </div>
+ </Div>
+   
   )
 }
+const Div = styled.div`
+position:relative `
 
 export default UserManagePage

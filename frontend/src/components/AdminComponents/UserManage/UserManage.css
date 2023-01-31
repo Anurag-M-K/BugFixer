@@ -11,3 +11,41 @@
 .blockbtn:visited{
     color: red;
 }
+.table-body{
+    margin-left: 18%;
+    margin-top: 4%;
+}
+:root {
+    --primary: #EB1616;
+    --secondary: #191C24;
+    --light: #6C7293;
+    --dark: #000000;
+}
+.jxomDM{
+    visibility: visible;
+    opacity: 1;
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    transition: opacity 2s cubic-bezier(0.5, 0, 0, 1) 0s, transform 2s cubic-bezier(0.5, 0, 0, 1) 0s;
+
+}
+.grid{
+    flex-direction: column;
+    height: 100%;
+    gap: 1rem;
+    margin-top: 2rem;
+    margin: 0;
+    padding: 0;
+}
+.row_one{
+    visibility: visible;
+    opacity: 1;
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    transition: opacity 2s cubic-bezier(0.5, 0, 0, 1) 0s, transform 2s cubic-bezier(0.5, 0, 0, 1) 0s;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    height: 50%;
+    gap: 1rem;
+}
+.rdt_TableHeader{
+    background-color: grey;
+}

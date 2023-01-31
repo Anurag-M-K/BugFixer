@@ -108,4 +108,7 @@
     width: 600px;
     flex-wrap: wrap;
   }
+  .reportBtn{
+    cursor: pointer;
+  }
   

@@ -6,7 +6,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    userDetails: '',
+    userDetails: [],
   },
   reducers: {
     setUserDetails: (state, action) => {
@@ -16,7 +16,7 @@ export const userSlice = createSlice({
       console.log("from userslice  state",state)
       console.log("from userslice action ",action.payload)
 
-      console.log(action.payload, " state from signup")
+      console.log(state.userDetails, " state from signup")
     },
     setUserLogout: (state) => {
       state.user = null;

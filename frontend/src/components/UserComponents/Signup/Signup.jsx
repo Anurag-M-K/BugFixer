@@ -1,5 +1,5 @@
 import React from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link,Navigate,useNavigate } from "react-router-dom";
 import Logo from "../Images/download.png";
 import gLogo from "../Images/g.png";
 import { useState } from "react";
@@ -60,7 +60,7 @@ const Signup = () => {
 
 
 
-
+const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const [error,setError] = useState('')
@@ -81,6 +81,7 @@ const Signup = () => {
         
         // dispatch(setUserDetails(res))
         dispatch(setUserDetails(res,res.data.OTP))
+        navigate("/otp-page")
       })
       // window.location.reload('/otp-page')
     } catch (error) {

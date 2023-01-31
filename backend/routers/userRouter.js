@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const {userSignup,otpVerify} = require('../controllers/userController/userSignupController')
 const {userLogin} = require('../controllers/userController/userLoginController')
-const {questionAdd,getQuestion,particularQuestion,updateVote,incrementVote} = require('../controllers/userController/questionController')
+const {questionAdd,getQuestion,particularQuestion,updateVote,incrementVote,reportQuestion} = require('../controllers/userController/questionController')
 const {answerAdd} = require("../controllers/userController/answerController")
 const {commentAdd} = require("../controllers/userController/commentController")
 const {updateProfileController,getProfileData,getImage, updateUserDetails}  = require('../controllers/userController/userProfileController');
@@ -37,5 +37,8 @@ router.post("/otp-check/:otp",otpVerify)
 
 router.put("/vote-updating",updateVote)
 router.put("/vote-increment",incrementVote)
+
+
+router.post('/question-report/:qid',reportQuestion)
 
 module.exports = router;

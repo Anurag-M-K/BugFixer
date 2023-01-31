@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+import toast,{Toaster} from 'react-hot-toast'
+
 function Header() {
 
 
@@ -17,6 +19,7 @@ function Header() {
   
 
   const hndleLogout = ()=>{
+    toast.success("Logout successfully")
     localStorage.clear()
     window.location.reload('/')
     message.success("logout successfully")    
@@ -114,6 +117,7 @@ function Header() {
                 {/* <ToastContainer/> */}
              
             </form>
+            <Toaster/>
           </div>
         </nav>
   );

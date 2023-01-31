@@ -73,7 +73,7 @@ function App() {
           <Route exact path="/home" element={<Test/>} />
           <Route exact path="/profile" element={<PublicRoute><UserProfilePage/></PublicRoute>} />
           <Route exact path="/edit-profile" element={<PublicRoute><UserEditProfilePage/></PublicRoute>} />
-          <Route exact path='/otp-page' element={<PublicRoute><Otp/></PublicRoute>} />
+          <Route exact path='/otp-page' element={<Otp/>} />
 
 
 

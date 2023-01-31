@@ -2,7 +2,8 @@ import React from 'react'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import './Otp.css'
+import './Otp.css';
+import toast,{Toaster} from  'react-hot-toast';
 function Otp() {
 
     const navigate = useNavigate()
@@ -23,10 +24,12 @@ let verifyOtp = userDetails.data.OTP
 const checkOtp = ()=>{
 console.log("here")
         if(verifyOtp === otp ){
-            alert("correct")
+			toast.success("Otp verified")
+            // alert("correct")
             navigate("/login-page")
         }else{
-            alert("wrong ")
+            // alert("wrong ")
+			toast.error("Otp wrong")
         }
     
   
@@ -48,7 +51,7 @@ console.log("here")
 					<div className="row">
 						<form   className="form-group">
 							<div className="row">
-								<input type="number" name="otp"  value={otp} onChange={updateInput} placeholder="enter otp" className="form__input" /><span name="otpErrorDisplay"></span>
+								<input type="text" name="otp"  value={otp} onChange={updateInput} placeholder="enter otp" className="form__input" /><span name="otpErrorDisplay"></span>
 							</div>
 							
 							
@@ -62,6 +65,7 @@ console.log("here")
 			</div>
 		</div>
 	</div>
+	<Toaster/>
     </div>
   )
 }
