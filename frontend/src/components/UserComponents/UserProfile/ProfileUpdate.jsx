@@ -7,7 +7,7 @@ import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserUpdatedDetails } from "../../../redux/features/userUpdatedSlice";
 import toast, { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setUserDetails } from "../../../redux/features/userSlice";
 
 function ProfileUpdate({ userDetails, response }) {
@@ -97,11 +97,9 @@ console.log("hello ",userData);
         await axios.get("/api/getUserDetails/" + data_id).then((datas) => {
           dispatch(setUserDetails(datas.data))
           setUsetData(datas)
-          console.log(datas.data , "   kjnhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh" )
+          // navigate("/profile");
         })
-        // setUsetData(res.data.response);
-        // dispatch(setUserDetails(res.data.response))
-        navigate("/profile");
+    
       });
     } catch (error) {
       console.log("error from catch error ", error);
@@ -183,8 +181,8 @@ console.log("hello ",userData);
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <button className="btn btn-primary" type="submit">
-              {" "}
+            <button  onClick={()=>  navigate('../profile', {replace:true})}  className="btn btn-primary" type="submit">
+            
               Update
             </button>
             {/* <Button variant="primary" onClick={handleClose}>

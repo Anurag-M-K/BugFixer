@@ -8,7 +8,7 @@ const {updateProfileController,getProfileData,getImage, updateUserDetails,getUse
 // const authMiddleware = require('../middleware/authMiddleware')
 const {getUsersDetails} = require("../controllers/adminController/adminUsersDetailsController")
 
-router.post('/userSignup',userSignup)
+router.post('/userSignup', userSignup)
 router.post('/userLogin',userLogin)
 
 router.get("/api",(req,res)=>{  

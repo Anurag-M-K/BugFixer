@@ -33,6 +33,7 @@ function MainQuestion() {
 
   const handleQuill = (value) => {
     setAnswer(value);
+    console.log(value)
   };
   useEffect(() => {
     async function getQuestionDetails() {
@@ -44,6 +45,8 @@ function MainQuestion() {
     getQuestionDetails();
   }, [_id]);
 
+
+  console.log("id checking here by anu ",_id);
   async function getUpdatedAnswer() {
     await axios
       .post(`/api/question/${_id}`)
@@ -60,7 +63,7 @@ function MainQuestion() {
       const body = {
         question_id: _id,
         answer: answer,
-        user: user,
+        user: userDetails,
       };
       const config = {
         headers: {
@@ -129,7 +132,7 @@ const incVoting = async()=>{
    } 
 
 
-
+console.log(" answer here ",answer);
   const questionDetails = { ...questionData, vote };
 
   return (
@@ -334,7 +337,7 @@ const incVoting = async()=>{
           }}
         />
       </div>
-      <button
+      <button className="btn btn-primary"
         type="submit"
         onClick={handleSubmit}
         style={{
