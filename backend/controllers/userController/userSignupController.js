@@ -43,7 +43,7 @@ const userSignup = async(req,res)=>{
                 console.log("email send successfully");
             }
         });
-        
+
 
         const {error} = validate(req.body);
        

@@ -19,20 +19,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProfilePicAddModal from './ProfilePicAddModal';
 import ProfileUpdate from './ProfileUpdate';
-
+import { setUserDetails } from '../../../redux/features/userSlice';
 
 export default function UserProfile() {
 
   const {userDetails} = useSelector(state=> state.user);
+  console.log("from slice ",userDetails)
   const [previewSource, setPreviewSource] = useState();
   const [fileInputState, setFileInpuyState] = useState("");
   const [selectedFle, setSelectedFile] = useState("");
 const [response , setResponse] = useState([])
- const {userUpdatedDetails} = useSelector(state=>state.user)
 
 const dispatch = useDispatch()
 
-console.log("userdetails  here userprofile page",userDetails);
   const handleFileInput = (e) => {
     const file = e.target.files[0];
     
@@ -49,7 +48,6 @@ console.log("userdetails  here userprofile page",userDetails);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-dispatch(userUpdatedDetails())
     if (!previewSource) return;
     uploadImage(previewSource);
   };
@@ -71,18 +69,22 @@ dispatch(userUpdatedDetails())
 
   
 
-  const userId = userDetails._id
+  const email = userDetails.email
   useEffect(()=>{
     (async()=>{
       axios.defaults.baseURL = "http://localhost:80"
-      const data =   await axios.get(`/api/getImage/${userId}`)
-      setResponse(data)
+      const data =   await axios.get(`/api/getImage/${email}`).then((response)=>{
+        setResponse(response.data[0])
+        dispatch(setUserDetails(response.data[0]))
+        console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaa",response.data[0]);
+      })
+   
 
     })()
 
 
   },[])
-
+console.log("respons e",response);
 
 
   let defaultUrl = "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
@@ -98,7 +100,7 @@ dispatch(userUpdatedDetails())
                
            <img
               
-              src={response ? response?.data?.imageUrl : defaultUrl  }
+              src={response.imageUrl ? response?.imageUrl : defaultUrl  }
                 // "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
                   alt="avatar"
                   className="rounded-circle"
@@ -109,7 +111,7 @@ dispatch(userUpdatedDetails())
                 <p className="text-muted mb-4">{userDetails?.company}</p>
                 <div className="d-flex justify-content-center mb-2">
                   {/* <Link to={'/edit-profile'}><MDBBtn>edit profile</MDBBtn> </Link> */}
-                 <ProfileUpdate userDetails = {userDetails}/> <ProfilePicAddModal/>
+                 <ProfileUpdate userDetails = {userDetails}  response = {response}/> <ProfilePicAddModal/>
                   {/* <MDBBtn outline className="ms-1">Message</MDBBtn> */}
                 </div>
               </MDBCardBody>

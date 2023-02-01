@@ -4,52 +4,112 @@ import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUserUpdatedDetails } from "../../../redux/features/userUpdatedSlice";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { setUserDetails } from "../../../redux/features/userSlice";
 
-function ProfileUpdate({ userDetails }) {
+function ProfileUpdate({ userDetails, response }) {
+  console.log("response here ", response);
   const [show, setShow] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const navigate = useNavigate();
 
   const initialValue = {
-    firstName: userDetails.firstName,
-    email: userDetails.email,
-    phone: userDetails.phone,
-    job: "",
-    company:""
+    firstName: response.firstName,
+    email: response.email,
+    phone: response.phone,
+    job: response.job,
+    company: response.company,
   };
   const [userData, setUsetData] = useState(initialValue);
 
+  // const data_id = response._id
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  var data_id = response._id;
+const getUserDetails =  async()=>{
+
+  axios.defaults.baseURL = "http://localhost:80";
+  await axios.get("/api/getUserDetails/" + data_id).then((datas) => {
+    dispatch(setUserDetails(datas))
+    setUsetData(datas)
+  })
+}
+useEffect(()=>{
+  getUserDetails()
+},[])
+console.log("hello ",userData);
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  console.log("new data ",userData)
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setUsetData({
-      ...userData,
+      ...response,
+
       [name]: value,
     });
   };
 
   const id = userDetails._id;
 
-const updateData = {...userData,id}
-const handleSubmit =async (e)=>{
-e.preventDefault();
-try {
-  dispatch(setUserUpdatedDetails(updateData))
-  axios.defaults.baseURL = "http://localhost:80"
- await axios.put('/api/update-user/',updateData);
- console.log("here");
+  const updateData = { ...userData, id };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    toast.success("Profile updated");
+    try {
+      axios.defaults.baseURL = "http://localhost:80";
+      await axios.put("/api/update-user/", updateData).then(async(res) => {
+        await axios.get("/api/getUserDetails/" + data_id).then((datas) => {
+          dispatch(setUserDetails(datas.data))
+          setUsetData(datas)
+          console.log(datas.data , "   kjnhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh" )
+        })
+        // setUsetData(res.data.response);
+        // dispatch(setUserDetails(res.data.response))
+        navigate("/profile");
+      });
+    } catch (error) {
+      console.log("error from catch error ", error);
+    }
+  };
+ 
 
-} catch (error) {
-  console.log("error from catch error ",error)
-}
-}
-
-
-
-
+  console.log("userdetails from fro kro ",userDetails);
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -57,11 +117,11 @@ try {
       </Button>
 
       <Modal show={show} onHide={handleClose}>
-          <form onSubmit={handleSubmit} >
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+        <form onSubmit={handleSubmit}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -118,21 +178,22 @@ try {
                 autoFocus
               />
             </Form.Group>
-         
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <button className="btn btn-primary" type="submit"> Update</button>
-          {/* <Button variant="primary" onClick={handleClose}>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <button className="btn btn-primary" type="submit">
+              {" "}
+              Update
+            </button>
+            {/* <Button variant="primary" onClick={handleClose}>
             Save Changes
           </Button> */}
-
-        </Modal.Footer>
-          </form>
+          </Modal.Footer>
+        </form>
+        <Toaster />
       </Modal>
-
     </>
   );
 }

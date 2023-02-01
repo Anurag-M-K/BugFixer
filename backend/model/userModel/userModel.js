@@ -5,6 +5,7 @@ const passwordComplexity = require("joi-password-complexity");
 const { schema } = require("../adminModel/adminCredentialModel");
 
 const userSchema = new mongoose.Schema({
+  
   firstName: {
      type: String, 
      required: true

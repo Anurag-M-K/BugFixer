@@ -11,7 +11,6 @@ function Otp() {
 const [otp , setOtp] = useState('')
 
 const {userDetails} = useSelector(state => state.user)
-console.log("UYSER DEDTAILS FROM REDUX ",userDetails)
       
 const updateInput = (e)=>{
     setOtp(e.target.value)

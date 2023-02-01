@@ -7,6 +7,7 @@ import storage from 'redux-persist/lib/storage';
 import {persistReducer} from 'redux-persist';
 import { combineReducers } from "@reduxjs/toolkit";
 import {questionSlice} from "./features/questionSlice";
+import { usersImageSlice } from "./features/userProfilePicSlice";
 
 
 const persistConfig = {
@@ -20,7 +21,8 @@ const reducer = combineReducers({
     admin:adminSlice.reducer,
     alerts:alertSlice.reducer,
     question:questionSlice.reducer,
-    updatedUser:userUpdatedSlice.reducer
+    updatedUser:userUpdatedSlice.reducer,
+    image:usersImageSlice.reducer
 
 
 })

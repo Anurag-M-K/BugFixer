@@ -4,7 +4,7 @@ const {userLogin} = require('../controllers/userController/userLoginController')
 const {questionAdd,getQuestion,particularQuestion,updateVote,incrementVote,reportQuestion} = require('../controllers/userController/questionController')
 const {answerAdd} = require("../controllers/userController/answerController")
 const {commentAdd} = require("../controllers/userController/commentController")
-const {updateProfileController,getProfileData,getImage, updateUserDetails}  = require('../controllers/userController/userProfileController');
+const {updateProfileController,getProfileData,getImage, updateUserDetails,getUserDataForProfileUpdate}  = require('../controllers/userController/userProfileController');
 // const authMiddleware = require('../middleware/authMiddleware')
 const {getUsersDetails} = require("../controllers/adminController/adminUsersDetailsController")
 
@@ -28,8 +28,13 @@ router.get('/question/:id',particularQuestion)
 
 router.post('/profile/:id',updateProfileController)
 router.get('/profileData',getProfileData)
-router.get('/getImage/:id',getImage)
+router.get('/getImage/:email',getImage)
 router.put("/update-user",updateUserDetails)
+router.get('/getUserDetails/:data_id',getUserDataForProfileUpdate)
+
+
+
+
 
 router.get("/user-details",getUsersDetails)
 router.post("/otp-check/:otp",otpVerify)

@@ -1,6 +1,6 @@
 const { cloudinary } = require("../../utils/cloudinary");
 const { User } = require("../../model/userModel/userModel");
-
+const { default: mongoose } = require("mongoose");
 const updateProfileController = async (req, res) => {
   try {
     const fileStr = req.body.data;
@@ -36,13 +36,13 @@ const getProfileData = async (req, res) => {
 };
 
 const getImage = async (req, res) => {
-  const { userId } = req.params;
-  const id = req.params.id  ;
+  // const { email } = req.params;
+  const email = req.params.email  ;
+  // console.log(emailId)
   try {
-    await User.findById({ _id: id }).then((data) => {
+    await User.find( {email:email}).then((data) => {
       res.status(200).json(data);
-    }).then((res)=>{
-      console.log("user data fetched successfully")
+   
     })
   } catch (error) {
     res.status(500)
@@ -54,32 +54,56 @@ const getImage = async (req, res) => {
 
 const updateUserDetails =async (req,res)=>{
   
-  console.log("req.body ",req.body)
+  console.log(req.body)
+  const id = req.body.id
 
 try {
   
-  await User.findByIdAndUpdate({_id:req.body.id},{$set:
+ await User.findByIdAndUpdate(id,{$set:
     {
       firstName:req.body.firstName,
       email : req.body.email,
       phone:req.body.phone,
       job:req.body.job,
       company:req.body.company,
+      // imageUrl
   
-    }},{upsert:true}).then((res)=>{
+    }},{upsert:true}).then((response)=>{
 
-      res.send(200).send(res)
-      console.log("response ",res)
+      console.log("here response ")
+      console.log("after res ",response)
+      res.status(200).json({response:response,message:"user updated successfully"})
     })
-} catch (error) {
+      // res.status(200).json({res})
+
   
+} catch (error) {
+  console.log("error ",error)
 }
 
 }
 
+
+
+const getUserDataForProfileUpdate = async(req,res)=>{
+  const id = req.params.data_id
+  
+  try {
+    console.log("rewq ",id)
+    
+    const userData = await User.findOne({_id:id})
+    console.log("LEEN ",userData)
+    res.status(200).json(userData)
+    
+  
+  } catch (error) {
+    console.log("errrrrr ",error)
+  }
+}
 module.exports = {
   updateProfileController,
   getProfileData,
   getImage,
-  updateUserDetails
+  updateUserDetails,
+  getUserDataForProfileUpdate
 };

@@ -46,14 +46,14 @@ console.log("modal ",userDetails);
   };
 const userId = userDetails?._id
 console.log(userId);
-  const uploadImage = async (base64EncodedImage) => {
+const uploadImage = async (base64EncodedImage) => {
+    console.log(" ",base64EncodedImage);
     try {
       await fetch(`http://localhost:80/api/profile/${userId}`, {
         method: "POST",
         body: JSON.stringify({ data: base64EncodedImage,userId}),
         headers: { "Content-type": "application/json" },
       }).then((responseData) => {
-        console.log("response from fetch method ",responseData)
         console.log(JSON.stringify(responseData, null, 4));
       });
     } catch (error) {
