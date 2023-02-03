@@ -52,6 +52,7 @@ function AdminQuestion() {
       await axios.put("/admin/unblock-user/" + id).then((res) => {
         toast.success("User unblocked")
         axios.get('/api/user-details').then((response)=>{
+
           dispatch(setUserDetails(response.data))
         })
         
@@ -61,20 +62,31 @@ function AdminQuestion() {
     }
   };
   
+  
+  useEffect(()=>{
 
+    axios.defaults.baseURL = "http://localhost:80";
+    axios.get('/api/user-details').then((response)=>{
+      console.log("user response ",response.data)
+      dispatch(setUserDetails(response.data))
+    })
+  },[])
+  
 
 
  
   
   const { userDetails } = useSelector((state) => state.user);
-  console.log(userDetails)
+  console.log("dt slice ",userDetails)
+
+
+
   
-  console.log(userDetails)
   const columns = [
     {
       name: "Users Name",
       
-      selector: (row) => row.firstName,
+      selector: (row) => row?.firstName,
       sortable: true,
       style: {
         backgroundColor: "grey",
@@ -82,14 +94,14 @@ function AdminQuestion() {
     },
     {
       name: "Users email",
-      selector: (row) => row.email,
+      selector: (row) => row?.email,
       style: {
         backgroundColor: "grey",
       },
     },
     {
       name: "Users phone",
-      selector: (row) => row.phone,
+      selector: (row) => row?.phone,
       style: {
         backgroundColor: "grey",
       },
@@ -102,8 +114,8 @@ function AdminQuestion() {
           width={50}
           height={50}
           src={
-            row.imageUrl
-              ? row.imageUrl
+            row?.imageUrl
+              ? row?.imageUrl
               : "https://bootdey.com/img/Content/avatar/avatar7.png"
           }
           alt=""
@@ -120,14 +132,14 @@ function AdminQuestion() {
           {row?.isBlocked != true ? (
             <button
               className="btn btn-danger"
-              onClick={() => userBlock(row._id)}
+              onClick={() => userBlock(row?._id)}
             >
               <RemoveCircleOutlineIcon />{" "}
             </button>
           ) : (
             <button
               className="btn btn-success"
-              onClick={() => userUnBlock(row._id)}
+              onClick={() => userUnBlock(row?._id)}
             ><LockOpenIcon/>
             </button>
           )}
