@@ -37,13 +37,12 @@ router.get('/getUserDetails/:data_id',getUserDataForProfileUpdate)
 
 
 
-router.get("/user-details",getUsersDetails)
 router.post("/otp-check/:otp",otpVerify)
 
 
-router.put("/vote-decrease",decreseVote)
+router.put("/vote-decrease/:qid",decreseVote)
 router.put("/vote-increment/:qid",incrementVote)
-router.get("/get-votes/:qid",getVotes)
+router.get("/get-vote/:qid",getVotes)
 
 router.post('/question-report/:qid',reportQuestion)
 

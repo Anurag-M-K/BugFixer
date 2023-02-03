@@ -39,7 +39,7 @@ function App() {
         <Routes><Route exact path="/home" element={ <PublicRoute> <Test /> </PublicRoute> }/>
           <Route exact path="/login-page" element={<PublicRoute> <Login /> </PublicRoute> } />
 
-          <Route exact path="/signup-page" element={<Signup />} />
+          <Route exact path="/signup-page" element={<Signup />}   />
           <Route exact path="/add-question" element={<PublicRoute><AddQuestionPage /></PublicRoute>} />
           <Route exact path="/question" element={<PublicRoute><ViewQuestion /></PublicRoute>} />
           <Route exact path="/" element={<SuperHome/>}/>

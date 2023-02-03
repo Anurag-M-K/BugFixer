@@ -1,4 +1,4 @@
-import { Bookmark, CloseOutlined, History } from "@mui/icons-material";
+import { Bookmark, CloseOutlined, History, Try } from "@mui/icons-material";
 import { Avatar, Link } from "@mui/material";
 import axios from "axios";
 import React from "react";
@@ -12,8 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails, userState } from "../../../redux/features/userSlice";
 import  toast,{Toaster}  from "react-hot-toast";
 import {setAnswerData} from  '../../../redux/features/answerSlice';
-import { setVote } from "../../../redux/features/voteSlice";
-
+import {setQuestionDetails} from '../../../redux/features/questionSlice'
+// import { setVote } from "../../../redux/features/voteSlice";
+import {setVoteToStore} from '../../../redux/features/voteSlice'
 
 
 function MainQuestion() {
@@ -39,6 +40,7 @@ function MainQuestion() {
   const handleQuill = (value) => {
     setAnswer(value);
   };
+  console.log(_id + "ddddddddddddddddddddd")
   useEffect(() => {
     async function getQuestionDetails() {
       await axios
@@ -88,23 +90,10 @@ function MainQuestion() {
       }
   };
 
-  let qid = questionData?._id
-  console.log("hello ",qid)
-// const getAnswer = async()=>{
+  const qid = questionData?._id
 
-//   axios.defaults.baseURL = "http://localhost:80";
-
-//  await axios.get("/api/get-answer/"+qid).then((response)=>{
-//   console.log(" response vannu " , response)
-//   dispatch(setAnswer(response))
-//   })
-
-// }
-// getAnswer()
-
-
-
-
+  
+  
 
 
 
@@ -129,44 +118,45 @@ function MainQuestion() {
 
 
   const decVoting = async () => {
+  try{
+
     setVote(vote - 1);    
     vote--;
     axios.defaults.baseURL = "http://localhost:80";
-    await axios.put("/api/vote-decrease", {vote:vote,qid});
+    await axios.put("/api/vote-decrease/"+qid, {vote:vote}).then(async(response)=>{
+      await axios.get('/api/get-vote/'+qid).then((response)=>{
+console.log("repsonse for geting vote ",response.data.response.vote )
+        dispatch(setVoteToStore(response.data.response.vote))
+      })
+    })
+  }catch(error){
+    console.log(error)
+  }
   } 
-
-
-  // dispatch(setQuestionData(qid))
-
-  //  {qid} = useSelector(state=>state.question)
-  const incVoting = async(qid)=>{
+  
+  const incVoting = async(vote)=>{
+    console.log("vote here   ",vote)
     try {
       setVote(vote+1);
       vote++;
       axios.defaults.baseURL = "http://localhost:80";
-      await axios.put("/api/vote-increment",{vote:vote,qid}).then((response)=>{
-      })
-      // console.log("error ")      
-      // await axios.get(`/api/get-votes/${qid}`).then((response)=>{
-      //   dispatch(setVote(response)) 
-      // })
+      await axios.put('/api/vote-increment/'+qid,{vote:vote}).then(async(response)=>{
+        await axios
+      .get(`/api/question/${_id}`)
+      .then((res) => setQuestionData(res.data[0]))
+      .catch((err) => console.log(err));
+    }      )
+     
     } catch (error) {
       console.log("error from frontend ",error);
     }
 } 
-// function incVoting(){
-//   try {
-//     console.log(" id id ",qid);
-    
-//     fetch("http://localhost:80/api/vote-increment"+qid,vote,{
-//       mehtod:"PUT"
-//     }).then((response)=>{
-//       console.log("fetch response ",response);
-//     })
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
+
+
+
+
+
+
 
 
 
@@ -181,7 +171,18 @@ function MainQuestion() {
   
    } 
   
-  const questionDetails = { ...questionData, vote };
+  const questionDetail = { ...questionData, vote };
+
+  // const {questionDetails} = useSelector(state=>state.question)
+ 
+
+  const {voteCount} = useSelector(state=>state.vote)
+
+  console.log("voting ",questionData)
+  
+
+
+  
 
   return (
     <div className="main col-xl-8">
@@ -210,7 +211,7 @@ function MainQuestion() {
                 <span className="arrow">
                   <svg
                     type="submit"
-                    onClick={incVoting}
+                    onClick={()=> incVoting(questionData?.vote)}
                     aria-hidden="true"
                     className="svg-icon iconArrowUpLg"
                     width="36"
@@ -220,7 +221,7 @@ function MainQuestion() {
                     <path d="M2 25h32L18 9 2 25Z"></path>
                   </svg>
                 </span>
-                <p className="arrow">{vote}</p>
+                <p className="arrow">{questionData?.vote}</p>
                 <span className="arrow">
                   <svg
                     type="submit"
@@ -393,7 +394,7 @@ function MainQuestion() {
           marginTop: "100px",
         }}
       >
-        Post Your Answer{" "}
+        Post Your Answer
       </button>
       <Toaster/>
     </div>

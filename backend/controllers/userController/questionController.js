@@ -171,25 +171,21 @@ try{
 
 
 const decreseVote = (req,res)=>{
+    const id = req.params.qid
 
-    const id = req.body.qid
     const vote = req.body.vote
     QuestionDB.findByIdAndUpdate(id,{$set:{vote:vote}},{upsert:true})
     .then((response)=>{
+        res.status(200).json(response)
     })
 }
 const incrementVote = (req,res)=>{
-    console.log("updating votes")
     try {
-        
         const id = req.params.qid
-        const vote = req.params
-        console.log(id)
-        console.log(vote)
+        const vote = req.body.vote
         QuestionDB.findByIdAndUpdate(id,{$set:{vote:vote}},{upsert:true})
         .then((response)=>{
-    
-            console.log("response checking re ",response)
+    res.status(200).json(response)
         })
     } catch (error) {
     console.log("error while updating ",error)
@@ -211,6 +207,8 @@ const incrementVote = (req,res)=>{
     const getVotes =(req,res)=>{
         console.log(" backend ")
         // const id = req.params
+        const id = req.params.qid
+        console.log("if if fiffin ",id)
         QuestionDB.findById(id).then((response)=>{
             console.log("response acame ",response)
       res.status(200).json({response})

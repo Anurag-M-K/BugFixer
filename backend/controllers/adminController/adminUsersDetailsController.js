@@ -6,7 +6,9 @@ const getUsersDetails = async (req,res)=>{
     console.log("first")
     try {
         User.find({},(err,users)=>{
+            console.log('users ',users)
             res.send(users)
+            
         })
     } catch (error) {
         console.log("error ",error)

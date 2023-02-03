@@ -12,21 +12,27 @@ import { setUserDetails } from "../../../redux/features/userSlice";
 import toast,{Toaster}  from 'react-hot-toast'
 import './UserManage.css';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
+import { setCompleteUsersDetails } from "../../../redux/features/completeUserDetailsSlice";
 function AdminQuestion() {
   const [users, setUsers] = useState([]);
   const dispatch = useDispatch();
+
+
   useEffect(() => {
     axios.defaults.baseURL = "http://localhost:80";
     const data = axios
-    .get("/api/user-details")
+    .get("/admin/user-details")
     .then((response) => {
       setUsers(response.data);
-      dispatch(setUserDetails(response.data));
+      console.log("response cann",response.data)
+      dispatch(setCompleteUsersDetails(response.data))
     })
     .catch((error) => {
       console.log(error);
       });
     }, []);
+
+
     
     const userBlock = async (id) => {
       try {
@@ -34,9 +40,10 @@ function AdminQuestion() {
       await axios.put("/admin/block-user/" + id).then((res) => {
         toast.error("User Blocked ")
 
-        axios.get("/api/user-details").then((redds) => {
+        axios.get("/admin/user-details").then((redds) => {
           
-          dispatch(setUserDetails(redds.data));
+console.log("data coming ",redds.data)
+          dispatch(setCompleteUsersDetails(redds.data));
         });
       });
     } catch (error) {
@@ -51,9 +58,9 @@ function AdminQuestion() {
       axios.defaults.baseURL = "http://localhost:80";
       await axios.put("/admin/unblock-user/" + id).then((res) => {
         toast.success("User unblocked")
-        axios.get('/api/user-details').then((response)=>{
-
-          dispatch(setUserDetails(response.data))
+        axios.get('/admin/user-details').then((response)=>{
+console.log("res coming ",response.data)
+          dispatch(setCompleteUsersDetails(response.data))
         })
         
       });
@@ -62,25 +69,10 @@ function AdminQuestion() {
     }
   };
   
-  
-  useEffect(()=>{
 
-    axios.defaults.baseURL = "http://localhost:80";
-    axios.get('/api/user-details').then((response)=>{
-      console.log("user response ",response.data)
-      dispatch(setUserDetails(response.data))
-    })
-  },[])
-  
+const {completeUsers} = useSelector(state=> state.users)
 
-
- 
-  
-  const { userDetails } = useSelector((state) => state.user);
-  console.log("dt slice ",userDetails)
-
-
-
+console.log("user s completeUsers ",completeUsers)
   
   const columns = [
     {
@@ -174,8 +166,7 @@ function AdminQuestion() {
   }, []);
 
 
-  // console.log("columns ,",columns)
-console.log("munne ",userDetails)
+
   return (
     <div className="body">
       <Section style={{ backGroundColor: "black" }}>
@@ -184,7 +175,7 @@ console.log("munne ",userDetails)
           <div className="row__one"></div>
           <DataTable
             columns={columns}
-            data={userDetails}
+            data={completeUsers}
             pagination
             title="Users Details"
             fixedHeader

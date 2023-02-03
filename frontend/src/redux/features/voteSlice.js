@@ -7,7 +7,8 @@ export const voteSlice = createSlice({
         voteCount : "",
     },
     reducers:{
-        setVote:(state,action)=>{
+        setVoteToStore:(state,action)=>{
+            console.log("vote slice ",action.payload)
             state.voteCount = action.payload;
         }
     }
@@ -15,6 +16,6 @@ export const voteSlice = createSlice({
 
 
 
-export const {setVote} = voteSlice.actions;
+export const {setVoteToStore} = voteSlice.actions;
 
 export default voteSlice.reducer;

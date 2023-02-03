@@ -11,12 +11,6 @@ export const userSlice = createSlice({
   reducers: {
     setUserDetails: (state, action) => {
       state.userDetails = action.payload;
-
-      
-      console.log("from userslice  state",state)
-      console.log("from userslice action ",action.payload)
-
-      console.log(state.userDetails, " state from signup")
     },
     setUserLogout: (state) => {
       state.user = null;
