@@ -7,8 +7,7 @@ const userLogin = async (req, res) => {
     const { error } = validate(req.body[0]);
     if (error)
       return res.status(400).send({ message: error.details[0].message });
-    const user = await User.findOne({ email: req.body.email });
-    console.log("id ",user)
+    const user = await User.findOne({ email: req.body.email,isBlocked:false });
     if (!user)
       return res.status(401).send({ message: "Invalid Email or Password" });
 

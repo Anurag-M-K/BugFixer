@@ -10,7 +10,8 @@ import axios from "axios";
 import DataTable from "react-data-table-component";
 import { setUserDetails } from "../../../redux/features/userSlice";
 import toast,{Toaster}  from 'react-hot-toast'
-import './UserManage.css'
+import './UserManage.css';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 function AdminQuestion() {
   const [users, setUsers] = useState([]);
   const dispatch = useDispatch();
@@ -127,8 +128,7 @@ function AdminQuestion() {
             <button
               className="btn btn-success"
               onClick={() => userUnBlock(row._id)}
-            >
-              ok
+            ><LockOpenIcon/>
             </button>
           )}
         </>
