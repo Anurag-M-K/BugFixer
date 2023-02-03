@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const {userSignup,otpVerify} = require('../controllers/userController/userSignupController')
 const {userLogin} = require('../controllers/userController/userLoginController')
-const {questionAdd,getQuestion,particularQuestion,updateVote,incrementVote,reportQuestion} = require('../controllers/userController/questionController')
+const {questionAdd,getQuestion,particularQuestion,decreseVote,incrementVote,reportQuestion,getVotes} = require('../controllers/userController/questionController')
 const {answerAdd} = require("../controllers/userController/answerController")
 const {commentAdd} = require("../controllers/userController/commentController")
 const {updateProfileController,getProfileData,getImage, updateUserDetails,getUserDataForProfileUpdate}  = require('../controllers/userController/userProfileController');
@@ -18,6 +18,7 @@ router.get("/api",(req,res)=>{
 router.post('/question',questionAdd)
 router.post("/answer",answerAdd)
 router.post("/comment/:id",commentAdd)
+// router.get("/get-answer/:qid",getAnswers)
 
 router.get('/getQuestion',getQuestion);
 router.get('/question/:id',particularQuestion)
@@ -40,9 +41,9 @@ router.get("/user-details",getUsersDetails)
 router.post("/otp-check/:otp",otpVerify)
 
 
-router.put("/vote-updating",updateVote)
-router.put("/vote-increment",incrementVote)
-
+router.put("/vote-decrease",decreseVote)
+router.put("/vote-increment/:qid",incrementVote)
+router.get("/get-votes/:qid",getVotes)
 
 router.post('/question-report/:qid',reportQuestion)
 

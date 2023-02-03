@@ -1,7 +1,6 @@
 // export default UserManage;
 import React, { useEffect } from "react";
 import Navbar from "../AdminDashboard/Navbar";
-import Sidebar from "../AdminDashboard/Sidebar";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -11,33 +10,31 @@ import axios from "axios";
 import DataTable from "react-data-table-component";
 import { setUserDetails } from "../../../redux/features/userSlice";
 import toast,{Toaster}  from 'react-hot-toast'
+import './UserManage.css'
 function AdminQuestion() {
   const [users, setUsers] = useState([]);
   const dispatch = useDispatch();
-  const { userDetails } = useSelector((state) => state.user);
-  console.log("jiobib", userDetails);
   useEffect(() => {
     axios.defaults.baseURL = "http://localhost:80";
     const data = axios
-      .get("/api/user-details")
-      .then((response) => {
-        setUsers(response.data);
-        dispatch(setUserDetails(response.data));
-        console.log("user details response ", response);
-      })
-      .catch((error) => {
-        console.log(error);
+    .get("/api/user-details")
+    .then((response) => {
+      setUsers(response.data);
+      dispatch(setUserDetails(response.data));
+    })
+    .catch((error) => {
+      console.log(error);
       });
-  }, []);
-
-  const userBlock = async (id) => {
-    try {
+    }, []);
+    
+    const userBlock = async (id) => {
+      try {
       axios.defaults.baseURL = "http://localhost:80";
       await axios.put("/admin/block-user/" + id).then((res) => {
         toast.error("User Blocked ")
 
         axios.get("/api/user-details").then((redds) => {
-
+          
           dispatch(setUserDetails(redds.data));
         });
       });
@@ -45,27 +42,37 @@ function AdminQuestion() {
       console.log("error in catch ", error);
     }
   };
-
-
-
+  
+  
+  
   const userUnBlock = async (id) => {
     try {
       axios.defaults.baseURL = "http://localhost:80";
       await axios.put("/admin/unblock-user/" + id).then((res) => {
         toast.success("User unblocked")
- axios.get('/api/user-details').then((response)=>{
-  dispatch(setUserDetails(response.data))
- })
+        axios.get('/api/user-details').then((response)=>{
+          dispatch(setUserDetails(response.data))
+        })
+        
       });
     } catch (error) {
-      console.log(error);
+      console.log("error from admin side ",error);
     }
   };
+  
 
+
+
+ 
+  
+  const { userDetails } = useSelector((state) => state.user);
+  console.log(userDetails)
+  
+  console.log(userDetails)
   const columns = [
     {
       name: "Users Name",
-
+      
       selector: (row) => row.firstName,
       sortable: true,
       style: {
@@ -131,6 +138,8 @@ function AdminQuestion() {
       },
     },
   ];
+ 
+
 
   useEffect(() => {
     const sr = scrollreveal({
@@ -152,6 +161,9 @@ function AdminQuestion() {
     );
   }, []);
 
+
+  // console.log("columns ,",columns)
+console.log("munne ",userDetails)
   return (
     <div className="body">
       <Section style={{ backGroundColor: "black" }}>
@@ -169,6 +181,7 @@ function AdminQuestion() {
           />
         </div>
       </Section>
+      <div className="divComplete"></div>
       <Toaster/>
     </div>
   );

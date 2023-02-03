@@ -8,9 +8,13 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; //quills css important
 import "./index.css";
 import ReactHtmlParser from "react-html-parser";
-import { useSelector } from "react-redux";
-import { userState } from "../../../redux/features/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserDetails, userState } from "../../../redux/features/userSlice";
 import  toast,{Toaster}  from "react-hot-toast";
+import {setAnswerData} from  '../../../redux/features/answerSlice';
+import { setVote } from "../../../redux/features/voteSlice";
+
+
 
 function MainQuestion() {
   const [show, setShow] = useState(false);
@@ -18,8 +22,9 @@ function MainQuestion() {
   const [questionData, setQuestionData] = useState();
   const { userDetails } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
-  const [vote, setVote] = useState(0);
-
+  var [vote, setVote] = useState(0);
+  const {setAnswerDetails} = useSelector(state=> state.answer)
+  const dispatch = useDispatch()
   let search = window.location.search;
   const params = new URLSearchParams(search);
   const id = params.get("q");
@@ -30,23 +35,21 @@ function MainQuestion() {
     const _id = url.match(/[^\=]+$/)[0];
     set_Id(_id);
   }, []);
-
+  
   const handleQuill = (value) => {
     setAnswer(value);
-    console.log(value)
   };
   useEffect(() => {
     async function getQuestionDetails() {
       await axios
-        .get(`/api/question/${_id}`)
-        .then((res) => setQuestionData(res.data[0]))
-        .catch((err) => console.log(err));
+      .get(`/api/question/${_id}`)
+      .then((res) => setQuestionData(res.data[0]))
+      .catch((err) => console.log(err));
     }
     getQuestionDetails();
   }, [_id]);
+  
 
-
-  console.log("id checking here by anu ",_id);
   async function getUpdatedAnswer() {
     await axios
       .post(`/api/question/${_id}`)
@@ -73,16 +76,37 @@ function MainQuestion() {
       await axios
         .post("/api/answer", body, config)
         .then((res) => {
-          console.log(res.data);
-          alert("answer added successfully");
+          dispatch(setAnswerData(body))
+          toast.success("Answer added successfully");
+          
           setAnswer("");
           getUpdatedAnswer();
         })
         .catch((err) => {
           console.log(err);
         });
-    }
+      }
   };
+
+  let qid = questionData?._id
+  console.log("hello ",qid)
+// const getAnswer = async()=>{
+
+//   axios.defaults.baseURL = "http://localhost:80";
+
+//  await axios.get("/api/get-answer/"+qid).then((response)=>{
+//   console.log(" response vannu " , response)
+//   dispatch(setAnswer(response))
+//   })
+
+// }
+// getAnswer()
+
+
+
+
+
+
 
   const handleComment = async () => {
     if (comment != "") {
@@ -100,24 +124,51 @@ function MainQuestion() {
     }
   };
 
-  console.log(questionData)
-  let qid = questionData?._id
+  
 
 
 
   const decVoting = async () => {
     setVote(vote - 1);    
+    vote--;
     axios.defaults.baseURL = "http://localhost:80";
-    await axios.put("/api/vote-updating", {vote:vote,qid});
+    await axios.put("/api/vote-decrease", {vote:vote,qid});
   } 
 
 
+  // dispatch(setQuestionData(qid))
 
-const incVoting = async()=>{
-  setVote(vote + 1);
-  axios.defaults.baseURL = "http://localhost:80";
-  await axios.put("/api/vote-increment",{vote:vote,qid})
+  //  {qid} = useSelector(state=>state.question)
+  const incVoting = async(qid)=>{
+    try {
+      setVote(vote+1);
+      vote++;
+      axios.defaults.baseURL = "http://localhost:80";
+      await axios.put("/api/vote-increment",{vote:vote,qid}).then((response)=>{
+      })
+      // console.log("error ")      
+      // await axios.get(`/api/get-votes/${qid}`).then((response)=>{
+      //   dispatch(setVote(response)) 
+      // })
+    } catch (error) {
+      console.log("error from frontend ",error);
+    }
 } 
+// function incVoting(){
+//   try {
+//     console.log(" id id ",qid);
+    
+//     fetch("http://localhost:80/api/vote-increment"+qid,vote,{
+//       mehtod:"PUT"
+//     }).then((response)=>{
+//       console.log("fetch response ",response);
+//     })
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
+
+
 
 
   
@@ -126,13 +177,10 @@ const incVoting = async()=>{
     axios.defaults.baseURL = "http://localhost:80";
   
     await axios.post(`/api/question-report/${qid}`).then((response)=>{
-      console.log("from qid ",response);
     })
   
    } 
-
-
-console.log(" answer here ",answer);
+  
   const questionDetails = { ...questionData, vote };
 
   return (

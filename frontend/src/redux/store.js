@@ -8,6 +8,8 @@ import {persistReducer} from 'redux-persist';
 import { combineReducers } from "@reduxjs/toolkit";
 import {questionSlice} from "./features/questionSlice";
 import { usersImageSlice } from "./features/userProfilePicSlice";
+import {answerSlice} from "./features/answerSlice";
+import {voteSlice} from "./features/voteSlice";
 
 
 const persistConfig = {
@@ -22,7 +24,9 @@ const reducer = combineReducers({
     alerts:alertSlice.reducer,
     question:questionSlice.reducer,
     updatedUser:userUpdatedSlice.reducer,
-    image:usersImageSlice.reducer
+    image:usersImageSlice.reducer,
+    answer:answerSlice.reducer,
+    vote:voteSlice.reducer
 
 
 })

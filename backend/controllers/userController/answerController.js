@@ -1,6 +1,7 @@
 const AnswerDB = require("../../model/userModel/AnswerModel")
 
 const answerAdd = async(req,res)=>{
+    console.log("javan")
     const answerData = new AnswerDB({
         question_id : req.body.question_id,
         answer: req.body.answer,
@@ -24,6 +25,13 @@ const answerAdd = async(req,res)=>{
 };
 
 
+// const getAnswers =async (req,res)=>{
+//     console.log("id back ",req.params.qid   )
+//     // await AnswerDB.findById(id)
+// }
+
+
 module.exports ={
-    answerAdd
+    answerAdd,
+    // getAnswers
 }

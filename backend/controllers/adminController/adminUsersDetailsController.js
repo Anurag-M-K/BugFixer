@@ -3,6 +3,7 @@ const {User} = require("../../model/userModel/userModel")
 
 
 const getUsersDetails = async (req,res)=>{
+    console.log("first")
     try {
         User.find({},(err,users)=>{
             res.send(users)

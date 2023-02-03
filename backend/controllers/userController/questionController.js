@@ -170,40 +170,59 @@ try{
 }
 
 
-const updateVote = (req,res)=>{
+const decreseVote = (req,res)=>{
 
-    console.log("backnd questin details ",req.body)
     const id = req.body.qid
     const vote = req.body.vote
     QuestionDB.findByIdAndUpdate(id,{$set:{vote:vote}},{upsert:true})
     .then((response)=>{
-        console.log("response ",response)
     })
 }
 const incrementVote = (req,res)=>{
-    console.log("here backend ")
-    const id = req.body.qid
-    const vote = req.body.vote
-    QuestionDB.findByIdAndUpdate(id,{$set:{vote:vote}},{upsert:true})
-    .then((response)=>{
-        console.log("response ",response)
-    })}
+    console.log("updating votes")
+    try {
+        
+        const id = req.params.qid
+        const vote = req.params
+        console.log(id)
+        console.log(vote)
+        QuestionDB.findByIdAndUpdate(id,{$set:{vote:vote}},{upsert:true})
+        .then((response)=>{
+    
+            console.log("response checking re ",response)
+        })
+    } catch (error) {
+    console.log("error while updating ",error)
+    
+    }
+        
+    }
 
 
 
     const reportQuestion =(req,res)=>{
         const id = req.params.qid
-        console.log("id from haha",id)
         QuestionDB.findByIdAndUpdate(id,{$set:{report:true}}).then((response)=>{
             res.send({response})
         })
     }
 
+
+    const getVotes =(req,res)=>{
+        console.log(" backend ")
+        // const id = req.params
+        QuestionDB.findById(id).then((response)=>{
+            console.log("response acame ",response)
+      res.status(200).json({response})
+
+        })
+    }
 module.exports = {
     questionAdd,
     getQuestion,
     particularQuestion,
-    updateVote,
+    decreseVote,
     incrementVote,
-    reportQuestion
+    reportQuestion,
+    getVotes
 }

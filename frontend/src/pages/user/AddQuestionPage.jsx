@@ -4,7 +4,7 @@ import Header from '../../components/UserComponents/Header/Header'
 
 function AddQuestionPage() {
   return (
-    <div>
+    <div >
         <Header/>
         <Question/>
     </div>

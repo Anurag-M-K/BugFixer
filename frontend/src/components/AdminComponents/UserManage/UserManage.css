@@ -49,3 +49,7 @@
 .rdt_TableHeader{
     background-color: grey;
 }
+.divComplete{
+    height: 52vh;
+    background-color: black;
+}

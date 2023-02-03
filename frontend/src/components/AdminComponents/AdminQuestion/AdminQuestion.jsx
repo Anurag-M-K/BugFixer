@@ -7,7 +7,7 @@ import DataTable from "react-data-table-component";
 import scrollreveal from "scrollreveal";
 import { useDispatch } from "react-redux";
 import toast,{Toaster} from 'react-hot-toast'
-
+import './AdminQuestion.css'
 function AdminQuestion() {
     
   const [questions, setQuestions] = useState([]);
@@ -117,6 +117,9 @@ return (
         </div>
         <Toaster/>
       </Section>
+      <div className="secondDiv" >
+        <h3></h3>
+      </div>
     </div>
   );
 }
@@ -144,7 +147,10 @@ const Section = styled.section`
       height: 50%;
     }
   }
-
+.secondDiv{
+  height: 32vh;
+  background-color: black;
+}
   @media screen and (min-width: 280px) and (max-width: 1080px) {
     margin-left: 0;
     .grid {
