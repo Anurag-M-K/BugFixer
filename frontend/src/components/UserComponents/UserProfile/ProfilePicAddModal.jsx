@@ -63,8 +63,8 @@ const uploadImage = async (base64EncodedImage) => {
 
  
   return (
-    <>
-    <Button variant="primary" className='ml-2' onClick={handleShow}>
+    <div className='mainModal'>
+    <Button variant="primary" className='ml-2 ' onClick={handleShow}>
      Add Profile Pic
     </Button>
 
@@ -73,14 +73,14 @@ const uploadImage = async (base64EncodedImage) => {
         <Modal.Title>Modal heading</Modal.Title>
       </Modal.Header>
       <form onSubmit={handleSubmit} >
-      <input  onChange={handleFileInput} name="image"
+      <input  onChange={handleFileInput} name="image" 
 
                       value={fileInputState}  type="file" />
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-       <button onClick={()=>window.location.reload('/profile')}  type="submit" variant="primary"  >
+       <button  onClick={()=>navigate('/profile')}  type="submit" className='btn btn-primary' >
           Save Changes
         </button>
       </Modal.Footer>   
@@ -90,7 +90,7 @@ const uploadImage = async (base64EncodedImage) => {
       
      
     </Modal>
-  </>  )
+  </div>  )
 }
 
 export default ProfilePicAddModal

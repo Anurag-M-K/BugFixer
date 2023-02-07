@@ -1,6 +1,6 @@
 import { Bookmark, CloseOutlined, History, Try } from "@mui/icons-material";
 import { Avatar, Link } from "@mui/material";
-import axios from "axios";
+import axios from "../../../config/axiosInstance";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -9,47 +9,42 @@ import "react-quill/dist/quill.snow.css"; //quills css important
 import "./index.css";
 import ReactHtmlParser from "react-html-parser";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserDetails, userState } from "../../../redux/features/userSlice";
 import  toast,{Toaster}  from "react-hot-toast";
-import {setAnswerData} from  '../../../redux/features/answerSlice';
-import {setQuestionDetails} from '../../../redux/features/questionSlice'
-// import { setVote } from "../../../redux/features/voteSlice";
-import {setVoteToStore} from '../../../redux/features/voteSlice'
-
+import { setSingleQuestionDetails } from "../../../redux/features/singleQuestionSlice";
+import { useLocation } from 'react-router-dom';
 
 function MainQuestion() {
+
   const [show, setShow] = useState(false);
   const [answer, setAnswer] = useState(" ");
-  const [questionData, setQuestionData] = useState();
+  const [questionData, setQuestionData] = useState([]);
   const { userDetails } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
   var [vote, setVote] = useState(0);
+  var [answerVote,setAnswerVote] = useState(0)
   const {setAnswerDetails} = useSelector(state=> state.answer)
   const dispatch = useDispatch()
-  let search = window.location.search;
-  const params = new URLSearchParams(search);
-  const id = params.get("q");
+  const [answerData,setAnswerData] = useState([])
 
-  const [_id, set_Id] = useState("");
-  useEffect(() => {
-    const url = window.location.href;
-    const _id = url.match(/[^\=]+$/)[0];
-    set_Id(_id);
-  }, []);
+  let location = useLocation();
+  let params = new URLSearchParams(location.search);
+  let id = params.get('id');
+
+  
+
   
   const handleQuill = (value) => {
     setAnswer(value);
   };
-  console.log(_id + "ddddddddddddddddddddd")
   useEffect(() => {
     async function getQuestionDetails() {
       await axios
-      .get(`/api/question/${_id}`)
+      .get(`/api/question/${id}`)
       .then((res) => setQuestionData(res.data[0]))
       .catch((err) => console.log(err));
     }
     getQuestionDetails();
-  }, [_id]);
+  }, []);
   
 
   async function getUpdatedAnswer() {
@@ -62,7 +57,7 @@ function MainQuestion() {
         console.log(err);
       });
   }
-
+  
   const handleSubmit = async () => {
     if (answer !== "") {
       const body = {
@@ -75,10 +70,18 @@ function MainQuestion() {
           "Content-type": "application/json",
         },
       };
+
+      
       await axios
         .post("/api/answer", body, config)
-        .then((res) => {
-          dispatch(setAnswerData(body))
+        .then(async(res) => {
+          const id = res.data.data.question_id
+          await axios.get("/api/get-answer/"+id).then((response)=>{
+            
+            console.log("checkning  ",response)
+            dispatch(setSingleQuestionDetails(response))
+
+          })
           toast.success("Answer added successfully");
           
           setAnswer("");
@@ -93,10 +96,6 @@ function MainQuestion() {
   const qid = questionData?._id
 
   
-  
-
-
-
   const handleComment = async () => {
     if (comment != "") {
       const body = {
@@ -117,17 +116,15 @@ function MainQuestion() {
 
 
 
-  const decVoting = async () => {
+  const decVoting = async (vote) => {
   try{
 
     setVote(vote - 1);    
     vote--;
-    axios.defaults.baseURL = "http://localhost:80";
     await axios.put("/api/vote-decrease/"+qid, {vote:vote}).then(async(response)=>{
-      await axios.get('/api/get-vote/'+qid).then((response)=>{
-console.log("repsonse for geting vote ",response.data.response.vote )
-        dispatch(setVoteToStore(response.data.response.vote))
-      })
+      await axios.get(`/api/question/${id}`).then((res)=>setQuestionData(res.data[0]))
+      console.log("question data ",QuestionData)
+      .catch((err)=> console.log("error on catch ",err))
     })
   }catch(error){
     console.log(error)
@@ -135,15 +132,13 @@ console.log("repsonse for geting vote ",response.data.response.vote )
   } 
   
   const incVoting = async(vote)=>{
-    console.log("vote here   ",vote)
     try {
       setVote(vote+1);
       vote++;
-      axios.defaults.baseURL = "http://localhost:80";
       await axios.put('/api/vote-increment/'+qid,{vote:vote}).then(async(response)=>{
         await axios
-      .get(`/api/question/${_id}`)
-      .then((res) => setQuestionData(res.data[0]))
+      .get(`/api/question/${id}`)
+      .then((res) => setQuestionData(res.data[0] ))
       .catch((err) => console.log(err));
     }      )
      
@@ -151,20 +146,8 @@ console.log("repsonse for geting vote ",response.data.response.vote )
       console.log("error from frontend ",error);
     }
 } 
-
-
-
-
-
-
-
-
-
-
-  
   const reportQuestion =async ()=>{
     toast.success("question reported !!")
-    axios.defaults.baseURL = "http://localhost:80";
   
     await axios.post(`/api/question-report/${qid}`).then((response)=>{
     })
@@ -173,16 +156,35 @@ console.log("repsonse for geting vote ",response.data.response.vote )
   
   const questionDetail = { ...questionData, vote };
 
-  // const {questionDetails} = useSelector(state=>state.question)
- 
-
   const {voteCount} = useSelector(state=>state.vote)
 
-  console.log("voting ",questionData)
-  
+const {singleQuestiondata} = useSelector(state=> state.singleQuestion)
 
 
+
+
+
+var answerVoting = async(answerVote)=>{
+  try {
+    setAnswerVote(answerVote + 1)
+    answerVote++;
+    await axios.put("/api/answer-voting/"+aid,{answerVote})
+
+      await axios.get(`/api/answer/${aid}`)
+      .then((res)=>{
+        setAnswerData(res.data)
+      }
+        )
+      .catch((err)=> console.log(err))
+    
+  } catch (error) {
+    console.log('error ',error)
+  }
   
+  
+}
+
+console.log("helllo mic scheck ",answerData?.response?.vote)
 
   return (
     <div className="main col-xl-8">
@@ -225,7 +227,7 @@ console.log("repsonse for geting vote ",response.data.response.vote )
                 <span className="arrow">
                   <svg
                     type="submit"
-                    onClick={decVoting}
+                    onClick={()=>decVoting(questionData?.vote)}
                     aria-hidden="true"
                     className="svg-icon iconArrowDownLg"
                     width="36"
@@ -318,7 +320,7 @@ console.log("repsonse for geting vote ",response.data.response.vote )
             <div key={_q?._id} className="all-questions-container">
               <div className="all-questions-left">
                 <div className="all-options">
-                  <span className="arrow">
+                  <span onClick={()=> answerVoting(answerData?.response?.vote)} className="arrow">
                     <svg
                       aria-hidden="true"
                       className="svg-icon iconArrowUpLg"
@@ -329,7 +331,7 @@ console.log("repsonse for geting vote ",response.data.response.vote )
                       <path d="M2 25h32L18 9 2 25Z"></path>
                     </svg>
                   </span>
-                  <p className="arrow">0</p>
+                  <p className="arrow">{answerData?.response?.vote}</p>
                   <span className="arrow">
                     <svg
                       aria-hidden="true"

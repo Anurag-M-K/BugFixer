@@ -2,7 +2,7 @@ const router = require('express').Router();
 const {userSignup,otpVerify} = require('../controllers/userController/userSignupController')
 const {userLogin} = require('../controllers/userController/userLoginController')
 const {questionAdd,getQuestion,particularQuestion,decreseVote,incrementVote,reportQuestion,getVotes} = require('../controllers/userController/questionController')
-const {answerAdd} = require("../controllers/userController/answerController")
+const {answerAdd,getAnswerByQId,increaseAnswerVote,getParticularAnswer} = require("../controllers/userController/answerController")
 const {commentAdd} = require("../controllers/userController/commentController")
 const {updateProfileController,getProfileData,getImage, updateUserDetails,getUserDataForProfileUpdate}  = require('../controllers/userController/userProfileController');
 // const authMiddleware = require('../middleware/authMiddleware')
@@ -10,6 +10,7 @@ const {getUsersDetails} = require("../controllers/adminController/adminUsersDeta
 
 router.post('/userSignup', userSignup)
 router.post('/userLogin',userLogin)
+router.post("/otpVerifying",otpVerify)
 
 router.get("/api",(req,res)=>{  
        res.send("welcome to bugfixer ")
@@ -18,13 +19,11 @@ router.get("/api",(req,res)=>{
 router.post('/question',questionAdd)
 router.post("/answer",answerAdd)
 router.post("/comment/:id",commentAdd)
-// router.get("/get-answer/:qid",getAnswers)
 
 router.get('/getQuestion',getQuestion);
 router.get('/question/:id',particularQuestion)
+router.get('/get-answer/:id',getAnswerByQId)
 
-// router.post('/mobile',otpGenerate);
-// router.post('/otp',otpInput)
 
 
 router.post('/profile/:id',updateProfileController)
@@ -43,7 +42,9 @@ router.post("/otp-check/:otp",otpVerify)
 router.put("/vote-decrease/:qid",decreseVote)
 router.put("/vote-increment/:qid",incrementVote)
 router.get("/get-vote/:qid",getVotes)
-
 router.post('/question-report/:qid',reportQuestion)
+
+router.put('/answer-voting/:aid',increaseAnswerVote)
+router.get("/answer/:aid",getParticularAnswer)
 
 module.exports = router;

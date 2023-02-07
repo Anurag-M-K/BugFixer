@@ -1,7 +1,7 @@
+const { response } = require("express");
 const AnswerDB = require("../../model/userModel/AnswerModel")
 
 const answerAdd = async(req,res)=>{
-    console.log("javan")
     const answerData = new AnswerDB({
         question_id : req.body.question_id,
         answer: req.body.answer,
@@ -25,13 +25,49 @@ const answerAdd = async(req,res)=>{
 };
 
 
-// const getAnswers =async (req,res)=>{
-//     console.log("id back ",req.params.qid   )
-//     // await AnswerDB.findById(id)
-// }
+const getAnswerByQId = (req,res)=>{
+   
+    const id = req.params.id
+    AnswerDB.findOne({question_id:id}).then((response)=>{
+        res.status(200).json(response)
+    })
+}
 
+
+const increaseAnswerVote =(req,res)=>{
+    try {
+        
+        const id =req.params.aid
+        const answerVote = req.body.answerVote
+        AnswerDB.findByIdAndUpdate(id,{$set:{vote:answerVote}},{upsert:true})
+        .then((response)=>{
+            res.status(200).json(response)
+        })
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+const getParticularAnswer = async(req,res)=>{
+    console.log(req.params)
+    const id = req.params.aid
+    try {
+        
+      await  AnswerDB.findById(id).then((response)=>{
+        console.log("res ",response)
+        res.status(200).json({response})
+      })
+    } catch (error) {
+        
+    }
+
+
+}
 
 module.exports ={
     answerAdd,
-    // getAnswers
+    getAnswerByQId,
+    increaseAnswerVote,
+    getParticularAnswer
 }

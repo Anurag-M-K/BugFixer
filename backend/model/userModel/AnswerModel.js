@@ -10,6 +10,7 @@ const answerSchema = new mongoose.Schema({
         type:Date,
         default:Date.now(),
     },
+    vote:Number,
     user:Object,
     comment_id:{
         type:mongoose.Schema.Types.ObjectId,

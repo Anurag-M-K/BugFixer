@@ -1,17 +1,21 @@
 
-const jwt =require("jsonwebtoken");
+// const jwt =require("jsonwebtoken");
 
 
- export default async function Auth(req,res,next){
-    try {
-        const token = req.header.authorization.split(" ")[1];
+// const verifyJWT = (req,res,next) => {
+//   const authHeader = req.headers.authorization || req.headers.authorization;
 
-      const decodedToken =  await jwt.verify(token,"jsonprivatekey")
+//   if(!authHeader?.startsWith("Bearer")) return res.sendStatus(401);
 
-      req.user = decodedToken
+//   jwt.verify(token,"secrete",(err,decoded)=>{
+//     if(err) return res.status(403).json({
+//       message:"access token is not valid"
+//     });
+//     req.user = decoded.userData.userId;
+//     req.role = decoded.role; res.send(200)
+//     next();
+//   })
+// }
 
-      res.json(token)
-    } catch (error) {
-        res.status(401).json({error : "Authentication failed"})
-    }
-}
+
+// exports.verifyJWT = verifyJWT;

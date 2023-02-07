@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import './Otp.css';
 import toast,{Toaster} from  'react-hot-toast';
+import axios from 'axios';
 function Otp() {
 
     const navigate = useNavigate()
@@ -16,18 +17,22 @@ const updateInput = (e)=>{
     setOtp(e.target.value)
   }
 
+console.log("otp ve " , userDetails.data.email)
 
-
-
+const email = userDetails.data.email 
 let verifyOtp = userDetails.data.OTP
-const checkOtp = ()=>{
-console.log("here")
+const checkOtp = (e)=>{
+e.preventDefault()
+  console.log("kkkkk")
+  console.log(verifyOtp)
         if(verifyOtp === otp ){
+         axios.defaults.baseURL=('http://localhost:80')
+          axios.post("/api/otpVerifying",{email:email}).then((response)=>{
+            console.log("res ",response)
+          })
 			toast.success("Otp verified")
-            // alert("correct")
             navigate("/login-page")
         }else{
-            // alert("wrong ")
 			toast.error("Otp wrong")
         }
     
@@ -35,43 +40,7 @@ console.log("here")
 }
  
 
-//   return (
-//     <div className="d-flex justify-content-center">
-//     <div className="container-fluid bg-light main-containers	">
-// 		<div className="row main-content bg-success ">
-// 			<div className="col-md-4 text-center company__info">
-// 				<h4 className="company_title fw-bold">Cric Store</h4>
-// 			</div>
-// 			<div className="col-md-8 col-xs-12 col-sm-12 login_form ">
-// 				<div className="container-fluid">
-// 					<div className="row">
-// 						<h2 className="mt-3 fw-bold">Enter OTP</h2>
-// 					</div>
-// 					<div className="row">
-// 						<form   className="form-group">
-// 							<div className="row">
-// 								<input type="text" name="otp"  value={otp} onChange={updateInput} placeholder="enter otp" className="form__input" /><span name="otpErrorDisplay"></span>
-// 							</div>
-							
-							
-// 							<div className="row justify-content-center" >
-// 								<button type="submit" onClick={checkOtp} className="btnbtn">ok</button>
-// 							</div>
-// 						</form>
-// 					</div>
-					
-// 				</div>
-// 			</div>
-// 		</div>
-// 	</div>
-// 	<Toaster/>
-//     </div>
 
-
-
-
-
-//   )
 
 
 
@@ -83,7 +52,7 @@ console.log("here")
           minwidth: "410px",maxWidth:"550px",marginTop:"8%",marginBottom:"5%"
         }}
       >
-        <form
+        <form onSubmit={checkOtp}
           className="border  pb-5  loginPage--form"
         >
           <div className="loginPage--form--img">
@@ -107,7 +76,7 @@ console.log("here")
                 </span>
               </div>
               <input
-                type="email"
+                type="text"
                 className="form-control"
                 placeholder="Otp "
                 name="otp"  value={otp} onChange={updateInput}
@@ -127,7 +96,7 @@ console.log("here")
           
 
          <button
-             type="submit" onClick={checkOtp}
+             type="submit"
             className="btn btn-lg btn-block btn-sm text-light"
             style={{
               backgroundColor: "rgb(10,149,255)",

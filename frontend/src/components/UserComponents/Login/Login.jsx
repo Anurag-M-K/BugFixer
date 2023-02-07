@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../../../config/axiosInstance";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../../redux/features/userSlice";
 import gLogo from '../Images/g.png'
 import {  hideLoading, showLoading } from "../../../redux/features/alertSlice";
-import toast , {Toaster} from "react-hot-toast"
+import toast , {Toaster} from "react-hot-toast";
+
 
 
 
@@ -28,12 +29,12 @@ function Login() {
     e.preventDefault();
 		try {
       dispatch(showLoading())
-			const url = "http://localhost:80/api/userLogin";
+			const url = "/api/userLogin";
       dispatch(hideLoading())
 			const { data: res } = await axios.post(url, data);
 			localStorage.setItem("userToken", res.data);
       toast.success("login successfull")
-      console.log("res ",res.user)
+      console.log("res ",res.data)
       try {
         dispatch(setUserDetails(res.user))
         navigate("/home");

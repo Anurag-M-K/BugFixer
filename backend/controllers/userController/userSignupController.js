@@ -6,11 +6,6 @@ const AUTH_TOKEN = "de8cfc9307405b92922b6d38e23aae57"
 const Client = require('twilio')(ACCOUNT_SID,AUTH_TOKEN)
 const nodemailer = require("nodemailer");
 
-//nodemailer
-
-
-
-
 
 let mailTransporter = nodemailer.createTransport({
     service:"gmail",
@@ -23,13 +18,9 @@ const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
 
 
 
-
-
-
 const userSignup = async(req,res)=>{
     try {
         let Email = req.body.email;
-        console.log("email check ",Email)
         let mailDetails = {
             from :"anuragmk10@gmail.com",
             to:Email,
@@ -65,17 +56,14 @@ const userSignup = async(req,res)=>{
 }
 
 const otpVerify = (req,res)=>{
+    console.log("back")
+    console.log("email ",req.body)
+    const email = req.body.email;
 try {
-    console.log(req.params)
-    const otp = req.params.otp
-    console.log("id ",otp)
-if(OTP  == req.params.otp){
-    console.log("before update")
-    User.findByIdAndUpdate(id,{$set:{verified:1}}).then((response)=>{
+    User.findOneAndUpdate({email:email},{$set:{verified:1}}).then((response)=>{
         console.log("res ",response)
-        res.send(200,response)
+        res.status(200,response)
     })
-}
 } catch (error) {
     console.log(error)
 }

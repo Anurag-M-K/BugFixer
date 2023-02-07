@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const  QuestionDB = require('../../model/userModel/Question');
 
 const questionAdd =  async(req,res)=>{
-  
+  console.log("req body coming ",req.body.tags)
     const questoinData = new QuestionDB({
         title:req.body.title,
         body:req.body.body,
-        tags:req.body.tag,
+        tags:req.body.tags,
         user:req.body.user,
     });
 
@@ -205,13 +205,10 @@ const incrementVote = (req,res)=>{
 
 
     const getVotes =(req,res)=>{
-        console.log(" backend ")
         // const id = req.params
         const id = req.params.qid
-        console.log("if if fiffin ",id)
         QuestionDB.findById(id).then((response)=>{
-            console.log("response acame ",response)
-      res.status(200).json({response})
+          res.status(200).json({response})
 
         })
     }

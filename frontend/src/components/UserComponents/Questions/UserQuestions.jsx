@@ -13,7 +13,8 @@ function truncate(str,n){
 }
 
 
- console.log("d",questionDetails.title);
+ console.log("d",questionDetails);
+ console.log("d",questionDetails?.tags);
 
   return (
     <>
@@ -40,64 +41,82 @@ function truncate(str,n){
           </Link>
           <p>
           {ReactHtmlParser(truncate(questionData?.body,300))}          </p>
+         
+        
+          <>
+          {questionData?.tags[0] ?
+         
           <button
-            className="btn btn-sm mr-1"
-            style={{
-              color: "rgb(122, 167, 199)",
-              backgroundColor: "rgb(225, 236, 244)",
-              fontSize: "10px",
-            }}
-          >
-        javascript
-          </button>
-          <button
-            className="btn btn-sm mr-1"
-            style={{
-              color: "rgb(122, 167, 199)",
-              backgroundColor: "rgb(225, 236, 244)",
-              fontSize: "10px",
-            }}
-          >
-react
-          </button>
-          <button
-            className="btn btn-sm mr-1"
-            style={{
-              color: "rgb(122, 167, 199)",
-              backgroundColor: "rgb(225, 236, 244)",
-              fontSize: "10px",
-            }}
-          >redux
-            
-          </button>
-          <button
-            className="btn btn-sm mr-1"
-            style={{
-              color: "rgb(122, 167, 199)",
-              backgroundColor: "rgb(225, 236, 244)",
-              fontSize: "10px",
-            }}
-          >typescript
-            
-          </button>
-          <div className="profile float-right mt-4">
+                className="btn btn-sm mr-1"
+                style={{
+                  color: "rgb(122, 167, 199)",
+                  backgroundColor: "rgb(225, 236, 244)",
+                  fontSize: "10px",
+                }}
+              >
+                {questionData?.tags[0]}
+              </button>
+               : ""}
+                         {questionData?.tags[1] ?
+
+               <button
+                className="btn btn-sm mr-1"
+                style={{
+                  color: "rgb(122, 167, 199)",
+                  backgroundColor: "rgb(225, 236, 244)",
+                  fontSize: "10px",
+                }}
+              >
+                  {questionData?.tags[1]}
+                </button>
+                : ""}
+
+{questionData?.tags[2] ? 
+
+                <button
+                  className="btn btn-sm mr-1"
+                  style={{
+                    color: "rgb(122, 167, 199)",
+                    backgroundColor: "rgb(225, 236, 244)",
+                    fontSize: "10px",
+                  }}
+                >
+                  {questionData?.tags[2]}
+
+
+                </button>
+                : ""}
+
+                {questionData?.tags[3] ?
+
+                <button
+                  className="btn btn-sm mr-1"
+                  style={{
+                    color: "rgb(122, 167, 199)",
+                    backgroundColor: "rgb(225, 236, 244)",
+                    fontSize: "10px",
+                  }}
+                >
+                  {questionData?.tags[3]}
+
+
+                </button>
+                
+                :""}
+                </>
+   
+          <div className="profile float-right ">
             <div className="d-flex mr-3">
               <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+            src=  {questionData?.user?.imageUrl ? questionData?.user?.imageUrl : "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"}
                 alt="User"
                 className="mr-2"
-                width="40px"
-                height="40px"
+                width="35px"
+                height="35px"
                 style={{ borderRadius: "1rem" }}
-              />
-              <div>
-                {/* <Link to="/">us</Link> */}
-                <div className="text-muted mt-3">
-                <span className="mb-1">asked 10320 ago</span>
-
-                 
-                </div>
-              </div>
+              /><p>{questionData?.user?.firstName + " "+questionData?.user?.lastName + " "}</p>
+              <p>{" "+questionData?.created_at}</p>
+             
             </div>
           </div>
         </div>

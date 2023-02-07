@@ -162,19 +162,23 @@ const handleLogout =()=>{
               className={currentLink === 2 ? "active" : "none"}
               onClick={() => setCurrentLink(2)}
             >
-              <a href="#">
-                <RiDashboard2Fill />
-                <span> Riders</span>
-              </a>
+              <a onClick={()=>{
+                    navigate('/user-manage')
+                  }}>
+                  <HiUsers />
+                  <span className="buttonsDashboard"   > Users</span>
+                </a>
             </li>
             <li
               className={currentLink === 3 ? "active" : "none"}
               onClick={() => setCurrentLink(3)}
             >
-              <a href="#">
-                <FaAddressCard />
-                <span> Payment Details</span>
-              </a>
+               <a onClick={()=>{
+                  navigate('/Question-manage')
+                }}>
+                  <FaAddressCard />
+                  <span className="buttonsDashboard" > Questions</span>
+                </a>
             </li>
             <li
               className={currentLink === 4 ? "active" : "none"}

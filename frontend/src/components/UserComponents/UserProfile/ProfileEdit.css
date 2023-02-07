@@ -44,4 +44,9 @@ body {
 }
 .modalImg{
     margin-top: 14%;
+
+}
+.show{
+    opacity: 0.5;
+
 }

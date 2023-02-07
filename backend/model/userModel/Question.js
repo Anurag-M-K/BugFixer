@@ -3,7 +3,9 @@ const mongoose = require("mongoose");
 const questionSchema = new mongoose.Schema({
     title:String,
     body:String,
-    tags:[],
+    tags:[{
+    type:String
+}],
     created_at :{
         type:Date,
         default:Date.now()

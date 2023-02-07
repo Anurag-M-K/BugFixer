@@ -15,7 +15,6 @@ function Question() {
 
   const [loading, setLoading] = useState(false);
   const {userDetails} = useSelector(state=>state.user);
-  console.log("user",userDetails)
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [tag, setTag] = useState([]);
@@ -85,9 +84,11 @@ function Question() {
       const bodyJSON = {
         title: title,
         body: body,
-        tags: JSON.stringify(tag),
+        tags: tag,
         user: userDetails,
       };
+      console.log("tags is ",tag)
+
         
 
       axios.defaults.baseURL = "http://localhost:80";
@@ -164,7 +165,7 @@ function Question() {
               </div>
             </div>
           </div>
-          <button type="submit" onClick={handleSubmit} className="button  ">
+          <button type="submit" onClick={handleSubmit} className="button ">
             {loading ? "Adding question....." : "Add your question"}
           </button>
         </div>

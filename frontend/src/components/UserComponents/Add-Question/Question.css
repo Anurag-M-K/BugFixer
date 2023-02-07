@@ -98,6 +98,7 @@
   .button {
     max-width: fit-content;
     margin: 10px 0px;
+    border-radius: 7px;
   }
   
   button:hover {

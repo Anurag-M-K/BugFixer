@@ -84,36 +84,7 @@ dispatch(filterQuestionDetails([val]))
             </div>
             <div className="d-flex justify-content-between">
               <p style={{ fontSize: "16px" }}>{ questions?.length} questions</p>
-              <div className="border">
-                <button className="btn  border-right active">Newest</button>
-                <button className="btn border-right">Active</button>
-                <button className="btn  border-right">
-                  Bounced{" "}
-                  <small
-                    className="bg-primary text-light px-1 rounded"
-                    style={{ forntSize: "10px" }}
-                  >
-                    252
-                  </small>
-                </button>
-                <button className="btn border-right">Unanswered</button>
-                <button
-                  className="btn dropdown-toggle"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  More
-                </button>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <button className="dropdown-item">Frequents</button>
-                  <button className="dropdown-item">Votes</button>
-                  <div className="dropdown-divider"></div>
-                  <button className="dropdown-item disabled">
-                    Unanswered(my tags)
-                  </button>
-                </div>
-              </div>
+             
               <button
                 className="btn border"
                 style={{

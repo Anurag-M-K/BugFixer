@@ -7,16 +7,12 @@ export const questionSlice = createSlice({
     },
     reducers:{
         setQuestionDetails:(state,action)=>{
-            console.log("question in slice action payload ",action.payload)
             
             state.questionDetails = action.payload;
-            console.log("question in slice action  ",state.questionDetails)
         },
         filterQuestionDetails:(state,action)=>{
-            console.log("question in slice action payload ",action.payload)
             
             state.questionDetails = action.payload;
-            console.log("question in slice action  ",state.questionDetails)
         }
     }
 })

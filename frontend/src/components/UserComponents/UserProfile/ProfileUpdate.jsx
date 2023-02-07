@@ -27,54 +27,20 @@ function ProfileUpdate({ userDetails, response }) {
   };
   const [userData, setUsetData] = useState(initialValue);
 
-  // const data_id = response._id
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   var data_id = response._id;
-const getUserDetails =  async()=>{
+  const getUserDetails = async () => {
+    axios.defaults.baseURL = "http://localhost:80";
+    await axios.get("/api/getUserDetails/" + data_id).then((datas) => {
+      dispatch(setUserDetails(datas));
+      setUsetData(datas);
+    });
+  };
+  useEffect(() => {
+    getUserDetails();
+  }, []);
+  console.log("hello ", userData);
 
-  axios.defaults.baseURL = "http://localhost:80";
-  await axios.get("/api/getUserDetails/" + data_id).then((datas) => {
-    dispatch(setUserDetails(datas))
-    setUsetData(datas)
-  })
-}
-useEffect(()=>{
-  getUserDetails()
-},[])
-console.log("hello ",userData);
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  console.log("new data ",userData)
+  console.log("new data ", userData);
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -91,23 +57,23 @@ console.log("hello ",userData);
   const handleSubmit = async (e) => {
     e.preventDefault();
     toast.success("Profile updated");
+
     try {
       axios.defaults.baseURL = "http://localhost:80";
-      await axios.put("/api/update-user/", updateData).then(async(res) => {
+      await axios.put("/api/update-user/", updateData).then(async (res) => {
         await axios.get("/api/getUserDetails/" + data_id).then((datas) => {
-          dispatch(setUserDetails(datas.data))
-          setUsetData(datas)
-          // navigate("/profile");
-        })
-    
+          dispatch(setUserDetails(datas.data));
+          setUsetData(datas);
+          navigate("/home")
+        });
       });
     } catch (error) {
       console.log("error from catch error ", error);
     }
   };
- 
 
-  console.log("userdetails from fro kro ",userDetails);
+  console.log("userdetails from fro kro ", userDetails);
+
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -181,8 +147,11 @@ console.log("hello ",userData);
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <button  onClick={()=>  navigate('../profile', {replace:true})}  className="btn btn-primary" type="submit">
-            
+          <button
+          // onClick={() => navigate('../profile', { replace: true })}
+              className="btn btn-primary"
+              type="submit"
+            >
               Update
             </button>
             {/* <Button variant="primary" onClick={handleClose}>

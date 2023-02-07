@@ -38,11 +38,11 @@ try {
     }
 
 
+    
 
 
     // const data = response.data
     console.log("outside of the useeffect ", questions)
-    console.log("outside of the useeffect ", questions._id)
     
     const columns = [
         {
@@ -59,6 +59,13 @@ try {
       style: {
         backgroundColor: "grey",
       },
+    },
+    {
+      name:"Vote",
+      selector:(row)=>row.vote,
+      style:{
+        backgroundColor:"grey"
+      }
     },
     {
       name: "Email",

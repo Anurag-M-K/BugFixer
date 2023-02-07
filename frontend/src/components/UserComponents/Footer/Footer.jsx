@@ -108,9 +108,9 @@ const Footer = () => {
 
         {/* Copyright Started */}
         <div class="text-right bg-dark mr-5">
-          © 2021 Copyright: {""}
+          © 2023 Copyright: {""}
           <Link to="/" class="text-reset fw-bold">
-            created by Dolly
+            created by Anurag MK
           </Link>
         </div>
         {/* Copyright Ends */}
@@ -123,7 +123,7 @@ export default Footer;
 
 const footerContent = [
   {
-    header: "STACK OVERFLOW",
+    header: "Bugfixer",
     con1: "Questions",
     con2: "Jobs",
     con3: "Developer Jobs Directory",
@@ -152,7 +152,7 @@ const footerContent = [
     con9: "Cookie Policy",
   },
   {
-    header: "STACK EXCHANGE NETWORK",
+    header: " NETWORK",
     con1: "Technology",
     con2: "Culture & recreation",
     con3: "Life & arts",

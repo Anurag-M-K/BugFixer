@@ -6,7 +6,7 @@ import ReactHtmlParser from 'react-html-parser'
 
 function AllQuestions({question}) {
  var tags = question.tags
-console.log("question details ",question?.answerDetails?.length)
+ console.log("tage hree ",tag)
 function truncate(str,n){
   return str?.length > n ? str.substr(0,n-1)+ "..." :str
 }
@@ -30,7 +30,7 @@ function truncate(str,n){
           </div>
         </div>
         <div className="question-answer ">
-          <Link to={`/question?id=${question?._id}`} className="titleStyle">{question?.title}</Link>
+          <Link to={`/question/:id=${question?._id}`} className="titleStyle">{question?.title}</Link>
           <div
             style={{
               width: "90%",
@@ -49,7 +49,7 @@ function truncate(str,n){
         {tags.forEach((tag)=>(
           
           <>
-          <span className="question-tags">{tag}</span>
+          <span className="question-tags">{tag} </span>
           </>
         ))}
          </div>
