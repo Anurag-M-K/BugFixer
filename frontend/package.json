@@ -51,6 +51,7 @@
     "sass": "^1.57.1",
     "scrollreveal": "^4.0.9",
     "styled-components": "^5.3.6",
+    "sweetalert-react": "^0.4.11",
     "web-vitals": "^3.1.1"
   },
   "devDependencies": {

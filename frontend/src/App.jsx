@@ -26,6 +26,7 @@ import UserEditProfilePage from "./pages/user/UserEditProfilePage";
 import Otp from "./components/UserComponents/Signup/Otp";
 import Question from "./components/UserComponents/Add-Question/Question";
 import AdminQuestionPage from "./pages/admin/AdminQuestionPage";
+import Tags from "./components/Community/Tags/Tags";
 // import AdminLayout from '../src/components/src/layouts/Admin'
 function App() {
   const dispatch = useDispatch();
@@ -57,6 +58,7 @@ function App() {
           {/* <Route exact path="/adminDashboard"  element={<Dashboard/>}/> */}
 
 
+{/* <Route exact path="/tags" element={<Tags/>}/> */}
         </Routes>
       </Router>
     </>

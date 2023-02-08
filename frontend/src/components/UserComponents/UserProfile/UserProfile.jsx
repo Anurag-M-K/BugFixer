@@ -24,7 +24,6 @@ import { setUserDetails } from '../../../redux/features/userSlice';
 export default function UserProfile() {
 
   const {userDetails} = useSelector(state=> state.user);
-  console.log("from slice ",userDetails)
   const [previewSource, setPreviewSource] = useState();
   const [fileInputState, setFileInpuyState] = useState("");
   const [selectedFle, setSelectedFile] = useState("");
@@ -58,7 +57,6 @@ const dispatch = useDispatch()
         body: JSON.stringify({ data: base64EncodedImage, userData,userId}),
         headers: { "Content-type": "application/json" },
       }).then((responseData) => {
-        console.log("response from fetch method ",responseData)
         console.log(JSON.stringify(responseData, null, 4));
       });
     } catch (error) {
@@ -66,17 +64,22 @@ const dispatch = useDispatch()
     }
   };
 
+  const {tokenData}= useSelector(state=> state.user);
 
   
 
   const email = userDetails.email
   useEffect(()=>{
     (async()=>{
-      axios.defaults.baseURL = "http://localhost:80"
-      const data =   await axios.get(`/api/getImage/${email}`).then((response)=>{
+      const data = await axios({
+        url:'/api/getImage/'+email,
+        method:"GET",
+        headers:{
+          Authorization:tokenData,
+        }
+      }).then((response)=>{
         setResponse(response.data[0])
         dispatch(setUserDetails(response.data[0]))
-        console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaa",response.data[0]);
       })
    
 
@@ -101,7 +104,6 @@ console.log("respons e",response);
            <img
               
               src={response.imageUrl ? response?.imageUrl : defaultUrl  }
-                // "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
                   alt="avatar"
                   className="rounded-circle"
                   style={{ width: '150px' }}

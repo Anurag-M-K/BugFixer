@@ -13,6 +13,8 @@ import toast, { Toaster } from "react-hot-toast";
 import "./UserManage.css";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import { setCompleteUsersDetails } from "../../../redux/features/completeUserDetailsSlice";
+
+
 function AdminQuestion() {
   const [users, setUsers] = useState([]);
   const dispatch = useDispatch();
@@ -32,14 +34,32 @@ function AdminQuestion() {
 
   const userBlock = async (id) => {
     try {
-      axios.defaults.baseURL = "http://localhost:80";
-      await axios.put("/admin/block-user/" + id).then((res) => {
-        toast.error("User Blocked ");
-
-        axios.get("/admin/user-details").then((redds) => {
-          dispatch(setCompleteUsersDetails(redds.data));
-        });
+      swal({
+        title: "Are you sure?",
+        text: "are you sure you want to block this user?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((userBlock) => {
+        if (userBlock) {
+           axios.put("/admin/block-user/" + id).then((res) => {
+       
+            axios.get("/admin/user-details").then((redds) => {
+              dispatch(setCompleteUsersDetails(redds.data));
+            });
+          })
+          swal("user blocked !", {
+            icon: "success",
+          });
+        } else {
+          swal("Canceled blockin");
+        }
       });
+
+      axios.defaults.baseURL = "http://localhost:80";
+  
+   ;
     } catch (error) {
       console.log("error in catch ", error);
     }
@@ -47,13 +67,30 @@ function AdminQuestion() {
 
   const userUnBlock = async (id) => {
     try {
-      axios.defaults.baseURL = "http://localhost:80";
-      await axios.put("/admin/unblock-user/" + id).then((res) => {
-        toast.success("User unblocked");
-        axios.get("/admin/user-details").then((response) => {
-          dispatch(setCompleteUsersDetails(response.data));
-        });
+      swal({
+        title: "Are you sure?",
+        text: "are you sure you want to unblock this user?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((userUnblock) => {
+        if (userUnblock) {
+          axios.defaults.baseURL = "http://localhost:80";
+           axios.put("/admin/unblock-user/" + id).then((res) => {
+            toast.success("User unblocked");
+            axios.get("/admin/user-details").then((response) => {
+              dispatch(setCompleteUsersDetails(response.data));
+            });
+          })
+          swal("user Unblockedblocked !", {
+            icon: "success",
+          });
+        } else {
+          swal("Canceled unblocking user");
+        }
       });
+   ;
     } catch (error) {
       console.log("error from admin side ", error);
     }
@@ -150,6 +187,10 @@ function AdminQuestion() {
       }
     );
   }, []);
+
+
+
+  
 
   return (
     <div className="body">

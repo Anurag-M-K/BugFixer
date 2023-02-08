@@ -6,7 +6,8 @@ const {answerAdd,getAnswerByQId,increaseAnswerVote,getParticularAnswer} = requir
 const {commentAdd} = require("../controllers/userController/commentController")
 const {updateProfileController,getProfileData,getImage, updateUserDetails,getUserDataForProfileUpdate}  = require('../controllers/userController/userProfileController');
 // const authMiddleware = require('../middleware/authMiddleware')
-const {getUsersDetails} = require("../controllers/adminController/adminUsersDetailsController")
+const {getUsersDetails} = require("../controllers/adminController/adminUsersDetailsController");
+const { verifyJWT } = require('../middleware/authMiddleware');
 
 router.post('/userSignup', userSignup)
 router.post('/userLogin',userLogin)
@@ -28,7 +29,7 @@ router.get('/get-answer/:id',getAnswerByQId)
 
 router.post('/profile/:id',updateProfileController)
 router.get('/profileData',getProfileData)
-router.get('/getImage/:email',getImage)
+router.get('/getImage/:email',verifyJWT,getImage)
 router.put("/update-user",updateUserDetails)
 router.get('/getUserDetails/:data_id',getUserDataForProfileUpdate)
 

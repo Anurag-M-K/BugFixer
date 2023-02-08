@@ -18,13 +18,13 @@ function ProfilePicAddModal() {
   const [previewSource, setPreviewSource] = useState();
   const [fileInputState, setFileInpuyState] = useState("");
   const [selectedFle, setSelectedFile] = useState("");
-
+  const [validate , setValidate] = useState("")
 const {userDetails}  = useSelector((state) => state.user)
 console.log("modal ",userDetails);
 
   const handleFileInput = (e) => {
     const file = e.target.files[0];
-    
+  
     previewFile(file);
   };
 

@@ -8,6 +8,8 @@ import scrollreveal from "scrollreveal";
 import { useDispatch } from "react-redux";
 import toast,{Toaster} from 'react-hot-toast'
 import './AdminQuestion.css'
+import QuestionModal from './QusetionModal'
+
 function AdminQuestion() {
     
   const [questions, setQuestions] = useState([]);
@@ -23,31 +25,45 @@ function AdminQuestion() {
 
 
     const questionDelete = async(qid)=>{
-        toast.success("Question deleted!!!")
+        // toast.success("Question deleted!!!")
 try {
-    console.log("before delete ",qid)
-    axios.defaults.baseURL = "http://localhost:80";
-    await axios.delete("/admin/question-delete/"+qid).then((res)=>{
-        axios.get("/admin/get-report-questions").then((response)=>{
-            dispatch(questionDetails(response))
-        })
-    })
+  swal({
+    title: "Are you sure?",
+    text: "are you sure you want to delete this question?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((deleteQuestion) => {
+    if (deleteQuestion) {
+      axios.defaults.baseURL = "http://localhost:80";
+       axios.delete("/admin/question-delete/"+qid).then((res)=>{
+          axios.get("/admin/get-report-questions").then((response)=>{
+              dispatch(questionDetails(response))
+          })
+      })
+      swal("Question deleted successfully !", {
+        icon: "success",
+      });
+    } else {
+      swal("Canceled");
+    }
+  });
+
 } catch (error) {
     console.log(error)
 }
     }
 
+  
 
     
 
-
-    // const data = response.data
-    console.log("outside of the useeffect ", questions)
     
     const columns = [
         {
       name: "Qusetion ID",
-      selector: (row) => row._id,
+      selector: (row) => <QuestionModal row={row._id}/>,
       srtable: true,
       style: {
         backgroundColor: "grey",
@@ -117,9 +133,14 @@ return (
             data={questions}
             pagination
             title="Question Handling "
+            
             fixedHeader
             fixedHeaderScrollHeight="440px"
             highlightOnHover
+            subHeaderComponent={<input type="text" placeholder="Search here" className=" text-danger w-25 form-control"/> 
+        
+          }
+          subHeaderAlign="left"
           />
         </div>
         <Toaster/>

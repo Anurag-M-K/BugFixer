@@ -11,7 +11,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { setUserDetails } from "../../../redux/features/userSlice";
 
 function ProfileUpdate({ userDetails, response }) {
-  console.log("response here ", response);
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const handleClose = () => setShow(false);
