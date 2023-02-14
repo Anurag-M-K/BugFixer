@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./css/Header.css";
-
-import { Link } from "react-router-dom";
+import axios from '../../../config/axiosInstance'
+import { Link, useNavigate } from "react-router-dom";
 import { message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
@@ -14,9 +14,9 @@ function Header() {
 
   const [username, setUsername] = useState('');
   console.log("here ethi ",userDetails);
-
-
-  
+const id = userDetails._id
+const {tokenData} = useSelector(state=> state.user)
+  const navigate = useNavigate()
 
   const hndleLogout = ()=>{
     toast.success("Logout successfully")
@@ -24,6 +24,19 @@ function Header() {
     window.location.reload('/')
     message.success("logout successfully")    
   }
+
+  const showProfile =async ()=>{
+    await axios({
+      url:'/api/getUserProfile/'+id,
+      method:"GET",
+      headers:{
+        Authorization:tokenData,
+      }
+    }).then(()=>{
+    navigate('/profile')
+  })
+  }
+ 
 
   return (
     <nav className="app navbar navbar-expand-lg navbar-light bg-light px-5">
@@ -52,8 +65,8 @@ function Header() {
                 
               </li>
               <li className="nav-item mr-4">
-                <Link to="/" className="nav-link">
-                  Products 
+                <Link to="/chat" className="nav-link">
+                  chat 
                 </Link>
               </li>
               <li className="nav-item mr-4">
@@ -83,7 +96,7 @@ function Header() {
 
               {userDetails?.firstName ? (
                 < >
-                <Link to={'/profile'}><span className="ms-4"> {userDetails.firstName}</span></Link>
+                <span onClick={showProfile} className="ms-4 headerBtn"> {userDetails.firstName}</span>
                 <Link className="nav-link">
                 <span onClick={hndleLogout} ><button className="btn btn-danger my-sm-0 btn-sm px-3">Logout</button> </span>  <span className="sr-only">(current)</span>
                 </Link>

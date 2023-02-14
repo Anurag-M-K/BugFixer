@@ -8,7 +8,8 @@ const db = require('./config/connection');
 require('dotenv').config();
 const adminRouter = require('./routers/adminRouter')
 const userRouter = require('./routers/userRouter')
-
+const ChatRoute = require("./routers/ChatRoute")
+const MessageRoute = require("./routers/MessageRoute")
 //db connection
 db(()=>{
     try {
@@ -58,10 +59,12 @@ app.use('upload',express.static(path.join(__dirname,'/../uploads')))
 
 app.use(express.json({limit: '50mb'}));
 
-
+ 
 //api
+app.use("/chat",ChatRoute)
 app.use('/api',userRouter);
 app.use('/admin',adminRouter);
+app.use("/message",MessageRoute)
 //server listen
 app.listen(PORT,()=>{
     console.log(`bugfixer is running on PORT no - ${PORT}`)

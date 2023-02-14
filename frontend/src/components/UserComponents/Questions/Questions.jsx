@@ -5,7 +5,7 @@ import RightSidebar from "./RightSidebar";
 import UserQuestions from "./UserQuestions";
 import Pagination from "./Pagination";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios from "../../../config/axiosInstance";
 import {useDispatch}  from 'react-redux'
 import {filterQuestionDetails, setQuestionDetails} from '../../../redux/features/questionSlice'
 
@@ -18,7 +18,6 @@ const [searchTerm , setSearchTerm] = useState('');
 
 useEffect(()=>{
   async function findQuestions(){
-    axios.defaults.baseURL = "http://localhost:80"
     await axios.get("/api/getQuestion").then(res => {
       setQuestions(res.data.reverse())
       dispatch(setQuestionDetails(res.data))
@@ -33,19 +32,14 @@ useEffect(()=>{
 
 questions.filter((val)=>{
   if(searchTerm == ""){
-    console.log("val ",val)
-    // setQuestions(val)
     return val
   }else if(val.title.toLowerCase().includes(searchTerm.toLowerCase())){
-    // setQuestions(val)
-console.log("val 2 ",val);
 dispatch(filterQuestionDetails([val]))
 
     return val
   }
 }).map((val,key)=>{
-  // setQuestions(val)
-  // console.log("val 3 ",val)  
+    
   return val.title
 })
 

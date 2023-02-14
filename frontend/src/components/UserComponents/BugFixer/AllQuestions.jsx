@@ -6,7 +6,6 @@ import ReactHtmlParser from 'react-html-parser'
 
 function AllQuestions({question}) {
  var tags = question.tags
- console.log("tage hree ",tag)
 function truncate(str,n){
   return str?.length > n ? str.substr(0,n-1)+ "..." :str
 }

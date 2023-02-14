@@ -1,6 +1,21 @@
 const { cloudinary } = require("../../utils/cloudinary");
 const { User } = require("../../model/userModel/userModel");
 const { default: mongoose } = require("mongoose");
+
+
+
+const getUserProfile = async (req,res)=>{
+  const id = req.params.id
+  try {
+    User.findById(id).then((response)=>{
+      res.status(200).json({response})
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
 const updateProfileController = async (req, res) => {
   try {
     const fileStr = req.body.data;
@@ -105,5 +120,6 @@ module.exports = {
   getProfileData,
   getImage,
   updateUserDetails,
-  getUserDataForProfileUpdate
+  getUserDataForProfileUpdate,
+  getUserProfile
 };

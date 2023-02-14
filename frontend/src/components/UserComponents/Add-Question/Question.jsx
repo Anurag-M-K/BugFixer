@@ -80,7 +80,9 @@ function Question() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    if (title !== "" && body !== "") {
+    if (title == "" || body == "") {
+      toast.error("question cant be null")
+    }else{
       const bodyJSON = {
         title: title,
         body: body,
@@ -154,7 +156,6 @@ function Question() {
                   <small>
                     Add upto 5 tags to describe what your question is about
                   </small>
-                  {/* <TagsInput value={tags} onChange={setTags}  /> */}
                   <TagsInput
                   value={tag}
                   onChange={setTag}
@@ -166,8 +167,7 @@ function Question() {
             </div>
           </div>
           <button type="submit" onClick={handleSubmit} className="button ">
-            {loading ? "Adding question....." : "Add your question"}
-          </button>
+Add question          </button>
         </div>
       </div>
     );

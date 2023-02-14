@@ -19,7 +19,8 @@ const questionSchema = new mongoose.Schema({
     report:{
         type:Boolean,
         default:false
-    }
+    },
+    reason:String
 })
 
 module.exports = mongoose.model("Questions",questionSchema)

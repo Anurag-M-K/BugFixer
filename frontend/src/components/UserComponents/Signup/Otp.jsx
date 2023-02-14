@@ -1,67 +1,55 @@
-import React from 'react'
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import './Otp.css';
-import toast,{Toaster} from  'react-hot-toast';
-import axios from 'axios';
+import React from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import "./Otp.css";
+import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
 function Otp() {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate()
+  const [otp, setOtp] = useState("");
 
-const [otp , setOtp] = useState('')
+  const { userDetails } = useSelector((state) => state.user);
 
-const {userDetails} = useSelector(state => state.user)
-      
-const updateInput = (e)=>{
-    setOtp(e.target.value)
-  }
+  const updateInput = (e) => {
+    setOtp(e.target.value);
+  };
 
-console.log("otp ve " , userDetails.data.email)
+  console.log("otp ve ", userDetails.data);
 
-const email = userDetails.data.email 
-let verifyOtp = userDetails.data.OTP
-const checkOtp = (e)=>{
-e.preventDefault()
-  console.log("kkkkk")
-  console.log(verifyOtp)
-        if(verifyOtp === otp ){
-         axios.defaults.baseURL=('http://localhost:80')
-          axios.post("/api/otpVerifying",{email:email}).then((response)=>{
-            console.log("res ",response)
-          })
-			toast.success("Otp verified")
-            navigate("/login-page")
-        }else{
-			toast.error("Otp wrong")
-        }
-    
-  
-}
- 
+  const email = userDetails.data.email;
+  let verifyOtp = userDetails.data.OTP;
+  const checkOtp = (e) => {
+    e.preventDefault();
+    if (verifyOtp === otp) {
+      axios.defaults.baseURL = "http://localhost:80";
+      axios.post("/api/otpVerifying", { email: email }).then((response) => {});
+      toast.success("Otp verified");
+      navigate("/login-page");
+    } else {
+      toast.error("Otp wrong");
+    }
+  };
 
-
-
-
-
- return (
+  return (
     <>
       <div
         className="container loginPage"
         style={{
-          minwidth: "410px",maxWidth:"550px",marginTop:"8%",marginBottom:"5%"
+          minwidth: "410px",
+          maxWidth: "550px",
+          marginTop: "8%",
+          marginBottom: "5%",
         }}
       >
-        <form onSubmit={checkOtp}
-          className="border  pb-5  loginPage--form"
-        >
+        <form onSubmit={checkOtp} className="border  pb-5  loginPage--form">
           <div className="loginPage--form--img">
             <br />
             <br />
             <h3 className="center mt-2">OTP</h3>
           </div>
           <div className="form-outline mb-4">
-           
             <div className="input-group flex-nowrap">
               <div className="input-group-prepend">
                 <span
@@ -79,8 +67,9 @@ e.preventDefault()
                 type="text"
                 className="form-control"
                 placeholder="Otp "
-                name="otp"  value={otp} onChange={updateInput}
-              
+                name="otp"
+                value={otp}
+                onChange={updateInput}
                 required
                 aria-label="gmail"
                 aria-describedby="addon-wrapping"
@@ -88,15 +77,11 @@ e.preventDefault()
             </div>
           </div>
           <div className="form-outline mb-4">
-            <label className="form-label" for="formExample23">
-             
-            </label>
-  
+            <label className="form-label" for="formExample23"></label>
           </div>
-          
 
-         <button
-             type="submit"
+          <button
+            type="submit"
             className="btn btn-lg btn-block btn-sm text-light"
             style={{
               backgroundColor: "rgb(10,149,255)",
@@ -104,12 +89,11 @@ e.preventDefault()
           >
             Submit
           </button>
-        
         </form>
-        <Toaster/>
+        <Toaster />
       </div>
     </>
   );
 }
 
-export default Otp
+export default Otp;

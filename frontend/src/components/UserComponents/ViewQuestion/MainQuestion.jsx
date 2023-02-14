@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import  toast,{Toaster}  from "react-hot-toast";
 import { setSingleQuestionDetails } from "../../../redux/features/singleQuestionSlice";
 import { useLocation } from 'react-router-dom';
+import ReportReason from "./ReportReason";
 
 function MainQuestion() {
 
@@ -146,13 +147,13 @@ function MainQuestion() {
       console.log("error from frontend ",error);
     }
 } 
-  const reportQuestion =async ()=>{
-    toast.success("question reported !!")
+  // const reportQuestion =async ()=>{
+  //   toast.success("question reported !!")
   
-    await axios.post(`/api/question-report/${qid}`).then((response)=>{
-    })
+  //   await axios.post(`/api/question-report/${qid}`).then((response)=>{
+  //   })
   
-   } 
+  //  } 
   
   const questionDetail = { ...questionData, vote };
 
@@ -237,7 +238,8 @@ console.log("helllo mic scheck ",answerData?.response?.vote)
                     <path d="M2 11h32L18 27 2 11Z"></path>
                   </svg>
                 </span>
-                  <small className="reportBtn" onClick={reportQuestion}>Report</small>
+                  <small className="reportBtn" >Report</small>
+                  <small><ReportReason questionData={questionData}/></small>
                 <Bookmark />
                 <History />
               </div>

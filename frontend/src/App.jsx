@@ -26,7 +26,8 @@ import UserEditProfilePage from "./pages/user/UserEditProfilePage";
 import Otp from "./components/UserComponents/Signup/Otp";
 import Question from "./components/UserComponents/Add-Question/Question";
 import AdminQuestionPage from "./pages/admin/AdminQuestionPage";
-import Tags from "./components/Community/Tags/Tags";
+import CommunityHomePage from "./pages/Community/CommunityHomePage";
+import Chat from "./components/Community/Chat/Chat";
 // import AdminLayout from '../src/components/src/layouts/Admin'
 function App() {
   const dispatch = useDispatch();
@@ -55,10 +56,12 @@ function App() {
           <Route exact path="/admin-dashboard" element={<AdminPublicRoute><AdminDashboard /></AdminPublicRoute>} />
           <Route exact path="/user-manage" element={<AdminPublicRoute><UserManagePage /></AdminPublicRoute>} />
           <Route exact path="/Question-manage" element={<AdminPublicRoute><AdminQuestionPage/></AdminPublicRoute>} />
-          {/* <Route exact path="/adminDashboard"  element={<Dashboard/>}/> */}
 
 
-{/* <Route exact path="/tags" element={<Tags/>}/> */}
+
+        <Route exact path="/community" element={<CommunityHomePage/>}/>
+
+    <Route exact path="/chat" element={<Chat/>}/>
         </Routes>
       </Router>
     </>

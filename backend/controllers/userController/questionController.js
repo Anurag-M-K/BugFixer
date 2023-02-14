@@ -197,8 +197,9 @@ const incrementVote = (req,res)=>{
 
 
     const reportQuestion =(req,res)=>{
+        const reason = req.body.reason
         const id = req.params.qid
-        QuestionDB.findByIdAndUpdate(id,{$set:{report:true}}).then((response)=>{
+        QuestionDB.findByIdAndUpdate(id,{$set:{report:true,reason:reason}}).then((response)=>{
             res.send({response})
         })
     }

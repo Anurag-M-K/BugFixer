@@ -87,7 +87,6 @@ const dispatch = useDispatch()
 
 
   },[])
-console.log("respons e",response);
 
 
   let defaultUrl = "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
@@ -101,12 +100,11 @@ console.log("respons e",response);
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
                
-           <img
-              
+               <img              
               src={response.imageUrl ? response?.imageUrl : defaultUrl  }
                   alt="avatar"
                   className="rounded-circle"
-                  style={{ width: '150px' }}
+                  style={{ width: '130px' , height:"130px" }}
                  
                   fluid  />
                 <p className="text-muted mt-2 mb-1">{userDetails?.job}</p>

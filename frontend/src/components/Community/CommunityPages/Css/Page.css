@@ -1,0 +1,57 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .tab-button {
+    background-color: transparent;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 18px;
+    margin-right: 20px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+  }
+  
+  .tab-button.active {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .posts {
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .post {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+    width: 300px;
+  }
+  
+  .post-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .post-votes {
+    font-size: 16px;
+    color: #999;
+  }
+  

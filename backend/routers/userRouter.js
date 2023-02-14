@@ -4,7 +4,7 @@ const {userLogin} = require('../controllers/userController/userLoginController')
 const {questionAdd,getQuestion,particularQuestion,decreseVote,incrementVote,reportQuestion,getVotes} = require('../controllers/userController/questionController')
 const {answerAdd,getAnswerByQId,increaseAnswerVote,getParticularAnswer} = require("../controllers/userController/answerController")
 const {commentAdd} = require("../controllers/userController/commentController")
-const {updateProfileController,getProfileData,getImage, updateUserDetails,getUserDataForProfileUpdate}  = require('../controllers/userController/userProfileController');
+const {updateProfileController,getUserProfile,getProfileData,getImage, updateUserDetails,getUserDataForProfileUpdate}  = require('../controllers/userController/userProfileController');
 // const authMiddleware = require('../middleware/authMiddleware')
 const {getUsersDetails} = require("../controllers/adminController/adminUsersDetailsController");
 const { verifyJWT } = require('../middleware/authMiddleware');
@@ -26,7 +26,7 @@ router.get('/question/:id',particularQuestion)
 router.get('/get-answer/:id',getAnswerByQId)
 
 
-
+router.get("/getUserProfile/:id",verifyJWT,getUserProfile)
 router.post('/profile/:id',updateProfileController)
 router.get('/profileData',getProfileData)
 router.get('/getImage/:email',verifyJWT,getImage)
