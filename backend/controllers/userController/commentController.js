@@ -28,6 +28,13 @@ const commentAdd = async (req, res) => {
   }
 };
 
+const getComment =async (req,res)=>{
+  const id = req.params.id
+const comment =  await CommentDB.find({question_id:id})
+console.log(comment)
+res.status(200).json(comment)
+}
 module.exports = {
   commentAdd,
+  getComment
 };

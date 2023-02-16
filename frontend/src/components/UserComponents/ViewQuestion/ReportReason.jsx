@@ -16,19 +16,20 @@ function ReportReason({ questionData }) {
   const handleReason = (event) => {
       setReportReason(event.target.value);
     };
-      console.log("herer hallo hallo hallo ")
-  
+  console.log(reportReason)
   const handleSubmit = (e) => {
       toast.success("question reported !!");
     e.preventDefault();
     try {
-      axios.post(`/api/question-report/${qid}`,{reason : reportReason}  );
+      axios.post(`/api/question-report/${qid}`,{reason : reportReason});
     } catch (error) {
       console.log("error ", error);
     }
     ("/question")
     setShow(false)
   };
+
+
 
   return (
     <>

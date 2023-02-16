@@ -3,7 +3,7 @@ const {userSignup,otpVerify} = require('../controllers/userController/userSignup
 const {userLogin} = require('../controllers/userController/userLoginController')
 const {questionAdd,getQuestion,particularQuestion,decreseVote,incrementVote,reportQuestion,getVotes} = require('../controllers/userController/questionController')
 const {answerAdd,getAnswerByQId,increaseAnswerVote,getParticularAnswer} = require("../controllers/userController/answerController")
-const {commentAdd} = require("../controllers/userController/commentController")
+const {commentAdd,getComment} = require("../controllers/userController/commentController")
 const {updateProfileController,getUserProfile,getProfileData,getImage, updateUserDetails,getUserDataForProfileUpdate}  = require('../controllers/userController/userProfileController');
 // const authMiddleware = require('../middleware/authMiddleware')
 const {getUsersDetails} = require("../controllers/adminController/adminUsersDetailsController");
@@ -20,6 +20,7 @@ router.get("/api",(req,res)=>{
 router.post('/question',questionAdd)
 router.post("/answer",answerAdd)
 router.post("/comment/:id",commentAdd)
+router.get("/comment/:id",getComment)
 
 router.get('/getQuestion',getQuestion);
 router.get('/question/:id',particularQuestion)

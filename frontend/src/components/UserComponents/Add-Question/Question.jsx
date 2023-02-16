@@ -166,7 +166,7 @@ function Question() {
               </div>
             </div>
           </div>
-          <button type="submit" onClick={handleSubmit} className="button ">
+          <button type="submit" onClick={handleSubmit} className="button btn btn-primary">
 Add question          </button>
         </div>
       </div>

@@ -20,12 +20,16 @@ function ProfilePicAddModal() {
   const [selectedFle, setSelectedFile] = useState("");
   const [validate , setValidate] = useState("")
 const {userDetails}  = useSelector((state) => state.user)
-console.log("modal ",userDetails);
 
   const handleFileInput = (e) => {
     const file = e.target.files[0];
+    if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+      toast.error("Please select valid image")
+      return false
+    }else{
+      previewFile(file);
+    }
   
-    previewFile(file);
   };
 
   const previewFile = (file) => {
@@ -36,16 +40,21 @@ console.log("modal ",userDetails);
     };
   };
 
-  const handleSubmit = (e) => {
-    toast.success("profile pic updated")
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(setUserUpdatedDetails())
-
+  
     if (!previewSource) return;
-    uploadImage(previewSource);
+  
+    try {
+      await uploadImage(previewSource);
+      dispatch(setUserUpdatedDetails());
+      toast.success('Profile picture updated');
+      navigate('/home')
+    } catch (error) {
+      console.error(error);
+    }
   };
 const userId = userDetails?._id
-console.log(userId);
 const uploadImage = async (base64EncodedImage) => {
     console.log(" ",base64EncodedImage);
     try {
@@ -80,7 +89,7 @@ const uploadImage = async (base64EncodedImage) => {
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-       <button  onClick={()=>navigate('/profile')}  type="submit" className='btn btn-primary' >
+       <button    type="submit" className='btn btn-primary' >
           Save Changes
         </button>
       </Modal.Footer>   

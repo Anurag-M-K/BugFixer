@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const  QuestionDB = require('../../model/userModel/Question');
 
 const questionAdd =  async(req,res)=>{
-  console.log("req body coming ",req.body.tags)
     const questoinData = new QuestionDB({
         title:req.body.title,
         body:req.body.body,
@@ -197,9 +196,20 @@ const incrementVote = (req,res)=>{
 
 
     const reportQuestion =(req,res)=>{
-        const reason = req.body.reason
+        const reason = (req.body.reason).toString()
+           
         const id = req.params.qid
-        QuestionDB.findByIdAndUpdate(id,{$set:{report:true,reason:reason}}).then((response)=>{
+        QuestionDB.findByIdAndUpdate(id,
+            {
+                $set:{report:true},
+            
+            
+                $push:{
+                    reason:reason,
+                }
+            }
+            ).then((response)=>{
+
             res.send({response})
         })
     }

@@ -13,6 +13,7 @@ import {voteSlice} from "./features/voteSlice";
 import { completeUsersDetailsSlice } from "./features/completeUserDetailsSlice";
 import {singleQuestionSlice} from "./features/singleQuestionSlice";
 import { chatSlice } from "./features/chatSlice";
+import { commentSlice }  from "./features/commentSlice";
 
 
 const persistConfig = {
@@ -33,6 +34,7 @@ const reducer = combineReducers({
     users:completeUsersDetailsSlice.reducer,
     singleQuestion:singleQuestionSlice.reducer,
     chat:chatSlice.reducer,
+    comment:commentSlice.reducer,
 
 
 })

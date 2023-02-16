@@ -13,6 +13,7 @@ import  toast,{Toaster}  from "react-hot-toast";
 import { setSingleQuestionDetails } from "../../../redux/features/singleQuestionSlice";
 import { useLocation } from 'react-router-dom';
 import ReportReason from "./ReportReason";
+import { setCommentDetails } from "../../../redux/features/commentSlice";
 
 function MainQuestion() {
 
@@ -47,6 +48,7 @@ function MainQuestion() {
     getQuestionDetails();
   }, []);
   
+  const _id = questionData._id
 
   async function getUpdatedAnswer() {
     await axios
@@ -79,7 +81,6 @@ function MainQuestion() {
           const id = res.data.data.question_id
           await axios.get("/api/get-answer/"+id).then((response)=>{
             
-            console.log("checkning  ",response)
             dispatch(setSingleQuestionDetails(response))
 
           })
@@ -104,27 +105,30 @@ function MainQuestion() {
         comment: comment,
         user: userDetails,
       };
-
-      await axios.post(`/api/comment/${_id}`, body).then((res) => {
+      await axios.post(`/api/comment/${qid}`, body).then(async(res) => {
+        const comment = await axios.get(`/api/comment/${qid}`)
+        console.log("comment ",comment?.data)
+        dispatch(setCommentDetails(comment.data))
         setComment("");
         setShow(false);
         getUpdatedAnswer();
+
+        toast.success("Comment added successfully");
+
       });
     }
   };
 
   
+const { commentDetails } = useSelector(state=>state.comment)
 
-
-
-  const decVoting = async (vote) => {
+const decVoting = async (vote) => {
   try{
 
     setVote(vote - 1);    
     vote--;
     await axios.put("/api/vote-decrease/"+qid, {vote:vote}).then(async(response)=>{
       await axios.get(`/api/question/${id}`).then((res)=>setQuestionData(res.data[0]))
-      console.log("question data ",QuestionData)
       .catch((err)=> console.log("error on catch ",err))
     })
   }catch(error){
@@ -138,24 +142,18 @@ function MainQuestion() {
       vote++;
       await axios.put('/api/vote-increment/'+qid,{vote:vote}).then(async(response)=>{
         await axios
-      .get(`/api/question/${id}`)
-      .then((res) => setQuestionData(res.data[0] ))
-      .catch((err) => console.log(err));
+        .get(`/api/question/${id}`)
+        .then((res) => setQuestionData(res.data[0] ))
+        .catch((err) => console.log(err));
     }      )
      
-    } catch (error) {
+  } catch (error) {
       console.log("error from frontend ",error);
     }
 } 
-  // const reportQuestion =async ()=>{
-  //   toast.success("question reported !!")
-  
-  //   await axios.post(`/api/question-report/${qid}`).then((response)=>{
-  //   })
-  
-  //  } 
-  
-  const questionDetail = { ...questionData, vote };
+ 
+
+const questionDetail = { ...questionData, vote };
 
   const {voteCount} = useSelector(state=>state.vote)
 
@@ -170,12 +168,12 @@ var answerVoting = async(answerVote)=>{
     setAnswerVote(answerVote + 1)
     answerVote++;
     await axios.put("/api/answer-voting/"+aid,{answerVote})
-
+    
       await axios.get(`/api/answer/${aid}`)
       .then((res)=>{
         setAnswerData(res.data)
       }
-        )
+      )
       .catch((err)=> console.log(err))
     
   } catch (error) {
@@ -185,6 +183,7 @@ var answerVoting = async(answerVote)=>{
   
 }
 
+console.log("useselector comment ",commentDetails)
 console.log("helllo mic scheck ",answerData?.response?.vote)
 
   return (
@@ -260,8 +259,8 @@ console.log("helllo mic scheck ",answerData?.response?.vote)
                 </div>
               </div>
               <div className="comments">
-                {questionData?.comments &&
-                  questionData?.comments?.map((_qd) => (
+                {commentDetails &&
+                  commentDetails?.map((_qd) => (
                     <p>
                       {_qd?.comment}-{" "}
                       <span>
