@@ -17,6 +17,7 @@ function ProfileUpdate({ userDetails, response }) {
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
 
+  console.log("userdetai")
   const initialValue = {
     firstName: response.firstName,
     email: response.email,
@@ -24,6 +25,8 @@ function ProfileUpdate({ userDetails, response }) {
     job: response.job,
     company: response.company,
   };
+
+ 
   const [userData, setUsetData] = useState(initialValue);
 
   var data_id = response._id;

@@ -13,7 +13,6 @@ function Header() {
   const {userDetails} = useSelector(state=> state.user)
 
   const [username, setUsername] = useState('');
-  console.log("here ethi ",userDetails);
 const id = userDetails._id
 const {tokenData} = useSelector(state=> state.user)
   const navigate = useNavigate()
@@ -26,15 +25,20 @@ const {tokenData} = useSelector(state=> state.user)
   }
 
   const showProfile =async ()=>{
-    await axios({
-      url:'/api/getUserProfile/'+id,
-      method:"GET",
-      headers:{
-        Authorization:tokenData,
-      }
-    }).then(()=>{
-    navigate('/profile')
-  })
+    try {
+      
+      await axios({
+        url:'/api/getUserProfile/'+id,
+        method:"GET",
+        headers:{
+          Authorization:tokenData,
+        }
+      }).then(()=>{
+      navigate('/profile')
+    })
+    } catch (error) {
+      console.log("error ",error)
+    }
   }
  
 
@@ -96,7 +100,7 @@ const {tokenData} = useSelector(state=> state.user)
 
               {userDetails?.firstName ? (
                 < >
-                <span onClick={showProfile} className="ms-4 headerBtn"> {userDetails.firstName}</span>
+                <span onClick={showProfile} className="ms-4 headerBtn"> {userDetails?.firstName}</span>
                 <Link className="nav-link">
                 <span onClick={hndleLogout} ><button className="btn btn-danger my-sm-0 btn-sm px-3">Logout</button> </span>  <span className="sr-only">(current)</span>
                 </Link>

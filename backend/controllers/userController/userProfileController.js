@@ -1,7 +1,7 @@
 const { cloudinary } = require("../../utils/cloudinary");
 const { User } = require("../../model/userModel/userModel");
 const { default: mongoose } = require("mongoose");
-
+const QuestionDB = require("../../model/userModel/Question")
 
 
 const getUserProfile = async (req,res)=>{
@@ -69,7 +69,6 @@ const getImage = async (req, res) => {
 
 const updateUserDetails =async (req,res)=>{
   
-  console.log(req.body)
   const id = req.body.id
 
 try {
@@ -85,8 +84,6 @@ try {
   
     }},{upsert:true}).then((response)=>{
 
-      console.log("here response ")
-      console.log("after res ",response)
       res.status(200).json({response:response,message:"user updated successfully"})
     })
       // res.status(200).json({res})
@@ -98,28 +95,29 @@ try {
 
 }
 
-
-
-const getUserDataForProfileUpdate = async(req,res)=>{
-  const id = req.params.data_id
+const getUserQuestions = async(req,res)=>{
+  const { userId } = req.params;
+  console.log("id  vannu",userId)
   
   try {
-    console.log("rewq ",id)
     
-    const userData = await User.findOne({_id:id})
-    console.log("LEEN ",userData)
-    res.status(200).json(userData)
+   const questions = await QuestionDB.find({userId})
+   console.log("question finded ",questions)
+   res.status(200).json({questions})
     
-  
   } catch (error) {
-    console.log("errrrrr ",error)
+    
   }
 }
+
+
+
 module.exports = {
   updateProfileController,
   getProfileData,
   getImage,
   updateUserDetails,
-  getUserDataForProfileUpdate,
-  getUserProfile
+  // getUserDataForProfileUpdate,
+  getUserProfile,
+  getUserQuestions
 };

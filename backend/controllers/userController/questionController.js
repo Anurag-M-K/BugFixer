@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { findByIdAndDelete } = require('../../model/userModel/Question');
 const  QuestionDB = require('../../model/userModel/Question');
 
 const questionAdd =  async(req,res)=>{
@@ -216,12 +217,29 @@ const incrementVote = (req,res)=>{
 
 
     const getVotes =(req,res)=>{
-        // const id = req.params
-        const id = req.params.qid
-        QuestionDB.findById(id).then((response)=>{
-          res.status(200).json({response})
+        try {
+            const id = req.params.qid
+            QuestionDB.findById(id).then((response)=>{
+              res.status(200).json({response})
+    
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
-        })
+
+
+    const deleteUserQuestion = async(req,res)=>{
+        try {   
+            const { id } = req.params
+            console.log("id did id ",id)
+           await QuestionDB.findByIdAndDelete({_id:id}).then((response)=>{
+            res.status(200).json({delete:true,message:"Question deleted successfully"})
+           })
+        } catch (error) {
+            console.log(error)
+        }
     }
 module.exports = {
     questionAdd,
@@ -230,5 +248,7 @@ module.exports = {
     decreseVote,
     incrementVote,
     reportQuestion,
-    getVotes
+    getVotes,
+deleteUserQuestion
+    
 }

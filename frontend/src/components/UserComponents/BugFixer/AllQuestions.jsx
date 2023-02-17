@@ -2,7 +2,7 @@ import { Avatar } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import './css/AllQuestions.css';
-import ReactHtmlParser from 'react-html-parser'
+import ReactHtmlParser from 'react-html-parser';
 
 function AllQuestions({question}) {
  var tags = question.tags

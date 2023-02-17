@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const {userSignup,otpVerify} = require('../controllers/userController/userSignupController')
 const {userLogin} = require('../controllers/userController/userLoginController')
-const {questionAdd,getQuestion,particularQuestion,decreseVote,incrementVote,reportQuestion,getVotes} = require('../controllers/userController/questionController')
+const {questionAdd,getQuestion,particularQuestion,decreseVote,incrementVote,reportQuestion,getVotes,deleteUserQuestion} = require('../controllers/userController/questionController')
 const {answerAdd,getAnswerByQId,increaseAnswerVote,getParticularAnswer} = require("../controllers/userController/answerController")
 const {commentAdd,getComment} = require("../controllers/userController/commentController")
-const {updateProfileController,getUserProfile,getProfileData,getImage, updateUserDetails,getUserDataForProfileUpdate}  = require('../controllers/userController/userProfileController');
+const {updateProfileController,getUserProfile,getProfileData,getImage, updateUserDetails,getUserQuestions}  = require('../controllers/userController/userProfileController');
 // const authMiddleware = require('../middleware/authMiddleware')
 const {getUsersDetails} = require("../controllers/adminController/adminUsersDetailsController");
 const { verifyJWT } = require('../middleware/authMiddleware');
@@ -32,9 +32,9 @@ router.post('/profile/:id',updateProfileController)
 router.get('/profileData',getProfileData)
 router.get('/getImage/:email',verifyJWT,getImage)
 router.put("/update-user",updateUserDetails)
-router.get('/getUserDetails/:data_id',getUserDataForProfileUpdate)
-
-
+// router.get('/getUserDetails/:data_id',getUserDataForProfileUpdate)
+router.delete("/question-delete/:id",verifyJWT, deleteUserQuestion)
+router.get('/get-user-questions/:userId',verifyJWT,getUserQuestions)
 
 
 

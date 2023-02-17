@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   MDBCol,
   MDBContainer,
@@ -13,27 +13,34 @@ import {
   MDBProgressBar,
   MDBIcon,
   MDBListGroup,
-  MDBListGroupItem
-} from 'mdb-react-ui-kit';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import ProfilePicAddModal from './ProfilePicAddModal';
-import ProfileUpdate from './ProfileUpdate';
-import { setUserDetails } from '../../../redux/features/userSlice';
+  MDBListGroupItem,
+} from "mdb-react-ui-kit";
+import { useDispatch, useSelector } from "react-redux";
+import ProfilePicAddModal from "./ProfilePicAddModal";
+import ProfileUpdate from "./ProfileUpdate";
+import { setUserDetails } from "../../../redux/features/userSlice";
+import ReactHtmlParser from "react-html-parser";
+import { deleteQuestion ,getUserQuestions } from "../../../helper/UserProfileHelper";
+import { setUserProfileQuestionsDetails } from "../../../redux/features/userProfileQuestions";
+import toast, { Toaster } from "react-hot-toast";
+import './UserProfile.css'
+
+import "./ProfileEdit.css";
 
 export default function UserProfile() {
-
-  const {userDetails} = useSelector(state=> state.user);
+  const { userDetails } = useSelector((state) => state.user);
   const [previewSource, setPreviewSource] = useState();
   const [fileInputState, setFileInpuyState] = useState("");
   const [selectedFle, setSelectedFile] = useState("");
-const [response , setResponse] = useState([])
-
-const dispatch = useDispatch()
+  const [response, setResponse] = useState([]);
+  const { questionDetails } = useSelector((state) => state.question);
+  const [questions, setQuestions] = useState([]);
+  const dispatch = useDispatch();
+  const { tokenData } = useSelector((state) => state.user);
 
   const handleFileInput = (e) => {
     const file = e.target.files[0];
-    
+
     previewFile(file);
   };
 
@@ -54,7 +61,7 @@ const dispatch = useDispatch()
     try {
       await fetch(`http://localhost:80/api/profile/${userId}`, {
         method: "POST",
-        body: JSON.stringify({ data: base64EncodedImage, userData,userId}),
+        body: JSON.stringify({ data: base64EncodedImage, userData, userId }),
         headers: { "Content-type": "application/json" },
       }).then((responseData) => {
         console.log(JSON.stringify(responseData, null, 4));
@@ -64,94 +71,125 @@ const dispatch = useDispatch()
     }
   };
 
-  const {tokenData}= useSelector(state=> state.user);
-
-  
-
-  const email = userDetails.email
-  useEffect(()=>{
-    (async()=>{
+  const email = userDetails.email;
+  useEffect(() => {
+    (async () => {
       const data = await axios({
-        url:'/api/getImage/'+email,
-        method:"GET",
-        headers:{
-          Authorization:tokenData,
-        }
-      }).then((response)=>{
-        setResponse(response.data[0])
-        dispatch(setUserDetails(response.data[0]))
-      })
-   
+        url: "/api/getImage/" + email,
+        method: "GET",
+        headers: {
+          Authorization: tokenData,
+        },
+      }).then((response) => {
+        setResponse(response.data[0]);
+        dispatch(setUserDetails(response.data[0]));
+      });
+    })();
+  }, []);
 
-    })()
+  const id = userDetails?._id;
+  useEffect(() => {
+    const filteredQuestions = questionDetails?.filter(
+      (question) => question?.user?._id === id
+    );
+    setQuestions(filteredQuestions);
+  }, []);
+const userId = id
+  const { singleQuestiondata } = useSelector((state) => state.singleQuestion);
+  const handleQuestionDelete = async (id) => {
+    const deleteQuestioneRsponse = await deleteQuestion(id, tokenData);
+   const data = await getUserQuestions(userId , tokenData)
+      dispatch(setUserProfileQuestionsDetails(data.data.questions))
+    toast.success(deleteQuestioneRsponse.message);
+  };
+  console.log("hello")
 
+  const { userProfileQuestionsDetails } = useSelector((state=> state.userProfileQuestions))
+  console.log("slice ",userProfileQuestionsDetails)
 
-  },[])
-
-
-  let defaultUrl = "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+  let defaultUrl =
+    "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp";
   return (
-    <section style={{ backgroundColor: '#eee' }}>
-      < MDBContainer className="py-5">
-      
-
+    <section style={{ backgroundColor: "#eee" }}>
+      <MDBContainer className="py-5">
         <MDBRow>
           <MDBCol lg="4">
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
-               
-               <img              
-              src={response.imageUrl ? response?.imageUrl : defaultUrl  }
+                <img
+                  src={response.imageUrl ? response?.imageUrl : defaultUrl}
                   alt="avatar"
                   className="rounded-circle"
-                  style={{ width: '130px' , height:"130px" }}
-                 
-                  fluid  />
+                  style={{ width: "130px", height: "130px" }}
+                  fluid
+                />
                 <p className="text-muted mt-2 mb-1">{userDetails?.job}</p>
                 <p className="text-muted mb-4">{userDetails?.company}</p>
                 <div className="d-flex justify-content-center mb-2">
                   {/* <Link to={'/edit-profile'}><MDBBtn>edit profile</MDBBtn> </Link> */}
-                 <ProfileUpdate userDetails = {userDetails}  response = {response}/> <ProfilePicAddModal/>
+                  <ProfileUpdate
+                    userDetails={userDetails}
+                    response={response}
+                  />{" "}
+                  <ProfilePicAddModal />
                   {/* <MDBBtn outline className="ms-1">Message</MDBBtn> */}
                 </div>
               </MDBCardBody>
             </MDBCard>
 
             <MDBCard className="mb-4 mb-lg-0">
-               
               <MDBCardBody className="p-0">
-          
                 <MDBListGroup flush className="rounded-3">
-             
                   <MDBListGroupItem className=" d-flex  align-items-center justify-content-center p-3">
-                    <MDBIcon/>
-                    <MDBCardText><h5>Social medias</h5></MDBCardText>
-                    
-                    <button className="btn btn-warning mb-3 ml-5  " type="submit">add</button>
-                    
-                  </MDBListGroupItem>``
-             
+                    <MDBIcon />
+                    <MDBCardText>
+                      <h5>Social medias</h5>
+                    </MDBCardText>
+
+                    <button
+                      className="btn btn-warning mb-3 ml-5  "
+                      type="submit"
+                    >
+                      add
+                    </button>
+                  </MDBListGroupItem>
+                  ``
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fas icon="globe fa-lg text-warning" />
                     <MDBCardText>https://mdbootstrap.com</MDBCardText>
                   </MDBListGroupItem>
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} />
+                    <MDBIcon
+                      fab
+                      icon="github fa-lg"
+                      style={{ color: "#333333" }}
+                    />
                     <MDBCardText>mdbootstrap</MDBCardText>
                   </MDBListGroupItem>
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fab icon="twitter fa-lg" style={{ color: '#55acee' }} />
+                    <MDBIcon
+                      fab
+                      icon="twitter fa-lg"
+                      style={{ color: "#55acee" }}
+                    />
                     <MDBCardText>@mdbootstrap</MDBCardText>
                   </MDBListGroupItem>
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fab icon="instagram fa-lg" style={{ color: '#ac2bac' }} />
+                    <MDBIcon
+                      fab
+                      icon="instagram fa-lg"
+                      style={{ color: "#ac2bac" }}
+                    />
                     <MDBCardText>mdbootstrap</MDBCardText>
                   </MDBListGroupItem>
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fab icon="facebook fa-lg" style={{ color: '#3b5998' }} />
+                    <MDBIcon
+                      fab
+                      icon="facebook fa-lg"
+                      style={{ color: "#3b5998" }}
+                    />
                     <MDBCardText>mdbootstrap</MDBCardText>
                   </MDBListGroupItem>
-                
                 </MDBListGroup>
               </MDBCardBody>
             </MDBCard>
@@ -164,7 +202,10 @@ const dispatch = useDispatch()
                     <MDBCardText>Full Name</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails?.firstName +" " }{ userDetails?.lastName}</MDBCardText>
+                    <MDBCardText className="text-muted">
+                      {userDetails?.firstName + " "}
+                      {userDetails?.lastName}
+                    </MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -173,7 +214,9 @@ const dispatch = useDispatch()
                     <MDBCardText>Email</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails?.email}</MDBCardText>
+                    <MDBCardText className="text-muted">
+                      {userDetails?.email}
+                    </MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -182,18 +225,21 @@ const dispatch = useDispatch()
                     <MDBCardText>Phone</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails?.phone}</MDBCardText>
+                    <MDBCardText className="text-muted">
+                      {userDetails?.phone}
+                    </MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
-               
 
                 <MDBRow>
                   <MDBCol sm="3">
                     <MDBCardText>Job</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails?.job}</MDBCardText>
+                    <MDBCardText className="text-muted">
+                      {userDetails?.job}
+                    </MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -202,80 +248,70 @@ const dispatch = useDispatch()
                     <MDBCardText>Company</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails?.company}</MDBCardText>
+                    <MDBCardText className="text-muted">
+                      {userDetails?.company}
+                    </MDBCardText>
                   </MDBCol>
                 </MDBRow>
               </MDBCardBody>
             </MDBCard>
 
             <MDBRow>
-              <MDBCol md="6">
-                <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">assigment</span> Project Status</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>Web Design</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={80} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Website Markup</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={72} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>One Page</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={89} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Mobile Template</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={55} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Backend API</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={66} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-
-              <MDBCol md="6">
-                <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">assigment</span> Project Status</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>Web Design</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={80} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Website Markup</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={72} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>One Page</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={89} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Mobile Template</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={55} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Backend API</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={66} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-                  </MDBCardBody>
-                </MDBCard>
+              <MDBCol md="6 col-md-12">
+                <MDBCardText className="mb-4">
+                  <span className="text-primary  font-italic me-1">
+                    Questions
+                  </span>{" "}
+                </MDBCardText>
+                {userProfileQuestionsDetails.map((question) => {
+                  return (
+                    <MDBCard className="mb-4 mb-md-0">
+                      <MDBCardBody>
+                        <>
+                          <MDBCardText
+                            key={question._id}
+                            className="mb-1"
+                            style={{
+                              fontSize: "1rem",
+                              fontWeight: "bold",
+                              width: "100%",
+                            }}
+                          >
+                            {question?.title}
+                            <div className="del-btn">
+                            <div class=" d-md-flex justify-content-md-end  ">
+                              <a
+                                class="btn btn-danger btn-md active"
+                                role="button"
+                                aria-pressed="true"
+                                onClick={() =>
+                                  handleQuestionDelete(question._id)
+                                }
+                              >
+                                Delete
+                              </a>
+                            </div>
+                            </div>
+                          </MDBCardText>
+                          <MDBCardText
+                            key={question._id}
+                            className="mb-1"
+                            style={{ fontSize: ".77rem" }}
+                          >
+                            {" "}
+                            {ReactHtmlParser(question?.body)}
+                          </MDBCardText>
+                        </>
+                      </MDBCardBody>
+                    </MDBCard>
+                  );
+                })}
               </MDBCol>
             </MDBRow>
           </MDBCol>
         </MDBRow>
       </MDBContainer>
+      <Toaster />
     </section>
   );
 }
