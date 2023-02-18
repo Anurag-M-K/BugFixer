@@ -5,6 +5,7 @@ import ChatOnline from '../ChatOnline/ChatOnline';
 import Conversation from '../Conversation/Conversation';
 import Message from '../Message/Message';
 import { getConversation , getMessages , postMessages } from '../../../helper/UsersChatHelper';
+import { io } from 'socket.io-client';
 import './Messenger.css';
 
 function Messenger() {
@@ -14,7 +15,35 @@ function Messenger() {
     const [currentChat , setCurrentChat] = useState(null)
     const [ messages , setMessages ] = useState([])
     const [ newMessage , setNewMessage ] = useState("")
+    const [ arrivalMessage , setArrivalMessage ] = useState(null)
     const scrollRef = useRef() //which is used for automatically scroll up when a message is send
+    const socket = useRef(io("ws://localhost:8080"))
+
+
+    useEffect(()=>{
+        socket.current = io("ws://localhost:8080") ;
+        socket.current.on("getMessage", data =>{
+        setArrivalMessage({
+            sender: data.senderId,
+            text : data.text,
+            createdAt : Date.now(), 
+        })
+        })
+    },[]);
+
+    useEffect(()=>{
+        arrivalMessage && currentChat?.members.includes(arrivalMessage.sender) &&
+        setMessages((prev)=>[...prev,arrivalMessage])
+    },[arrivalMessage,currentChat]);
+    
+    useEffect(()=>{
+        socket.current.emit("addUser",userDetails._id)
+        socket.current.on("getUsers",users=>{
+            
+        })
+    },[userDetails])
+    
+
     useEffect(()=>{
             try {
                 (async()=>{
@@ -45,14 +74,26 @@ const message = {
     sender : userDetails._id,
     text:newMessage,
 };
+
+
+
+//sending messages to socket server
+const recieverId = currentChat?.members?.find(member=> member !== userDetails._id)
+socket.current.emit("sendMessage",{
+    senderId:userDetails._id,
+    recieverId,
+    text:newMessage,
+})
 try {
     const res = await postMessages(message) 
     setMessages([...messages, res])
     setNewMessage('')
 } catch (error) {
-    console.log("error from messenger getmessage ",error)
+    console.log(error)
 }
 }
+
+
 
 
 useEffect(()=>{

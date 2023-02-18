@@ -50,6 +50,7 @@
     "redux-persist": "^6.0.0",
     "sass": "^1.57.1",
     "scrollreveal": "^4.0.9",
+    "socket.io-client": "^4.6.0",
     "styled-components": "^5.3.6",
     "sweetalert-react": "^0.4.11",
     "timeago.js": "^4.0.2",
