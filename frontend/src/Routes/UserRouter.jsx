@@ -11,9 +11,10 @@ import Test from '../pages/user/Test'
 import UserEditProfilePage from "../pages/user/UserEditProfilePage";
 import Otp from "../components/UserComponents/Signup/Otp";
 import CommunityHomePage from "../pages/Community/CommunityHomePage";
-import Chat from "../components/Community/Chat/Chat";
 import { Route ,Routes,BrowserRouter as Router } from 'react-router-dom';
 import { useSelector } from "react-redux";
+import ViewQuestionPage from "../pages/user/ViewQuestionPage";
+import Messenger from "../components/Community/Messenger/Messenger";
 
 
 function UserRoute(){
@@ -33,8 +34,11 @@ function UserRoute(){
           <Route exact path="/profile" element={<Private><UserProfilePage/></Private>} />
           <Route exact path="/edit-profile" element={<Private><UserEditProfilePage/></Private>} />
           <Route exact path='/otp-page' element={<Otp/>} />
+          <Route exact path='/view-question' element={<ViewQuestionPage/>} />
+
           <Route exact path="/community" element={<CommunityHomePage/>}/>
-          <Route exact path="/chat" element={<Chat/>}/>
+          <Route exact path="/messenger" element={<Private><Messenger/></Private>}/>
+          
           </Routes>
   </>
   )

@@ -6,49 +6,45 @@ import { useEffect } from "react";
 import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; //quills css important
-import "./index.css";
 import ReactHtmlParser from "react-html-parser";
 import { useDispatch, useSelector } from "react-redux";
-import  toast,{Toaster}  from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { setSingleQuestionDetails } from "../../../redux/features/singleQuestionSlice";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import ReportReason from "./ReportReason";
 import { setCommentDetails } from "../../../redux/features/commentSlice";
+import "./index.css";
 
 function MainQuestion() {
-
   const [show, setShow] = useState(false);
   const [answer, setAnswer] = useState(" ");
   const [questionData, setQuestionData] = useState([]);
   const { userDetails } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
   var [vote, setVote] = useState(0);
-  var [answerVote,setAnswerVote] = useState(0)
-  const {setAnswerDetails} = useSelector(state=> state.answer)
-  const dispatch = useDispatch()
-  const [answerData,setAnswerData] = useState([])
+  var [answerVote, setAnswerVote] = useState(0);
+  const { setAnswerDetails } = useSelector((state) => state.answer);
+  const dispatch = useDispatch();
+  const [answerData, setAnswerData] = useState([]);
 
   let location = useLocation();
   let params = new URLSearchParams(location.search);
-  let id = params.get('id');
+  let id = params.get("id");
 
-  
-
-  
   const handleQuill = (value) => {
     setAnswer(value);
   };
   useEffect(() => {
     async function getQuestionDetails() {
       await axios
-      .get(`/api/question/${id}`)
-      .then((res) => setQuestionData(res.data[0]))
-      .catch((err) => console.log(err));
+        .get(`/api/question/${id}`)
+        .then((res) => setQuestionData(res.data[0]))
+        .catch((err) => console.log(err));
     }
     getQuestionDetails();
   }, []);
-  
-  const _id = questionData._id
+
+  const _id = questionData._id;
 
   async function getUpdatedAnswer() {
     await axios
@@ -60,7 +56,7 @@ function MainQuestion() {
         console.log(err);
       });
   }
-  
+
   const handleSubmit = async () => {
     if (answer !== "") {
       const body = {
@@ -74,30 +70,26 @@ function MainQuestion() {
         },
       };
 
-      
       await axios
         .post("/api/answer", body, config)
-        .then(async(res) => {
-          const id = res.data.data.question_id
-          await axios.get("/api/get-answer/"+id).then((response)=>{
-            
-            dispatch(setSingleQuestionDetails(response))
-
-          })
+        .then(async (res) => {
+          const id = res.data.data.question_id;
+          await axios.get("/api/get-answer/" + id).then((response) => {
+            dispatch(setSingleQuestionDetails(response));
+          });
           toast.success("Answer added successfully");
-          
+
           setAnswer("");
           getUpdatedAnswer();
         })
         .catch((err) => {
           console.log(err);
         });
-      }
+    }
   };
 
-  const qid = questionData?._id
+  const qid = questionData?._id;
 
-  
   const handleComment = async () => {
     if (comment != "") {
       const body = {
@@ -105,102 +97,94 @@ function MainQuestion() {
         comment: comment,
         user: userDetails,
       };
-      await axios.post(`/api/comment/${qid}`, body).then(async(res) => {
-        const comment = await axios.get(`/api/comment/${qid}`)
-        console.log("comment ",comment?.data)
-        dispatch(setCommentDetails(comment.data))
+      await axios.post(`/api/comment/${qid}`, body).then(async (res) => {
+        const comment = await axios.get(`/api/comment/${qid}`);
+        console.log("comment ", comment?.data);
+        dispatch(setCommentDetails(comment.data));
         setComment("");
         setShow(false);
         getUpdatedAnswer();
 
         toast.success("Comment added successfully");
-
       });
     }
   };
 
-  
-const { commentDetails } = useSelector(state=>state.comment)
+  const { commentDetails } = useSelector((state) => state.comment);
 
-const decVoting = async (vote) => {
-  try{
-
-    setVote(vote - 1);    
-    vote--;
-    await axios.put("/api/vote-decrease/"+qid, {vote:vote}).then(async(response)=>{
-      await axios.get(`/api/question/${id}`).then((res)=>setQuestionData(res.data[0]))
-      .catch((err)=> console.log("error on catch ",err))
-    })
-  }catch(error){
-    console.log(error)
-  }
-  } 
-  
-  const incVoting = async(vote)=>{
+  const decVoting = async (vote) => {
     try {
-      setVote(vote+1);
-      vote++;
-      await axios.put('/api/vote-increment/'+qid,{vote:vote}).then(async(response)=>{
-        await axios
-        .get(`/api/question/${id}`)
-        .then((res) => setQuestionData(res.data[0] ))
-        .catch((err) => console.log(err));
-    }      )
-     
-  } catch (error) {
-      console.log("error from frontend ",error);
+      setVote(vote - 1);
+      vote--;
+      await axios
+        .put("/api/vote-decrease/" + qid, { vote: vote })
+        .then(async (response) => {
+          await axios
+            .get(`/api/question/${id}`)
+            .then((res) => setQuestionData(res.data[0]))
+            .catch((err) => console.log("error on catch ", err));
+        });
+    } catch (error) {
+      console.log(error);
     }
-} 
- 
+  };
 
-const questionDetail = { ...questionData, vote };
+  const incVoting = async (vote) => {
+    try {
+      setVote(vote + 1);
+      vote++;
+      await axios
+        .put("/api/vote-increment/" + qid, { vote: vote })
+        .then(async (response) => {
+          await axios
+            .get(`/api/question/${id}`)
+            .then((res) => setQuestionData(res.data[0]))
+            .catch((err) => console.log(err));
+        });
+    } catch (error) {
+      console.log("error from frontend ", error);
+    }
+  };
 
-  const {voteCount} = useSelector(state=>state.vote)
+  const questionDetail = { ...questionData, vote };
 
-const {singleQuestiondata} = useSelector(state=> state.singleQuestion)
+  const { voteCount } = useSelector((state) => state.vote);
 
+  const { singleQuestiondata } = useSelector((state) => state.singleQuestion);
 
+  var answerVoting = async (answerVote) => {
+    try {
+      setAnswerVote(answerVote + 1);
+      answerVote++;
+      await axios.put("/api/answer-voting/" + aid, { answerVote });
 
+      await axios
+        .get(`/api/answer/${aid}`)
+        .then((res) => {
+          setAnswerData(res.data);
+        })
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.log("error ", error);
+    }
+  };
 
-
-var answerVoting = async(answerVote)=>{
-  try {
-    setAnswerVote(answerVote + 1)
-    answerVote++;
-    await axios.put("/api/answer-voting/"+aid,{answerVote})
-    
-      await axios.get(`/api/answer/${aid}`)
-      .then((res)=>{
-        setAnswerData(res.data)
-      }
-      )
-      .catch((err)=> console.log(err))
-    
-  } catch (error) {
-    console.log('error ',error)
-  }
-  
-  
-}
-
-console.log("useselector comment ",commentDetails)
-console.log("helllo mic scheck ",answerData?.response?.vote)
+  console.log("useselector comment ", commentDetails);
+  console.log("helllo mic scheck ", answerData?.response?.vote);
 
   return (
-    <div className="main col-xl-8">
+    <div className="main col-xl-12">
       <div className="main-container">
         <div className="main-top">
           <h2 className="main-question">{questionData?.title}</h2>
-          <Link top="/add-question">
-            <button className="btn btn-primary">Ask Question</button>
-          </Link>
+        
         </div>
         <div className="main-desc">
           <div className="info">
-            <p>{new Date(questionData?.created_at).toLocaleString()}</p>
             <p>
               Active <span>today</span>
             </p>
+            <p>{new Date(questionData?.created_at).toLocaleString()}</p>
             <p>
               Viewed <span>43 times</span>
             </p>
@@ -208,41 +192,64 @@ console.log("helllo mic scheck ",answerData?.response?.vote)
         </div>
         <div className="all-questions">
           <div className="all-questions-container">
-            <div className="all-questions-left">
-              <div className="all-options">
-                <span className="arrow">
-                  <svg
-                    type="submit"
-                    onClick={()=> incVoting(questionData?.vote)}
-                    aria-hidden="true"
-                    className="svg-icon iconArrowUpLg"
-                    width="36"
-                    height="36"
-                    viewBox="0 0 36 36"
-                  >
-                    <path d="M2 25h32L18 9 2 25Z"></path>
-                  </svg>
-                </span>
-                <p className="arrow">{questionData?.vote}</p>
-                <span className="arrow">
-                  <svg
-                    type="submit"
-                    onClick={()=>decVoting(questionData?.vote)}
-                    aria-hidden="true"
-                    className="svg-icon iconArrowDownLg"
-                    width="36"
-                    height="36"
-                    viewBox="0 0 36 36"
-                  >
-                    <path d="M2 11h32L18 27 2 11Z"></path>
-                  </svg>
-                </span>
-                  <small className="reportBtn" >Report</small>
-                  <small><ReportReason questionData={questionData}/></small>
-                <Bookmark />
-                <History />
-              </div>
+            <div className="all-questions-left ">
+              <div
+                className="all-options"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <div className="col-md-12 side">
+                  <div className="upArrow">
+                    <span className="arrow">
+                      <svg
+                        type="submit"
+                        onClick={() => incVoting(questionData?.vote)}
+                        aria-hidden="true"
+                        className="svg-icon iconArrowUpLg"
+                        width="36"
+                        height="36"
+                        viewBox="0 0 36 36"
+                      >
+                        <path d="M2 25h32L18 9 2 25Z"></path>
+                      </svg>
+                    </span>
+                  </div>
+                  <div className="vote">
+                    <p className="arrow pe-2">{questionData?.vote}</p>
+                  </div>
+                  <div className="downArrow">
+                    <span className="arrow">
+                      <svg
+                        type="submit"
+                        onClick={() => decVoting(questionData?.vote)}
+                        aria-hidden="true"
+                        className="svg-icon iconArrowDownLg"
+                        width="36"
+                        height="36"
+                        viewBox="0 0 36 36"
+                      >
+                        <path d="M2 11h32L18 27 2 11Z"></path>
+                      </svg>
+                    </span>
+                  </div>
+                  <div className="report">
+                    <small>
+                      <ReportReason questionData={questionData} />
+                    </small>
+                  </div>
+                  <div className="bookmark">
+                    <Bookmark />
+                  </div>
+                  <div className="history">
+                    <History />
+                  </div>
+                </div>
+              
             </div>
+<div className="col-md-10">
+
             <div className="question-answer">
               <p>{ReactHtmlParser(questionData?.body)}</p>
               <div className="author">
@@ -293,13 +300,15 @@ console.log("helllo mic scheck ",answerData?.response?.vote)
                         placeholder="Add your comment..."
                         rows={5}
                       ></textarea>
-                      <button onClick={handleComment}>Add comment</button>
+                      <button className="btn btn-primary" onClick={handleComment}>Add comment</button>
                     </div>
                   )}
                 </div>
                 <br />
               </div>
             </div>
+</div>
+</div>
           </div>
         </div>
         <div
@@ -319,9 +328,12 @@ console.log("helllo mic scheck ",answerData?.response?.vote)
           </p>
           {questionData?.answerDetails?.map((_q) => (
             <div key={_q?._id} className="all-questions-container">
-              <div className="all-questions-left">
+              <div className="all-questions-left col-md-2">
                 <div className="all-options">
-                  <span onClick={()=> answerVoting(answerData?.response?.vote)} className="arrow">
+                  <span
+                    onClick={() => answerVoting(answerData?.response?.vote)}
+                    className="arrow"
+                  >
                     <svg
                       aria-hidden="true"
                       className="svg-icon iconArrowUpLg"
@@ -343,16 +355,23 @@ console.log("helllo mic scheck ",answerData?.response?.vote)
                     >
                       <path d="M2 11h32L18 27 2 11Z"></path>
                     </svg>
-                    
                   </span>
                   <Bookmark />
                   <History />
                 </div>
               </div>
 
-              <div className="question-answer">
+              <div
+                className="question-answer col-md-10"
+                style={{
+                  display: "flex",
+                  justifyContent: " space-evenly",
+                }}
+              >
                 <p>{ReactHtmlParser(_q?.answer)}</p>
-                <div className="author">
+
+                      </div>
+                <div className="author-answer">
                   <small>{new Date(_q?.created_at).toLocaleString()}</small>
                   <div className="auth-details">
                     <Avatar src={_q?.user?.photo} />
@@ -364,7 +383,6 @@ console.log("helllo mic scheck ",answerData?.response?.vote)
                     </p>
                   </div>
                 </div>
-              </div>
             </div>
           ))}
         </div>
@@ -389,7 +407,8 @@ console.log("helllo mic scheck ",answerData?.response?.vote)
           }}
         />
       </div>
-      <button className="btn btn-primary"
+      <button
+        className="btn btn-primary"
         type="submit"
         onClick={handleSubmit}
         style={{
@@ -399,7 +418,7 @@ console.log("helllo mic scheck ",answerData?.response?.vote)
       >
         Post Your Answer
       </button>
-      <Toaster/>
+      <Toaster />
     </div>
   );
 }

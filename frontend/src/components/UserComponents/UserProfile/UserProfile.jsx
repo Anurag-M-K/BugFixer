@@ -34,10 +34,11 @@ export default function UserProfile() {
   const [selectedFle, setSelectedFile] = useState("");
   const [response, setResponse] = useState([]);
   const { questionDetails } = useSelector((state) => state.question);
-  const [questions, setQuestions] = useState([]);
+  // const [questions, setQuestions] = useState([]);
   const dispatch = useDispatch();
   const { tokenData } = useSelector((state) => state.user);
-
+  const { userProfileQuestionsDetails } = useSelector((state=> state.userProfileQuestions))
+  
   const handleFileInput = (e) => {
     const file = e.target.files[0];
 
@@ -87,24 +88,40 @@ export default function UserProfile() {
     })();
   }, []);
 
+
+
   const id = userDetails?._id;
-  useEffect(() => {
-    const filteredQuestions = questionDetails?.filter(
-      (question) => question?.user?._id === id
-    );
-    setQuestions(filteredQuestions);
-  }, []);
-const userId = id
-  const { singleQuestiondata } = useSelector((state) => state.singleQuestion);
+  // useEffect(() => {
+  //   const filteredQuestions = questionDetails?.filter(
+  //     (question) => question?.user?._id === id
+  //   );
+  //   setQuestions(filteredQuestions);
+  // }, []);
+
+
+  
+  const userId = id
+  useEffect(()=>{
+    try {
+      (async ()=>{
+        const data = await getUserQuestions(userId , tokenData)
+        dispatch(setUserProfileQuestionsDetails(data.data.questions))
+      })()
+    } catch (error) {
+    console.log(error)      
+    }
+  },[])
+
+
+
+  
   const handleQuestionDelete = async (id) => {
     const deleteQuestioneRsponse = await deleteQuestion(id, tokenData);
-   const data = await getUserQuestions(userId , tokenData)
-      dispatch(setUserProfileQuestionsDetails(data.data.questions))
+    const data = await getUserQuestions(userId , tokenData)
+        dispatch(setUserProfileQuestionsDetails(data.data.questions))
     toast.success(deleteQuestioneRsponse.message);
   };
-  console.log("hello")
 
-  const { userProfileQuestionsDetails } = useSelector((state=> state.userProfileQuestions))
   console.log("slice ",userProfileQuestionsDetails)
 
   let defaultUrl =
@@ -258,12 +275,15 @@ const userId = id
 
             <MDBRow>
               <MDBCol md="6 col-md-12">
+                {userProfileQuestionsDetails?.map((question) => {
                 <MDBCardText className="mb-4">
                   <span className="text-primary  font-italic me-1">
+                    
                     Questions
                   </span>{" "}
+                    
+                
                 </MDBCardText>
-                {userProfileQuestionsDetails.map((question) => {
                   return (
                     <MDBCard className="mb-4 mb-md-0">
                       <MDBCardBody>
@@ -277,7 +297,7 @@ const userId = id
                               width: "100%",
                             }}
                           >
-                            {question?.title}
+                            {question.title ? question?.title : ""} 
                             <div className="del-btn">
                             <div class=" d-md-flex justify-content-md-end  ">
                               <a
@@ -299,19 +319,21 @@ const userId = id
                             style={{ fontSize: ".77rem" }}
                           >
                             {" "}
-                            {ReactHtmlParser(question?.body)}
+
+                            {ReactHtmlParser(question?.body )}
                           </MDBCardText>
                         </>
                       </MDBCardBody>
                     </MDBCard>
-                  );
-                })}
+                );
+            
+              })}
               </MDBCol>
             </MDBRow>
           </MDBCol>
-        </MDBRow>
-      </MDBContainer>
-      <Toaster />
-    </section>
+          </MDBRow>
+          </MDBContainer>
+          <Toaster />
+          </section>
   );
 }

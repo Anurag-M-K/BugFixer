@@ -8,6 +8,7 @@
         },
         reducers:{
             setUserProfileQuestionsDetails:(state,action)=>{
+                console.log("from usrepROIFILEquestion slice ",action.payload)
                 state.userProfileQuestionsDetails = action.payload;
             }
         }

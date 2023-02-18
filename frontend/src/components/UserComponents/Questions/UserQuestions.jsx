@@ -7,14 +7,12 @@ import { useSelector } from "react-redux";
 const UserQuestions = () => {
 
   const {questionDetails} = useSelector(state=> state.question)
-  console.log("first",questionDetails)
 function truncate(str,n){
   return str?.length > n ? str.substr(0,n-1)+ "..." : str
 }
 
 
- console.log("d",questionDetails);
- console.log("d",questionDetails?.tags);
+ 
 
   return (
     <>
@@ -44,6 +42,9 @@ function truncate(str,n){
          
         
           <>
+          <div className="tag-image">
+          <div className="col-md-8">
+
           {questionData?.tags[0] ?
          
           <button
@@ -103,22 +104,27 @@ function truncate(str,n){
                 </button>
                 
                 :""}
-                </>
-   
-          <div className="profile float-right ">
+          </div>
+   <div className="col-md-4">
+   <div className="profile float-right ">
             <div className="d-flex mr-3">
               <img
             src=  {questionData?.user?.imageUrl ? questionData?.user?.imageUrl : "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"}
-                alt="User"
-                className="mr-2"
-                width="35px"
-                height="35px"
-                style={{ borderRadius: "1rem" }}
-              /><p>{questionData?.user?.firstName + " "+questionData?.user?.lastName + " "}</p>
+            alt="User"
+            className="mr-2"
+            width="35px"
+            height="35px"
+            style={{ borderRadius: "1rem" }}
+            /><p>{questionData?.user?.firstName + " "+questionData?.user?.lastName + " "}</p>
               <p>{" "+questionData?.created_at}</p>
              
             </div>
           </div>
+   </div>
+
+          </div>
+            </>
+        
         </div>
       </div>
      })} 

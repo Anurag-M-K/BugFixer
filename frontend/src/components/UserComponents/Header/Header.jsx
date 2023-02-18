@@ -69,7 +69,7 @@ const {tokenData} = useSelector(state=> state.user)
                 
               </li>
               <li className="nav-item mr-4">
-                <Link to="/chat" className="nav-link">
+                <Link to="/messenger" className="nav-link">
                   chat 
                 </Link>
               </li>

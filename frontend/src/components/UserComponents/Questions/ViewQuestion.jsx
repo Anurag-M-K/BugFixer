@@ -8,14 +8,14 @@ import { Link } from "react-router-dom";
 import axios from "../../../config/axiosInstance";
 import {useDispatch}  from 'react-redux'
 import {filterQuestionDetails, setQuestionDetails} from '../../../redux/features/questionSlice'
+import MainQuestion from "../ViewQuestion/MainQuestion";
 
-const Questions = () => {
+const ViewQuestions = () => {
   const dispatch = useDispatch()
   const [questions,setQuestions] = useState([]);
 const [searchTerm , setSearchTerm] = useState('');
 
 
-console.log(searchTerm)
 
 useEffect(()=>{
   async function findQuestions(){
@@ -54,7 +54,7 @@ dispatch(filterQuestionDetails([val]))
           {/* Left Sidebar added */}
           <div
             className="questions--LeftSidebar col-md-2 border"
-            style={{ fontSize: "14px", overflowY: "scroll",backgroundColor:"" }}
+            style={{ fontSize: "14px", overflowY: "scroll" }}
           >
             <LeftSidebar />
           </div>
@@ -92,7 +92,8 @@ dispatch(filterQuestionDetails([val]))
             </div>
             <hr />
             {/* Users Questionsadded */}
-            <UserQuestions  />
+            {/* <UserQuestions  /> */}
+            <MainQuestion/>
 
             {/* Pagination added */}
             <Pagination />
@@ -111,4 +112,4 @@ dispatch(filterQuestionDetails([val]))
   );
 };
 
-export default Questions;
+export default ViewQuestions;

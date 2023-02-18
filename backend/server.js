@@ -6,10 +6,12 @@ const PORT = process.env.PORT || 80
 const path = require('path');
 const db = require('./config/connection');
 require('dotenv').config();
-const adminRouter = require('./routers/adminRouter')
-const userRouter = require('./routers/userRouter')
-const ChatRoute = require("./routers/ChatRoute")
-const MessageRoute = require("./routers/MessageRoute")
+const adminRouter = require('./routers/adminRouter');
+const userRouter = require('./routers/userRouter');
+const conversationRouter = require('./routers/conversation');
+const messageRouter = require('./routers/messages');
+
+
 //db connection
 db(()=>{
     try {
@@ -61,10 +63,10 @@ app.use(express.json({limit: '50mb'}));
 
  
 //api
-app.use("/chat",ChatRoute)
 app.use('/api',userRouter);
 app.use('/admin',adminRouter);
-app.use("/message",MessageRoute)
+app.use('/api/conversation',conversationRouter);
+app.use('/api/message',messageRouter);
 //server listen
 app.listen(PORT,()=>{
     console.log(`bugfixer is running on PORT no - ${PORT}`)

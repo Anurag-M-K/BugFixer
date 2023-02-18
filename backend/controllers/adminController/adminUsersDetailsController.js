@@ -36,8 +36,16 @@ await User.findByIdAndUpdate(id,{$set:{isBlocked:false}}).then((response)=>{
 })
 }
 
+const getUser = async(req,res)=>{
+  const friend =   await User.findById(req.params.friendId)
+  console.log('friend from back ',friend)
+  res.status(200).json(friend)
+
+}
+
 module.exports = {
     getUsersDetails,
     blockUser,
-    unblockUser
+    unblockUser,
+    getUser
 }

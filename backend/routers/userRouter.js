@@ -6,7 +6,7 @@ const {answerAdd,getAnswerByQId,increaseAnswerVote,getParticularAnswer} = requir
 const {commentAdd,getComment} = require("../controllers/userController/commentController")
 const {updateProfileController,getUserProfile,getProfileData,getImage, updateUserDetails,getUserQuestions}  = require('../controllers/userController/userProfileController');
 // const authMiddleware = require('../middleware/authMiddleware')
-const {getUsersDetails} = require("../controllers/adminController/adminUsersDetailsController");
+const {getUsersDetails,getUser} = require("../controllers/adminController/adminUsersDetailsController");
 const { verifyJWT } = require('../middleware/authMiddleware');
 
 router.post('/userSignup', userSignup)
@@ -48,5 +48,12 @@ router.post('/question-report/:qid',reportQuestion)
 
 router.put('/answer-voting/:aid',increaseAnswerVote)
 router.get("/answer/:aid",getParticularAnswer)
+
+
+
+router.get('/getUser/:friendId',verifyJWT, getUser)
+
+
+
 
 module.exports = router;

@@ -11,4 +11,10 @@
     padding-left: 7px;
     border-color: darkgray;
   }
- 
+  .row.questions--LeftSidebar{
+    background-color: white ;
+  }
+  ::-webkit-scrollbar {
+    background-color: rgb(255, 252, 252);
+    width: 0.4vw;
+}

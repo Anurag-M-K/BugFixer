@@ -51,38 +51,7 @@ const RightSidebar = () => {
       </div>
       {/* Blog card ends */}
 
-      {/* Collectives card started */}
-      {/* <div className="card my-3 shadow-sm">
-        <div className="card-header">Collectives</div>
-        {apps.map((app) => {
-          return (
-            <div className="card-body">
-              <div className="d-flex justify-content-between">
-                <div className="d-flex">
-                  <img
-                    // src={process.env.PUBLIC_URL + app.img}
-                    alt="img"
-                    width="35px"
-                    height="30px"
-                    className="mr-2"
-                  />
-                  <div>
-                    <p style={{ fontSize: "18px", fontWeight: "100" }}>
-                      <b>{app.name}</b>
-                    </p>
-                    <p>{app.member}</p>
-                  </div>
-                </div>
-                <button className="btn btn-outline-info btn-sm mb-4 ">
-                  Search
-                </button>
-              </div>
-              <p>{app.content}</p>
-            </div>
-          );
-        })}
-      </div> */}
-      {/* Collectives card ends */}
+   
 
       {/* Relative Tags part added */}
       <RelatedTags />
@@ -96,13 +65,13 @@ const RightSidebar = () => {
 export default RightSidebar;
 
 const meta = [
-  `Providing a JavaScript API for userscripts`,
-  `Congratulations to the 59 sites that just left Beta`,
+  `Providing a JavaScript API `,
+  `Congratulations `,
 ];
 
 const blog = [
-  `Best practices for writing code comments`,
-  ` Sequencing your DNA with a USB dongle and open source code`,
+  `Best practices for writing code `,
+  ` Sequencing your DNA  `,
 ];
 
 const apps = [

@@ -1,0 +1,110 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import Header from '../../UserComponents/Header/Header'
+import ChatOnline from '../ChatOnline/ChatOnline';
+import Conversation from '../Conversation/Conversation';
+import Message from '../Message/Message';
+import { getConversation , getMessages , postMessages } from '../../../helper/UsersChatHelper';
+import './Messenger.css';
+
+function Messenger() {
+    const { userDetails } = useSelector((state)=>state.user)
+    const [conversations, setConversations] = useState([])
+    const { tokenData } = useSelector((state)=>state.user)
+    const [currentChat , setCurrentChat] = useState(null)
+    const [ messages , setMessages ] = useState([])
+    const [ newMessage , setNewMessage ] = useState("")
+    const scrollRef = useRef() //which is used for automatically scroll up when a message is send
+    useEffect(()=>{
+            try {
+                (async()=>{
+                    const res = await getConversation(userDetails?._id , tokenData)
+                    setConversations(res)
+                })()
+            } catch (error) {
+                console.log(error)
+            }
+    },[])
+
+    useEffect(()=>{
+            try {
+                (async()=>{
+                    const res = await getMessages(currentChat?._id,tokenData)
+                    setMessages(res)
+                })()
+                } catch (error) {
+                    console.log(error)
+                }
+            },[currentChat])
+
+
+const handleSubmit =async (e)=>{
+e.preventDefault();
+const message = {
+    conversationId : currentChat._id,
+    sender : userDetails._id,
+    text:newMessage,
+};
+try {
+    const res = await postMessages(message) 
+    setMessages([...messages, res])
+    setNewMessage('')
+} catch (error) {
+    console.log("error from messenger getmessage ",error)
+}
+}
+
+
+useEffect(()=>{
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+},[messages])
+  return (
+    <>
+    <Header/>
+    <div className='messenger'>
+<div className="chatMenu">
+    <div className="chatMenuWrapper">
+        <input type="input" placeholder='Search for friends' className='chatMenuInput' />
+        {conversations?.map((c)=>(
+            <div onClick={()=>setCurrentChat(c)}>
+
+        <Conversation  conversation = {c} /> 
+            </div>
+     ))}
+      
+    </div>
+</div>
+<div className="chatBox">
+    <div className="chatBoxWrapper">
+        {
+            currentChat ? 
+       (<> <div className="chatBoxTop">
+        {messages?.map((m)=>(
+<div ref={scrollRef}>
+
+            <Message message={m} own={m?.sender===userDetails._id}/>
+</div>
+        ))}
+          
+          
+          
+        </div>
+        <div className="chatBoxBottom">
+            <textarea className='chatMessageInput' onChange={(e)=> setNewMessage(e.target.value)} 
+            value={newMessage} placeholder='write Something....' ></textarea>
+            <button onClick={handleSubmit} className='chatSubmitButton'>Send</button>
+        </div></> ) : (
+             <span className='noConversationText'>Open a conversation to start a chat</span>)}
+    </div>
+</div>
+<div className="chatOnline">
+    <div className="chatOnlineWrapper">
+            <ChatOnline/>   
+    </div>
+</div>
+    </div>
+    </>
+  )
+}
+
+export default Messenger
