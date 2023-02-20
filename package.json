@@ -32,5 +32,9 @@
     "nodemon": "^2.0.20",
     "react-toastify": "^9.1.1",
     "twilio": "^3.84.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.34.0",
+    "eslint-plugin-react": "^7.32.2"
   }
 }

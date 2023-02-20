@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 function AdminQuestionPage() {
   return (
-    <Div style={{backgroundColor:'black'}}>
+    <Div style={{backgroundColor:'black' }}>
       <Sidebar/>
         <AdminQuestion/>
     </Div   >

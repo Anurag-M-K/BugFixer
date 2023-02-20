@@ -127,8 +127,9 @@ function AdminQuestion() {
 
       selector: (row) => (
         <img
-          width={50}
-          height={50}
+        style={{borderRadius:"20px"}}
+          width={45}
+          height={40}
           src={
             row?.imageUrl
               ? row?.imageUrl

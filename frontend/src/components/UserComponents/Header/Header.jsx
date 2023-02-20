@@ -13,20 +13,20 @@ function Header() {
   const {userDetails} = useSelector(state=> state.user)
 
   const [username, setUsername] = useState('');
-const id = userDetails._id
-const {tokenData} = useSelector(state=> state.user)
+  const {tokenData} = useSelector(state=> state.user)
   const navigate = useNavigate()
-
+  
   const hndleLogout = ()=>{
     toast.success("Logout successfully")
     localStorage.clear()
     window.location.reload('/')
     message.success("logout successfully")    
   }
-
+  
   const showProfile =async ()=>{
     try {
       
+      const id = userDetails._id
       await axios({
         url:'/api/getUserProfile/'+id,
         method:"GET",
@@ -40,6 +40,7 @@ const {tokenData} = useSelector(state=> state.user)
       console.log("error ",error)
     }
   }
+  
  
 
   return (
@@ -62,8 +63,9 @@ const {tokenData} = useSelector(state=> state.user)
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
+
               <li className="nav-item mx-4 active">
-                <Link className="nav-link">
+                <Link to={'/community'} className="nav-link">
                 <span >Community</span>  <span className="sr-only">(current)</span>
                 </Link>
                 

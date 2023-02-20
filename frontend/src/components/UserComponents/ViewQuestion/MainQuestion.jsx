@@ -17,16 +17,15 @@ import "./index.css";
 
 function MainQuestion() {
   const [show, setShow] = useState(false);
-  const [answer, setAnswer] = useState(" ");
+  const [answer, setAnswer] = useState([]);
   const [questionData, setQuestionData] = useState([]);
   const { userDetails } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
   var [vote, setVote] = useState(0);
-  var [answerVote, setAnswerVote] = useState(0);
-  const { setAnswerDetails } = useSelector((state) => state.answer);
+  var [answerVote, setAnswerVote] = useState([])  
+  // const { setAnswerDetails } = useSelector((state) => state.answer);
   const dispatch = useDispatch();
-  const [answerData, setAnswerData] = useState([]);
-
+  
   let location = useLocation();
   let params = new URLSearchParams(location.search);
   let id = params.get("id");
@@ -34,17 +33,45 @@ function MainQuestion() {
   const handleQuill = (value) => {
     setAnswer(value);
   };
+console.log(answer)
+
   useEffect(() => {
-    async function getQuestionDetails() {
+    ( async () =>{
+    try {
       await axios
-        .get(`/api/question/${id}`)
-        .then((res) => setQuestionData(res.data[0]))
-        .catch((err) => console.log(err));
+      .get(`/api/question/${id}`)
+      .then((res) => {
+        setQuestionData(res.data[0]);
+        setAnswerVote(res.data[0].answerDetails);
+        console.log("heel ",res.data[0].answerDetails);
+      
+      })
+    } catch (error) {
+      console.log(error)
     }
-    getQuestionDetails();
+  })()
   }, []);
 
   const _id = questionData._id;
+  
+
+
+  // useEffect(()=>{
+  //   (async()=>{
+  //    var qid = questionData._id; 
+  //    console.log("qisd ",qid)
+  //     await axios
+
+  //     .get(`/api/answer/${qid}`)
+  //     .then((res) => {
+      
+  //     })
+  //   })()
+  // },[])
+  // const [answerData, setAnswerData] = useState([]);
+  // console.log("answer data top ",answerData)
+
+
 
   async function getUpdatedAnswer() {
     await axios
@@ -55,7 +82,7 @@ function MainQuestion() {
       .catch((err) => {
         console.log(err);
       });
-  }
+    }
 
   const handleSubmit = async () => {
     if (answer !== "") {
@@ -78,7 +105,7 @@ function MainQuestion() {
             dispatch(setSingleQuestionDetails(response));
           });
           toast.success("Answer added successfully");
-
+          
           setAnswer("");
           getUpdatedAnswer();
         })
@@ -109,7 +136,7 @@ function MainQuestion() {
       });
     }
   };
-
+  
   const { commentDetails } = useSelector((state) => state.comment);
 
   const decVoting = async (vote) => {
@@ -152,25 +179,30 @@ function MainQuestion() {
 
   const { singleQuestiondata } = useSelector((state) => state.singleQuestion);
 
-  var answerVoting = async (answerVote) => {
+
+
+
+  var answerVoting = async (id) => {
+    console.log(id)
     try {
       setAnswerVote(answerVote + 1);
       answerVote++;
-      await axios.put("/api/answer-voting/" + aid, { answerVote });
-
+      await axios.put("/api/answer-voting/"+id,  { answerVote:answerVote });
+      var qid = questionData._id
       await axios
-        .get(`/api/answer/${aid}`)
-        .then((res) => {
-          setAnswerData(res.data);
-        })
-        .catch((err) => console.log(err));
+      .get(`/api/answer/${qid}`)
+      .then((res) => {
+        setAnswerVote(res.data.response);
+      
+      })
+      .catch((err) => console.log(err));
     } catch (error) {
       console.log("error ", error);
     }
   };
 
-  console.log("useselector comment ", commentDetails);
-  console.log("helllo mic scheck ", answerData?.response?.vote);
+
+
 
   return (
     <div className="main col-xl-12">
@@ -324,14 +356,14 @@ function MainQuestion() {
               fontWeight: "300",
             }}
           >
-            {questionData?.answerDetails?.length} Answers
+            {answerVote?.length} Answers
           </p>
-          {questionData?.answerDetails?.map((_q) => (
+          {answerVote?.map((_q) => (
             <div key={_q?._id} className="all-questions-container">
               <div className="all-questions-left col-md-2">
                 <div className="all-options">
                   <span
-                    onClick={() => answerVoting(answerData?.response?.vote)}
+                    onClick={() => answerVoting(_q._id)}
                     className="arrow"
                   >
                     <svg
@@ -344,7 +376,8 @@ function MainQuestion() {
                       <path d="M2 25h32L18 9 2 25Z"></path>
                     </svg>
                   </span>
-                  <p className="arrow">{answerData?.response?.vote}</p>
+
+                  <p className="arrow">{_q?.vote ? _q.vote : "0"}</p>
                   <span className="arrow">
                     <svg
                       aria-hidden="true"
@@ -362,7 +395,7 @@ function MainQuestion() {
               </div>
 
               <div
-                className="question-answer col-md-10"
+                className="question-answer col-md-10 col-sm-6 "
                 style={{
                   display: "flex",
                   justifyContent: " space-evenly",
@@ -390,7 +423,7 @@ function MainQuestion() {
       <div className="main-answer">
         <h3
           style={{
-            fontSize: "22px",
+            fontSize: "22px",           
             margin: "10px 0",
             fontWeight: "400",
           }}

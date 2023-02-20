@@ -1,17 +1,16 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import "./AdminLogin.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../../../redux/features/alertSlice";
-import {  setAdminDetails } from "../../../redux/features/adminSlice";
-
-
+import {
+  setAdminDetails,
+} from "../../../redux/features/adminSlice";
+import { useNavigate } from "react-router-dom";
+import { setAdminToken  } from "../../../redux/features/adminTokenSlice";
 
 function AdminLogin() {
-
-
-
-
+  const navigate = useNavigate();
   const [data, setData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
 
@@ -19,38 +18,32 @@ function AdminLogin() {
     setData({ ...data, [input.name]: input.value });
   };
 
-  const { loading } = useSelector(state=>state.admin);
-  // const {adminDetails} = useSelector(adminState())     
+  const { loading } = useSelector((state) => state.admin);
+  // const {adminDetails} = useSelector(adminState())
   const dispatch = useDispatch();
 
-//toast
-
-
-
+  //toast
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       dispatch(showLoading());
       setTimeout(async () => {
-        
         const url = "http://localhost:80/admin/admin-login";
-      
+
         dispatch(hideLoading());
-        
-        const { data: res } = await axios.post(url, data);
-       
-        localStorage.setItem("AdminToken", res.data);
-      
-       try {
-        dispatch(setAdminDetails(data))
-        window.location= ('/admin-dashboard')
-       } catch (error) {
-       
-        console.log(error.message);
-        
-       }
-      }, 800);
+
+        const { data: res } = await axios.post(url, data).then((res) => {
+          localStorage.setItem("AdminToken", res.data);
+          try {
+            dispatch(setAdminToken(res.data.data));
+            dispatch(setAdminDetails(data));
+            navigate("/admin-dashboard");
+          } catch (error) {
+            console.log(error.message);
+          }
+        }, 800);
+      });
     } catch (error) {
       dispatch(hideLoading());
       if (
@@ -97,8 +90,8 @@ function AdminLogin() {
               </div>
             )}
             <a href="">
-              <button  style={{ backgroundColor: "#243b55" }}>Submit</button>
-         
+              <button style={{ backgroundColor: "#243b55" }}>Submit</button>
+
               <span></span>
               <span></span>
               <span></span>

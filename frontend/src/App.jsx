@@ -23,7 +23,6 @@ function App() {
         </Routes>
         <Routes>
           <Route exact path="/*" element={<UserRoute/>} />
-
         </Routes>
 
                   

@@ -22,12 +22,14 @@ function ReportReason({ questionData }) {
     e.preventDefault();
     try {
       axios.post(`/api/question-report/${qid}`,{reason : reportReason});
+      setReportReason("")
     } catch (error) {
       console.log("error ", error);
     }
     ("/question")
     setShow(false)
   };
+
 
 
 
@@ -40,14 +42,14 @@ function ReportReason({ questionData }) {
       <Modal show={show} onHide={handleClose}>
             <form onSubmit={handleSubmit}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Type Reason</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
-              <Form.Label>Example textarea</Form.Label>
+              <Form.Label></Form.Label>
               <Form.Control
                 value={reportReason}
                 onChange={handleReason}

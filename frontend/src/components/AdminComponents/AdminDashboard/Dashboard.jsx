@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import Analytics from "./Analytics";
-import Earnings from "./Earnings";
+// import Earnings from "./Earnings";
 import FAQ from "./FAQ";
 import Navbar from "./Navbar";
-import Profile from "./Profile";
-import Transfers from "./Transfers";
+// import Profile from "./Profile";
+// import Transfers from "./Transfers";
 import scrollreveal from "scrollreveal";
 export default function Dashboard() {
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function Dashboard() {
     );
   }, []);
   return (
-    <>
+    < div >
     <Section>
       <Navbar />
       <div className="grid">
@@ -36,20 +36,20 @@ export default function Dashboard() {
           <Analytics />
           <FAQ />
         </div>
-        <div className="row__two">
-          <Earnings />
-          <Transfers />
-          <Profile />
-        </div>
+        {/* <div className="row__two">
+          <Earnings /> 
+           <Transfers /> 
+           <Profile />
+        </div> */}
       </div>
     </Section>
-  </>
+  </div>
   );
 }
 
 const Section = styled.section`
   margin-left: 18vw;
-  padding: 2rem;
+  padding: 3rem;
   height: 100%;
   .grid {
     display: flex;

@@ -1,14 +1,15 @@
 import React from "react";
 import "./HomePage.scss";
 import secure from "../Images/secure.png";
-import search from "../Images/search.png";
+import search from "../Images/search.png"
 import LineImg from "../Images/line.png";
 import blue from "../Images/blue.png";
 import yellow from "../Images/yellow.png";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate()
   return (
     <>
       <div className="col-md-12">
@@ -41,7 +42,7 @@ const HomePage = () => {
                   Find the best answer to your technical question, help others
                   answer theirs
                 </p>
-                <button
+                <button  onClick={()=>navigate('/community')}
                   type="button"
                   className="homePage--innerDiv--box--find--btn btn"
                 >
@@ -65,7 +66,7 @@ const HomePage = () => {
                 <img src={secure} alt="search" />
                 <p>
                   Want a secure, private space for your technical knowledge?
-                </p>
+                </p>````
 
                 <p style={{ marginBottom: "-1rem" }}>Get started</p>
                 <hr text-primary />

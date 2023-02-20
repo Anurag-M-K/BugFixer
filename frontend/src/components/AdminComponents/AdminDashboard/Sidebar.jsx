@@ -48,10 +48,11 @@ export default function Sidebar() {
   }, []);
 
 //logout function
-const handleLogout =()=>{
-  localStorage.clear()
+const handleLogout =(e)=>{
+  // e.preventDefault();
+  localStorage.removeItem("AdminToken")
+  navigate('/admin-login')
   message.success("Logout successfully")
-  window.location.reload('/admin-login')
 }
 
   return (
@@ -113,9 +114,11 @@ const handleLogout =()=>{
                 className={currentLink === 4 ? "active" : "none"}
                 onClick={() => setCurrentLink(4)}
               >
-                <a href="#">
+                <a onClick={()=>{
+                  navigate("/admin-community")
+                }}>
                   <GiTwirlCenter />
-                  <span className="buttonsDashboard" > Learning Center</span>
+                  <span className="buttonsDashboard" > Community</span>
                 </a>
               </li>
               <li
@@ -140,10 +143,8 @@ const handleLogout =()=>{
           </div>
         </div>
         <div className="logout">
-          <Link>
             <FiLogOut />
-            <span onClick={handleLogout} className="logout">Logout</span>
-          </Link>
+            <button onClick={handleLogout} className="logout">Logout</button>
         </div>
       </Section>
       <ResponsiveNav state={navbarState} className={navbarState ? "show" : ""}>
@@ -186,7 +187,7 @@ const handleLogout =()=>{
             >
               <a href="#">
                 <GiTwirlCenter />
-                <span> Learning Center</span>
+                <span> Community</span>
               </a>
             </li>
             <li

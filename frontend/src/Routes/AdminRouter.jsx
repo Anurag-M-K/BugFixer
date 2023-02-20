@@ -5,7 +5,9 @@ import AdminPrivateRoute from '../PrivateRoutes/AdminRoute'
 import UserManagePage from "../pages/admin/UserManagePage";
 import AdminQuestionPage from "../pages/admin/AdminQuestionPage";
 import AdminLoginPage from '../components/AdminComponents/AdminLogin/AdminLogin';
-import { Route ,Routes,BrowserRouter as Router } from 'react-router-dom';
+import { Route ,Routes } from 'react-router-dom';
+import AdminCommunityPage from "../pages/admin/AdminCommunityPage";
+// import AdminLayout from '../Layout/AdminLayout'
 
 
 function AdminRouter() {
@@ -13,12 +15,15 @@ function AdminRouter() {
 
   return (
     <>
-    {loading && <Spinner />}
+    {/* {loading && <Spinner />} */}
       <Routes>
           <Route exact path="/admin-login" element={ <AdminPrivateRoute><AdminLoginPage /></AdminPrivateRoute>} />
+          {/* <Route element={<AdminLayout/>}> */}
           <Route exact path="/admin-dashboard" element={<AdminPrivateRoute><AdminDashboard /></AdminPrivateRoute>} />
           <Route exact path="/user-manage" element={<AdminPrivateRoute><UserManagePage /></AdminPrivateRoute>} />
           <Route exact path="/Question-manage" element={<AdminPrivateRoute><AdminQuestionPage/></AdminPrivateRoute>} />
+          <Route exact path="/admin-community" element={<AdminPrivateRoute><AdminCommunityPage/></AdminPrivateRoute>} />
+          {/* </Route> */}
       </Routes>
     </>
   );

@@ -1,0 +1,22 @@
+.community-card{
+    margin: 5px;
+    border-radius: 30px;
+}
+.community-card{
+  
+    color: white;
+    width: 350px;
+    height: 250px;
+    max-width: 321px;
+    max-height: 350px;
+
+}
+.add-data-btn{
+    display: flex;
+    justify-content: start;
+}
+.community-modal{
+    display: flex;
+    align-items: center;
+    /* margin-top: 50px; */
+}

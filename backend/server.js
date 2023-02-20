@@ -10,6 +10,7 @@ const adminRouter = require('./routers/adminRouter');
 const userRouter = require('./routers/userRouter');
 const conversationRouter = require('./routers/conversation');
 const messageRouter = require('./routers/messages');
+const communityRouter = require('./routers/communityRoutes')
 
 
 //db connection
@@ -67,6 +68,7 @@ app.use('/api',userRouter);
 app.use('/admin',adminRouter);
 app.use('/api/conversation',conversationRouter);
 app.use('/api/message',messageRouter);
+app.use("/api/community",communityRouter)
 //server listen
 app.listen(PORT,()=>{
     console.log(`bugfixer is running on PORT no - ${PORT}`)

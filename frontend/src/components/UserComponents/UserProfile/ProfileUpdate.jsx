@@ -17,7 +17,6 @@ function ProfileUpdate({ userDetails, response }) {
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
 
-  console.log("userdetai")
   const initialValue = {
     firstName: response.firstName,
     email: response.email,

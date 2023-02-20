@@ -15,6 +15,8 @@ import {singleQuestionSlice} from "./features/singleQuestionSlice";
 import { chatSlice } from "./features/chatSlice";
 import { commentSlice }  from "./features/commentSlice";
 import { userProfileQuestionsSlice } from "./features/userProfileQuestions";
+import { adminTokenSlice } from "./features/adminTokenSlice";
+import { communityPostsSlice } from "./features/communityPostsSlice";
 
 
 const persistConfig = {
@@ -36,7 +38,9 @@ const reducer = combineReducers({
     singleQuestion:singleQuestionSlice.reducer,
     chat:chatSlice.reducer,
     comment:commentSlice.reducer,
-    userProfileQuestions:userProfileQuestionsSlice.reducer
+    userProfileQuestions:userProfileQuestionsSlice.reducer,
+    adminToken:adminTokenSlice.reducer,
+    communityPosts:communityPostsSlice.reducer,
 
 
 })

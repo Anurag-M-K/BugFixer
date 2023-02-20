@@ -47,7 +47,7 @@ router.get("/get-vote/:qid",getVotes)
 router.post('/question-report/:qid',reportQuestion)
 
 router.put('/answer-voting/:aid',increaseAnswerVote)
-router.get("/answer/:aid",getParticularAnswer)
+router.get("/answer/:qid",getParticularAnswer)
 
 
 

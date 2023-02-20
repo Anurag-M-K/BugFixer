@@ -12,16 +12,18 @@ console.log(req.body)
     const admin = await Admin.findOne({username:req.body.username});
     if(!admin)
     return res.status(401).send({message:"Invalid username or password"});
-
+    
     const validPassword = await bcrypt.compare(
         req.body.password,
         admin.password
-    );
-    if(!validPassword)
-    return res.status(401).send({message:"invalid username or password"})
+        );
+        if(!validPassword)
+        return res.status(401).send({message:"invalid username or password"})
+        console.log("admin ",admin)
 
     const token = admin.generateAuthToken();
-    res.status(200).send({data:token, message:"Logged in successfully"});
+    console.log("admin token  ",token)
+    res.status(200).json({data:token, message:"Logged in successfully"});
 
    } catch (error) {
     res.status(500).send({message:"internal server error"})

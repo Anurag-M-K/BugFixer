@@ -56,10 +56,6 @@ try {
     }
 
   
-
-    
-
-    
     const columns = [
         {
       name: "Qusetion ID",
