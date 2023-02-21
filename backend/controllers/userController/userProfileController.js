@@ -51,9 +51,7 @@ const getProfileData = async (req, res) => {
 };
 
 const getImage = async (req, res) => {
-  // const { email } = req.params;
   const email = req.params.email  ;
-  // console.log(emailId)
   try {
     await User.find( {email:email}).then((data) => {
       res.status(200).json(data);

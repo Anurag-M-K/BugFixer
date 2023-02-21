@@ -43,7 +43,10 @@ const userSchema = new mongoose.Schema({
     },
     company:{
       type:String
-    }
+    },
+    community:[{
+      type:String
+  }]
 });
 
 userSchema.methods.generateAuthToken = function () {

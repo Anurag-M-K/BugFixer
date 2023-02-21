@@ -19,7 +19,7 @@ function Header() {
   const hndleLogout = ()=>{
     toast.success("Logout successfully")
     localStorage.clear()
-    window.location.reload('/')
+    navigate('/login-page')
     message.success("logout successfully")    
   }
   
@@ -103,9 +103,9 @@ function Header() {
               {userDetails?.firstName ? (
                 < >
                 <span onClick={showProfile} className="ms-4 headerBtn"> {userDetails?.firstName}</span>
-                <Link className="nav-link">
-                <span onClick={hndleLogout} ><button className="btn btn-danger my-sm-0 btn-sm px-3">Logout</button> </span>  <span className="sr-only">(current)</span>
-                </Link>
+             
+                <button onClick={hndleLogout} className="btn btn-danger ms-2" >Log Out </button> 
+             
                 </>
               ) : (
                 <>

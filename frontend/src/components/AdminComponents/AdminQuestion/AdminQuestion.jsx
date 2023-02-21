@@ -25,7 +25,6 @@ function AdminQuestion() {
 
 
     const questionDelete = async(qid)=>{
-        // toast.success("Question deleted!!!")
 try {
   swal({
     title: "Are you sure?",

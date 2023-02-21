@@ -9,26 +9,28 @@ import { setUserUpdatedDetails } from "../../../redux/features/userUpdatedSlice"
 import toast, { Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { setUserDetails } from "../../../redux/features/userSlice";
+import { updateUserProfile } from '../../../helper/UserProfileHelper'
 
-function ProfileUpdate({ userDetails, response }) {
+function ProfileUpdate({ userDetails }) {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
+  const { tokenData } = useSelector((state)=>state.user)
 
   const initialValue = {
-    firstName: response.firstName,
-    email: response.email,
-    phone: response.phone,
-    job: response.job,
-    company: response.company,
+    firstName: userDetails.firstName,
+    email: userDetails.email,
+    phone: userDetails.phone,
+    job: userDetails.job,
+    company: userDetails.company,
   };
 
  
   const [userData, setUsetData] = useState(initialValue);
 
-  var data_id = response._id;
+  var data_id = userDetails._id;
   const getUserDetails = async () => {
     axios.defaults.baseURL = "http://localhost:80";
     await axios.get("/api/getUserDetails/" + data_id).then((datas) => {
@@ -39,14 +41,12 @@ function ProfileUpdate({ userDetails, response }) {
   useEffect(() => {
     getUserDetails();
   }, []);
-  console.log("hello ", userData);
 
-  console.log("new data ", userData);
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setUsetData({
-      ...response,
+      ...userDetails,
 
       [name]: value,
     });
@@ -61,19 +61,17 @@ function ProfileUpdate({ userDetails, response }) {
 
     try {
       axios.defaults.baseURL = "http://localhost:80";
-      await axios.put("/api/update-user/", updateData).then(async (res) => {
-        await axios.get("/api/getUserDetails/" + data_id).then((datas) => {
+      await updateUserProfile( updateData , tokenData)
+     const datas =  await getUserDetails( data_id)
+     console.log("datasd ",datas)
           dispatch(setUserDetails(datas.data));
           setUsetData(datas);
           navigate("/home")
-        });
-      });
     } catch (error) {
       console.log("error from catch error ", error);
     }
   };
 
-  console.log("userdetails from fro kro ", userDetails);
 
   return (
     <>
@@ -149,15 +147,13 @@ function ProfileUpdate({ userDetails, response }) {
               Close
             </Button>
           <button
-          // onClick={() => navigate('../profile', { replace: true })}
               className="btn btn-primary"
               type="submit"
+              onClick={handleClose}
             >
               Update
             </button>
-            {/* <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button> */}
+         
           </Modal.Footer>
         </form>
         <Toaster />

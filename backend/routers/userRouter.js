@@ -5,17 +5,17 @@ const {questionAdd,getQuestion,particularQuestion,decreseVote,incrementVote,repo
 const {answerAdd,getAnswerByQId,increaseAnswerVote,getParticularAnswer} = require("../controllers/userController/answerController")
 const {commentAdd,getComment} = require("../controllers/userController/commentController")
 const {updateProfileController,getUserProfile,getProfileData,getImage, updateUserDetails,getUserQuestions}  = require('../controllers/userController/userProfileController');
-// const authMiddleware = require('../middleware/authMiddleware')
 const {getUsersDetails,getUser} = require("../controllers/adminController/adminUsersDetailsController");
 const { verifyJWT } = require('../middleware/authMiddleware');
+const { addingCommunity } = require("../controllers/userController/userCommunityController")
 
 router.post('/userSignup', userSignup)
 router.post('/userLogin',userLogin)
 router.post("/otpVerifying",otpVerify)
 
-router.get("/api",(req,res)=>{  
-       res.send("welcome to bugfixer ")
-});
+// router.get("/api",(req,res)=>{  
+//        res.send("welcome to bugfixer ")
+// });
 
 router.post('/question',questionAdd)
 router.post("/answer",answerAdd)
@@ -52,6 +52,8 @@ router.get("/answer/:qid",getParticularAnswer)
 
 
 router.get('/getUser/:friendId',verifyJWT, getUser)
+
+router.put("/join-community",verifyJWT,addingCommunity)
 
 
 

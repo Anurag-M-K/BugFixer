@@ -1,76 +1,63 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./Css/Page.css";
+import { useDispatch, useSelector } from 'react-redux'
+import { joinCommunity } from "../../../helper/userCommunityHelper";
+import "./Css/Community.css";
+import toast,{Toaster} from 'react-hot-toast'
+ import { setUserDetails } from "../../../redux/features/userSlice";
+
 
 const Community = () => {
   const navigate = useNavigate()
   const [selectedTab, setSelectedTab] = useState("all");
-  const [posts, setPosts] = useState([
-    { id: 1, title: "Reactjs ", votes: "Make Better UI with many libraries ,UI with many libraries , " },
-    { id: 2, title: "Node", votes: "Best practices for Node.js development" },
-    { id: 3, title: "Database", votes: "MongoDB vs. MySQL: Which is better?" },
-    {
-      id: 4,
-      title: "Python",
-      votes:
-        " A versatile language for everything from data analysis to web development",
-    },
-    {
-      id: 4,
-      title: "Java",
-      votes: "A robust language for web development and scripting",
-    },
-    {
-      id: 1,
-      title: "Ruby",
-      votes: " A popular language used  for web development and scripting",
-    },
-    {
-      id: 2,
-      title: "C++",
-      votes: "A pwerful language used for systems programming, gaming and more",
-    },
-    {
-      id: 3,
-      title: "Php",
-      votes:
-        "A server side language used for web development and powering popular content management systems like wordpress",
-    },
-    {
-      id: 4,
-      title: "Swift",
-      votes: "Apple modern language for ios, macos, and beyond",
-    },
-    {
-      id: 4,
-      title: "Kotlin",
-      votes: "A modern language used for android development and beyond",
-    },
-    {
-      id: 1,
-      title: "Typescript",
-      votes:
-        "A typed superset  of javascript that adds additional features and helps catch errors at compile time",
-    },
-    {
-      id: 2,
-      title: "Rust",
-      votes:
-        "A language focused on safety , speed and concurrency used for systems programming and beyond",
-    },
-  ]);
-
+  const { posts } = useSelector((state)=>state.communityPosts)
+  const { userDetails,tokenData } = useSelector((state)=>state.user)
+  const dispatch = useDispatch()
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
   };
 
-  const filteredPosts =
-    selectedTab === "all"
-      ? posts
-      : selectedTab === "popular"
-      ? posts.sort((a, b) => b.votes - a.votes)
-      : posts.sort((a, b) => b.id - a.id);
 
+
+  const handleJoinCommunity = async (post)=>{
+    console.log("post ",post)
+  
+    try {
+      swal({
+        title:"Are you sure",
+        text:  `Are you sure you want to join ${post.title} community?`,
+        icon:'success',
+        buttons:true,
+        dangerMode:true,
+      }).then((button)=>{
+
+        if(button){
+
+          joinCommunity(userDetails._id,post,tokenData).then((response)=>{
+            
+            console.log("checking position",post.title )
+            
+            swal(`you successfully joined the community`,{
+              icon:"success",
+            })
+            navigate(`/single-community/${post._id}`)
+
+            })
+        }else{
+          console.log("caneled")
+          swal('Canceled')
+        }
+      })
+      } 
+      catch (error) {
+        console.log(error)
+      }
+      
+    }
+    
+    
+    
+    
   return (
     <div className="container mt-3">
       <div className="tabs">
@@ -93,14 +80,18 @@ const Community = () => {
           New
         </button>
       </div>
-      <div className="posts">
-        {filteredPosts.map((post) => (
-<div onClick={()=>navigate(`/${post.title}`)} key={post.id} className="post">
-            <h3 className="post-title mt-5">{post.title}</h3>
-            <p className="post-votes"> {post.votes}</p>
+      <div  className="posts">
+        {posts?.map((post) => (
+          <div onClick={()=>handleJoinCommunity(post)}>
+
+<div  key={post._id} className="post">
+           <h3 className="post-title mt-5">{post.title}</h3>
+            <p className="post-votes"> {post.body}</p>
           </div>
+        </div>
         ))}
       </div>
+      <Toaster/>
     </div>
   );
 };

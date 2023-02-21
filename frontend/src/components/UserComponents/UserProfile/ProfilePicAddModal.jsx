@@ -49,7 +49,7 @@ const {userDetails}  = useSelector((state) => state.user)
       await uploadImage(previewSource);
       dispatch(setUserUpdatedDetails());
       toast.success('Profile picture updated');
-      navigate('/home')
+      setShow(false)
     } catch (error) {
       console.error(error);
     }

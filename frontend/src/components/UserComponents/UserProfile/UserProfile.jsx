@@ -20,11 +20,10 @@ import ProfilePicAddModal from "./ProfilePicAddModal";
 import ProfileUpdate from "./ProfileUpdate";
 import { setUserDetails } from "../../../redux/features/userSlice";
 import ReactHtmlParser from "react-html-parser";
-import { deleteQuestion ,getUserQuestions } from "../../../helper/UserProfileHelper";
+import { deleteQuestion ,getUserQuestions,getUserDetails } from "../../../helper/UserProfileHelper";
 import { setUserProfileQuestionsDetails } from "../../../redux/features/userProfileQuestions";
 import toast, { Toaster } from "react-hot-toast";
 import './UserProfile.css'
-
 import "./ProfileEdit.css";
 
 export default function UserProfile() {
@@ -34,7 +33,6 @@ export default function UserProfile() {
   const [selectedFle, setSelectedFile] = useState("");
   const [response, setResponse] = useState([]);
   const { questionDetails } = useSelector((state) => state.question);
-  // const [questions, setQuestions] = useState([]);
   const dispatch = useDispatch();
   const { tokenData } = useSelector((state) => state.user);
   const { userProfileQuestionsDetails } = useSelector((state=> state.userProfileQuestions))
@@ -71,7 +69,7 @@ export default function UserProfile() {
       console.error(error);
     }
   };
-
+console.log("userd details from profile ",userDetails)
   const email = userDetails.email;
   useEffect(() => {
     (async () => {
@@ -90,16 +88,11 @@ export default function UserProfile() {
 
 
 
+
+
+
   const id = userDetails?._id;
-  // useEffect(() => {
-  //   const filteredQuestions = questionDetails?.filter(
-  //     (question) => question?.user?._id === id
-  //   );
-  //   setQuestions(filteredQuestions);
-  // }, []);
-
-
-  
+    
   const userId = id
   useEffect(()=>{
     try {
@@ -122,10 +115,22 @@ export default function UserProfile() {
     toast.success(deleteQuestioneRsponse.message);
   };
 
-  console.log("slice ",userProfileQuestionsDetails)
+  useEffect(()=>{
+    try {
+      (async()=>{
+        const user = await getUserDetails(userDetails._id,tokenData)
+        console.log("usr ",user.response)
+        dispatch(setUserDetails(user?.response))
+      })()
+    } catch (error) {
+      console.log(error)
+    }
 
+  },[])
+
+  const userAskedQuestions = userProfileQuestionsDetails.filter(useraskedQuestions=> useraskedQuestions?.user?._id ==id)
   let defaultUrl =
-    "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp";
+  "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp";
   return (
     <section style={{ backgroundColor: "#eee" }}>
       <MDBContainer className="py-5">
@@ -143,13 +148,11 @@ export default function UserProfile() {
                 <p className="text-muted mt-2 mb-1">{userDetails?.job}</p>
                 <p className="text-muted mb-4">{userDetails?.company}</p>
                 <div className="d-flex justify-content-center mb-2">
-                  {/* <Link to={'/edit-profile'}><MDBBtn>edit profile</MDBBtn> </Link> */}
                   <ProfileUpdate
                     userDetails={userDetails}
                     response={response}
                   />{" "}
                   <ProfilePicAddModal />
-                  {/* <MDBBtn outline className="ms-1">Message</MDBBtn> */}
                 </div>
               </MDBCardBody>
             </MDBCard>
@@ -220,8 +223,8 @@ export default function UserProfile() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                      {userDetails?.firstName + " "}
-                      {userDetails?.lastName}
+                      {userDetails?.firstName ? userDetails?.firstName + " " : ""}
+                      {userDetails?.lastName ? userDetails?.lastName : "" }
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>
@@ -232,7 +235,7 @@ export default function UserProfile() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                      {userDetails?.email}
+                      {userDetails?.email ? userDetails?.email : ""}
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>
@@ -243,7 +246,7 @@ export default function UserProfile() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                      {userDetails?.phone}
+                      {userDetails?.phone ? userDetails?.phone : ""}
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>
@@ -255,7 +258,7 @@ export default function UserProfile() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                      {userDetails?.job}
+                      {userDetails?.job ? userDetails?.job : ""}
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>
@@ -266,7 +269,7 @@ export default function UserProfile() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                      {userDetails?.company}
+                      {userDetails?.company ? userDetails?.company : ""}
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>
@@ -275,7 +278,7 @@ export default function UserProfile() {
 
             <MDBRow>
               <MDBCol md="6 col-md-12">
-                {userProfileQuestionsDetails?.map((question) => {
+                {userAskedQuestions?.map((question) => {
                 <MDBCardText className="mb-4">
                   <span className="text-primary  font-italic me-1">
                     
@@ -283,6 +286,7 @@ export default function UserProfile() {
                   </span>{" "}
                     
                 
+
                 </MDBCardText>
                   return (
                     <MDBCard className="mb-4 mb-md-0">

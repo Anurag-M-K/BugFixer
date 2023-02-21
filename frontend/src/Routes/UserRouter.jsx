@@ -15,6 +15,7 @@ import { Route ,Routes,BrowserRouter as Router } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import ViewQuestionPage from "../pages/user/ViewQuestionPage";
 import Messenger from "../components/Community/Messenger/Messenger";
+import SingleCommunityPage from "../pages/Community/SingleCommunityPage";
 
 function UserRoute(){
     const { loading } = useSelector((state) => state.alerts);
@@ -35,10 +36,11 @@ function UserRoute(){
           <Route exact path='/otp-page' element={<Otp/>} />
           <Route exact path='/view-question' element={<ViewQuestionPage/>} />
 
-          <Route exact path="/community" element={<CommunityHomePage/>}/>
           <Route exact path="/messenger" element={<Private><Messenger/></Private>}/>
           <Route exact path="/page" element={<CommunityHomePage/>}/>
           
+          <Route exact path="/community" element={<CommunityHomePage/>}/>
+          <Route exact path="/single-community/:id" element={<SingleCommunityPage/>}/>
           </Routes>
   </>
   )

@@ -33,3 +33,36 @@ console.log(error)
 
 }
 
+export const updateUserProfile = async(updateData , tokenData)=>{
+    try {
+        const updateUserProfile = await instance({
+            url:"/api/update-user",
+            method:"PUT",
+            headers:{
+                Authorization:tokenData,
+            },
+            data : updateData
+        })
+        return updateUserProfile
+        
+    } catch (error) {
+        
+    }
+}
+
+export const getUserDetails = async( id , tokenData )=>{
+    try {
+        const getUserDetails = await instance({
+            url:"/api/getUserProfile/"+id,
+            method:"GET",
+            headers:{
+                Authorization:tokenData
+            }
+        })
+        return getUserDetails.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
