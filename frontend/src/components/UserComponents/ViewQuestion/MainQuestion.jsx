@@ -56,21 +56,6 @@ console.log(answer)
   
 
 
-  // useEffect(()=>{
-  //   (async()=>{
-  //    var qid = questionData._id; 
-  //    console.log("qisd ",qid)
-  //     await axios
-
-  //     .get(`/api/answer/${qid}`)
-  //     .then((res) => {
-      
-  //     })
-  //   })()
-  // },[])
-  // const [answerData, setAnswerData] = useState([]);
-  // console.log("answer data top ",answerData)
-
 
 
   async function getUpdatedAnswer() {

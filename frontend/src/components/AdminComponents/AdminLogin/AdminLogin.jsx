@@ -19,10 +19,8 @@ function AdminLogin() {
   };
 
   const { loading } = useSelector((state) => state.admin);
-  // const {adminDetails} = useSelector(adminState())
   const dispatch = useDispatch();
 
-  //toast
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -90,7 +88,7 @@ function AdminLogin() {
               </div>
             )}
             <a href="">
-              <button style={{ backgroundColor: "#243b55" }}>Submit</button>
+              <button className="btn " style={{ backgroundColor: "#243b55", }}>Submit</button>
 
               <span></span>
               <span></span>

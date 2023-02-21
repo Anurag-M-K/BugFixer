@@ -9,22 +9,30 @@ const getReportedQuestion =async (req,res)=>{
     })
 
 }
-const deleteQuestion = (req,res)=>{
+const deleteQuestion = async(req,res)=>{
+    console.log("hello anu")
     try {
         
-        console.log("sdhfoashfuadnfoiihjfqhjewefo",req.params.qid)
         const id = req.params.qid;
-        console.log("id ",id)
-        Questions.findByIdAndDelete(id).then((response)=>{
-            console.log(response,"   from delete response")
-        })
+     const deleteRes = await Questions.findByIdAndDelete(id)
+     res.status(200).json(deleteRes)
     } catch (error) {
         console.log("error from delete side",error)
     }
 }
 
+const getAllQuestions = async(req,res)=>{
+    try {
+        const questions = await Questions.find();
+        res.status(200).json(questions)
+    } catch (error) {
+        console.log(error)
+        
+    }
+}
 
 module.exports = {
     getReportedQuestion,
-    deleteQuestion
+    deleteQuestion,
+    getAllQuestions
 }

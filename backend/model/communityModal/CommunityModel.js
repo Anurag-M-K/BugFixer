@@ -8,7 +8,10 @@ const communitySchema = new mongoose.Schema({
     body:{
         type:String,
         required:true,
-    }
+    },
+    user:[{
+        type:Object
+    }],
 })
 
 module.exports = mongoose.model("Community", communitySchema)

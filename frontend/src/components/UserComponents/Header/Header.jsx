@@ -76,15 +76,11 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item mr-4">
-                <Link to="/questions" className="nav-link">
+                <Link to="/home" className="nav-link">
                   Questions
                 </Link>
               </li>
-              <li className="nav-item mr-4">
-                <Link to="/jobs" className="nav-link">
-                  Jobs
-                </Link>
-              </li>
+           
               <li className="nav-item">
                 <Link to="/team" className="nav-link">
                 </Link>

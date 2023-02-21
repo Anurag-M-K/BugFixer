@@ -33,9 +33,9 @@ const Community = () => {
 
         if(button){
 
-          joinCommunity(userDetails._id,post,tokenData).then((response)=>{
+          joinCommunity(userDetails,post,tokenData).then((response)=>{
             
-            console.log("checking position",post.title )
+            console.log("checking position",response )
             
             swal(`you successfully joined the community`,{
               icon:"success",

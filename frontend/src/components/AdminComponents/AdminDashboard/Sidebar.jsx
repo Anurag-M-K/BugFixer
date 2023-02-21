@@ -104,10 +104,10 @@ const handleLogout =(e)=>{
                 onClick={() => setCurrentLink(3)}
               >
                 <a onClick={()=>{
-                  navigate('/Question-manage')
+                  navigate('/reported-question-manage')
                 }}>
                   <FaAddressCard />
-                  <span className="buttonsDashboard" > Questions</span>
+                  <span className="buttonsDashboard" > Reported Questions</span>
                 </a>
               </li>
               <li
@@ -119,6 +119,17 @@ const handleLogout =(e)=>{
                 }}>
                   <GiTwirlCenter />
                   <span className="buttonsDashboard" > Community</span>
+                </a>
+              </li>
+              <li
+                className={currentLink === 5 ? "active" : "none"}
+                onClick={() => setCurrentLink(5)}
+              >
+                <a onClick={()=>{
+                  navigate("/question-manage")
+                }}>
+                  <BsFillChatTextFill />
+                  <span className="buttonsDashboard" > Questions</span>
                 </a>
               </li>
               <li
@@ -142,8 +153,8 @@ const handleLogout =(e)=>{
             </ul>
           </div>
         </div>
-        <div className="logout">
-            <FiLogOut />
+        <div className="logoumt">
+            {/* <FiLogOut /> */}
             <button onClick={handleLogout} className="logout">Logout</button>
         </div>
       </Section>
@@ -175,7 +186,7 @@ const handleLogout =(e)=>{
               onClick={() => setCurrentLink(3)}
             >
                <a onClick={()=>{
-                  navigate('/Question-manage')
+                  navigate('/reported-question-manage')
                 }}>
                   <FaAddressCard />
                   <span className="buttonsDashboard" > Questions</span>

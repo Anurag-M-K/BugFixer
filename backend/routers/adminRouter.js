@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router();
 const { adminLogin } = require('../controllers/adminController/adminLoginController')
 const {blockUser,unblockUser,getUsersDetails} = require("../controllers/adminController/adminUsersDetailsController")
-const {getReportedQuestion,deleteQuestion} = require("../controllers/adminController/adminQuestionController")
+const {getReportedQuestion,deleteQuestion,getAllQuestions} = require("../controllers/adminController/adminQuestionController")
 
 
 
@@ -14,6 +14,7 @@ router.get("/user-details",getUsersDetails)
 
 router.get('/get-report-questions',getReportedQuestion)
 router.delete("/question-delete/:qid",deleteQuestion)
+router.get('/get-questions',getAllQuestions)
 
 
 module.exports = router;
