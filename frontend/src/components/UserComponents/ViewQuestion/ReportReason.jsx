@@ -51,6 +51,7 @@ function ReportReason({ questionData }) {
             >
               <Form.Label></Form.Label>
               <Form.Control
+              required
                 value={reportReason}
                 onChange={handleReason}
                 as="textarea"

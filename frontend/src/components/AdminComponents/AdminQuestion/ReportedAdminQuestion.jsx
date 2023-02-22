@@ -5,19 +5,28 @@ import Navbar from "../AdminDashboard/Navbar";
 import styled from "styled-components";
 import DataTable from "react-data-table-component";
 import scrollreveal from "scrollreveal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast,{Toaster} from 'react-hot-toast'
 import './AdminQuestion.css'
 import QuestionModal from './QusetionModal'
+import { setReportedQuestions } from "../../../redux/features/reportedQuestionsSlice";
+import { getReportedQuestions } from "../../../helper/adminQuestionHelper";
 
 function AdminQuestion() {
     
   const [questions, setQuestions] = useState([]);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const { adminToken } = useSelector((state)=>state.adminToken);
+  const { reportedQuestionDetails } = useSelector((state)=>state.reportedQuestion)
+
+  console.log("reported question details ,",reportedQuestionDetails)
   useEffect(() => {
+ 
       axios.defaults.baseURL = "http://localhost:80";
       axios.get("/admin/get-report-questions").then((response) => {
-          setQuestions(response.data.data);
+           setQuestions(response.data.data)
+       dispatch(setReportedQuestions(response.data.data))
+
        
         });
     }, []);
@@ -36,12 +45,16 @@ try {
   .then((deleteQuestion) => {
     if (deleteQuestion) {
       axios.defaults.baseURL = "http://localhost:80";
-       axios.delete("/admin/question-delete/"+qid).then((res)=>{
-          axios.get("/admin/get-report-questions").then((response)=>{
-              dispatch(questionDetails(response))
-          })
-      })
-      swal("Question deleted successfully !", {
+       axios.delete("/admin/question-delete/"+qid).then(async(res)=>{
+        axios.get("/admin/get-report-questions").then((response) => {
+          setQuestions(response.data.data)
+      dispatch(setReportedQuestions(response.data.data))
+
+      
+       });
+     
+            })
+            swal("Question deleted successfully !", {
         icon: "success",
       });
     } else {
@@ -54,11 +67,13 @@ try {
 }
     }
 
+
+    console.log("quesitons  ",questions)
   
     const columns = [
         {
       name: "Qusetion ID",
-      selector: (row) => <QuestionModal row={row._id}/>,
+      selector: (row) => <QuestionModal row={row?._id}/>,
       srtable: true,
       style: {
         backgroundColor: "grey",
@@ -66,21 +81,28 @@ try {
     },
     {
       name: "User Name",
-      selector: (row) => row.user.firstName,
+      selector: (row) => row?.user?.firstName,
       style: {
         backgroundColor: "grey",
       },
     },
     {
       name:"Vote",
-      selector:(row)=>row.vote,
+      selector:(row)=>row?.vote ? row.vote : "0",
+      style:{
+        backgroundColor:"grey"
+      }
+    },
+    {
+      name:"Report Count",
+      selector:(row)=>row?.reason.length ? row?.reason.length : "0",
       style:{
         backgroundColor:"grey"
       }
     },
     {
       name: "Email",
-      selector: (row) => row.user.email,
+      selector: (row) => row?.user?.email,
       style: {
         backgroundColor: "grey",
       },
@@ -89,7 +111,7 @@ try {
       name: "Actions",
       selector: (row) => (
           <button className="btn btn-danger"
-          onClick={()=>questionDelete(row._id)} >delete post</button>
+          onClick={()=>questionDelete(row?._id)} >delete post</button>
           ),
           style: {
             backgroundColor: "grey",
@@ -125,9 +147,9 @@ return (
           <div className="row__one"></div>
           <DataTable
             columns={columns}
-            data={questions}
+            data={ reportedQuestionDetails }
             pagination
-            title="Question Handling "
+            title=" Reported Question "
             
             fixedHeader
             fixedHeaderScrollHeight="440px"

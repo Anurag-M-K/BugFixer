@@ -46,3 +46,19 @@ export const getQuestions = async(adminToken)=>{
         console.log(error)
     }
 }
+
+export const getReportedQuestions = async(adminToken)=>{
+    try {
+        const getReportedQuestions = await instance({
+            url:"/admin/get-report-questions",
+            method:"GET",
+            headers:{
+                Authorization:adminToken
+            }
+        })
+        return getReportedQuestions.data
+    } catch (error) {
+        console.log(error)
+    }
+    console.log("from helper",getReportedQuestions)
+}

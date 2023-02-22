@@ -23,7 +23,6 @@ function AdminQuestion() {
   useEffect(() => {
     (async ()=>{
       const questionsDetails = await getAllQuestionsDetails(adminToken)
-      console.log("questoindetails ",questionsDetails)
       dispatch(setAdminQuestionDetails(questionsDetails))
 
       setQuestions(questionsDetails)

@@ -18,6 +18,7 @@ import { userProfileQuestionsSlice } from "./features/userProfileQuestions";
 import { adminTokenSlice } from "./features/adminTokenSlice";
 import { communityPostsSlice } from "./features/communityPostsSlice";
 import { adminQuestionSlice } from "./features/adminQuestionSlice";
+import { reportedQuestionsSlice } from "./features/reportedQuestionsSlice";
 
 
 const persistConfig = {
@@ -42,7 +43,8 @@ const reducer = combineReducers({
     userProfileQuestions:userProfileQuestionsSlice.reducer,
     adminToken:adminTokenSlice.reducer,
     communityPosts:communityPostsSlice.reducer,
-    adminQuestion:adminQuestionSlice.reducer
+    adminQuestion:adminQuestionSlice.reducer,
+    reportedQuestion:reportedQuestionsSlice.reducer,
 
 
 })
