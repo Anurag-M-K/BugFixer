@@ -5,7 +5,9 @@ const QuestionDB = require("../../model/userModel/Question")
 
 
 const getUserProfile = async (req,res)=>{
-  const id = req.params.id
+  const objectId = res.locals._id
+  const id = objectId.toString()
+
   try {
     User.findById(id).then((response)=>{
       res.status(200).json({response})
@@ -50,18 +52,21 @@ const getProfileData = async (req, res) => {
   res.send(publicIds);
 };
 
-const getImage = async (req, res) => {
-  const email = req.params.email  ;
-  try {
-    await User.find( {email:email}).then((data) => {
-      res.status(200).json(data);
+// const getImage = async (req, res) => {
+// //   const objectId = res.locals._id
+// // const id = objectId.toString()
+// console.log("emeial ",req.body)
+// const { email } = req.body
+//   try {
+//     await User.find( {email:email}).then((data) => {
+//       res.status(200).json(data);
    
-    })
-  } catch (error) {
-    res.status(500)
-    console.log("data geting error ", error);
-  }
-};
+//     })
+//   } catch (error) {
+//     res.status(500)
+//     console.log("data geting error ", error);
+//   }
+// };
 
 
 
@@ -78,13 +83,11 @@ try {
       phone:req.body.phone,
       job:req.body.job,
       company:req.body.company,
-      // imageUrl
   
     }},{upsert:true}).then((response)=>{
 
       res.status(200).json({response:response,message:"user updated successfully"})
     })
-      // res.status(200).json({res})
 
   
 } catch (error) {
@@ -94,16 +97,21 @@ try {
 }
 
 const getUserQuestions = async(req,res)=>{
-  const { userId } = req.params;
-  console.log("id  vannu",userId)
+  const objectId = res.locals._id
+  const userId = objectId.toString()
+  console.log("for question personsa; ",userId)
   
   try {
     
-   const questions = await QuestionDB.find({userId})
-   console.log("question finded ",questions)
+  //  const questions = await QuestionDB.find({user._id:userId})
+
+ const questions = await QuestionDB.aggregate([{
+    $match:{"user._id":userId}
+  }])
    res.status(200).json({questions})
     
   } catch (error) {
+    console.log("error in getuserquestions ",error)
     
   }
 }
@@ -113,7 +121,7 @@ const getUserQuestions = async(req,res)=>{
 module.exports = {
   updateProfileController,
   getProfileData,
-  getImage,
+  // getImage,
   updateUserDetails,
   // getUserDataForProfileUpdate,
   getUserProfile,

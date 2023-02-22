@@ -17,7 +17,7 @@ router.post("/otpVerifying",otpVerify)
 //        res.send("welcome to bugfixer ")
 // });
 
-router.post('/question',questionAdd)
+router.post('/question',verifyJWT,questionAdd)
 router.post("/answer",answerAdd)
 router.post("/comment/:id",commentAdd)
 router.get("/comment/:id",getComment)
@@ -27,14 +27,14 @@ router.get('/question/:id',particularQuestion)
 router.get('/get-answer/:id',getAnswerByQId)
 
 
-router.get("/getUserProfile/:id",verifyJWT,getUserProfile)
+router.get("/getUserProfile",verifyJWT,getUserProfile)
 router.post('/profile/:id',updateProfileController)
 router.get('/profileData',getProfileData)
-router.get('/getImage/:email',verifyJWT,getImage)
+// router.get('/getImage',verifyJWT,getImage)
 router.put("/update-user",updateUserDetails)
 // router.get('/getUserDetails/:data_id',getUserDataForProfileUpdate)
-router.delete("/question-delete/:id",verifyJWT, deleteUserQuestion)
-router.get('/get-user-questions/:userId',verifyJWT,getUserQuestions)
+router.delete("/question-delete/:qid",verifyJWT, deleteUserQuestion)
+router.get('/get-user-questions',verifyJWT,getUserQuestions)
 
 
 

@@ -231,12 +231,12 @@ const incrementVote = (req,res)=>{
 
 
     const deleteUserQuestion = async(req,res)=>{
+        
         try {   
-            const { id } = req.params
-            console.log("id did id ",id)
-           await QuestionDB.findByIdAndDelete({_id:id}).then((response)=>{
+           const qid = req.params.qid
+          const response =  await QuestionDB.findByIdAndDelete({_id:qid})
             res.status(200).json({delete:true,message:"Question deleted successfully"})
-           })
+           
         } catch (error) {
             console.log(error)
         }

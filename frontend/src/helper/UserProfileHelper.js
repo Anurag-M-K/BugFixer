@@ -1,10 +1,10 @@
 import instance from "../config/axiosInstance";
 
 
-export const deleteQuestion = async ( id ,tokenData )=>{
+export const deleteQuestion = async (qid, tokenData )=>{
     try {
         const deleteQuestion = await instance({
-            url:`/api/question-delete/${id}`,
+            url:`/api/question-delete/${qid}`,
             method:"DELETE",
             headers:{
                 Authorization:tokenData
@@ -16,10 +16,10 @@ export const deleteQuestion = async ( id ,tokenData )=>{
     }
 }
 
-export const getUserQuestions = async ( userId , tokenData )=>{
+export const getUserQuestions = async (  tokenData )=>{
     try {
         const getUserQuestions = await instance({
-            url:`/api/get-user-questions/${userId}`,
+            url:"/api/get-user-questions",
             method:"GET",
             headers:{
                 Authorization:tokenData
@@ -50,10 +50,11 @@ export const updateUserProfile = async(updateData , tokenData)=>{
     }
 }
 
-export const getUserDetails = async( id , tokenData )=>{
+export const getUserDetails = async( tokenData )=>{
+    console.log("token ",tokenData)
     try {
         const getUserDetails = await instance({
-            url:"/api/getUserProfile/"+id,
+            url:"/api/getUserProfile",
             method:"GET",
             headers:{
                 Authorization:tokenData

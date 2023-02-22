@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; //quills css important
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import Editor from "react-quill/lib/toolbar";
 import { userState } from "../../../redux/features/userSlice";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
+import { addQuestion } from "../../../helper/userQuestionHelper";
 import 'react-toastify/dist/ReactToastify.css';
 
 function Question() {
@@ -19,6 +20,7 @@ function Question() {
   const [body, setBody] = useState("");
   const [tag, setTag] = useState([]);
   const navigate = useNavigate();
+  const { tokenData } = useSelector((state)=>state.user)
 
   const notify = () =>  toast.success("Question added successfully!",{
     position:"top-right"
@@ -89,25 +91,30 @@ function Question() {
         tags: tag,
         user: userDetails,
       };
-      console.log("tags is ",tag)
 
         
+     await addQuestion(tokenData,bodyJSON)
+    notify("question added successfully");
+    navigate("/home");
+  }
+};
 
-      axios.defaults.baseURL = "http://localhost:80";
+      // axios.defaults.baseURL = "http://localhost:80";
 
-      await axios
-        .post("/api/question", bodyJSON)
-        .then((res) => {
-          notify("question added successfully");
-          setLoading(false);
-          navigate("/home");
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoading(false);
-        });
-    }
-  };
+      // await axios
+      //   .post("/api/question", bodyJSON)
+      //   .then((res) => {
+      //     notify("question added successfully");
+      //     setLoading(false);
+      //     navigate("/home");
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     setLoading(false);
+      //   });
+  // useEffect(()=>{
+  // },[])
+
 
   try {
     return (

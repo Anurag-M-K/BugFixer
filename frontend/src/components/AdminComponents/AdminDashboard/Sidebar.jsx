@@ -155,7 +155,7 @@ const handleLogout =(e)=>{
         </div>
         <div className="logoumt">
             {/* <FiLogOut /> */}
-            <button onClick={handleLogout} className="logout">Logout</button>
+            <button  onClick={handleLogout} className="logout btn btn-secondary">Logout</button>
         </div>
       </Section>
       <ResponsiveNav state={navbarState} className={navbarState ? "show" : ""}>

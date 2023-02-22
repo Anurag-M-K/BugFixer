@@ -100,6 +100,7 @@ const UserQuestions = () => {
                   <div className="col-md-4">
                     <div className="profile float-right ">
                       <div className="d-flex mr-3">
+                        <div>
                         <img
                           src={
                             questionData?.user?.imageUrl
@@ -111,15 +112,24 @@ const UserQuestions = () => {
                           width="35px"
                           height="35px"
                           style={{ borderRadius: "1rem" }}
-                        />
+                        />  
+                        </div>
+                        <div>
                         <p>
-                          {questionData?.user?.firstName +
-                            " " +
-                            questionData?.user?.lastName +
-                            " "}
-                        </p>
-                        <p>{" " + questionData?.created_at}</p>
+                        {questionData?.user?.firstName +
+                          " " +
+                          questionData?.user?.lastName +
+                          " "}
+                      </p>
+
+                        </div>
+                       
+                      
                       </div>
+                       <div>
+
+                        <small>{" " + questionData?.created_at}</small>
+                       </div>
                     </div>
                   </div>
                 </div>

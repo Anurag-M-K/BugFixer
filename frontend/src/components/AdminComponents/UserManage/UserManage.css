@@ -47,9 +47,32 @@
     gap: 1rem;
 }
 .rdt_TableHeader{
-    background-color: grey;
+    background-color: #9e9999;
 }
 .divComplete{
     height: 52vh;
     background-color: black;
+}
+.sc-jrcTuL{
+    background-color: black;
+    color: #fff;
+}
+.rdt_TableHeader{
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+.rdt_TableCell{
+    background: #9e9999;
+    color: black;
+}
+.fZiPPB{
+    background-color: #9e9999;
+
+} 
+.sc-fLcnxK{
+    background-color: #9e9999;
+}
+.jqIkEI{
+    background-color: #9e9999;
+
 }

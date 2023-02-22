@@ -30,17 +30,17 @@ function ProfileUpdate({ userDetails }) {
  
   const [userData, setUsetData] = useState(initialValue);
 
-  var data_id = userDetails._id;
-  const getUserDetails = async () => {
-    axios.defaults.baseURL = "http://localhost:80";
-    await axios.get("/api/getUserDetails/" + data_id).then((datas) => {
-      dispatch(setUserDetails(datas));
-      setUsetData(datas);
-    });
-  };
-  useEffect(() => {
-    getUserDetails();
-  }, []);
+  // var data_id = userDetails._id;
+  // const getUserDetails = async () => {
+  //   axios.defaults.baseURL = "http://localhost:80";
+  //   await axios.get("/api/getUserDetails/" + data_id).then((datas) => {
+  //     dispatch(setUserDetails(datas));
+  //     setUsetData(datas);
+  //   });
+  // };
+  // useEffect(() => {
+  //   getUserDetails();
+  // }, []);
 
   const handleChange = (e) => {
     const name = e.target.name;

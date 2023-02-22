@@ -36,7 +36,9 @@ export default function UserProfile() {
   const dispatch = useDispatch();
   const { tokenData } = useSelector((state) => state.user);
   const { userProfileQuestionsDetails } = useSelector((state=> state.userProfileQuestions))
+
   
+  console.log("userProfilequestiondetails ",userProfileQuestionsDetails)
   const handleFileInput = (e) => {
     const file = e.target.files[0];
 
@@ -69,22 +71,22 @@ export default function UserProfile() {
       console.error(error);
     }
   };
-console.log("userd details from profile ",userDetails)
   const email = userDetails.email;
-  useEffect(() => {
-    (async () => {
-      const data = await axios({
-        url: "/api/getImage/" + email,
-        method: "GET",
-        headers: {
-          Authorization: tokenData,
-        },
-      }).then((response) => {
-        setResponse(response.data[0]);
-        dispatch(setUserDetails(response.data[0]));
-      });
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const data = await axios({
+  //       url: "/api/getImage",
+  //       method: "GET",
+  //       data:email,
+  //       headers: {
+  //         Authorization: tokenData,
+  //       },
+  //     }).then((response) => {
+  //       setResponse(response.data[0]);
+  //       dispatch(setUserDetails(response.data[0]));
+  //     });
+  //   })();
+  // }, []);
 
 
 
@@ -97,7 +99,7 @@ console.log("userd details from profile ",userDetails)
   useEffect(()=>{
     try {
       (async ()=>{
-        const data = await getUserQuestions(userId , tokenData)
+        const data = await getUserQuestions( tokenData)
         dispatch(setUserProfileQuestionsDetails(data.data.questions))
       })()
     } catch (error) {
@@ -107,19 +109,27 @@ console.log("userd details from profile ",userDetails)
 
 
 
+
+
+
   
   const handleQuestionDelete = async (id) => {
-    const deleteQuestioneRsponse = await deleteQuestion(id, tokenData);
-    const data = await getUserQuestions(userId , tokenData)
-        dispatch(setUserProfileQuestionsDetails(data.data.questions))
-    toast.success(deleteQuestioneRsponse.message);
+    try {
+      
+      const deleteQuestionRsponse = await deleteQuestion(id, tokenData);
+      console.log("question reaponse ",deleteQuestionRsponse)
+      toast.success(deleteQuestionRsponse.message)
+      const data = await getUserQuestions( tokenData)
+          dispatch(setUserProfileQuestionsDetails(data.data.questions))
+    } catch (error) {
+      toast.error("server error")
+    }
   };
 
   useEffect(()=>{
     try {
       (async()=>{
-        const user = await getUserDetails(userDetails._id,tokenData)
-        console.log("usr ",user.response)
+        const user = await getUserDetails(tokenData)
         dispatch(setUserDetails(user?.response))
       })()
     } catch (error) {
@@ -127,8 +137,10 @@ console.log("userd details from profile ",userDetails)
     }
 
   },[])
+  console.log("userDETials ",userDetails)
 
-  const userAskedQuestions = userProfileQuestionsDetails.filter(useraskedQuestions=> useraskedQuestions?.user?._id ==id)
+  // const userAskedQuestions = userProfileQuestionsDetails.filter(useraskedQuestions=> useraskedQuestions?.user?._id ==id)
+  // console.log("userAskedquestins ",userAskedQuestions)
   let defaultUrl =
   "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp";
   return (
@@ -139,7 +151,7 @@ console.log("userd details from profile ",userDetails)
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
                 <img
-                  src={response.imageUrl ? response?.imageUrl : defaultUrl}
+                  src={userDetails.imageUrl ? userDetails?.imageUrl : defaultUrl}
                   alt="avatar"
                   className="rounded-circle"
                   style={{ width: "130px", height: "130px" }}
@@ -278,7 +290,7 @@ console.log("userd details from profile ",userDetails)
 
             <MDBRow>
               <MDBCol md="6 col-md-12">
-                {userAskedQuestions?.map((question) => {
+                {userProfileQuestionsDetails?.map((question) => {
                 <MDBCardText className="mb-4">
                   <span className="text-primary  font-italic me-1">
                     

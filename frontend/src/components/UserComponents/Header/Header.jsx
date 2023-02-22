@@ -28,7 +28,7 @@ function Header() {
       
       const id = userDetails._id
       await axios({
-        url:'/api/getUserProfile/'+id,
+        url:'/api/getUserProfile',
         method:"GET",
         headers:{
           Authorization:tokenData,
