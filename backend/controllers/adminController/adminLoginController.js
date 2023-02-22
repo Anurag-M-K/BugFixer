@@ -6,12 +6,11 @@ const adminLogin = async(req,res)=>{
    try {
 
     const {error} = validate(req.body);
-console.log(req.body)
     if(error)
     return res.status(400).send({message:error.details[0].message});
     const admin = await Admin.findOne({username:req.body.username});
     if(!admin)
-    return res.status(401).send({message:"Invalid username or password"});
+    return res.status(401).json({message:"Invalid username or password"});
     
     const validPassword = await bcrypt.compare(
         req.body.password,

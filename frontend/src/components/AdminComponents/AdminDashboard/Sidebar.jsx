@@ -136,9 +136,11 @@ const handleLogout =(e)=>{
                 className={currentLink === 5 ? "active" : "none"}
                 onClick={() => setCurrentLink(5)}
               >
-                <a href="#">
+                <a onClick={()=>{
+                  navigate("/tag-manage")
+                }}>
                   <BsFillChatTextFill />
-                  <span className="buttonsDashboard" > FAQs</span>
+                  <span className="buttonsDashboard" > Tags</span>
                 </a>
               </li>
               <li

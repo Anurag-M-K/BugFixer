@@ -8,6 +8,7 @@ import {
 } from "../../../redux/features/adminSlice";
 import { useNavigate } from "react-router-dom";
 import { setAdminToken  } from "../../../redux/features/adminTokenSlice";
+import toast, { Toaster } from "react-hot-toast";
 
 function AdminLogin() {
   const navigate = useNavigate();
@@ -31,17 +32,17 @@ function AdminLogin() {
 
         dispatch(hideLoading());
 
-        const { data: res } = await axios.post(url, data).then((res) => {
+        const { data: res } = await axios.post(url, data)
           localStorage.setItem("AdminToken", res.data);
           try {
-            dispatch(setAdminToken(res.data.data));
+            dispatch(setAdminToken(res.data));
             dispatch(setAdminDetails(data));
             navigate("/admin-dashboard");
           } catch (error) {
             console.log(error.message);
+            toast.error("Check your username and password")
           }
         }, 800);
-      });
     } catch (error) {
       dispatch(hideLoading());
       if (
@@ -98,6 +99,7 @@ function AdminLogin() {
           </form>
         </div>
       </div>
+      <Toaster/>
     </div>
   );
 }

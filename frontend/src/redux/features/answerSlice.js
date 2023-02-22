@@ -7,9 +7,7 @@ export const answerSlice = createSlice({
     },
     reducers:{
         setAnswerData:(state,action)=>{
-            console.log("answer slice")
             state.answerDetails = action.payload;
-            console.log("this is from answer slice ",action.payload)
         }
     }
 })

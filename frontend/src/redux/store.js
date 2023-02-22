@@ -19,6 +19,7 @@ import { adminTokenSlice } from "./features/adminTokenSlice";
 import { communityPostsSlice } from "./features/communityPostsSlice";
 import { adminQuestionSlice } from "./features/adminQuestionSlice";
 import { reportedQuestionsSlice } from "./features/reportedQuestionsSlice";
+import  { tagSlice } from "./features/tagSlice";
 
 
 const persistConfig = {
@@ -45,6 +46,7 @@ const reducer = combineReducers({
     communityPosts:communityPostsSlice.reducer,
     adminQuestion:adminQuestionSlice.reducer,
     reportedQuestion:reportedQuestionsSlice.reducer,
+    tag:tagSlice.reducer,
 
 
 })

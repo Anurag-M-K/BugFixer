@@ -5,6 +5,7 @@ const { User } = require("../model/userModel/userModel")
 
 const verifyJWT = async(req,res,next) => {
   const token = req.headers.authorization;
+  
 
 try {
   const decoded = await jwt.verify(token, "secrete");

@@ -1,12 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
+import React, { useEffect } from "react";
+import { useSelector , useDispatch } from "react-redux";
+import { getAllTags } from "../../../helper/userTagsHelper";
+import { setTags } from "../../../redux/features/tagSlice";
 const RelatedTags = () => {
+
+  const { tokenData } = useSelector((state)=>state.user)
+  const dispatch = useDispatch();
+  const { allTags } = useSelector((state) => state.tag);
+
+
+  useEffect(() => {
+    (async () => {
+      const tags = await getAllTags(tokenData);
+      dispatch(setTags(tags));
+    })();
+  }, []);
+
   return (
     <>
       {/* tags started */}
       <h4>Related Tags</h4>
-      {tags.map((tag) => {
+      {allTags[0]?.tags?.map((tag) => {
         return (
           <div className="relatedTags d-flex align-items-center my-1">
             <button
@@ -17,9 +31,9 @@ const RelatedTags = () => {
                 fontSize: "10px",
               }}
             >
-              {tag.name}
+              {tag}
             </button>
-            <small className="text muted ">× {tag.num}</small>
+            <small className="text muted ">× </small>
           </div>
         );
       })}
@@ -28,7 +42,7 @@ const RelatedTags = () => {
         style={{ color: "rgb(122, 167, 199)", fontSize: "10px" }}
       >
         {" "}
-        <Link to="/">more related tags</Link>
+        {/* <Link to="/">more related tags</Link> */}
       </button>
       {/* tags Ends */}
     </>
@@ -38,10 +52,6 @@ const RelatedTags = () => {
 export default RelatedTags;
 
 const tags = [
-  {
-    name: "javascript",
-    num: 2313929,
-  },
   {
     name: "python",
     num: 1859181,

@@ -1,20 +1,17 @@
+const jwt = require("jsonwebtoken");
 
-const jwt =require("jsonwebtoken");
+const verifyJWT = (req, res, next) => {
+  const adminToken = req.headers.authorization;
 
-console.log("in middlware")
-const verifyJWT = (req,res,next) => {
-  const authHeader = req.headers.authorization;
-  console.log("authheader ",authHeader)
-
-  jwt.verify(authHeader,"secrete",(err,decoded)=>{
-    
-    if(err) return res.status(403).json({
-      
-      message:"access token is not valid"
-    });
+  jwt.verify(adminToken, "adminSecret", (err, decoded) => {
+    if (err){
+      console.log(err)
+      return res.status(403).json({
+        message: "access token is not valid",
+      });
+    }
     next();
-  })
-}
-
+  });
+};
 
 exports.verifyJWT = verifyJWT;

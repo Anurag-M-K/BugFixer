@@ -1,0 +1,9 @@
+.card-body-tags{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: stretch;
+}
+.tag-card{
+    display: flex;
+}
