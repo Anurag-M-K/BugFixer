@@ -20,7 +20,7 @@ function Tags() {
     })()
   },[])
 
-  console.log("tags from store ",allTags[0].tags)
+  console.log("tags from store ",allTags)
 
 
   return (

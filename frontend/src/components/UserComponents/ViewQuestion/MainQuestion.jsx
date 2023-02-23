@@ -14,6 +14,7 @@ import { useLocation } from "react-router-dom";
 import ReportReason from "./ReportReason";
 import { setCommentDetails } from "../../../redux/features/commentSlice";
 import "./index.css";
+import { questionVoting } from "../../../helper/userQuestionHelper";
 
 function MainQuestion() {
   const [show, setShow] = useState(false);
@@ -23,8 +24,11 @@ function MainQuestion() {
   const [comment, setComment] = useState("");
   var [vote, setVote] = useState(0);
   var [answerVote, setAnswerVote] = useState([])  
-  // const { setAnswerDetails } = useSelector((state) => state.answer);
   const dispatch = useDispatch();
+  const { tokenData } = useSelector((state)=> state.user)
+  const [ voteResponse , setVoteResponse] = useState("")
+  
+
   
   let location = useLocation();
   let params = new URLSearchParams(location.search);
@@ -124,39 +128,61 @@ console.log(answer)
   
   const { commentDetails } = useSelector((state) => state.comment);
 
-  const decVoting = async (vote) => {
-    try {
-      setVote(vote - 1);
-      vote--;
-      await axios
-        .put("/api/vote-decrease/" + qid, { vote: vote })
-        .then(async (response) => {
-          await axios
-            .get(`/api/question/${id}`)
-            .then((res) => setQuestionData(res.data[0]))
-            .catch((err) => console.log("error on catch ", err));
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const decVoting = async (vote) => {
+  //   try {
+  //     setVote(vote - 1);
+  //     vote--;
+  //     await axios
+  //       .put("/api/vote-decrease/" + qid, { vote: vote })
+  //       .then(async (response) => {
+  //         await axios
+  //           .get(`/api/question/${id}`)
+  //           .then((res) => setQuestionData(res.data[0]))
+  //           .catch((err) => console.log("error on catch ", err));
+  //       });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const incVoting = async (vote) => {
-    try {
-      setVote(vote + 1);
-      vote++;
-      await axios
-        .put("/api/vote-increment/" + qid, { vote: vote })
-        .then(async (response) => {
-          await axios
-            .get(`/api/question/${id}`)
-            .then((res) => setQuestionData(res.data[0]))
-            .catch((err) => console.log(err));
-        });
-    } catch (error) {
-      console.log("error from frontend ", error);
-    }
-  };
+
+      async function incVoting(question_id){
+        try {
+          
+          const data = await questionVoting(question_id,tokenData)
+          // const particularQuestion = await getAllQuestions(id,tokenData)
+        } catch (error) {
+          console.log(error)
+        }
+
+      }
+console.log("question data ",questionData)
+   
+
+
+
+
+
+
+  // const incVoting = async (vote) => {
+  //   try {
+  //     setVote(vote + 1);
+  //     vote++;
+  //     await axios
+  //       .put("/api/vote-increment/" + qid, { vote: vote })
+  //       .then(async (response) => {
+  //         await axios
+  //           .get(`/api/question/${id}`)
+  //           .then((res) => setQuestionData(res.data[0]))
+  //           .catch((err) => console.log(err));
+  //       });
+  //   } catch (error) {
+  //     console.log("error from frontend ", error);
+  //   }
+  // };
+
+  // // 
+  
 
   const questionDetail = { ...questionData, vote };
 
@@ -222,7 +248,7 @@ console.log(answer)
                     <span className="arrow">
                       <svg
                         type="submit"
-                        onClick={() => incVoting(questionData?.vote)}
+                        onClick={() => incVoting(questionData?._id)}
                         aria-hidden="true"
                         className="svg-icon iconArrowUpLg"
                         width="36"
@@ -234,7 +260,7 @@ console.log(answer)
                     </span>
                   </div>
                   <div className="vote">
-                    <p className="arrow pe-2">{questionData?.vote}</p>
+                    <p className="arrow pe-2">{questionData?.vote?.length}</p>
                   </div>
                   <div className="downArrow">
                     <span className="arrow">

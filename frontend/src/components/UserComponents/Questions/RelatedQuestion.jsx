@@ -2,25 +2,25 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getHotQuestions } from "../../../helper/homePageRightSideHelper";
+// import { getHotQuestions } from "../../../helper/homePageRightSideHelper";
 
 const RelatedQuestion = () => {
   const [hotQuestions, setHotQuestions] = useState([]);
   const { tokenData } = useSelector((state) => state.user);
 
-  useEffect(() => {
-    (async () => {
-      const hotQuestions = await getHotQuestions(tokenData);
-      setHotQuestions(hotQuestions);
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const hotQuestions = await getHotQuestions(tokenData);
+  //     setHotQuestions(hotQuestions);
+  //   })();
+  // }, []);
 
   return (
     <>
       {/* quotes started */}
       <div className="relatedQuestion">
         <h5 className="mt-5">Hot Network Questions</h5>
-        {hotQuestions.map((text) => {
+        {/* {hotQuestions?.map((text) => { */}
           return (
             <div className=" d-flex mt-3">
               <div>
@@ -31,10 +31,10 @@ const RelatedQuestion = () => {
                   className="mr-2"
                 />
               </div>
-              <Link to={`/question?id=${text?._id}`}>{text.title}</Link>
+              {/* <Link to={`/question?id=${text?._id}`}>{text?.title}</Link> */}
             </div>
           );
-        })}
+        {/* })} */}
       </div>
       {/* quotes started */}
     </>

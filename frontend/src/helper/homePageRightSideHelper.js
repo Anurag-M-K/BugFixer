@@ -15,18 +15,18 @@ export const getAllTags = async(tokenData)=>{
     }
 }
 
-export const getHotQuestions = async(tokenData)=>{
-    console.log("from hot question helper ")
-    try {
-        const getHotQuestions = await instance({
-            url:"/api/get-hot-questions",
-            method:"GET",
-            headers:{
-                Authorization:tokenData
-            }
-        })
-        return getHotQuestions.data
-    } catch (error) {
-        console.log(error)
-    }
-}
+// export const getHotQuestions = async(tokenData)=>{
+//     console.log("from hot question helper ")
+//     try {
+//         const getHotQuestions = await instance({
+//             url:"/api/get-hot-questions",
+//             method:"GET",
+//             headers:{
+//                 Authorization:tokenData
+//             }
+//         })
+//         return getHotQuestions.data
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }

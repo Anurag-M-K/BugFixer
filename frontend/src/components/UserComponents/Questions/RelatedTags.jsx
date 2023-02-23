@@ -20,7 +20,7 @@ const RelatedTags = () => {
     <>
       {/* tags started */}
       <h4>Related Tags</h4>
-      {allTags[0]?.tags?.map((tag) => {
+      { allTags ?   allTags[0]?.tags?.map((tag) => {
         return (
           <div className="relatedTags d-flex align-items-center my-1">
             <button
@@ -36,7 +36,7 @@ const RelatedTags = () => {
             <small className="text muted ">× </small>
           </div>
         );
-      })}
+      }) : ""}
       <button
         className="btn"
         style={{ color: "rgb(122, 167, 199)", fontSize: "10px" }}

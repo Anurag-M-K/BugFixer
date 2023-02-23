@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import instance from "../config/axiosInstance";
 
 export const addQuestion = async(tokenData,bodyJSON)=>{
@@ -17,3 +18,22 @@ export const addQuestion = async(tokenData,bodyJSON)=>{
     }
 
 }
+
+
+export const    questionVoting  = async(question_id,tokenData)=>{
+    console.log("quesiton id from helper ",question_id , tokenData)
+    try {
+        const incVoting = await instance({
+            url:"/api/vote-increment",
+            method:"POST",
+            data:{question_id:question_id},
+            headers:{
+                Authorization:tokenData
+            }
+        })
+        return questionVoting.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+

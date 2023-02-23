@@ -51,7 +51,6 @@ dispatch(filterQuestionDetails([val]))
     <>
       <div className="container-fluid questions pt-4">
         <div className="row" style={{ margin: "0 8%" }}>
-          {/* Left Sidebar added */}
           <div
             className="questions--LeftSidebar col-md-2 border"
             style={{ fontSize: "14px", overflowY: "scroll",backgroundColor:"" }}
@@ -91,14 +90,11 @@ dispatch(filterQuestionDetails([val]))
               </button>
             </div>
             <hr />
-            {/* Users Questionsadded */}
             <UserQuestions  />
 
-            {/* Pagination added */}
             <Pagination />
           </div>
 
-          {/* Right Sidebar added */}
           <div
             className="questions-rightSidebar col-md-3"
             style={{ fontSize: "12px", lineHeight: "10px" }}

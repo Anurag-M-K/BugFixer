@@ -179,19 +179,26 @@ const decreseVote = (req,res)=>{
         res.status(200).json(response)
     })
 }
-const incrementVote = (req,res)=>{
+const incrementVote =async (req,res)=>{
+    const qid = req.body.question_id
+    const objectId = res.locals._id
+    const userId = objectId.toString()
+
+
     try {
-        const id = req.params.qid
-        const vote = req.body.vote
-        QuestionDB.findByIdAndUpdate(id,{$set:{vote:vote}},{upsert:true})
-        .then((response)=>{
-    res.status(200).json(response)
-        })
+        const question = await QuestionDB.findById(qid);
+
+if(question.vote.filter(like => like === userId).length > 0){
+    return res.status(400).json({message:"Question already voted"});
+}
+question.vote.unshift(userId);
+await question.save();
+res.json(question.vote)
     } catch (error) {
-    console.log("error while updating ",error)
-    
+        console.log(error.message)
+        res.status(500).send("Server error")
     }
-        
+   
     }
 
 
