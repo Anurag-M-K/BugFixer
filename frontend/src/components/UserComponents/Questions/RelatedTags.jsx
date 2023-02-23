@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector , useDispatch } from "react-redux";
-import { getAllTags } from "../../../helper/userTagsHelper";
+import { getAllTags } from "../../../helper/homePageRightSideHelper";
 import { setTags } from "../../../redux/features/tagSlice";
 const RelatedTags = () => {
 

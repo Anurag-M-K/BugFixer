@@ -1,8 +1,5 @@
 const router = require("express").Router();
-const {
-  userSignup,
-  otpVerify,
-} = require("../controllers/userController/userSignupController");
+const {userSignup, otpVerify,} = require("../controllers/userController/userSignupController");
 const {
   userLogin,
 } = require("../controllers/userController/userLoginController");
@@ -43,8 +40,8 @@ const {
   addingCommunity,
 } = require("../controllers/userController/userCommunityController");
 const {
-  getAllTags,
-} = require("../controllers/userController/userTagsController");
+  getAllTags,getHotQuestions
+} = require("../controllers/userController/homePageRightSideController");
 
 router.post("/userSignup", userSignup);
 router.post("/userLogin", userLogin);
@@ -79,5 +76,6 @@ router.get("/getUser/:friendId", verifyJWT, getUser);
 
 router.put("/join-community", verifyJWT, addingCommunity);
 router.get("/get-all-tags", verifyJWT, getAllTags);
+router.get("/get-hot-questions",verifyJWT,getHotQuestions)
 
 module.exports = router;
