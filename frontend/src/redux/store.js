@@ -47,6 +47,7 @@ const reducer = combineReducers({
     adminQuestion:adminQuestionSlice.reducer,
     reportedQuestion:reportedQuestionsSlice.reducer,
     tag:tagSlice.reducer,
+    
 
 
 })

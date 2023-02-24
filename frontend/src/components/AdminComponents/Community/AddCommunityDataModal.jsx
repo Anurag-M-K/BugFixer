@@ -3,9 +3,10 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { useFormik } from "formik";
-import { addCommunityPosts } from "../../../helper/adminCommunityHelper";
-import { useSelector } from "react-redux";
+import { addCommunityPosts, getAllCommunityPosts } from "../../../helper/adminCommunityHelper";
+import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
+import { setCommunityPosts } from '../../../redux/features/communityPostsSlice'
 import "./CommunityManage.css";
 
 function AddCommunityDataModal() {
@@ -13,17 +14,21 @@ function AddCommunityDataModal() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const { adminToken } = useSelector((state) => state.adminToken);
-
+  const dispatch = useDispatch()
   const onSubmit = (values) => {
     try {
       (async () => {
         const data = await addCommunityPosts(values, adminToken);
+        const posts = await getAllCommunityPosts();
+        dispatch(setCommunityPosts(posts));
         toast.success("Post added successfully");
       })();
     } catch (error) {
       console.log(error);
     }
   };
+
+ 
 
   const { values, handleChange, handleSubmit } = useFormik({
     initialValues: {

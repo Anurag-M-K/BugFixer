@@ -28,7 +28,7 @@ function AdminLogin() {
     try {
       dispatch(showLoading());
       setTimeout(async () => {
-        const url = "http://localhost:80/admin/admin-login";
+        const url = "http://localhost:8060/admin/admin-login";
 
         dispatch(hideLoading());
 

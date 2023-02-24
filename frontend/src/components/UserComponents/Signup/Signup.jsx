@@ -4,7 +4,7 @@ import Logo from "../Images/download.png";
 import gLogo from "../Images/g.png";
 import { useState } from "react";
 import './Signup.css';
-import axios from "axios";
+import axios from "../../../config/axiosInstance";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../../../redux/features/userSlice";
 
@@ -75,15 +75,13 @@ const navigate = useNavigate()
   const handleSubmit = async(e)=>{
     e.preventDefault();
     try {
-      const url = 'http://localhost:80/api/userSignup'  ;
+      const url = '/api/userSignup'  ;
       const {data:res}= await axios.post(url,data).then((res)=>{
         
         
-        // dispatch(setUserDetails(res))
         dispatch(setUserDetails(res,res.data.OTP))
         navigate("/otp-page")
       })
-      // window.location.reload('/otp-page')
     } catch (error) {
       if(error.response && error.response.status >= 400 && 
         error.response.status <= 500

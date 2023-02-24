@@ -1,3 +1,4 @@
+const { findByIdAndDelete } = require("../../model/communityModal/CommunityModel")
 const communityDB = require("../../model/communityModal/CommunityModel")
 
 
@@ -15,14 +16,23 @@ const addingCommunityPosts = async(req,res)=>{
 const getAllCommunityPosts = async(req,res)=>{
     try {
         const communityPosts = await communityDB.find()
-        console.log("communityposts ",communityPosts)
         res.status(200).json(communityPosts)
     } catch (error) {
         res.status(500).send("internal server error")
     }
 }
 
+const deleteCommunity = async(req,res)=>{
+    const communityId  = req.body.communityId
+    res.status(204).send();
+    try {
+        await communityDB.findByIdAndDelete(communityId)
+    } catch (error) {
+        console.log(error)
+    }
+}
 module.exports = {
     addingCommunityPosts,
-    getAllCommunityPosts
+    getAllCommunityPosts,
+    deleteCommunity
 }

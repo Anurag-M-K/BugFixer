@@ -20,7 +20,7 @@ function AdminQuestion() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios.defaults.baseURL = "http://localhost:80";
+    axios.defaults.baseURL = "http://localhost:8060";
     const data = axios
       .get("/admin/user-details")
       .then((response) => {
@@ -57,7 +57,7 @@ function AdminQuestion() {
         }
       });
 
-      axios.defaults.baseURL = "http://localhost:80";
+      axios.defaults.baseURL = "http://localhost:8060";
   
    ;
     } catch (error) {
@@ -76,7 +76,7 @@ function AdminQuestion() {
       })
       .then((userUnblock) => {
         if (userUnblock) {
-          axios.defaults.baseURL = "http://localhost:80";
+          axios.defaults.baseURL = "http://localhost:8060";
            axios.put("/admin/unblock-user/" + id).then((res) => {
             toast.success("User unblocked");
             axios.get("/admin/user-details").then((response) => {

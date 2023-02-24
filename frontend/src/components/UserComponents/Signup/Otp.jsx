@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./Otp.css";
 import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
+import axios from "../../../config/axiosInstance";
 function Otp() {
   const navigate = useNavigate();
 
@@ -23,7 +23,6 @@ function Otp() {
   const checkOtp = (e) => {
     e.preventDefault();
     if (verifyOtp === otp) {
-      axios.defaults.baseURL = "http://localhost:80";
       axios.post("/api/otpVerifying", { email: email }).then((response) => {});
       toast.success("Otp verified");
       navigate("/login-page");

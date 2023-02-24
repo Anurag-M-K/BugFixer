@@ -1,23 +1,22 @@
 const { User } = require("../../model/userModel/userModel");
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
-
 const userLogin = async (req, res) => {
   try {
     const { error } = validate(req.body[0]);
     if (error)
-      return res.status(400).send({ message: error.details[0].message });
+    return res.status(400).send({ message: error.details[0].message });
     const user = await User.findOne({ email: req.body.email,isBlocked:false ,verified:1});
     if (!user)
-      return res.status(401).send({ message: "Invalid Email or Password" });
+    return res.status(401).send({ message: "Invalid Email or Password" });
 
+   
     const validPassword = await bcrypt.compare(
       req.body.password,
       user.password
     );
     if (!validPassword)
       return res.status(401).send({ message: "Invalid Email or Password" });
-console.log("user ",user)
     const token = user.generateAuthToken();
     console.log("user token ",token)
     res.status(200).send({ data: token,user,message: "Logged in successfully" });

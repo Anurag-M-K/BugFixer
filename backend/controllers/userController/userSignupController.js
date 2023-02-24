@@ -56,7 +56,6 @@ const userSignup = async(req,res)=>{
 }
 
 const otpVerify = (req,res)=>{
-    console.log("back")
     console.log("email ",req.body)
     const email = req.body.email;
 try {

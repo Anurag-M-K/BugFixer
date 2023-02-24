@@ -24,3 +24,19 @@ export const  getAllCommunityPosts = async ()=>{
     console.log(error)
   }
 }
+
+export const deleteCommunity = async(communityId , adminToken)=>{
+  try {
+    const deleteCommunity = await instance({
+      url:"/api/community/community-delete",
+      method:"DELETE",
+      data:{communityId:communityId},
+      headers:{
+      Authorization:adminToken
+      }
+    })
+    return deleteCommunity.data
+  } catch (error) {
+    console.log(error)
+  }
+}

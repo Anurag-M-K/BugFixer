@@ -33,6 +33,7 @@ function Login() {
       // dispatch(hideLoading())  
 			const { data: res } = await axios.post(url, data);
 			localStorage.setItem("userToken", res.data);
+      
       toast.success("login successfull")
       try {
         dispatch(setUserDetails(res.user))

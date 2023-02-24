@@ -28,14 +28,13 @@ const updateProfileController = async (req, res) => {
 
     let url = uploadedResponse.url;
     let id = req.body.userId;
-
+    
    
 
     const value = await User.findByIdAndUpdate(
       { _id: id },
       { $set: { imageUrl: url } }
     );
-    console.log("res ", value);
   } catch (error) {
     console.log("carch error from controller ", error);
     res.status(500).json({ err: "something went wrong" });

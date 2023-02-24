@@ -3,28 +3,44 @@ import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { getAllCommunityPosts } from "../../../helper/adminCommunityHelper";
+import { getAllCommunityPosts ,deleteCommunity } from "../../../helper/adminCommunityHelper";
 import { setCommunityPosts } from "../../../redux/features/communityPostsSlice";
 import AddCommunityDataModal from "./AddCommunityDataModal";
+import { BiTrashAlt } from 'react-icons/bi'
 import "./CommunityManage.css";
+import { toast } from "react-hot-toast";
 
 function CommunityManage() {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.communityPosts);
+  const { adminToken } = useSelector((state)=>state.adminToken)
+  console.log("admin tokne ",adminToken)
 
   useEffect(() => {
     try {
       (async () => {
         const posts = await getAllCommunityPosts();
         dispatch(setCommunityPosts(posts));
-        console.log(posts);
       })();
     } catch (error) {
       console.log(error);
     }
-  }, [getAllCommunityPosts]);
+  }, []);
 
-  console.log("posts ", posts);
+// useEffect(()=>{
+
+  const handleDeleteCommunity = async(commmunityId)=>{
+    console.log("communityid ",commmunityId , adminToken)
+      try {
+        await deleteCommunity(commmunityId , adminToken)
+        const posts = await getAllCommunityPosts();
+        dispatch(setCommunityPosts(posts));
+        toast.success("Deleted successfully")
+      } catch (error) {
+        console.log(error)
+      }
+  }
+// },[])
 
   return (
     <div>
@@ -40,6 +56,9 @@ function CommunityManage() {
             <div className="card-box">
 
               <Card key={index} className="community-card bg-dark">
+                <div className="coll-md-12 d-flex justify-content-end">< div>
+                  <BiTrashAlt onClick={()=>handleDeleteCommunity(post._id)} style={{width:"25px",height:"25px",cursor:"pointer",color:"red"}}/>
+                </div></div>
                 <Card.Body>
                   <Card.Title className="text-center">
                     {post?.title ? post.title : ""}

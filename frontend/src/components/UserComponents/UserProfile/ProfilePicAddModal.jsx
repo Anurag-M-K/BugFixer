@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { setUserUpdatedDetails } from "../../../redux/features/userUpdatedSlice";
 import "./ProfileEdit.css";
 import toast, { Toaster } from "react-hot-toast";
+import { getUserDetails } from "../../../helper/UserProfileHelper";
+import { setUserDetails } from "../../../redux/features/userSlice";
 
 function ProfilePicAddModal() {
   const [show, setShow] = useState(false);
@@ -57,18 +59,30 @@ function ProfilePicAddModal() {
   const uploadImage = async (base64EncodedImage) => {
     console.log(" ", base64EncodedImage);
     try {
-      await fetch(`http://localhost:80/api/profile/${userId}`, {
+      await fetch(`http://localhost:8060/api/profile/${userId}`, {
         method: "POST",
         body: JSON.stringify({ data: base64EncodedImage, userId }),
         headers: { "Content-type": "application/json" },
       }).then((responseData) => {
+        console.log("resonse from poijc ",responseData)
+        // dispatch(setUserImage(responseData))
         console.log(JSON.stringify(responseData, null, 4));
       });
     } catch (error) {
       console.error(error);
     }
   };
+  useEffect(()=>{
+    try {
+      (async()=>{
+        const user = await getUserDetails(tokenData)
+        dispatch(setUserDetails(user?.response))
+      })()
+    } catch (error) {
+      console.log(error)
+    }
 
+  },[])
   return (
     <div className="mainModal">
       <Button variant="primary" className="ml-2 " onClick={handleShow}>

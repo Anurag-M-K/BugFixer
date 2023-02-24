@@ -1,12 +1,12 @@
 const router = require("express").Router()
-const { addingCommunityPosts ,getAllCommunityPosts } = require("../controllers/communityController/communityController")
+const { addingCommunityPosts ,getAllCommunityPosts ,deleteCommunity } = require("../controllers/communityController/communityController")
 const { verifyJWT } = require("../middleware/adminMiddleware")
 
 //admin adding post
 
 router.post("/add-community-posts",addingCommunityPosts)
 router.get("/get-community-posts",getAllCommunityPosts)
-
+router.delete("/community-delete",verifyJWT , deleteCommunity)
 
 
 module.exports = router;
