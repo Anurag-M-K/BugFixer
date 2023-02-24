@@ -70,6 +70,6 @@ app.use('/api/conversation',conversationRouter);
 app.use('/api/message',messageRouter);
 app.use("/api/community",communityRouter)
 //server listen
-app.listen(PORT,()=>{
+app.listen(process.env.PORT,()=>{
     console.log(`bugfixer is running on PORT no - ${PORT}`)
 })

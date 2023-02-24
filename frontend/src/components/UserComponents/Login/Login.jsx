@@ -28,9 +28,9 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 		try {
-      dispatch(showLoading())
+      // dispatch(showLoading())
 			const url = "/api/userLogin";
-      dispatch(hideLoading())
+      // dispatch(hideLoading())  
 			const { data: res } = await axios.post(url, data);
 			localStorage.setItem("userToken", res.data);
       toast.success("login successfull")
