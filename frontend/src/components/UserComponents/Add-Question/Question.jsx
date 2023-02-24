@@ -6,9 +6,9 @@ import "./Question.css";
 import { TagsInput } from "react-tag-input-component";
 import { useSelector } from "react-redux";
 import Editor from "react-quill/lib/toolbar";
-import { ToastContainer, toast } from 'react-toastify';
+// import { ToastContainer, toast } from 'react-toastify';
 import { addQuestion } from "../../../helper/userQuestionHelper";
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 
 function Question() {
 
@@ -20,9 +20,9 @@ function Question() {
   const navigate = useNavigate();
   const { tokenData } = useSelector((state)=>state.user)
 
-  const notify = () =>  toast.success("Question added successfully!",{
-    position:"top-right"
-  });
+  // const notify = () =>  toast.success("Question added successfully!",{
+  //   position:"top-right"
+  // });
   
 
 
@@ -150,7 +150,7 @@ function Question() {
                   onChange={setTag}
                   name="fruits"
                   placeHolder="enter add new tag" />
-                    <ToastContainer/>
+                    {/* <ToastContainer/> */}
                 </div>
               </div>
             </div>
