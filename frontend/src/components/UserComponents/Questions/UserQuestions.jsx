@@ -20,12 +20,12 @@ const UserQuestions = () => {
             style={{ fontSize: "12px" }}
           >
             <div className="left text-muted mr-3">
-              <p className="">votes: </p>
+              <p className="">votes: {questionData?.vote.length} </p>
               <br />
               <p className="">Answers:{questionData?.answerDetails.length} </p>
               <br />
 
-              <small>1212 views</small>
+              <small>12 views</small>
             </div>
             <div className="right">
               <Link to={`/question?id=${questionData?._id}`}>

@@ -10,7 +10,7 @@ const {
   questionAdd,
   getQuestion,
   particularQuestion,
-  decreseVote,
+  decreaseVote,
   incrementVote,
   reportQuestion,
   getVotes,
@@ -67,7 +67,7 @@ router.get("/get-user-questions", verifyJWT, getUserQuestions);
 
 router.post("/otp-check/:otp", otpVerify);
 
-router.put("/vote-decrease/:qid", decreseVote);
+router.post("/vote-decrease",verifyJWT, decreaseVote);
 router.post("/vote-increment",verifyJWT, incrementVote);
 router.get("/get-vote/:qid", getVotes);
 router.post("/question-report/:qid", reportQuestion);

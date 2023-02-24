@@ -64,7 +64,7 @@ dispatch(filterQuestionDetails([val]))
             <div>
               <div className="d-flex justify-content-between my-3">
                 <h2 className="font-weight-normal">
-                  Questions 
+                  Questions
                 </h2>
                 <input className="searchInput" type="text" placeholder="search..." onChange={event => {setSearchTerm(event.target.value)}} />
                 

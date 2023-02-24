@@ -1,3 +1,4 @@
+import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import instance from "../config/axiosInstance";
 
@@ -21,7 +22,6 @@ export const addQuestion = async(tokenData,bodyJSON)=>{
 
 
 export const    questionVoting  = async(question_id,tokenData)=>{
-    console.log("quesiton id from helper ",question_id , tokenData)
     try {
         const incVoting = await instance({
             url:"/api/vote-increment",
@@ -33,7 +33,23 @@ export const    questionVoting  = async(question_id,tokenData)=>{
         })
         return questionVoting.data
     } catch (error) {
-        console.log(error)
+    return error.response
     }
 }
 
+export const questionDecVoting = async (question_id , tokenData)=>{
+    try {
+        const questionDecVoting = await instance({
+            url:"/api/vote-decrease",
+            data:{question_id:question_id},
+            method:"POST",
+            headers:{
+                Authorization:tokenData
+            }
+        })
+        return questionDecVoting.data
+    } catch (error) {
+        console.log(error)
+        return error.response
+    }
+}

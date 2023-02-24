@@ -8,7 +8,6 @@ export const singleQuestionSlice = createSlice({
     },
     reducers:{
         setSingleQuestionDetails:(state,action)=>{
-            console.log("frm slice single question ",action.payload )
             state.singleQuestiondata = action.payload;
         }
     }

@@ -14,7 +14,7 @@ import { useLocation } from "react-router-dom";
 import ReportReason from "./ReportReason";
 import { setCommentDetails } from "../../../redux/features/commentSlice";
 import "./index.css";
-import { questionVoting } from "../../../helper/userQuestionHelper";
+import { questionDecVoting, questionVoting } from "../../../helper/userQuestionHelper";
 
 function MainQuestion() {
   const [show, setShow] = useState(false);
@@ -27,6 +27,8 @@ function MainQuestion() {
   const dispatch = useDispatch();
   const { tokenData } = useSelector((state)=> state.user)
   const [ voteResponse , setVoteResponse] = useState("")
+  const [ voteRes , setVoteRes ] = useState("")
+  const { singleQuestiondata } = useSelector((state)=>state.singleQuestion)
   
 
   
@@ -128,67 +130,53 @@ console.log(answer)
   
   const { commentDetails } = useSelector((state) => state.comment);
 
-  // const decVoting = async (vote) => {
-  //   try {
-  //     setVote(vote - 1);
-  //     vote--;
-  //     await axios
-  //       .put("/api/vote-decrease/" + qid, { vote: vote })
-  //       .then(async (response) => {
-  //         await axios
-  //           .get(`/api/question/${id}`)
-  //           .then((res) => setQuestionData(res.data[0]))
-  //           .catch((err) => console.log("error on catch ", err));
-  //       });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
 
       async function incVoting(question_id){
         try {
           
           const data = await questionVoting(question_id,tokenData)
-          // const particularQuestion = await getAllQuestions(id,tokenData)
+         const getSingleQuestion =  await axios.get(`/api/question/${id}`)
+          dispatch(setSingleQuestionDetails(getSingleQuestion.data))
+          setVoteRes(getSingleQuestion.data)
+          toast.error(data.data.message)
         } catch (error) {
           console.log(error)
         }
 
       }
-console.log("question data ",questionData)
+
+      async function decVoting(question_id){
+
+        try {
+          
+          const data = await questionDecVoting(question_id,tokenData)
+          const getSingleQuestion =  await axios.get(`/api/question/${id}`)
+          dispatch(setSingleQuestionDetails(getSingleQuestion.data))
+          setVoteRes(getSingleQuestion.data)
+        
+          toast.error(data.data.message)
+        } catch (error) {
+          console.log(error)
+        }
+
+      }
    
 
+      console.log("setvote  ",voteRes)
+      console.log("single question data ",singleQuestiondata)
+      console.log("single question check  ",singleQuestiondata[0]?.vote)
 
 
 
 
 
-  // const incVoting = async (vote) => {
-  //   try {
-  //     setVote(vote + 1);
-  //     vote++;
-  //     await axios
-  //       .put("/api/vote-increment/" + qid, { vote: vote })
-  //       .then(async (response) => {
-  //         await axios
-  //           .get(`/api/question/${id}`)
-  //           .then((res) => setQuestionData(res.data[0]))
-  //           .catch((err) => console.log(err));
-  //       });
-  //   } catch (error) {
-  //     console.log("error from frontend ", error);
-  //   }
-  // };
 
-  // // 
   
-
   const questionDetail = { ...questionData, vote };
 
   const { voteCount } = useSelector((state) => state.vote);
 
-  const { singleQuestiondata } = useSelector((state) => state.singleQuestion);
 
 
 
@@ -260,13 +248,13 @@ console.log("question data ",questionData)
                     </span>
                   </div>
                   <div className="vote">
-                    <p className="arrow pe-2">{questionData?.vote?.length}</p>
+                    <p className="arrow pe-2">{singleQuestiondata[0]?.vote.length}</p>
                   </div>
                   <div className="downArrow">
                     <span className="arrow">
                       <svg
                         type="submit"
-                        onClick={() => decVoting(questionData?.vote)}
+                        onClick={() => decVoting(questionData?._id)}
                         aria-hidden="true"
                         className="svg-icon iconArrowDownLg"
                         width="36"
@@ -462,7 +450,7 @@ console.log("question data ",questionData)
       >
         Post Your Answer
       </button>
-      <Toaster />
+      {/* <Toaster /> */}
     </div>
   );
 }
