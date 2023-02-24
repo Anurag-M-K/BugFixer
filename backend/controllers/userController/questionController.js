@@ -249,9 +249,7 @@ const deleteUserQuestion = async (req, res) => {
   try {
     const qid = req.params.qid;
     const response = await QuestionDB.findByIdAndDelete({ _id: qid });
-    res
-      .status(200)
-      .json({ delete: true, message: "Question deleted successfully" });
+    res.status(200).json({ delete: true, message: "Question deleted successfully" });
   } catch (error) {
     console.log(error);
   }

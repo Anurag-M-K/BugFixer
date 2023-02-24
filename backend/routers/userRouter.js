@@ -44,6 +44,7 @@ const {
 } = require("../controllers/userController/userCommunityController");
 const {
   getAllTags,
+  getHotQuestions
 } = require("../controllers/userController/homePageRightSideController");
 
 router.post("/userSignup", userSignup);
@@ -60,7 +61,7 @@ router.get("/getUserProfile", verifyJWT, getUserProfile);
 router.post("/profile/:id", updateProfileController);
 router.get("/profileData", getProfileData);
 // router.get('/getImage',verifyJWT,getImage)
-router.put("/update-user", updateUserDetails);
+router.put("/update-user",verifyJWT, updateUserDetails);
 // router.get('/getUserDetails/:data_id',getUserDataForProfileUpdate)
 router.delete("/question-delete/:qid", verifyJWT, deleteUserQuestion);
 router.get("/get-user-questions", verifyJWT, getUserQuestions);
@@ -79,5 +80,5 @@ router.get("/getUser/:friendId", verifyJWT, getUser);
 
 router.put("/join-community", verifyJWT, addingCommunity);
 router.get("/get-all-tags", verifyJWT, getAllTags);
-
+router.get("/get-hot-questions",verifyJWT, getHotQuestions)
 module.exports = router;

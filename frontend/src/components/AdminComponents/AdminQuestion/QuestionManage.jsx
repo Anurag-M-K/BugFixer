@@ -9,7 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import toast,{Toaster} from 'react-hot-toast'
 import QuestionModal from './QusetionModal';
 import { getAllQuestionsDetails , getQuestions} from "../../../helper/adminQuestionHelper"; 
-import { setAdminQuestionDetails } from '../../../redux/features/adminQuestionSlice'
+import { setAdminQuestionDetails } from '../../../redux/features/adminQuestionSlice';
+import { BiTrashAlt } from 'react-icons/bi'
+
 import './AdminQuestion.css';
 
 function AdminQuestion() {
@@ -103,8 +105,9 @@ console.log("questiondetails array ",adminQuestionDetails)
     {
       name: "Actions",
       selector: (row) => (
-          <button className="btn btn-danger"
-          onClick={()=>questionDelete(row?._id)} >delete post</button>
+        <BiTrashAlt
+         style={{width:"20px",cursor:"pointer",height:"20px"}}
+          onClick={()=>questionDelete(row?._id)}  post/>
           ),
           style: {
             backgroundColor: "grey",

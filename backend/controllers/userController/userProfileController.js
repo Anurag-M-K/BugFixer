@@ -71,12 +71,13 @@ const getProfileData = async (req, res) => {
 
 
 const updateUserDetails =async (req,res)=>{
-  
-  const id = req.body.id
+  const objectId = res.locals._id
+  const id = objectId.toString()
+ console.log("id ",id)
 
 try {
   
- await User.findByIdAndUpdate(id,{$set:
+ await User.findByIdAndUpdate({_id:id},{$set:
     {
       firstName:req.body.firstName,
       email : req.body.email,
@@ -84,8 +85,8 @@ try {
       job:req.body.job,
       company:req.body.company,
   
-    }},{upsert:true}).then((response)=>{
-
+    }}).then((response)=>{
+console.log("response ",response)
       res.status(200).json({response:response,message:"user updated successfully"})
     })
 

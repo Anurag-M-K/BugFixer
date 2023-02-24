@@ -34,6 +34,7 @@ console.log(error)
 }
 
 export const updateUserProfile = async(updateData , tokenData)=>{
+    console.log("update data from helper ",updateData)
     try {
         const updateUserProfile = await instance({
             url:"/api/update-user",
@@ -60,6 +61,7 @@ export const getUserDetails = async( tokenData )=>{
                 Authorization:tokenData
             }
         })
+        console.log('checking',getUserDetails);
         return getUserDetails.data
     } catch (error) {
         console.log(error)

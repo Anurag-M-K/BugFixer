@@ -248,7 +248,7 @@ console.log(answer)
                     </span>
                   </div>
                   <div className="vote">
-                    <p className="arrow pe-2">{singleQuestiondata[0]?.vote.length}</p>
+                    <p className="arrow pe-2">{singleQuestiondata[0]?.vote.length ? singleQuestiondata[0]?.vote.length  : "0" }</p>
                   </div>
                   <div className="downArrow">
                     <span className="arrow">

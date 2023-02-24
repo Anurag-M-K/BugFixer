@@ -9,7 +9,8 @@ import { setUserUpdatedDetails } from "../../../redux/features/userUpdatedSlice"
 import toast, { Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { setUserDetails } from "../../../redux/features/userSlice";
-import { updateUserProfile } from '../../../helper/UserProfileHelper'
+import { updateUserProfile ,getUserDetails } from '../../../helper/UserProfileHelper'
+import {useFormik} from 'formik'
 
 function ProfileUpdate({ userDetails }) {
   const [show, setShow] = useState(false);
@@ -19,58 +20,57 @@ function ProfileUpdate({ userDetails }) {
   const navigate = useNavigate();
   const { tokenData } = useSelector((state)=>state.user)
 
-  const initialValue = {
-    firstName: userDetails.firstName,
-    email: userDetails.email,
-    phone: userDetails.phone,
-    job: userDetails.job,
-    company: userDetails.company,
-  };
+  console.log("userdetails fromporigole. ",userDetails)
 
  
-  const [userData, setUsetData] = useState(initialValue);
+  // const [userData, setUsetData] = useState(initialValue);
 
-  // var data_id = userDetails._id;
-  // const getUserDetails = async () => {
-  //   axios.defaults.baseURL = "http://localhost:80";
-  //   await axios.get("/api/getUserDetails/" + data_id).then((datas) => {
-  //     dispatch(setUserDetails(datas));
-  //     setUsetData(datas);
+ 
+
+  // const handleChange = (e) => {
+  //   const name = e.target.name;
+  //   const value = e.target.value;
+  //   setUsetData({
+  //     ...userDetails,
+  //     job,company,
+
+  //     [name]: value,
   //   });
   // };
-  // useEffect(() => {
-  //   getUserDetails();
-  // }, []);
-
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setUsetData({
-      ...userDetails,
-
-      [name]: value,
-    });
-  };
 
   const id = userDetails._id;
 
-  const updateData = { ...userData, id };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    toast.success("Profile updated");
-
+  
+  // const updateData = { ...userData, id };
+  const onSubmit = async (values) => {
+    // e.preventDefault();
+    console.log("update teatat ",values)
     try {
       axios.defaults.baseURL = "http://localhost:80";
-      await updateUserProfile( updateData , tokenData)
-     const datas =  await getUserDetails( data_id)
-     console.log("datasd ",datas)
-          dispatch(setUserDetails(datas.data));
+      await updateUserProfile( values , tokenData)
+      const datas =  await getUserDetails( tokenData)
+      console.log("=====",datas);
+      toast.success("Profile updated");
+          dispatch(setUserDetails(datas.response));
           setUsetData(datas);
           navigate("/home")
     } catch (error) {
       console.log("error from catch error ", error);
     }
   };
+  const {values,handleSubmit,handleChange}= useFormik({
+    initialValues:{
+      firstName: userDetails.firstName,
+      email: userDetails.email,
+      phone: userDetails.phone,
+      job: userDetails.job,
+      company: userDetails.company,
+    },
+    onSubmit
+  });
+
+
+
 
 
   return (
@@ -88,7 +88,7 @@ function ProfileUpdate({ userDetails }) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
               <Form.Control
-                value={userData.firstName}
+                value={values.firstName}
                 onChange={handleChange}
                 name="firstName"
                 type="text"
@@ -100,7 +100,7 @@ function ProfileUpdate({ userDetails }) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Email</Form.Label>
               <Form.Control
-                value={userData.email}
+                value={values.email}
                 onChange={handleChange}
                 type="email"
                 name="email"
@@ -111,7 +111,7 @@ function ProfileUpdate({ userDetails }) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Phone</Form.Label>
               <Form.Control
-                value={userData.phone}
+                value={values.phone}
                 onChange={handleChange}
                 type="number"
                 name="phone"
@@ -122,10 +122,10 @@ function ProfileUpdate({ userDetails }) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Job</Form.Label>
               <Form.Control
-                value={userData.job}
+                value={values.job}
                 onChange={handleChange}
                 type="text"
-                name="job"
+                id="job"
                 placeholder="your job"
                 autoFocus
               />
@@ -133,7 +133,7 @@ function ProfileUpdate({ userDetails }) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Company</Form.Label>
               <Form.Control
-                value={userData.company}
+                value={values.company}
                 onChange={handleChange}
                 type="text"
                 name="company"

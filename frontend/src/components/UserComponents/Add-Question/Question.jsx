@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; //quills css important
 import { useNavigate } from "react-router-dom";
@@ -6,8 +6,6 @@ import "./Question.css";
 import { TagsInput } from "react-tag-input-component";
 import { useSelector } from "react-redux";
 import Editor from "react-quill/lib/toolbar";
-import { userState } from "../../../redux/features/userSlice";
-import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import { addQuestion } from "../../../helper/userQuestionHelper";
 import 'react-toastify/dist/ReactToastify.css';
@@ -58,23 +56,23 @@ function Question() {
     /*
    * Quill editor formats
    * See https://quilljs.com/docs/formats/
-   */
-    Editor.formats = [
-      "header",
-      "font",
-      "size",
-      "bold",
-      "italic",
-      "underline",
-      "strike",
-      "blockquote",
-      "list",
-      "bullet",
-      "indent",
-      "link",
-      "image",
-      "video",
-    ];
+  //  */
+  //   Editor.formats = [
+  //     "header",
+  //     "font",
+  //     "size",
+  //     "bold",
+  //     "italic",
+  //     "underline",
+  //     "strike",
+  //     "blockquote",
+  //     "list",
+  //     "bullet",
+  //     "indent",
+  //     "link",
+  //     "image",
+  //     "video",
+  //   ];
   const handleQuill = (value) => {
     setBody(value);
   };
@@ -98,22 +96,6 @@ function Question() {
     navigate("/home");
   }
 };
-
-      // axios.defaults.baseURL = "http://localhost:80";
-
-      // await axios
-      //   .post("/api/question", bodyJSON)
-      //   .then((res) => {
-      //     notify("question added successfully");
-      //     setLoading(false);
-      //     navigate("/home");
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //     setLoading(false);
-      //   });
-  // useEffect(()=>{
-  // },[])
 
 
   try {

@@ -1,4 +1,5 @@
 const Tags = require("../../model/adminModel/tagModel");
+const questionDB = require("../../model/userModel/Question")
 
 
 const getAllTags = async(req,res)=>{
@@ -10,6 +11,17 @@ const getAllTags = async(req,res)=>{
     }
 }
 
+const getHotQuestions = async(req,res)=>{
+    try {
+        const hotQuestions = await questionDB.find({vote:{$gt:1}})
+        res.status(200).json(hotQuestions)
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).json(error)
+    }
+}
+
 module.exports = {
-    getAllTags
+    getAllTags,
+    getHotQuestions
 }

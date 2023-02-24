@@ -23,6 +23,7 @@ import ReactHtmlParser from "react-html-parser";
 import { deleteQuestion ,getUserQuestions,getUserDetails } from "../../../helper/UserProfileHelper";
 import { setUserProfileQuestionsDetails } from "../../../redux/features/userProfileQuestions";
 import toast, { Toaster } from "react-hot-toast";
+import { FaTrashAlt } from 'react-icons/fa'
 import './UserProfile.css'
 import "./ProfileEdit.css";
 
@@ -38,7 +39,6 @@ export default function UserProfile() {
   const { userProfileQuestionsDetails } = useSelector((state=> state.userProfileQuestions))
 
   
-  console.log("userProfilequestiondetails ",userProfileQuestionsDetails)
   const handleFileInput = (e) => {
     const file = e.target.files[0];
 
@@ -71,22 +71,7 @@ export default function UserProfile() {
       console.error(error);
     }
   };
-  const email = userDetails.email;
-  // useEffect(() => {
-  //   (async () => {
-  //     const data = await axios({
-  //       url: "/api/getImage",
-  //       method: "GET",
-  //       data:email,
-  //       headers: {
-  //         Authorization: tokenData,
-  //       },
-  //     }).then((response) => {
-  //       setResponse(response.data[0]);
-  //       dispatch(setUserDetails(response.data[0]));
-  //     });
-  //   })();
-  // }, []);
+
 
 
 
@@ -111,15 +96,14 @@ export default function UserProfile() {
 
 
 
-
   
   const handleQuestionDelete = async (id) => {
     try {
       
       const deleteQuestionRsponse = await deleteQuestion(id, tokenData);
-      console.log("question reaponse ",deleteQuestionRsponse)
       toast.success(deleteQuestionRsponse.message)
       const data = await getUserQuestions( tokenData)
+      console.log("data t ",data.data.questions);
           dispatch(setUserProfileQuestionsDetails(data.data.questions))
     } catch (error) {
       toast.error("server error")
@@ -137,10 +121,7 @@ export default function UserProfile() {
     }
 
   },[])
-  console.log("userDETials ",userDetails)
 
-  // const userAskedQuestions = userProfileQuestionsDetails.filter(useraskedQuestions=> useraskedQuestions?.user?._id ==id)
-  // console.log("userAskedquestins ",userAskedQuestions)
   let defaultUrl =
   "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp";
   return (
@@ -290,7 +271,8 @@ export default function UserProfile() {
 
             <MDBRow>
               <MDBCol md="6 col-md-12">
-                {userProfileQuestionsDetails?.map((question) => {
+                {
+                userProfileQuestionsDetails?.map((question) => {
                 <MDBCardText className="mb-4">
                   <span className="text-primary  font-italic me-1">
                     
@@ -316,16 +298,17 @@ export default function UserProfile() {
                             {question.title ? question?.title : ""} 
                             <div className="del-btn">
                             <div class=" d-md-flex justify-content-md-end  ">
-                              <a
-                                class="btn btn-danger btn-md active"
+                              {/* <a
                                 role="button"
                                 aria-pressed="true"
                                 onClick={() =>
                                   handleQuestionDelete(question._id)
                                 }
-                              >
-                                Delete
-                              </a>
+                              > */}
+                              {/* </a> */}
+                              <FaTrashAlt style={{cursor:"pointer"}} onClick={() =>
+                                  handleQuestionDelete(question._id)
+                                }/>
                             </div>
                             </div>
                           </MDBCardText>

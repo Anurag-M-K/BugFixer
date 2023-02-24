@@ -10,6 +10,7 @@ import toast,{Toaster} from 'react-hot-toast'
 import './AdminQuestion.css'
 import QuestionModal from './QusetionModal'
 import { setReportedQuestions } from "../../../redux/features/reportedQuestionsSlice";
+import { BiTrashAlt } from 'react-icons/bi'
 import { getReportedQuestions } from "../../../helper/adminQuestionHelper";
 
 function AdminQuestion() {
@@ -110,8 +111,9 @@ try {
     {
       name: "Actions",
       selector: (row) => (
-          <button className="btn btn-danger"
-          onClick={()=>questionDelete(row?._id)} >delete post</button>
+          <BiTrashAlt
+          style={{width:"20px",height:"20px",cursor:"pointer"}}
+          onClick={()=>questionDelete(row?._id)} />
           ),
           style: {
             backgroundColor: "grey",
