@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { joinCommunity } from "../../../helper/userCommunityHelper";
@@ -13,14 +13,22 @@ const Community = () => {
   const { posts } = useSelector((state)=>state.communityPosts)
   const { userDetails,tokenData } = useSelector((state)=>state.user)
   const dispatch = useDispatch()
+
+
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
   };
+useEffect(()=>{
+  (async ()=>{
+    const posts = await getAllCommunityPosts();
 
+    console.log("posts posts ",posts)
+    dispatch(setCommunityPosts(posts));
+  })
+},[])
 
 
   const handleJoinCommunity = async (post)=>{
-    console.log("post ",post)
   
     try {
       swal({

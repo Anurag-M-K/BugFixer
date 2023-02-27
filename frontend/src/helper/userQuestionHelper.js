@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import instance from "../config/axiosInstance";
 
 export const addQuestion = async(tokenData,bodyJSON)=>{
-    console.log("from helper ",bodyJSON)
     try {
         const addQuestion = await instance({
             url:"/api/question",

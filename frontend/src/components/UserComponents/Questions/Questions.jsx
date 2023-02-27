@@ -19,13 +19,11 @@ console.log(searchTerm)
 
 useEffect(()=>{
   async function findQuestions(){
-    await axios.get("/api/getQuestion").then(res => {
+    const res = await axios.get("/api/getQuestion")
       setQuestions(res.data.reverse())
       dispatch(setQuestionDetails(res.data))
       return res.data
-    }).catch(err =>{
-      console.log(err)
-    })
+  
   } 
   findQuestions()
 },[])

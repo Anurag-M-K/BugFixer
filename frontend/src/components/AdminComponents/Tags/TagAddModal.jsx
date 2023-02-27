@@ -15,10 +15,16 @@ function TagAddModal() {
   const { adminToken } = useSelector((state) => state.adminToken);
   const dispatch = useDispatch();
   const [state, setState] = useState("");
+
+
+
   const onSubmit = (values) => {
     try {
       (async () => {
         const data = await addTag(values, adminToken);
+        const tags = await getTags(adminToken);
+        setState(tags);
+        dispatch(setTags(tags));
         toast.success("Tag added successfully");
       })();
     } catch (error) {

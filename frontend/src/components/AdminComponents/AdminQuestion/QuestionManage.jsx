@@ -19,7 +19,7 @@ function AdminQuestion() {
   const [questions, setQuestions] = useState([]);
   const dispatch = useDispatch();
   const { adminToken } = useSelector((state)=>state.adminToken)
-  
+  const { adminQuestionDetails } = useSelector((state)=>state.adminQuestion)
   
   
   useEffect(() => {
@@ -67,7 +67,6 @@ function AdminQuestion() {
 
 
 
-const { adminQuestionDetails }  = useSelector((state)=>state.adminQuestion)
 
 console.log("questiondetails array ",adminQuestionDetails)
 

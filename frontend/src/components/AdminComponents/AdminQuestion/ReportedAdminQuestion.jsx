@@ -23,7 +23,7 @@ function AdminQuestion() {
   console.log("reported question details ,",reportedQuestionDetails)
   useEffect(() => {
  
-      axios.defaults.baseURL = "http://localhost:80";
+      axios.defaults.baseURL = "http://localhost:8060";
       axios.get("/admin/get-report-questions").then((response) => {
            setQuestions(response.data.data)
        dispatch(setReportedQuestions(response.data.data))

@@ -6,7 +6,7 @@ import "./Question.css";
 import { TagsInput } from "react-tag-input-component";
 import { useSelector } from "react-redux";
 import Editor from "react-quill/lib/toolbar";
-// import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { addQuestion } from "../../../helper/userQuestionHelper";
 // import 'react-toastify/dist/ReactToastify.css';
 
@@ -20,9 +20,9 @@ function Question() {
   const navigate = useNavigate();
   const { tokenData } = useSelector((state)=>state.user)
 
-  // const notify = () =>  toast.success("Question added successfully!",{
-  //   position:"top-right"
-  // });
+  const notify = () =>  toast.success("Question added successfully!",{
+    position:"top-right"
+  });
   
 
 
@@ -53,26 +53,7 @@ function Question() {
       matchVisual: false,
     },
   };
-    /*
-   * Quill editor formats
-   * See https://quilljs.com/docs/formats/
-  //  */
-  //   Editor.formats = [
-  //     "header",
-  //     "font",
-  //     "size",
-  //     "bold",
-  //     "italic",
-  //     "underline",
-  //     "strike",
-  //     "blockquote",
-  //     "list",
-  //     "bullet",
-  //     "indent",
-  //     "link",
-  //     "image",
-  //     "video",
-  //   ];
+ 
   const handleQuill = (value) => {
     setBody(value);
   };

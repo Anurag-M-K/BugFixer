@@ -11,6 +11,7 @@ import {
 } from "../../../helper/UsersChatHelper";
 import { io } from "socket.io-client";
 import "./Messenger.css";
+import SearchBar from "./SearchBar";
 
 function Messenger() {
   const { userDetails } = useSelector((state) => state.user);
@@ -22,6 +23,9 @@ function Messenger() {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef(); //which is used for automatically scroll up when a message is send
   const socket = useRef(io("ws://localhost:8080"));
+  const [ value , setValue ] = useState('')
+
+
 
   useEffect(() => {
     socket.current = io("ws://localhost:8080");
@@ -43,7 +47,6 @@ function Messenger() {
   useEffect(() => {
     socket.current.emit("addUser", userDetails._id);
     socket.current.on("getUsers", (users) => {
-        console.log("users ",users)
     });
   }, [userDetails]);
 
@@ -98,17 +101,18 @@ function Messenger() {
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  const handleDataFromChild = (data)=>{
+    setDataFromChild(data)
+  }
+
   return (
     <>
       <Header />
       <div className="messenger">
         <div className="chatMenu">
           <div className="chatMenuWrapper">
-            <input
-              type="input"
-              placeholder="Search for friends"
-              className="chatMenuInput"
-            />
+           <SearchBar onData={handleDataFromChild}/>
             {conversations?.map((c) => (
               <div onClick={() => setCurrentChat(c)}>
                 <Conversation conversation={c} />
@@ -152,7 +156,7 @@ function Messenger() {
         </div>
         <div className="chatOnline">
           <div className="chatOnlineWrapper">
-            <ChatOnline />
+            {/* <ChatOnline /> */}
           </div>
         </div>
       </div>

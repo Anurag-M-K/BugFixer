@@ -6,10 +6,10 @@ export const userSlice = createSlice({
   initialState: {
     userDetails: [],
     tokenData:"",
+    allUsersDetails:[]
   },
   reducers: {
     setUserDetails: (state, action) => {
-      console.log("login checking slice ",action.payload)
       state.userDetails = action.payload;
     },
     setUserLogout: (state) => {
@@ -17,12 +17,15 @@ export const userSlice = createSlice({
     },
     setToken : (state,action)=>{
       state.tokenData = action.payload;
-    }
+    },
+    setAllUsersDetails:(state,action)=>{
+      state.allUsersDetails = action.payload
+    },
   },
 });
 
 export const userState = (state) => state.user.user;
 
-export const { setUserDetails, setUserLogout,setToken } = userSlice.actions;
+export const { setUserDetails, setUserLogout,setToken , setAllUsersDetails} = userSlice.actions;
 
 export default userSlice.reducer;

@@ -13,7 +13,7 @@ const addTag = async(req,res)=>{
         }else{
             const tagAdd =   await Tag.updateOne({},{
                 $push:{tags:tag}
-            },{upsert:true})
+            })
             res.status(200).json({message:"tag added"})
         }
         res.status(200).json()
@@ -33,7 +33,18 @@ const getTags = async(req,res)=>{
     }
 }
 
+
+const deleteTag = async(req,res)=>{
+    const tag = req.body.tag
+    try {
+        await Tag.findOneAndUpdate({tag},{$pull:{tags:tag}})
+        res.status(200).json({message:"Deleted successfully"})
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
 module.exports = {
     addTag,
-    getTags
+    getTags,
+    deleteTag
 }

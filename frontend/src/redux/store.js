@@ -20,6 +20,8 @@ import { communityPostsSlice } from "./features/communityPostsSlice";
 import { adminQuestionSlice } from "./features/adminQuestionSlice";
 import { reportedQuestionsSlice } from "./features/reportedQuestionsSlice";
 import  { tagSlice } from "./features/tagSlice";
+import { friendDataSlice } from "./features/friendDataSlice";
+import  { clickedUserSlice }  from "./features/chatLeftSideClickedUserSlice";
 
 
 const persistConfig = {
@@ -47,6 +49,8 @@ const reducer = combineReducers({
     adminQuestion:adminQuestionSlice.reducer,
     reportedQuestion:reportedQuestionsSlice.reducer,
     tag:tagSlice.reducer,
+    friend:friendDataSlice.reducer,
+    clickedUser:clickedUserSlice.reducer,
     
 
 

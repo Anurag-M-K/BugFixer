@@ -30,3 +30,21 @@ export const getTags = async(adminToken)=>{
         console.log(error)
     }
 }
+
+
+export const deleteTag = async(tag , adminToken)=>{
+    console.log("heloer ",tag,adminToken)
+    try {
+      const deleteTag = await instance({
+        url:"/admin/tag-delete",
+        method:"DELETE",
+        data:{tag:tag},
+        headers:{
+        Authorization:adminToken
+        }
+      })
+      return deleteTag.data
+    } catch (error) {
+      console.log(error)
+    }
+  }

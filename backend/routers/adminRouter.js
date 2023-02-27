@@ -5,7 +5,7 @@ const {blockUser,unblockUser,getUsersDetails} = require("../controllers/adminCon
 const {getReportedQuestion,deleteQuestion,getAllQuestions} = require("../controllers/adminController/adminQuestionController")
 const { verifyJWT } = require("../middleware/adminMiddleware")
 
-const { addTag , getTags} = require("../controllers/adminController/adminTagsController")
+const { addTag , getTags,deleteTag} = require("../controllers/adminController/adminTagsController")
 
 router.post('/admin-login',adminLogin)
 router.put("/block-user/:id",blockUser)
@@ -16,6 +16,7 @@ router.delete("/question-delete/:qid",deleteQuestion)
 router.get('/get-questions',getAllQuestions)
 router.post("/add-tag",verifyJWT,addTag)
 router.get("/get-tags",verifyJWT,getTags)
+router.delete("/tag-delete",verifyJWT , deleteTag)
 
 
 module.exports = router;

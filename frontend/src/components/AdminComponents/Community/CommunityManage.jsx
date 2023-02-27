@@ -9,12 +9,12 @@ import AddCommunityDataModal from "./AddCommunityDataModal";
 import { BiTrashAlt } from 'react-icons/bi'
 import "./CommunityManage.css";
 import { toast } from "react-hot-toast";
+import Navbar from "../AdminDashboard/Navbar";
 
 function CommunityManage() {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.communityPosts);
   const { adminToken } = useSelector((state)=>state.adminToken)
-  console.log("admin tokne ",adminToken)
 
   useEffect(() => {
     try {
@@ -45,6 +45,7 @@ function CommunityManage() {
   return (
     <div>
       <Section className="bg-black" style={{ backGroundColor: "black" }}>
+        <Navbar/>
         <div className="add-data-btn">
           <div className="add-data-btn ">
             <AddCommunityDataModal />

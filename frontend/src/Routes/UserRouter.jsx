@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import ViewQuestionPage from "../pages/user/ViewQuestionPage";
 import Messenger from "../components/Community/Messenger/Messenger";
 import SingleCommunityPage from "../pages/Community/SingleCommunityPage";
+import SearchBar from "../components/Community/Messenger/SearchBar";
 
 function UserRoute(){
     const { loading } = useSelector((state) => state.alerts);
@@ -37,6 +38,7 @@ function UserRoute(){
           <Route exact path='/view-question' element={<ViewQuestionPage/>} />
 
           <Route exact path="/messenger" element={<Private><Messenger/></Private>}/>
+          <Route exact path='/search' element={<SearchBar/>} />
           <Route exact path="/page" element={<CommunityHomePage/>}/>
           
           <Route exact path="/community" element={<CommunityHomePage/>}/>

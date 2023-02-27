@@ -1,14 +1,21 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { format } from 'timeago.js'
 import "./Message.css";
 
 export default function Message({message,own}) {
+  const { friendData } = useSelector((state)=>state.friend) 
+ 
+  const { userDetails } = useSelector((state)=>state.user)
+
+
+  
   return (
     <div className={own ? "message own" : "message"}>
       <div className="messageTop">
         <img
           className="messageImg"
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+          src={own && userDetails?.imageUrl ? userDetails.imageUrl : friendData?.imageUrl}
           alt=""
         />
         <p className="messageText">

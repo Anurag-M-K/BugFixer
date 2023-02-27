@@ -6,4 +6,17 @@
 }
 .tag-card{
     display: flex;
+    margin-bottom: 32px;
+    color: white;
+}
+
+.community-card-tag{    height: 13vh;
+    width: 30vh;}
+
+
+.tag-card-container > .card-group{
+        display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+   
 }

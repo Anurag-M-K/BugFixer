@@ -4,9 +4,13 @@ import CardGroup from "react-bootstrap/CardGroup";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import TagAddModal from "./TagAddModal";
-import { getTags } from "../../../helper/adminTagHelper";
+import { getTags  ,deleteTag } from "../../../helper/adminTagHelper";
 import './Tags.css'
 import { setTags } from "../../../redux/features/tagSlice";
+import { BiTrashAlt } from 'react-icons/bi'
+import { toast } from "react-hot-toast";
+import Navbar from "../AdminDashboard/Navbar";
+
 
 function Tags() {
   const dispatch = useDispatch();
@@ -20,25 +24,39 @@ function Tags() {
     })()
   },[])
 
-  console.log("tags from store ",allTags)
 
+  const handleDeleteTag = async(tag)=>{
+    console.log("communityid ",tag , adminToken)
+      try {
+        await deleteTag(tag , adminToken)
+        const tags = await getTags(adminToken)
+      dispatch(setTags(tags))
+        toast.success("Deleted successfully")
+      } catch (error) {
+        console.log(error)
+      }
+  }
+  console.log("tag check ",allTags)
 
   return (
     <div style={{height:"100vh"}}>
       <Section className="bg-black" style={{ backGroundColor: "black" }}>
+        <Navbar/>
         <div className="add-data-btn">
           <div className="add-data-btn ">
             <TagAddModal/>
           </div>
         </div>
-        <div className="card-container">
-          <CardGroup>
+        <div className="tag-card-container">
+          <CardGroup >
     {allTags[0]?.tags?.map((tag,index)=>{
       return(
 <>
         <div className="tag-card">
-
-      <Card  className="community-card bg-dark">
+      <Card  className="community-card-tag bg-dark">
+        <div className="coll-md-12 d-flex justify-content-end">< div>
+                  <BiTrashAlt onClick={()=>handleDeleteTag(tag)} style={{width:"25px",height:"25px",cursor:"pointer",color:"red"}}/>
+                </div></div>
                 <Card.Body className="card-body-tags">
                   <Card.Title key={index} className="text-center">
                     {tag}

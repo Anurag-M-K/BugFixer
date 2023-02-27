@@ -51,6 +51,7 @@ function Login() {
 				error.response.status >= 400 &&
 				error.response.status <= 500
 			) {
+        toast.error(error.response.data.message)
 				setError(error.response.data.message);
 			}
 		}
@@ -132,7 +133,7 @@ function Login() {
               />
             </div>
           </div>
-          {error && <div  ><p className="error-show">{error}</p></div>}
+          {/* {error && <div  ><p className="error-show">{error}</p></div>} */}
 
          <button
             type="submit"

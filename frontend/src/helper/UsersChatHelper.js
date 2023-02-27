@@ -62,3 +62,18 @@ export const postMessages = async(message,tokenData)=>{
         console.log(error)
     }
 }
+
+export const getAllUsers = async(tokenData)=>{
+    try {
+        const getAllUsers = await instance({
+            url:"/api/get-all-users",
+            method:"GET",
+            headers:{
+                Authorization:tokenData
+            }
+        })
+        return getAllUsers.data
+    } catch (error) {
+        console.log(error)
+    }
+}
