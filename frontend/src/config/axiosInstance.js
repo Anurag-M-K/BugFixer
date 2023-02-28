@@ -5,7 +5,6 @@ const instance = axios.create({
     
 });
 
-// instance.defaults.headers.common['Authorization'] = 'Auth from instance';
 
 export default instance;     
 

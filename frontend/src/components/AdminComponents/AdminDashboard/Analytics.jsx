@@ -1,20 +1,84 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BsFillCalendar2WeekFill } from "react-icons/bs";
 import { IoStatsChart } from "react-icons/io5";
 import { BiGroup } from "react-icons/bi";
 import { FiActivity } from "react-icons/fi";
 import { cardStyles } from "./ReusableStyles";
+import { setCompleteUsersDetails } from "../../../redux/features/completeUserDetailsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { setQuestionDetails } from "../../../redux/features/questionSlice";
+import { GiTwirlCenter } from "react-icons/gi";
+import { setCommunityPosts } from "../../../redux/features/communityPostsSlice";
+import { getAllCommunityPosts } from "../../../helper/adminCommunityHelper";
+import { getTags } from "../../../helper/adminTagHelper";
+import { setTags } from "../../../redux/features/tagSlice";
+
+
+
 export default function Analytics() {
+  const { completeUsers } = useSelector((state) => state.users);
+  const [questions,setQuestions] = useState([]);
+  const { posts } = useSelector((state) => state.communityPosts);
+  const { allTags } = useSelector((state)=>state.tag)
+
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    axios.defaults.baseURL = "http://localhost:8060";
+    const data = axios
+      .get("/admin/user-details")
+      .then((response) => {
+        dispatch(setCompleteUsersDetails(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [])
+
+  useEffect(()=>{
+    async function findQuestions(){
+      const res = await axios.get("/api/getQuestion")
+      setQuestions(res.data.reverse())
+
+        dispatch(setQuestionDetails(res.data))
+        return res.data
+    
+    } 
+    findQuestions()
+  },[])
+
+
+  useEffect(() => {
+    try {
+      (async () => {
+        const posts = await getAllCommunityPosts();
+        dispatch(setCommunityPosts(posts));
+      })();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(()=>{
+    (async()=>{
+      const tags = await getTags(adminToken)
+      dispatch(setTags(tags))
+    })()
+  },[])
+  console.log("teag ",allTags)
   return (
+
     <Section>
       <div className="analytic ">
         <div className="content">
-          <h5>Spent this month</h5>
-          <h2>$682.5</h2>
+          <h5>Users</h5>
+          <h2>{completeUsers?.length   }</h2>
         </div>
         <div className="logo">
-          <BsFillCalendar2WeekFill />
+          {/* <BsFillCalendar2WeekFill /> */}
+          <BiGroup />
         </div>
       </div>
       <div className="analytic">
@@ -22,23 +86,23 @@ export default function Analytics() {
           <IoStatsChart />
         </div>
         <div className="content">
-          <h5>Earnings</h5>
-          <h2>$350.40</h2>
+          <h5>Question</h5>
+          <h2>{questions?.length}</h2>
         </div>
       </div>
       <div className="analytic">
         <div className="logo">
-          <BiGroup />
+          <GiTwirlCenter />
         </div>
         <div className="content">
-          <h5>New clients</h5>
-          <h2>321</h2>
+          <h5>Community</h5>
+          <h2>{posts?.length}</h2>
         </div>
       </div>
       <div className="analytic ">
         <div className="content">
-          <h5>Activity</h5>
-          <h2>$540.50</h2>
+          <h5>Tags</h5>
+          <h2>{allTags[0].tags?.length}</h2>
         </div>
         <div className="logo">
           <FiActivity />

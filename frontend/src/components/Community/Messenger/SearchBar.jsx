@@ -10,6 +10,7 @@ function SearchBar() {
     const { tokenData ,allUsersDetails } = useSelector((state)=>state.user)
     const dispatch = useDispatch()
     const  [ filterData , setFilterData ] = useState([])
+    const [ displayBox , setDisplayBox ]  = useState(true)
 
    
 
@@ -23,6 +24,7 @@ function SearchBar() {
 
     //filter username  logic
     const handleFilter = (event)=>{
+        setDisplayBox(true)
        const searchWord =  event.target.value
         const newFIlter = allUsersDetails.filter((value)=>{
             return value.firstName.toLowerCase().includes(searchWord.toLowerCase())
@@ -31,11 +33,14 @@ function SearchBar() {
         setFilterData(newFIlter )
     }
 
-    //get clicked user  details && pass data to parent component through props
+    //get clicked user  details 
     const onClickUser = (userId)=>{
         const filteredUserData =  allUsersDetails.filter((value)=>value._id == userId)
          dispatch(setClickedUserDetails(filteredUserData))
+         setDisplayBox(false)
     }
+
+ 
 
   return (
     <div className='search'>
@@ -44,7 +49,8 @@ function SearchBar() {
             <div className="searchIcon"><BiSearchAlt2/>
             </div>
         </div>
-        <div className="dataBox">
+       {displayBox && 
+        <div  className="dataBox">
 { filterData.length != 0  && (
         <div className="dataResult">
                 {filterData.slice(0,15).map((value,key)=>{
@@ -54,6 +60,7 @@ function SearchBar() {
                 })}
         </div>
     )}    </div>
+            }
             
     </div>
 

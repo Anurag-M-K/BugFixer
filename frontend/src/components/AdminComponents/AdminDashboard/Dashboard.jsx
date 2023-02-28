@@ -36,11 +36,7 @@ export default function Dashboard() {
           <Analytics />
           <FAQ />
         </div>
-        {/* <div className="row__two">
-          <Earnings /> 
-           <Transfers /> 
-           <Profile />
-        </div> */}
+      
       </div>
     </Section>
   </div>

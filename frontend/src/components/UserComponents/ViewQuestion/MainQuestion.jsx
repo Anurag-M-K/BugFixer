@@ -15,6 +15,7 @@ import ReportReason from "./ReportReason";
 import { setCommentDetails } from "../../../redux/features/commentSlice";
 import "./index.css";
 import { questionDecVoting, questionVoting } from "../../../helper/userQuestionHelper";
+import { setAnswerDetails } from "../../../redux/features/completeAnswerSlice";
 
 function MainQuestion() {
   const [show, setShow] = useState(false);
@@ -29,6 +30,9 @@ function MainQuestion() {
   const [ voteResponse , setVoteResponse] = useState("")
   const [ voteRes , setVoteRes ] = useState("")
   const { singleQuestiondata } = useSelector((state)=>state.singleQuestion)
+  const { answerDetails } = useSelector((state)=>state.answer)
+
+  
   
 
   
@@ -93,7 +97,9 @@ console.log(answer)
         .then(async (res) => {
           const id = res.data.data.question_id;
           await axios.get("/api/get-answer/" + id).then((response) => {
-            dispatch(setSingleQuestionDetails(response));
+            // dispatch(setSingleQuestionDetails(response));
+            console.log("respjosd response ",response)
+            dispatch(setAnswerDetails(response.data))
           });
           toast.success("Answer added successfully");
           
@@ -117,7 +123,6 @@ console.log(answer)
       };
       await axios.post(`/api/comment/${qid}`, body).then(async (res) => {
         const comment = await axios.get(`/api/comment/${qid}`);
-        console.log("comment ", comment?.data);
         dispatch(setCommentDetails(comment.data));
         setComment("");
         setShow(false);
@@ -393,12 +398,13 @@ console.log(answer)
                 </div>
               </div>
 
+            
               <div
-                className="question-answer col-md-10 col-sm-6 "
-                style={{
-                  display: "flex",
-                  justifyContent: " space-evenly",
-                }}
+              className="question-answer col-md-10 col-sm-6 "
+              style={{
+                display: "flex",
+                justifyContent: " space-evenly",
+              }}
               >
                 <p>{ReactHtmlParser(_q?.answer)}</p>
 

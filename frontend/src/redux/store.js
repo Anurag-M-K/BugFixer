@@ -22,6 +22,7 @@ import { reportedQuestionsSlice } from "./features/reportedQuestionsSlice";
 import  { tagSlice } from "./features/tagSlice";
 import { friendDataSlice } from "./features/friendDataSlice";
 import  { clickedUserSlice }  from "./features/chatLeftSideClickedUserSlice";
+import { completeAnswerSlice } from "./features/completeAnswerSlice";
 
 
 const persistConfig = {
@@ -51,6 +52,7 @@ const reducer = combineReducers({
     tag:tagSlice.reducer,
     friend:friendDataSlice.reducer,
     clickedUser:clickedUserSlice.reducer,
+    answer:completeAnswerSlice.reducer,
     
 
 
