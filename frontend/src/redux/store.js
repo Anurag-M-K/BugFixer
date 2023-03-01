@@ -22,7 +22,11 @@ import { reportedQuestionsSlice } from "./features/reportedQuestionsSlice";
 import  { tagSlice } from "./features/tagSlice";
 import { friendDataSlice } from "./features/friendDataSlice";
 import  { clickedUserSlice }  from "./features/chatLeftSideClickedUserSlice";
+<<<<<<< HEAD
 import { particularAnswersSlice } from "./features/particularAnswersSlice";
+=======
+import { completeAnswerSlice } from "./features/completeAnswerSlice";
+>>>>>>> 93f5235af67a30625dddc94f48e8c3a63962dbe9
 
 
 const persistConfig = {
@@ -52,7 +56,11 @@ const reducer = combineReducers({
     tag:tagSlice.reducer,
     friend:friendDataSlice.reducer,
     clickedUser:clickedUserSlice.reducer,
+<<<<<<< HEAD
     particularAnswers:particularAnswersSlice.reducer,
+=======
+    answer:completeAnswerSlice.reducer,
+>>>>>>> 93f5235af67a30625dddc94f48e8c3a63962dbe9
     
 
 

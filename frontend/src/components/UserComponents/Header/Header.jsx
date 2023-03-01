@@ -49,10 +49,15 @@ function Header() {
   return (
     <nav className="app navbar navbar-expand-lg navbar-light bg-light px-5">
 
+<<<<<<< HEAD
           <span onClick={()=>navigate('/home')} className="navbar-brand">
             <img src='https://res.cloudinary.com/dmvxmurxw/image/upload/v1674187605/logo4_g8zbar.png' alt="" width="160px" />
           </span>
+=======
+            <img style={{cursor:"pointer"}} onClick={()=>navigate("/home")} src='https://res.cloudinary.com/dmvxmurxw/image/upload/v1674187605/logo4_g8zbar.png' alt="" width="160px" />
+>>>>>>> 93f5235af67a30625dddc94f48e8c3a63962dbe9
           <button
+
             className="navbar-toggler"
             type="button"
             data-toggle="collapse"

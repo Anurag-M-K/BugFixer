@@ -30,7 +30,6 @@ function CommunityManage() {
 // useEffect(()=>{
 
   const handleDeleteCommunity = async(commmunityId)=>{
-    console.log("communityid ",commmunityId , adminToken)
       try {
         await deleteCommunity(commmunityId , adminToken)
         const posts = await getAllCommunityPosts();
