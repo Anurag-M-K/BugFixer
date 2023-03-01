@@ -10,11 +10,11 @@ function SearchBar() {
     const { tokenData ,allUsersDetails } = useSelector((state)=>state.user)
     const dispatch = useDispatch()
     const  [ filterData , setFilterData ] = useState([])
-<<<<<<< HEAD
+
     const [ displayUsers , setDisplayUsers ] = useState(true)
-=======
+
     const [ displayBox , setDisplayBox ]  = useState(true)
->>>>>>> 93f5235af67a30625dddc94f48e8c3a63962dbe9
+
 
    
 
@@ -41,11 +41,8 @@ function SearchBar() {
     const onClickUser = (userId)=>{
         const filteredUserData =  allUsersDetails.filter((value)=>value._id == userId)
          dispatch(setClickedUserDetails(filteredUserData))
-<<<<<<< HEAD
          setDisplayUsers(false)
-=======
          setDisplayBox(false)
->>>>>>> 93f5235af67a30625dddc94f48e8c3a63962dbe9
     }
 
  
@@ -57,13 +54,10 @@ function SearchBar() {
             <div className="searchIcon"><BiSearchAlt2/>
             </div>
         </div>
-<<<<<<< HEAD
         <div className="dataBox">
             
-=======
        {displayBox && 
         <div  className="dataBox">
->>>>>>> 93f5235af67a30625dddc94f48e8c3a63962dbe9
 { filterData.length != 0  && (
         <div className="dataResult">
                 {filterData.slice(0,15).map((value,key)=>{
@@ -72,14 +66,13 @@ function SearchBar() {
                         </a>
                 })}
         </div>
-<<<<<<< HEAD
     )}    
     
     </div>
-=======
-    )}    </div>
-            }
->>>>>>> 93f5235af67a30625dddc94f48e8c3a63962dbe9
+    
+    
+            }      
+     </div>
             
     </div>
 

@@ -49,99 +49,92 @@ function Header() {
   return (
     <nav className="app navbar navbar-expand-lg navbar-light bg-light px-5">
 
-<<<<<<< HEAD
-          <span onClick={()=>navigate('/home')} className="navbar-brand">
-            <img src='https://res.cloudinary.com/dmvxmurxw/image/upload/v1674187605/logo4_g8zbar.png' alt="" width="160px" />
-          </span>
-=======
-            <img style={{cursor:"pointer"}} onClick={()=>navigate("/home")} src='https://res.cloudinary.com/dmvxmurxw/image/upload/v1674187605/logo4_g8zbar.png' alt="" width="160px" />
->>>>>>> 93f5235af67a30625dddc94f48e8c3a63962dbe9
-          <button
 
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+          <><span onClick={() => navigate('/home')} className="navbar-brand">
+      <img src='https://res.cloudinary.com/dmvxmurxw/image/upload/v1674187605/logo4_g8zbar.png' alt="" width="160px" />
+    </span><button
 
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mr-auto">
+      className="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+        <span className="navbar-toggler-icon"></span>
+      </button><div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul className="navbar-nav mr-auto">
 
-              <li className="nav-item mx-4 active">
-                <Link to={'/community'} className="nav-link">
-                <span >Community</span>  <span className="sr-only">(current)</span>
-                </Link>
-                
-              </li>
-              <li className="nav-item mr-4">
-                <Link to="/messenger" className="nav-link">
-                  chat 
-                </Link>
-              </li>
-              <li className="nav-item mr-4">
-                <span onClick={()=>navigate("/home")} className="nav-link">
-                  Questions
-                </span>
-              </li>
-           
-              <li className="nav-item">
-                <Link to="/team" className="nav-link">
-                </Link>
-              </li>
-            </ul>
-            <form className="form-inline mx-2 my-lg-0 mr-5">
-             
-              <input
-                type="text"
-                className="form-control pr-5 pl-4 searchInput fas fa-search search"
-                aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-sm"
-                placeholder="Search..."
-              />
+          <li className="nav-item mx-4 active">
+            <Link to={'/community'} className="nav-link">
+              <span>Community</span>  <span className="sr-only">(current)</span>
+            </Link>
 
-              {userDetails?.firstName ? (
-                < >
-                <span onClick={showProfile} className="ms-4 headerBtn"> {userDetails?.firstName}</span>
-             
-                <button onClick={hndleLogout} className="btn btn-danger ms-2" >Log Out </button> 
-             
-                </>
-              ) : (
-                <>
-                     <Link to="/login-page" className="nav-link">
-              <button 
-                className="btn btn-outline-primary my-sm-0 btn-sm px-3"
-                type="submit"
-                style={{ backgroundColor: "#e3f2fd", color: "gray" }}
-              >
-                Log in
-              </button>
-                </Link>
-                <Link to="/signup-page" className="nav-link">
-              <button
-                className="btn btn-primary my-sm-0 btn-sm px-3"
-                type="submit"
-              >
-             
-                Sign Up
-              </button>
-                </Link>
-                </>
+          </li>
+          <li className="nav-item mr-4">
+            <Link to="/messenger" className="nav-link">
+              chat
+            </Link>
+          </li>
+          <li className="nav-item mr-4">
+            <span onClick={() => navigate("/home")} className="nav-link">
+              Questions
+            </span>
+          </li>
 
-              )}
-         
+          <li className="nav-item">
+            <Link to="/team" className="nav-link">
+            </Link>
+          </li>
+        </ul>
+        <form className="form-inline mx-2 my-lg-0 mr-5">
 
-             
-                {/* <ToastContainer/> */}
-             
-            </form>
-            <Toaster/>
-          </div>
+          <input
+            type="text"
+            className="form-control pr-5 pl-4 searchInput fas fa-search search"
+            aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-sm"
+            placeholder="Search..." />
+
+          {userDetails?.firstName ? (
+            <>
+              <span onClick={showProfile} className="ms-4 headerBtn"> {userDetails?.firstName}</span>
+
+              <button onClick={hndleLogout} className="btn btn-danger ms-2">Log Out </button>
+
+            </>
+          ) : (
+            <>
+              <Link to="/login-page" className="nav-link">
+                <button
+                  className="btn btn-outline-primary my-sm-0 btn-sm px-3"
+                  type="submit"
+                  style={{ backgroundColor: "#e3f2fd", color: "gray" }}
+                >
+                  Log in
+                </button>
+              </Link>
+              <Link to="/signup-page" className="nav-link">
+                <button
+                  className="btn btn-primary my-sm-0 btn-sm px-3"
+                  type="submit"
+                >
+
+                  Sign Up
+                </button>
+              </Link>
+            </>
+
+          )}
+
+
+
+          {/* <ToastContainer/> */}
+
+        </form>
+        <Toaster />
+      </div></>
         </nav>
   );
 }

@@ -88,22 +88,15 @@ function AdminLogin() {
                 <p className="error-show">{error}</p>
               </div>
             )}
-<<<<<<< HEAD
             
-=======
            
->>>>>>> 93f5235af67a30625dddc94f48e8c3a63962dbe9
               <button className="btn " style={{ backgroundColor: "#243b55", }}>Submit</button>
 
               <span></span>
               <span></span>
               <span></span>
               <span></span>
-<<<<<<< HEAD
          
-=======
-      
->>>>>>> 93f5235af67a30625dddc94f48e8c3a63962dbe9
           </form>
         </div>
       </div>
