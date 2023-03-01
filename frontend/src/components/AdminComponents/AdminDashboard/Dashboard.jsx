@@ -28,7 +28,7 @@ export default function Dashboard() {
     );
   }, []);
   return (
-    < div >
+    < div  >
     <Section>
       <Navbar />
       <div className="grid">

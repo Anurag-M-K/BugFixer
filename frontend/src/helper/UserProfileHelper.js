@@ -52,7 +52,6 @@ export const updateUserProfile = async(updateData , tokenData)=>{
 }
 
 export const getUserDetails = async( tokenData )=>{
-    console.log("token ",tokenData)
     try {
         const getUserDetails = await instance({
             url:"/api/getUserProfile",
@@ -68,5 +67,18 @@ export const getUserDetails = async( tokenData )=>{
     }
 }
 
+
+export const getAnswers = async(id)=>{
+    console.log("from helper id ",id)
+    try {
+    const getAnswers = await instance({
+        url:"/api/get-answer/"+id,
+        method:"GET",
+    })
+    return getAnswers.data
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 

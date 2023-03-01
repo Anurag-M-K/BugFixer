@@ -62,3 +62,21 @@ export const getReportedQuestions = async(adminToken)=>{
     }
     console.log("from helper",getReportedQuestions)
 }
+
+
+export const deleteReportedQuestion = async(qid,adminToken)=>{
+    console.log("delete helper",qid)
+    try {
+        const deleteReportedQuestion = await instance({
+            url:"/admin/question-delete/"+qid,
+            method:"DELETE",
+            headers:{
+                Authorization:adminToken
+            }
+
+        })
+        return deleteReportedQuestion.data
+    } catch (error) {
+        console.log(error)
+    }
+}

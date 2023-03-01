@@ -12,13 +12,11 @@ export default function Conversation({ conversation  }) {
   const { clidkedUserDetails } = useSelector((state)=>state.clickedUser)
 
 
-  console.log("clidkced user ",clidkedUserDetails)
   useEffect(() => {
     const friendId = conversation?.members?.find(
       (memberId) => memberId !== userDetails._id
     );
 
-    console.log("friend id ",friendId)
     try {
       (async () => {
         const res = await getUser(friendId, tokenData);

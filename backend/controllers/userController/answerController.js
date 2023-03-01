@@ -26,7 +26,7 @@ const answerAdd = async (req, res) => {
 
 const getAnswerByQId = (req, res) => {
   const id = req.params.id;
-  AnswerDB.findOne({ question_id: id }).then((response) => {
+  AnswerDB.find({ question_id: id }).then((response) => {
     res.status(200).json(response);
   });
 };

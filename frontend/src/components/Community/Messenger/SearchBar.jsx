@@ -10,6 +10,7 @@ function SearchBar() {
     const { tokenData ,allUsersDetails } = useSelector((state)=>state.user)
     const dispatch = useDispatch()
     const  [ filterData , setFilterData ] = useState([])
+    const [ displayUsers , setDisplayUsers ] = useState(true)
 
    
 
@@ -27,7 +28,7 @@ function SearchBar() {
         const newFIlter = allUsersDetails.filter((value)=>{
             return value.firstName.toLowerCase().includes(searchWord.toLowerCase())
              
-        });
+        });w
         setFilterData(newFIlter )
     }
 
@@ -35,6 +36,7 @@ function SearchBar() {
     const onClickUser = (userId)=>{
         const filteredUserData =  allUsersDetails.filter((value)=>value._id == userId)
          dispatch(setClickedUserDetails(filteredUserData))
+         setDisplayUsers(false)
     }
 
   return (
@@ -45,6 +47,7 @@ function SearchBar() {
             </div>
         </div>
         <div className="dataBox">
+            
 { filterData.length != 0  && (
         <div className="dataResult">
                 {filterData.slice(0,15).map((value,key)=>{
@@ -53,7 +56,9 @@ function SearchBar() {
                         </a>
                 })}
         </div>
-    )}    </div>
+    )}    
+    
+    </div>
             
     </div>
 

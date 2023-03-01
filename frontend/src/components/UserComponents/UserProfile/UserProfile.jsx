@@ -20,12 +20,19 @@ import ProfilePicAddModal from "./ProfilePicAddModal";
 import ProfileUpdate from "./ProfileUpdate";
 import { setUserDetails } from "../../../redux/features/userSlice";
 import ReactHtmlParser from "react-html-parser";
-import { deleteQuestion ,getUserQuestions,getUserDetails } from "../../../helper/UserProfileHelper";
+import {
+  deleteQuestion,
+  getUserQuestions,
+  getUserDetails,
+  getAnswers,
+} from "../../../helper/UserProfileHelper";
 import { setUserProfileQuestionsDetails } from "../../../redux/features/userProfileQuestions";
 import toast, { Toaster } from "react-hot-toast";
-import { FaTrashAlt } from 'react-icons/fa'
-import './UserProfile.css'
+import { FaTrashAlt } from "react-icons/fa";
+import "./UserProfile.css";
 import "./ProfileEdit.css";
+import { Link } from "react-router-dom";
+import { setSingleQuestionDetails } from "../../../redux/features/singleQuestionSlice";
 
 export default function UserProfile() {
   const { userDetails } = useSelector((state) => state.user);
@@ -36,9 +43,12 @@ export default function UserProfile() {
   const { questionDetails } = useSelector((state) => state.question);
   const dispatch = useDispatch();
   const { tokenData } = useSelector((state) => state.user);
-  const { userProfileQuestionsDetails } = useSelector((state=> state.userProfileQuestions))
+  const { userProfileQuestionsDetails } = useSelector(
+    (state) => state.userProfileQuestions
+  );
+    const { singleQuestiondata } = useSelector((state)=>state.singleQuestion)
+console.log("singleQuesitondata ",singleQuestiondata)
 
-  
   const handleFileInput = (e) => {
     const file = e.target.files[0];
 
@@ -72,58 +82,55 @@ export default function UserProfile() {
     }
   };
 
-
-
-
-
-
-
   const id = userDetails?._id;
-    
-  const userId = id
-  useEffect(()=>{
+
+  const userId = id;
+  useEffect(() => {
     try {
-      (async ()=>{
-        const data = await getUserQuestions( tokenData)
-        dispatch(setUserProfileQuestionsDetails(data.data.questions))
-      })()
+      (async () => {
+        const data = await getUserQuestions(tokenData);
+        dispatch(setUserProfileQuestionsDetails(data.data.questions));
+      })();
     } catch (error) {
-    console.log(error)      
+      console.log(error);
     }
-  },[])
+  }, []);
 
-
-
-
-
-  
   const handleQuestionDelete = async (id) => {
     try {
-      
       const deleteQuestionRsponse = await deleteQuestion(id, tokenData);
-      toast.success(deleteQuestionRsponse.message)
-      const data = await getUserQuestions( tokenData)
-      console.log("data t ",data.data.questions);
-          dispatch(setUserProfileQuestionsDetails(data.data.questions))
+      toast.success(deleteQuestionRsponse.message);
+      const data = await getUserQuestions(tokenData);
+      dispatch(setUserProfileQuestionsDetails(data.data.questions));
     } catch (error) {
-      toast.error("server error")
+      toast.error("server error");
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     try {
-      (async()=>{
-        const user = await getUserDetails(tokenData)
-        dispatch(setUserDetails(user?.response))
-      })()
+      (async () => {
+        const user = await getUserDetails(tokenData);
+        dispatch(setUserDetails(user?.response));
+      })();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
+  }, []);
 
+
+//get answers
+  useEffect(()=>{
+    (async ()=>{
+      const answers = await getAnswers(userProfileQuestionsDetails[0]._id)
+      console.log("answers , ",answers)
+      dispatch(setSingleQuestionDetails(answers));
+    })()
   },[])
 
+
   let defaultUrl =
-  "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp";
+    "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp";
   return (
     <section style={{ backgroundColor: "#eee" }}>
       <MDBContainer className="py-5">
@@ -132,7 +139,9 @@ export default function UserProfile() {
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
                 <img
-                  src={userDetails.imageUrl ? userDetails?.imageUrl : defaultUrl}
+                  src={
+                    userDetails.imageUrl ? userDetails?.imageUrl : defaultUrl
+                  }
                   alt="avatar"
                   className="rounded-circle"
                   style={{ width: "130px", height: "130px" }}
@@ -216,8 +225,10 @@ export default function UserProfile() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                      {userDetails?.firstName ? userDetails?.firstName + " " : ""}
-                      {userDetails?.lastName ? userDetails?.lastName : "" }
+                      {userDetails?.firstName
+                        ? userDetails?.firstName + " "
+                        : ""}
+                      {userDetails?.lastName ? userDetails?.lastName : ""}
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>
@@ -271,17 +282,12 @@ export default function UserProfile() {
 
             <MDBRow>
               <MDBCol md="6 col-md-12">
-                {
-                userProfileQuestionsDetails?.map((question) => {
-                <MDBCardText className="mb-4">
-                  <span className="text-primary  font-italic me-1">
-                    
-                    Questions
-                  </span>{" "}
-                    
-                
-
-                </MDBCardText>
+                {userProfileQuestionsDetails?.map((question) => {
+                  <MDBCardText className="mb-4">
+                    <span className="text-primary  font-italic me-1">
+                      Questions
+                    </span>{" "}
+                  </MDBCardText>;
                   return (
                     <MDBCard className="mb-4 mb-md-0">
                       <MDBCardBody>
@@ -295,21 +301,26 @@ export default function UserProfile() {
                               width: "100%",
                             }}
                           >
-                            {question.title ? question?.title : ""} 
+                            <Link to={`/question?id=${question?._id}`}>
+                              {question.title ? question?.title : ""}
+                            </Link>
                             <div className="del-btn">
-                            <div class=" d-md-flex justify-content-md-end  ">
-                              {/* <a
+                              <div class=" d-md-flex justify-content-md-end  ">
+                                {/* <a
                                 role="button"
                                 aria-pressed="true"
                                 onClick={() =>
                                   handleQuestionDelete(question._id)
                                 }
                               > */}
-                              {/* </a> */}
-                              <FaTrashAlt style={{cursor:"pointer"}} onClick={() =>
-                                  handleQuestionDelete(question._id)
-                                }/>
-                            </div>
+                                {/* </a> */}
+                                <FaTrashAlt
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() =>
+                                    handleQuestionDelete(question._id)
+                                  }
+                                />
+                              </div>
                             </div>
                           </MDBCardText>
                           <MDBCardText
@@ -318,21 +329,22 @@ export default function UserProfile() {
                             style={{ fontSize: ".77rem" }}
                           >
                             {" "}
-
-                            {ReactHtmlParser(question?.body )}
+                            {ReactHtmlParser(question?.body)}
                           </MDBCardText>
                         </>
+                        <h4>Answers</h4>
+                        {singleQuestiondata?.answer ? ReactHtmlParser(singleQuestiondata?.answer) : ""}
                       </MDBCardBody>
                     </MDBCard>
-                );
-            
-              })}
+                  );
+                })}
+                
               </MDBCol>
             </MDBRow>
           </MDBCol>
-          </MDBRow>
-          </MDBContainer>
-          <Toaster />
-          </section>
+        </MDBRow>
+      </MDBContainer>
+      <Toaster />
+    </section>
   );
 }

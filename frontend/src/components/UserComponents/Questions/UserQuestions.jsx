@@ -13,7 +13,7 @@ const UserQuestions = () => {
   console.log("question dat afrom ui ",questionDetails)
   return (
     <>
-      {questionDetails.map((questionData) => {
+      {questionDetails?.map((questionData) => {
         return (
           <div
             className="userQuestions d-flex border-bottom py-2"

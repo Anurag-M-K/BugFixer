@@ -6,7 +6,7 @@ import Sidebar from '../../components/AdminComponents/AdminDashboard/Sidebar';
 import './Admin.css'
 export default function AdminDashboard() {
   return (
-    <Div  style={{backgroundColor:'black'}} >
+    <Div  style={{backgroundColor:'black',height:"100%"}} >
              <Sidebar/>
              <Dashboard />
         </Div>

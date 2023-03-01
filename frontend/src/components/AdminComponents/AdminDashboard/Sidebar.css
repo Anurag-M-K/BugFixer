@@ -1,3 +1,6 @@
 .img1{
     width: 48px;
 }
+a:hover {
+    background-color: none;
+}

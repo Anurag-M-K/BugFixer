@@ -11,7 +11,8 @@ import './AdminQuestion.css'
 import QuestionModal from './QusetionModal'
 import { setReportedQuestions } from "../../../redux/features/reportedQuestionsSlice";
 import { BiTrashAlt } from 'react-icons/bi'
-import { getReportedQuestions } from "../../../helper/adminQuestionHelper";
+import { deleteReportedQuestion, getReportedQuestions } from "../../../helper/adminQuestionHelper";
+import ReasonModal from "./ReasonModal";
 
 function AdminQuestion() {
     
@@ -20,12 +21,11 @@ function AdminQuestion() {
   const { adminToken } = useSelector((state)=>state.adminToken);
   const { reportedQuestionDetails } = useSelector((state)=>state.reportedQuestion)
 
-  console.log("reported question details ,",reportedQuestionDetails)
   useEffect(() => {
- 
+    
       axios.defaults.baseURL = "http://localhost:8060";
       axios.get("/admin/get-report-questions").then((response) => {
-           setQuestions(response.data.data)
+        setQuestions(response.data.data)
        dispatch(setReportedQuestions(response.data.data))
 
        
@@ -45,16 +45,16 @@ try {
   })
   .then((deleteQuestion) => {
     if (deleteQuestion) {
-      axios.defaults.baseURL = "http://localhost:80";
-       axios.delete("/admin/question-delete/"+qid).then(async(res)=>{
-        axios.get("/admin/get-report-questions").then((response) => {
-          setQuestions(response.data.data)
-      dispatch(setReportedQuestions(response.data.data))
+       deleteReportedQuestion(qid,adminToken).then((res)=>{
 
-      
+         axios.get("/admin/get-report-questions").then((response) => {
+           setQuestions(response.data.data)
+           dispatch(setReportedQuestions(response.data.data))
+           
+           
+          })
        });
      
-            })
             swal("Question deleted successfully !", {
         icon: "success",
       });
@@ -62,14 +62,13 @@ try {
       swal("Canceled");
     }
   });
-
+  
 } catch (error) {
-    console.log(error)
+  console.log(error)
 }
-    }
+}
 
 
-    console.log("quesitons  ",questions)
   
     const columns = [
         {
@@ -81,19 +80,13 @@ try {
       },
     },
     {
-      name: "User Name",
-      selector: (row) => row?.user?.firstName,
+      name: "Reasons",
+      selector: (row) => <ReasonModal row={row?.reason}/>,
       style: {
         backgroundColor: "grey",
       },
     },
-    {
-      name:"Vote",
-      selector:(row)=>row?.vote ? row.vote : "0",
-      style:{
-        backgroundColor:"grey"
-      }
-    },
+  
     {
       name:"Report Count",
       selector:(row)=>row?.reason.length ? row?.reason.length : "0",
@@ -101,13 +94,7 @@ try {
         backgroundColor:"grey"
       }
     },
-    {
-      name: "Email",
-      selector: (row) => row?.user?.email,
-      style: {
-        backgroundColor: "grey",
-      },
-    },
+
     {
       name: "Actions",
       selector: (row) => (

@@ -136,7 +136,7 @@ function Messenger() {
                   ))}
                 </div>
                 <div className="chatBoxBottom">
-                  <textarea
+                  <textarea 
                     className="chatMessageInput"
                     onChange={(e) => setNewMessage(e.target.value)}
                     value={newMessage}
@@ -156,7 +156,7 @@ function Messenger() {
         </div>
         <div className="chatOnline">
           <div className="chatOnlineWrapper">
-            {/* <ChatOnline /> */}
+            <ChatOnline />
           </div>
         </div>
       </div>

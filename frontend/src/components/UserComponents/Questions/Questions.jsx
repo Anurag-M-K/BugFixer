@@ -18,6 +18,7 @@ const [searchTerm , setSearchTerm] = useState('');
 console.log(searchTerm)
 
 useEffect(()=>{
+  console.log("hello")
   async function findQuestions(){
     const res = await axios.get("/api/getQuestion")
       setQuestions(res.data.reverse())
@@ -27,6 +28,7 @@ useEffect(()=>{
   } 
   findQuestions()
 },[])
+
 
 
 questions.filter((val)=>{

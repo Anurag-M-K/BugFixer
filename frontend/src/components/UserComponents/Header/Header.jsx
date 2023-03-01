@@ -19,6 +19,8 @@ function Header() {
   const hndleLogout = ()=>{
     toast.success("Logout successfully")
     localStorage.clear()
+  // store.dispatch({type: 'CLEAR_STORE'})
+
     navigate('/login-page')
     message.success("logout successfully")    
   }
@@ -47,9 +49,9 @@ function Header() {
   return (
     <nav className="app navbar navbar-expand-lg navbar-light bg-light px-5">
 
-          <Link to="/home" className="navbar-brand">
+          <span onClick={()=>navigate('/home')} className="navbar-brand">
             <img src='https://res.cloudinary.com/dmvxmurxw/image/upload/v1674187605/logo4_g8zbar.png' alt="" width="160px" />
-          </Link>
+          </span>
           <button
             className="navbar-toggler"
             type="button"
@@ -77,9 +79,9 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item mr-4">
-                <Link to="/home" className="nav-link">
+                <span onClick={()=>navigate("/home")} className="nav-link">
                   Questions
-                </Link>
+                </span>
               </li>
            
               <li className="nav-item">

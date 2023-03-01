@@ -1,4 +1,10 @@
-import { Bookmark, CloseOutlined, History, Try } from "@mui/icons-material";
+import {
+  Bookmark,
+  CloseOutlined,
+  ConstructionOutlined,
+  History,
+  Try,
+} from "@mui/icons-material";
 import { Avatar, Link } from "@mui/material";
 import axios from "../../../config/axiosInstance";
 import React from "react";
@@ -14,7 +20,11 @@ import { useLocation } from "react-router-dom";
 import ReportReason from "./ReportReason";
 import { setCommentDetails } from "../../../redux/features/commentSlice";
 import "./index.css";
-import { questionDecVoting, questionVoting } from "../../../helper/userQuestionHelper";
+import {
+  questionDecVoting,
+  questionVoting,
+} from "../../../helper/userQuestionHelper";
+import { setParticularAnswerDetails } from "../../../redux/features/particularAnswersSlice";
 
 function MainQuestion() {
   const [show, setShow] = useState(false);
@@ -23,15 +33,18 @@ function MainQuestion() {
   const { userDetails } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
   var [vote, setVote] = useState(0);
-  var [answerVote, setAnswerVote] = useState([])  
+  var [answerVote, setAnswerVote] = useState([]);
   const dispatch = useDispatch();
-  const { tokenData } = useSelector((state)=> state.user)
-  const [ voteResponse , setVoteResponse] = useState("")
-  const [ voteRes , setVoteRes ] = useState("")
-  const { singleQuestiondata } = useSelector((state)=>state.singleQuestion)
-  
+  const { tokenData } = useSelector((state) => state.user);
+  const [voteResponse, setVoteResponse] = useState("");
+  const [voteRes, setVoteRes] = useState("");
+  const { singleQuestiondata } = useSelector((state) => state.singleQuestion);
+  const { particularAnswersDetails } = useSelector(
+    (state) => state.particularAnswers
+  );
 
-  
+  console.log("particular answer a", particularAnswersDetails);
+
   let location = useLocation();
   let params = new URLSearchParams(location.search);
   let id = params.get("id");
@@ -39,30 +52,24 @@ function MainQuestion() {
   const handleQuill = (value) => {
     setAnswer(value);
   };
-console.log(answer)
 
   useEffect(() => {
-    ( async () =>{
-    try {
-      await axios
-      .get(`/api/question/${id}`)
-      .then((res) => {
-        setQuestionData(res.data[0]);
-        setAnswerVote(res.data[0].answerDetails);
-        console.log("heel ",res.data[0].answerDetails);
-      
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  })()
+    (async () => {
+      try {
+        await axios.get(`/api/question/${id}`).then(async (res) => {
+          const comment = await axios.get(`/api/comment/${id}`);
+          dispatch(setCommentDetails(comment.data));
+          setQuestionData(res.data[0]);
+          setAnswerVote(res.data[0].answerDetails);
+          dispatch(setParticularAnswerDetails(res.data[0].answerDetails));
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   }, []);
 
   const _id = questionData._id;
-  
-
-
-
 
   async function getUpdatedAnswer() {
     await axios
@@ -73,8 +80,9 @@ console.log(answer)
       .catch((err) => {
         console.log(err);
       });
-    }
+  }
 
+  //answer adding and geting
   const handleSubmit = async () => {
     if (answer !== "") {
       const body = {
@@ -93,10 +101,14 @@ console.log(answer)
         .then(async (res) => {
           const id = res.data.data.question_id;
           await axios.get("/api/get-answer/" + id).then((response) => {
+            console.log(" ansdwer response geting ", response);
+            console.log("response of anser hgeting  ", response.data);
+            dispatch(setParticularAnswerDetails(response.data));
+
             dispatch(setSingleQuestionDetails(response));
           });
           toast.success("Answer added successfully");
-          
+
           setAnswer("");
           getUpdatedAnswer();
         })
@@ -117,98 +129,72 @@ console.log(answer)
       };
       await axios.post(`/api/comment/${qid}`, body).then(async (res) => {
         const comment = await axios.get(`/api/comment/${qid}`);
-        console.log("comment ", comment?.data);
         dispatch(setCommentDetails(comment.data));
         setComment("");
         setShow(false);
         getUpdatedAnswer();
-
         toast.success("Comment added successfully");
       });
     }
   };
-  
+
   const { commentDetails } = useSelector((state) => state.comment);
 
+  ///quesiton upvoting and downvoting
+  async function incVoting(question_id) {
+    try {
+      const data = await questionVoting(question_id, tokenData);
+      const getSingleQuestion = await axios.get(`/api/question/${id}`);
+      dispatch(setSingleQuestionDetails(getSingleQuestion.data));
+      setVoteRes(getSingleQuestion.data);
+      toast.error(data.data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
+  async function decVoting(question_id) {
+    try {
+      const data = await questionDecVoting(question_id, tokenData);
+      const getSingleQuestion = await axios.get(`/api/question/${id}`);
+      dispatch(setSingleQuestionDetails(getSingleQuestion.data));
+      setVoteRes(getSingleQuestion.data);
 
-      async function incVoting(question_id){
-        try {
-          
-          const data = await questionVoting(question_id,tokenData)
-         const getSingleQuestion =  await axios.get(`/api/question/${id}`)
-          dispatch(setSingleQuestionDetails(getSingleQuestion.data))
-          setVoteRes(getSingleQuestion.data)
-          toast.error(data.data.message)
-        } catch (error) {
-          console.log(error)
-        }
+      toast.error(data.data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-      }
-
-      async function decVoting(question_id){
-
-        try {
-          
-          const data = await questionDecVoting(question_id,tokenData)
-          const getSingleQuestion =  await axios.get(`/api/question/${id}`)
-          dispatch(setSingleQuestionDetails(getSingleQuestion.data))
-          setVoteRes(getSingleQuestion.data)
-        
-          toast.error(data.data.message)
-        } catch (error) {
-          console.log(error)
-        }
-
-      }
-   
-
-      console.log("setvote  ",voteRes)
-      console.log("single question data ",singleQuestiondata)
-      console.log("single question check  ",singleQuestiondata[0]?.vote)
-
-
-
-
-
-
-  
   const questionDetail = { ...questionData, vote };
 
   const { voteCount } = useSelector((state) => state.vote);
 
+  // var answerVoting = async (id) => {
+  //   console.log(id)
+  //   try {
+  //     setAnswerVote(answerVote + 1);
+  //     answerVote++;
+  //     await axios.put("/api/answer-voting/"+id,  { answerVote:answerVote });
+  //     var qid = questionData._id
+  //     await axios
+  //     .get(`/api/answer/${qid}`)
+  //     .then((res) => {
+  //       dispatch(setParticularAnswerDetails(res.data.response))
+  //       setAnswerVote(res.data.response);
 
-
-
-
-  var answerVoting = async (id) => {
-    console.log(id)
-    try {
-      setAnswerVote(answerVote + 1);
-      answerVote++;
-      await axios.put("/api/answer-voting/"+id,  { answerVote:answerVote });
-      var qid = questionData._id
-      await axios
-      .get(`/api/answer/${qid}`)
-      .then((res) => {
-        setAnswerVote(res.data.response);
-      
-      })
-      .catch((err) => console.log(err));
-    } catch (error) {
-      console.log("error ", error);
-    }
-  };
-
-
-
+  //     })
+  //     .catch((err) => console.log(err));
+  //   } catch (error) {
+  //     console.log("error ", error);
+  //   }
+  // };
 
   return (
     <div className="main col-xl-12">
       <div className="main-container">
         <div className="main-top">
           <h2 className="main-question">{questionData?.title}</h2>
-        
         </div>
         <div className="main-desc">
           <div className="info">
@@ -248,7 +234,11 @@ console.log(answer)
                     </span>
                   </div>
                   <div className="vote">
-                    <p className="arrow pe-2">{singleQuestiondata[0]?.vote.length ? singleQuestiondata[0]?.vote.length  : "0" }</p>
+                    <p className="arrow pe-2">
+                      {singleQuestiondata[0]?.vote.length
+                        ? singleQuestiondata[0]?.vote.length
+                        : "0"}
+                    </p>
                   </div>
                   <div className="downArrow">
                     <span className="arrow">
@@ -277,69 +267,72 @@ console.log(answer)
                     <History />
                   </div>
                 </div>
-              
-            </div>
-<div className="col-md-10">
-
-            <div className="question-answer">
-              <p>{ReactHtmlParser(questionData?.body)}</p>
-              <div className="author">
-                <small>
-                  asked{new Date(questionData?.created_at).toLocaleString()}
-                </small>
-                <div className="auth-details">
-                  <Avatar src={questionData?.user?.imageUrl} />
-                  <p>
-                    {questionData?.user?.firstName
-                      ? questionData?.user?.firstName
-                      : String(questionData?.user?.email).split("@")[0]}
-                  </p>
-                </div>
               </div>
-              <div className="comments">
-                {commentDetails &&
-                  commentDetails?.map((_qd) => (
-                    <p>
-                      {_qd?.comment}-{" "}
-                      <span>
-                        {" "}
-                        {_qd?.user?.firstName
-                          ? _qd?.user?.firstName
-                          : String(_qd?.firstName).split("@")[0]}
-                      </span>{" "}
-                      {_qd?.user?.lastName ? _qd?.user?.lastName : ""}
-                      <small>
-                        {new Date(_qd?.created_at).toLocaleString()}
-                      </small>
-                    </p>
-                  ))}
-                <div className="comment">
-                  <p onClick={() => setShow(!show)}>Add a comment</p>
-                  {show && (
-                    <div className="title">
-                      <textarea
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        style={{
-                          margin: "5px 0px",
-                          padding: "10px",
-                          border: "1px solid rgba(0,0,0,0.2)",
-                          borderRadius: "3px",
-                          outline: "none",
-                        }}
-                        type="text"
-                        placeholder="Add your comment..."
-                        rows={5}
-                      ></textarea>
-                      <button className="btn btn-primary" onClick={handleComment}>Add comment</button>
+              <div className="col-md-10">
+                <div className="question-answer">
+                  <p>{ReactHtmlParser(questionData?.body)}</p>
+                  <div className="author">
+                    <small>
+                      asked{new Date(questionData?.created_at).toLocaleString()}
+                    </small>
+                    <div className="auth-details">
+                      <Avatar src={questionData?.user?.imageUrl} />
+                      <p>
+                        {questionData?.user?.firstName
+                          ? questionData?.user?.firstName
+                          : String(questionData?.user?.email).split("@")[0]}
+                      </p>
                     </div>
-                  )}
+                  </div>
+                  <div className="comments">
+                    {commentDetails &&
+                      commentDetails?.map((_qd) => (
+                        <p>
+                          {_qd?.comment}-{" "}
+                          <span>
+                            {" "}
+                            {_qd?.user?.firstName
+                              ? _qd?.user?.firstName
+                              : String(_qd?.firstName).split("@")[0]}
+                          </span>{" "}
+                          {_qd?.user?.lastName ? _qd?.user?.lastName : ""}
+                          <small>
+                            {new Date(_qd?.created_at).toLocaleString()}
+                          </small>
+                        </p>
+                      ))}
+                    <div className="comment">
+                      <p onClick={() => setShow(!show)}>Add a comment</p>
+                      {show && (
+                        <div className="title">
+                          <textarea
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            style={{
+                              margin: "5px 0px",
+                              padding: "10px",
+                              border: "1px solid rgba(0,0,0,0.2)",
+                              borderRadius: "3px",
+                              outline: "none",
+                            }}
+                            type="text"
+                            placeholder="Add your comment..."
+                            rows={5}
+                          ></textarea>
+                          <button
+                            className="btn btn-primary"
+                            onClick={handleComment}
+                          >
+                            Add comment
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <br />
+                  </div>
                 </div>
-                <br />
               </div>
             </div>
-</div>
-</div>
           </div>
         </div>
         <div
@@ -355,14 +348,14 @@ console.log(answer)
               fontWeight: "300",
             }}
           >
-            {answerVote?.length} Answers
+            {particularAnswersDetails?.length} Answers
           </p>
-          {answerVote?.map((_q) => (
+          {particularAnswersDetails?.map((_q) => (
             <div key={_q?._id} className="all-questions-container">
               <div className="all-questions-left col-md-2">
                 <div className="all-options">
                   <span
-                    onClick={() => answerVoting(_q._id)}
+                    // onClick={() => answerVoting(_q._id)}
                     className="arrow"
                   >
                     <svg
@@ -376,7 +369,7 @@ console.log(answer)
                     </svg>
                   </span>
 
-                  <p className="arrow">{_q?.vote ? _q.vote : "0"}</p>
+                  {/* <p className="arrow">{_q?.vote ? _q.vote : "0"}</p> */}
                   <span className="arrow">
                     <svg
                       aria-hidden="true"
@@ -401,20 +394,19 @@ console.log(answer)
                 }}
               >
                 <p>{ReactHtmlParser(_q?.answer)}</p>
-
-                      </div>
-                <div className="author-answer">
-                  <small>{new Date(_q?.created_at).toLocaleString()}</small>
-                  <div className="auth-details">
-                    <Avatar src={_q?.user?.photo} />
-                    <p>
-                      {" "}
-                      {_q?.user?.firstName
-                        ? _q?.user?.firstName
-                        : String(_q?.user?.email).split("@")[0]}
-                    </p>
-                  </div>
+              </div>
+              <div className="author-answer">
+                <small>{new Date(_q?.created_at).toLocaleString()}</small>
+                <div className="auth-details">
+                  <Avatar src={_q?.user?.photo} />
+                  <p>
+                    {" "}
+                    {_q?.user?.firstName
+                      ? _q?.user?.firstName
+                      : String(_q?.user?.email).split("@")[0]}
+                  </p>
                 </div>
+              </div>
             </div>
           ))}
         </div>
@@ -422,7 +414,7 @@ console.log(answer)
       <div className="main-answer">
         <h3
           style={{
-            fontSize: "22px",           
+            fontSize: "22px",
             margin: "10px 0",
             fontWeight: "400",
           }}
