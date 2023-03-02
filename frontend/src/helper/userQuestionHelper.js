@@ -1,5 +1,3 @@
-import { toast } from "react-hot-toast";
-import { useSelector } from "react-redux";
 import instance from "../config/axiosInstance";
 
 export const addQuestion = async(tokenData,bodyJSON)=>{
@@ -14,7 +12,6 @@ export const addQuestion = async(tokenData,bodyJSON)=>{
         })
         return addQuestion.data
     } catch (error) {
-        console.log(error)
     }
 
 }
@@ -48,7 +45,6 @@ export const questionDecVoting = async (question_id , tokenData)=>{
         })
         return questionDecVoting.data
     } catch (error) {
-        console.log(error)
         return error.response
     }
 }

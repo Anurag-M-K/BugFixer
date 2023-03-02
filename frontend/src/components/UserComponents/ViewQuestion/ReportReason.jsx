@@ -16,7 +16,6 @@ function ReportReason({ questionData }) {
   const handleReason = (event) => {
       setReportReason(event.target.value);
     };
-  console.log(reportReason)
   const handleSubmit = (e) => {
       toast.success("question reported !!");
     e.preventDefault();

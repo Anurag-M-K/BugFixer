@@ -18,15 +18,14 @@ const adminLogin = async(req,res)=>{
         );
         if(!validPassword)
         return res.status(401).send({message:"invalid username or password"})
-        console.log("admin ",admin)
+       
 
     const token = admin.generateAuthToken();
-    console.log("admin token  ",token)
+    
     res.status(200).json({data:token, message:"Logged in successfully"});
 
    } catch (error) {
     res.status(500).send({message:"internal server error"})
-    console.log(error ,'=====>internal ')
     
    }
 }

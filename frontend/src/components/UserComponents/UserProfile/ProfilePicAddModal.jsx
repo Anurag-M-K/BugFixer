@@ -64,8 +64,6 @@ function ProfilePicAddModal() {
         body: JSON.stringify({ data: base64EncodedImage, userId }),
         headers: { "Content-type": "application/json" },
       }).then((responseData) => {
-        console.log("resonse from poijc ",responseData)
-        // dispatch(setUserImage(responseData))
         console.log(JSON.stringify(responseData, null, 4));
       });
     } catch (error) {

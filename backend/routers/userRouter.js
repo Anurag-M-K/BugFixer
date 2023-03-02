@@ -47,6 +47,7 @@ const {
   getHotQuestions
 } = require("../controllers/userController/homePageRightSideController");
 const { getAllUsers } = require("../controllers/userController/userMessageController");
+const { getAllMessagedUsers } = require("../controllers/userController/userChatController");
 
 router.post("/userSignup", userSignup);
 router.post("/userLogin", userLogin);
@@ -83,4 +84,8 @@ router.put("/join-community", verifyJWT, addingCommunity);
 router.get("/get-all-tags", verifyJWT, getAllTags);
 router.get("/get-hot-questions",verifyJWT, getHotQuestions)
 router.get("/get-all-users",verifyJWT , getAllUsers)
+
+
+router.get("/allMessages",getAllMessagedUsers)
+
 module.exports = router;

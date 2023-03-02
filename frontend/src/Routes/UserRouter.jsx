@@ -1,5 +1,4 @@
 import React from "react";
-
 import AddQuestionPage from '../pages/user/AddQuestionPage'
 import ViewQuestion from "../components/UserComponents/ViewQuestion";
 import Signup from "../pages/user/UserSignupPage";
@@ -16,7 +15,7 @@ import { useSelector } from "react-redux";
 import ViewQuestionPage from "../pages/user/ViewQuestionPage";
 import Messenger from "../components/Community/Messenger/Messenger";
 import SingleCommunityPage from "../pages/Community/SingleCommunityPage";
-import SearchBar from "../components/Community/Messenger/SearchBar";
+// import SearchBar from "../components/Community/Messenger/SearchBar";
 
 function UserRoute(){
     const { loading } = useSelector((state) => state.alerts);
@@ -35,12 +34,10 @@ function UserRoute(){
           <Route exact path="/profile" element={<Private><UserProfilePage/></Private>} />
           <Route exact path="/edit-profile" element={<Private><UserEditProfilePage/></Private>} />
           <Route exact path='/otp-page' element={<Otp/>} />
-          <Route exact path='/view-question' element={<ViewQuestionPage/>} />
-
+          <Route exact path='/view-question' element={<Private><ViewQuestionPage/></Private>} />
           <Route exact path="/messenger" element={<Private><Messenger/></Private>}/>
-          <Route exact path='/search' element={<SearchBar/>} />
+          {/* <Route exact path='/search' element={<SearchBar/>} /> */}
           <Route exact path="/page" element={<CommunityHomePage/>}/>
-          
           <Route exact path="/community" element={<CommunityHomePage/>}/>
           <Route exact path="/single-community/:id" element={<SingleCommunityPage/>}/>
           </Routes>

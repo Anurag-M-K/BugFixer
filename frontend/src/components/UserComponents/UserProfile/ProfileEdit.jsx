@@ -5,7 +5,6 @@ import "./ProfileEdit.css";
 
 function ProfileEdit() {
   const { userDetails } = useSelector((state) => state.user);
-  console.log("hello userdetails from edit page ", userDetails);
 
 
 
@@ -48,7 +47,6 @@ setUserData({
 });
   }
 
-  console.log("userData ",userData);
 
 
 
@@ -64,7 +62,6 @@ setUserData({
 
 
   const userId = userDetails._id
-  console.log(userId , "userId")
   const uploadImage = async (base64EncodedImage) => {
     try {
       await fetch(`http://localhost:80/api/profile/${userId}`, {
@@ -72,7 +69,6 @@ setUserData({
         body: JSON.stringify({ data: base64EncodedImage, userData,userId}),
         headers: { "Content-type": "application/json" },
       }).then((responseData) => {
-        console.log("response from fetch method ",responseData)
         console.log(JSON.stringify(responseData, null, 4));
       });
     } catch (error) {

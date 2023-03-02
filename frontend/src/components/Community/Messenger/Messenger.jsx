@@ -31,8 +31,8 @@ function Messenger() {
     socket.current = io("ws://localhost:8080");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
-        sender: data.senderId,
-        text: data.text,
+        sender: data?.senderId,
+        text: data?.text,
         createdAt: Date.now(),
       });
     });
@@ -50,6 +50,8 @@ function Messenger() {
     });
   }, [userDetails]);
 
+
+  //geting existing conversations
   useEffect(() => {
     try {
       (async () => {
@@ -60,7 +62,10 @@ function Messenger() {
       console.log(error);
     }
   }, []);
+  console.log("existing message check ",messages)
 
+
+  //geting messages
   useEffect(() => {
     try {
       (async () => {
@@ -106,6 +111,15 @@ function Messenger() {
     setDataFromChild(data)
   }
 
+
+
+
+
+
+
+  //currrent chat upf]date  
+
+
   return (
     <>
       <Header />
@@ -113,11 +127,16 @@ function Messenger() {
         <div className="chatMenu">
           <div className="chatMenuWrapper">
            <SearchBar onData={handleDataFromChild}/>
+           <div className="card-scroll"
+          style={{ height: "407px", overflowY: "scroll" }}
+        >
+
             {conversations?.map((c) => (
               <div onClick={() => setCurrentChat(c)}>
-                <Conversation conversation={c} />
+                <Conversation messages={messages} conversation={c} />
               </div>
             ))}
+            </div>
           </div>
         </div>
         <div className="chatBox">

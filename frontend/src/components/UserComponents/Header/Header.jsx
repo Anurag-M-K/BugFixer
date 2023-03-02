@@ -19,8 +19,6 @@ function Header() {
   const hndleLogout = ()=>{
     toast.success("Logout successfully")
     localStorage.clear()
-  // store.dispatch({type: 'CLEAR_STORE'})
-
     navigate('/login-page')
     message.success("logout successfully")    
   }
@@ -39,7 +37,9 @@ function Header() {
       navigate('/profile')
     })
     } catch (error) {
-      console.log("error ",error)
+      toast.error('Network Error..!');
+      console.log(error)
+      
     }
   }
 

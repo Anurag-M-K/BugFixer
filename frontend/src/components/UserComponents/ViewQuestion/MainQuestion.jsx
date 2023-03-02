@@ -43,7 +43,6 @@ function MainQuestion() {
     (state) => state.particularAnswers
   );
 
-  console.log("particular answer a", particularAnswersDetails);
 
   let location = useLocation();
   let params = new URLSearchParams(location.search);
@@ -101,8 +100,6 @@ function MainQuestion() {
         .then(async (res) => {
           const id = res.data.data.question_id;
           await axios.get("/api/get-answer/" + id).then((response) => {
-            console.log(" ansdwer response geting ", response);
-            console.log("response of anser hgeting  ", response.data);
             dispatch(setParticularAnswerDetails(response.data));
 
             dispatch(setSingleQuestionDetails(response));
@@ -140,6 +137,10 @@ function MainQuestion() {
 
   const { commentDetails } = useSelector((state) => state.comment);
 
+
+
+
+    
   ///quesiton upvoting and downvoting
   async function incVoting(question_id) {
     try {
@@ -166,29 +167,11 @@ function MainQuestion() {
     }
   }
 
-  const questionDetail = { ...questionData, vote };
+  // const questionDetail = { ...questionData, vote };
 
-  const { voteCount } = useSelector((state) => state.vote);
+  // const { voteCount } = useSelector((state) => state.vote);
 
-  // var answerVoting = async (id) => {
-  //   console.log(id)
-  //   try {
-  //     setAnswerVote(answerVote + 1);
-  //     answerVote++;
-  //     await axios.put("/api/answer-voting/"+id,  { answerVote:answerVote });
-  //     var qid = questionData._id
-  //     await axios
-  //     .get(`/api/answer/${qid}`)
-  //     .then((res) => {
-  //       dispatch(setParticularAnswerDetails(res.data.response))
-  //       setAnswerVote(res.data.response);
 
-  //     })
-  //     .catch((err) => console.log(err));
-  //   } catch (error) {
-  //     console.log("error ", error);
-  //   }
-  // };
 
   return (
     <div className="main col-xl-12">
@@ -235,8 +218,8 @@ function MainQuestion() {
                   </div>
                   <div className="vote">
                     <p className="arrow pe-2">
-                      {singleQuestiondata[0]?.vote.length
-                        ? singleQuestiondata[0]?.vote.length
+                      {singleQuestiondata[0]?.vote?.length
+                        ? singleQuestiondata[0]?.vote?.length
                         : "0"}
                     </p>
                   </div>

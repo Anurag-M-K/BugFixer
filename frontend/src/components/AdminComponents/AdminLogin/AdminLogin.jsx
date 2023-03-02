@@ -39,7 +39,6 @@ function AdminLogin() {
             dispatch(setAdminDetails(data));
             navigate("/admin-dashboard");
           } catch (error) {
-            console.log(error.message);
             toast.error("Check your username and password")
           }
         }, 800);
@@ -50,7 +49,6 @@ function AdminLogin() {
         error.response.status >= 400 &&
         error.response.status <= 500
       ) {
-        console.log(error.response.data.message);
         setError(error.response.data.message);
       }
     }

@@ -13,7 +13,6 @@ const getUserProfile = async (req,res)=>{
       res.status(200).json({response})
     })
   } catch (error) {
-    console.log(error)
   }
 }
 
@@ -36,7 +35,6 @@ const updateProfileController = async (req, res) => {
       { $set: { imageUrl: url } }
     );
   } catch (error) {
-    console.log("carch error from controller ", error);
     res.status(500).json({ err: "something went wrong" });
   }
 };
@@ -51,28 +49,12 @@ const getProfileData = async (req, res) => {
   res.send(publicIds);
 };
 
-// const getImage = async (req, res) => {
-// //   const objectId = res.locals._id
-// // const id = objectId.toString()
-// console.log("emeial ",req.body)
-// const { email } = req.body
-//   try {
-//     await User.find( {email:email}).then((data) => {
-//       res.status(200).json(data);
-   
-//     })
-//   } catch (error) {
-//     res.status(500)
-//     console.log("data geting error ", error);
-//   }
-// };
 
 
 
 const updateUserDetails =async (req,res)=>{
   const objectId = res.locals._id
   const id = objectId.toString()
- console.log("id ",id)
 
 try {
   
@@ -85,13 +67,11 @@ try {
       company:req.body.company,
   
     }}).then((response)=>{
-console.log("response ",response)
       res.status(200).json({response:response,message:"user updated successfully"})
     })
 
   
 } catch (error) {
-  console.log("error ",error)
 }
 
 }
@@ -99,11 +79,9 @@ console.log("response ",response)
 const getUserQuestions = async(req,res)=>{
   const objectId = res.locals._id
   const userId = objectId.toString()
-  console.log("for question personsa; ",userId)
   
   try {
     
-  //  const questions = await QuestionDB.find({user._id:userId})
 
  const questions = await QuestionDB.aggregate([{
     $match:{"user._id":userId}
@@ -111,7 +89,6 @@ const getUserQuestions = async(req,res)=>{
    res.status(200).json({questions})
     
   } catch (error) {
-    console.log("error in getuserquestions ",error)
     
   }
 }
@@ -121,9 +98,7 @@ const getUserQuestions = async(req,res)=>{
 module.exports = {
   updateProfileController,
   getProfileData,
-  // getImage,
   updateUserDetails,
-  // getUserDataForProfileUpdate,
   getUserProfile,
   getUserQuestions
 };

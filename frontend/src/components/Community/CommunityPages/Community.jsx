@@ -22,7 +22,6 @@ useEffect(()=>{
   (async ()=>{
     const posts = await getAllCommunityPosts();
 
-    console.log("posts posts ",posts)
     dispatch(setCommunityPosts(posts));
   })
 },[])
@@ -43,7 +42,6 @@ useEffect(()=>{
 
           joinCommunity(userDetails,post,tokenData).then((response)=>{
             
-            console.log("checking position",response )
             
             swal(`you successfully joined the community`,{
               icon:"success",
@@ -52,7 +50,6 @@ useEffect(()=>{
 
             })
         }else{
-          console.log("caneled")
           swal('Canceled')
         }
       })

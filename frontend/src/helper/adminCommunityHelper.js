@@ -9,7 +9,6 @@ export const addCommunityPosts = async (data) => {
     });
     return addCommunityPosts.data
   } catch (error) {
-    console.log(error)
   }
 };
 
@@ -21,7 +20,6 @@ export const  getAllCommunityPosts = async ()=>{
     });
     return getAllCommunityPosts.data
   } catch (error) {
-    console.log(error)
   }
 }
 
@@ -37,6 +35,5 @@ export const deleteCommunity = async(communityId , adminToken)=>{
     })
     return deleteCommunity.data
   } catch (error) {
-    console.log(error)
   }
 }

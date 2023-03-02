@@ -26,7 +26,6 @@ function Tags() {
 
 
   const handleDeleteTag = async(tag)=>{
-    console.log("communityid ",tag , adminToken)
       try {
         await deleteTag(tag , adminToken)
         const tags = await getTags(adminToken)
@@ -36,7 +35,6 @@ function Tags() {
         console.log(error)
       }
   }
-  console.log("tag check ",allTags)
 
   return (
     <div style={{height:"100vh"}}>

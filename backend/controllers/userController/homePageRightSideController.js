@@ -16,7 +16,6 @@ const getHotQuestions = async(req,res)=>{
         const hotQuestions = await questionDB.find({vote:{$gt:1}})
         res.status(200).json(hotQuestions)
     } catch (error) {
-        console.log(error.message)
         res.status(500).json(error)
     }
 }

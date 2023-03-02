@@ -67,7 +67,6 @@ export default function Analytics() {
       dispatch(setTags(tags))
     })()
   },[])
-  console.log("teag ",allTags)
   return (
 
     <Section>

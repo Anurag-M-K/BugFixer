@@ -12,7 +12,6 @@ export const deleteQuestion = async (qid, tokenData )=>{
         })
         return deleteQuestion.data
     } catch (error) {
-        console.log("error ",error)
     }
 }
 
@@ -28,13 +27,11 @@ export const getUserQuestions = async (  tokenData )=>{
         return getUserQuestions;
         
     } catch (error) {
-console.log(error)
     }
 
 }
 
 export const updateUserProfile = async(updateData , tokenData)=>{
-    console.log("update data from helper ",updateData)
     try {
         const updateUserProfile = await instance({
             url:"/api/update-user",
@@ -60,16 +57,13 @@ export const getUserDetails = async( tokenData )=>{
                 Authorization:tokenData
             }
         })
-        console.log('checking',getUserDetails);
         return getUserDetails.data
     } catch (error) {
-        console.log(error)
     }
 }
 
 
 export const getAnswers = async(id)=>{
-    console.log("from helper id ",id)
     try {
     const getAnswers = await instance({
         url:"/api/get-answer/"+id,
@@ -77,7 +71,6 @@ export const getAnswers = async(id)=>{
     })
     return getAnswers.data
     } catch (error) {
-        console.log(error)
     }
 }
 

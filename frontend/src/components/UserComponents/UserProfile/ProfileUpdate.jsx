@@ -20,36 +20,17 @@ function ProfileUpdate({ userDetails }) {
   const navigate = useNavigate();
   const { tokenData } = useSelector((state)=>state.user)
 
-  console.log("userdetails fromporigole. ",userDetails)
 
  
-  // const [userData, setUsetData] = useState(initialValue);
-
  
-
-  // const handleChange = (e) => {
-  //   const name = e.target.name;
-  //   const value = e.target.value;
-  //   setUsetData({
-  //     ...userDetails,
-  //     job,company,
-
-  //     [name]: value,
-  //   });
-  // };
-
   const id = userDetails._id;
 
   
-  // const updateData = { ...userData, id };
   const onSubmit = async (values) => {
-    // e.preventDefault();z
-    console.log("update teatat ",values)
     try {
       axios.defaults.baseURL = "http://localhost:80";
       await updateUserProfile( values , tokenData)
       const datas =  await getUserDetails( tokenData)
-      console.log("=====",datas);
       toast.success("Profile updated");
           dispatch(setUserDetails(datas.response));
           setUsetData(datas);

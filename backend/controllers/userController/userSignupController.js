@@ -51,7 +51,6 @@ const userSignup = async(req,res)=>{
 
     } catch (error) {
         res.status(500).send({message:'internal server error'})
-        console.log(error)
     }
 }
 
@@ -60,11 +59,9 @@ const otpVerify = (req,res)=>{
     const email = req.body.email;
 try {
     User.findOneAndUpdate({email:email},{$set:{verified:1}}).then((response)=>{
-        console.log("res ",response)
         res.status(200,response)
     })
 } catch (error) {
-    console.log(error)
 }
 
 

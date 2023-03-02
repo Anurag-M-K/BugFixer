@@ -43,7 +43,6 @@ const increaseAnswerVote = (req, res) => {
       res.status(200).json(response);
     });
   } catch (error) {
-    console.log(error);
   }
 };
 
@@ -54,7 +53,6 @@ const getParticularAnswer = async (req, res) => {
       res.status(200).json({ response });
     });
   } catch (error) {
-    console.log(error);
   }
 };
 

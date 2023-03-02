@@ -84,7 +84,6 @@ const getQuestion = async (req, res) => {
       res.status(200).send(questionDetails);
     })
     .catch((e) => {
-      console.log("error", e);
       res.status(400).send(error);
     });
 };
@@ -156,11 +155,9 @@ const particularQuestion = async (req, res) => {
         res.status(200).send(questionDetails);
       })
       .catch((e) => {
-        console.log("error", e);
         res.status(400).send(e);
       });
   } catch (err) {
-    console.log("error here ", err);
     res.status(400).send({
       message: "Question not found",
     });
@@ -182,7 +179,6 @@ const incrementVote = async (req, res) => {
     await question.save();
     res.json(question.vote);
   } catch (error) {
-    console.log(error.message);
     res.status(500).send("Server error");
   }
 };
@@ -194,16 +190,12 @@ const decreaseVote = async (req, res) => {
 
   try {
     const question = await QuestionDB.findById(qid);
-console.log("1",question)
 if (question.vote.filter((like) => like === userId).length  === 0) {
-    console.log("2")
     return res.status(400).json({ message: "Question has not been voted" });
 }
 
-console.log("3")
 //get remove index 
 const removeIndex = question.vote.map(like => like === userId).indexOf(userId);
-console.log("4",removeIndex)
 
     question.vote.splice(removeIndex,1)
 
@@ -211,7 +203,6 @@ console.log("4",removeIndex)
 
     res.json(question.vote);
   } catch (error) {
-    console.log(error.message);
     res.status(500).send("Server error");
   }
 };
@@ -241,7 +232,6 @@ const getVotes = (req, res) => {
       res.status(200).json({ response });
     });
   } catch (error) {
-    console.log(error);
   }
 };
 
@@ -251,7 +241,6 @@ const deleteUserQuestion = async (req, res) => {
     const response = await QuestionDB.findByIdAndDelete({ _id: qid });
     res.status(200).json({ delete: true, message: "Question deleted successfully" });
   } catch (error) {
-    console.log(error);
   }
 };
 module.exports = {

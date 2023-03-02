@@ -1,3 +1,4 @@
+import { toast } from "react-hot-toast";
 import instance from "../config/axiosInstance";
 
 export const getAllTags = async(tokenData)=>{
@@ -11,7 +12,6 @@ export const getAllTags = async(tokenData)=>{
         })
         return getAllTags.data
     } catch (error) {
-        console.log(error)
     }
 }
 
@@ -26,6 +26,8 @@ export const getHotQuestions = async(tokenData)=>{
         })
         return getHotQuestions.data
     } catch (error) {
-        console.log(error)
+        toast.error("server connection failed")
+        return { message: 'Server Connection Failed' }    
+      
     }
 }

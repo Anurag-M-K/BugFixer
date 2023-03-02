@@ -47,7 +47,6 @@ function TagAddModal() {
     })();
   }, []);
 
-  console.log("state ", state);
 
   return (
     <>

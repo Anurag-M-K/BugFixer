@@ -11,12 +11,10 @@ export const getAllQuestionsDetails = async(adminToken)=>{
         })
         return getAllQuestionsDetails.data
     } catch (error) {
-        console.log(error)
     }
 }
 
 export const deleteQuestion = async(qid,adminToken)=>{
-    console.log(qid)
     try {
         const deleteQuestion = await instance({
             url:"/admin/question-delete/"+qid,
@@ -27,7 +25,6 @@ export const deleteQuestion = async(qid,adminToken)=>{
         })
         return deleteQuestion.data
     } catch (error) {
-        console.log(error)
         
     }
 }
@@ -43,7 +40,6 @@ export const getQuestions = async(adminToken)=>{
         })
         return getQuestions.data
     } catch (error) {
-        console.log(error)
     }
 }
 
@@ -58,14 +54,11 @@ export const getReportedQuestions = async(adminToken)=>{
         })
         return getReportedQuestions.data
     } catch (error) {
-        console.log(error)
     }
-    console.log("from helper",getReportedQuestions)
 }
 
 
 export const deleteReportedQuestion = async(qid,adminToken)=>{
-    console.log("delete helper",qid)
     try {
         const deleteReportedQuestion = await instance({
             url:"/admin/question-delete/"+qid,
@@ -77,6 +70,5 @@ export const deleteReportedQuestion = async(qid,adminToken)=>{
         })
         return deleteReportedQuestion.data
     } catch (error) {
-        console.log(error)
     }
 }

@@ -1,7 +1,6 @@
 import instance from "../config/axiosInstance";
 
 export const joinCommunity = async(id,post,tokenData)=>{
-    console.log("4 data " , post )
     try {
         const joinCommunity = await instance({
             url:"/api/join-community",
@@ -13,7 +12,6 @@ export const joinCommunity = async(id,post,tokenData)=>{
         })
         return joinCommunity.data
     } catch (error) {
-        console.log(error)
     }
 
 }

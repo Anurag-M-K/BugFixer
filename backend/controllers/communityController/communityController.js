@@ -28,7 +28,6 @@ const deleteCommunity = async(req,res)=>{
     try {
         await communityDB.findByIdAndDelete(communityId)
     } catch (error) {
-        console.log(error)
     }
 }
 module.exports = {

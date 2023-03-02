@@ -47,7 +47,8 @@ export default function UserProfile() {
     (state) => state.userProfileQuestions
   );
     const { singleQuestiondata } = useSelector((state)=>state.singleQuestion)
-console.log("singleQuesitondata ",singleQuestiondata)
+
+    console.log("singlequestiondata ",singleQuestiondata.data)
 
   const handleFileInput = (e) => {
     const file = e.target.files[0];
@@ -123,7 +124,6 @@ console.log("singleQuesitondata ",singleQuestiondata)
   useEffect(()=>{
     (async ()=>{
       const answers = await getAnswers(userProfileQuestionsDetails[0]._id)
-      console.log("answers , ",answers)
       dispatch(setSingleQuestionDetails(answers));
     })()
   },[])
@@ -282,6 +282,7 @@ console.log("singleQuesitondata ",singleQuestiondata)
 
             <MDBRow>
               <MDBCol md="6 col-md-12">
+                <MDBCard className="mb-4 mb-md-0">
                 {userProfileQuestionsDetails?.map((question) => {
                   <MDBCardText className="mb-4">
                     <span className="text-primary  font-italic me-1">
@@ -289,7 +290,6 @@ console.log("singleQuesitondata ",singleQuestiondata)
                     </span>{" "}
                   </MDBCardText>;
                   return (
-                    <MDBCard className="mb-4 mb-md-0">
                       <MDBCardBody>
                         <>
                           <MDBCardText
@@ -332,12 +332,19 @@ console.log("singleQuesitondata ",singleQuestiondata)
                             {ReactHtmlParser(question?.body)}
                           </MDBCardText>
                         </>
-                        <h4>Answers</h4>
-                        {singleQuestiondata?.answer ? ReactHtmlParser(singleQuestiondata?.answer) : ""}
                       </MDBCardBody>
-                    </MDBCard>
-                  );
+                    );
+                    })}
+                <h4 className="ms-3">Answers</h4>
+                {singleQuestiondata?.data?.map((answers)=>{
+                
+                  return (
+
+                    <p className="ms-3">{ReactHtmlParser(answers?.answer)}</p>
+                    
+                    )
                 })}
+                    </MDBCard>
                 
               </MDBCol>
             </MDBRow>

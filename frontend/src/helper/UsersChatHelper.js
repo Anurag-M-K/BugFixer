@@ -12,7 +12,6 @@ export const getConversation = async(id,tokenData)=>{
         })
         return getConversation.data
     } catch (error) {
-        console.log(error)
     }
 }
 
@@ -27,7 +26,6 @@ export const getUser = async(friendId,tokenData)=>{
         })
         return getUser.data
     } catch (error) {
-        console.log(error)
     }
 }
 
@@ -42,7 +40,6 @@ export const getMessages = async(id,tokenData)=>{
         })
         return getMessages.data
     } catch (error) {
-        console.log("error from geting messages ",error)
     }
 }
 
@@ -59,7 +56,6 @@ export const postMessages = async(message,tokenData)=>{
         return postMessages.data
 
     } catch (error) {
-        console.log(error)
     }
 }
 
@@ -74,6 +70,21 @@ export const getAllUsers = async(tokenData)=>{
         })
         return getAllUsers.data
     } catch (error) {
+    }
+}
+
+
+export const createConversation = async(userId,friendId)=>{
+    try {
+        const createConversation  =  await instance({
+            url:"/api/conversation/create-conversation",
+            method:"POST",
+            data:{userId, friendId}
+        })
+        return createConversation.data
+    } catch (error) {
         console.log(error)
     }
 }
+
+

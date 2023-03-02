@@ -48,7 +48,6 @@ function AdminQuestion() {
       axios.defaults.baseURL = "http://localhost:80";
        axios.delete("/admin/question-delete/"+qid).then(async(res)=>{
          const response =  await getQuestions(adminToken)
-         console.log(response+"response")
               dispatch(setAdminQuestionDetails(response))
           
       })

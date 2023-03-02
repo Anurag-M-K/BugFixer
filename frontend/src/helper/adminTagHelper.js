@@ -12,7 +12,6 @@ export const addTag = async(values,adminToken)=>{
         })
         return addTag.data
     } catch (error) {
-        console.log(error)
     }
 }
 
@@ -27,13 +26,11 @@ export const getTags = async(adminToken)=>{
         })
         return getTags.data
     } catch (error) {
-        console.log(error)
     }
 }
 
 
 export const deleteTag = async(tag , adminToken)=>{
-    console.log("heloer ",tag,adminToken)
     try {
       const deleteTag = await instance({
         url:"/admin/tag-delete",
@@ -45,6 +42,5 @@ export const deleteTag = async(tag , adminToken)=>{
       })
       return deleteTag.data
     } catch (error) {
-      console.log(error)
     }
   }
