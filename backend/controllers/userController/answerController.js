@@ -95,12 +95,19 @@ const getQuestionAnswers = async (req, res) => {
 
 ///deleting answer from view question page in userside
 const deleteAnswer = async (req, res) => {
+  const objectId = res.locals._id;
+  const userId = objectId.toString();
   const id = req.body.aId
   try {
+   const answer = await AnswerDB.findById(id);
+   if(answer.user._id === userId){
     await AnswerDB.findByIdAndDelete(id);
     res.status(200).json({
       status: true,
     });
+   }else{
+    res.status(400).json({message:"You do not have permission to delete"})
+   }
   } catch (error) {
     res.status(500).json({ error });
   }

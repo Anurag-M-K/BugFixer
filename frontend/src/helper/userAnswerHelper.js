@@ -48,6 +48,8 @@ export const deleteAnswer = async(tokenData, aId)=>{
         })
         return deleteAnswer.data
     } catch (error) {
-        console.log(error)
+        console.log("error fro",error)
+        toast.error(error.response.data.message)
+    
     }
 }

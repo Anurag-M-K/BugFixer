@@ -234,6 +234,7 @@ function MainQuestion() {
         .then((deleteQuestion) => {
           if (deleteQuestion) {
              deleteAnswer(tokenData,aId).then((res)=>{
+              
               axios.get("/api/get-answer/" + id).then((getAnswer) => {
 
                 dispatch(setParticularAnswerDetails(getAnswer.data));
@@ -449,14 +450,13 @@ function MainQuestion() {
                       <path d="M2 11h32L18 27 2 11Z"></path>
                     </svg>
                   </span>
-                  <BiTrashAlt onClick={()=>answerDelete(_q._id)} style={{ marginBottom:"10px",height:"15px",cursor:"pointer"}}/>
-                  <Bookmark />
-                  <History />
+                 {_q.user._id === userDetails._id && <BiTrashAlt onClick={()=>answerDelete(_q._id)} style={{ marginBottom:"10px",height:"15px",cursor:"pointer"}}/>}
+             
                 </div>
               </div>
 
               <div
-                className="question-answer col-md-10 col-sm-6 "
+                className="question-answer col-md-10 col-sm-6  "
                 style={{
                   display: "flex",
                   justifyContent: " space-evenly",
@@ -480,7 +480,7 @@ function MainQuestion() {
           ))}
         </div>
       </div>
-      <div className="main-answer">
+      <div className="main-answer mt-5">
         <h3
           style={{
             fontSize: "22px",

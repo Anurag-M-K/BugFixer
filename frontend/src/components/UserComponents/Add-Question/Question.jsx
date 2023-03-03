@@ -6,7 +6,7 @@ import "./Question.css";
 import { TagsInput } from "react-tag-input-component";
 import { useSelector } from "react-redux";
 import Editor from "react-quill/lib/toolbar";
-import { ToastContainer, toast } from 'react-toastify';
+import  { toast } from 'react-toastify';
 import { addQuestion } from "../../../helper/userQuestionHelper";
 // import 'react-toastify/dist/ReactToastify.css';
 
