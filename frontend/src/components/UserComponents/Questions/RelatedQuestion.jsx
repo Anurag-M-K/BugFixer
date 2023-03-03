@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getHotQuestions } from "../../../helper/homePageRightSideHelper";
 import toast from 'react-hot-toast'
+import { CoPresentOutlined } from "@mui/icons-material";
 
 const RelatedQuestion = () => {
   const [hotQuestions, setHotQuestions] = useState([]);
@@ -22,7 +23,7 @@ const RelatedQuestion = () => {
     })();
   }, []);
 
-  
+  console.log("hotQuestions ",hotQuestions)
 
   return (
     <>

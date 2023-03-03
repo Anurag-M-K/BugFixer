@@ -48,3 +48,19 @@ export const questionDecVoting = async (question_id , tokenData)=>{
         return error.response
     }
 }
+
+
+export const getAnswers = async (tokenData , id) => {
+    try {
+        const getAnswers = await instance({
+            url:"/api/get-question-answers/"+id,
+            method:"GET",
+            headers:{
+                Authorization:tokenData
+            }
+        })
+        return getAnswers.data
+    } catch (error) {
+        console.error(error)
+    }
+}

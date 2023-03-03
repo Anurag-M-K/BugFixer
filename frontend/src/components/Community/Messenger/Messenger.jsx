@@ -12,6 +12,7 @@ import {
 import { io } from "socket.io-client";
 import "./Messenger.css";
 import SearchBar from "./SearchBar";
+import { setClickedUserDetails } from "../../../redux/features/chatLeftSideClickedUserSlice";
 
 function Messenger() {
   const { userDetails } = useSelector((state) => state.user);
@@ -24,7 +25,9 @@ function Messenger() {
   const scrollRef = useRef(); //which is used for automatically scroll up when a message is send
   const socket = useRef(io("ws://localhost:8080"));
   const [ value , setValue ] = useState('')
+  const { clidkedUserDetails } = useSelector((state) => state.clickedUser);
 
+  console.log("clikeduserDetails in messenger ",clidkedUserDetails)
 
 
   useEffect(() => {
@@ -56,6 +59,10 @@ function Messenger() {
     try {
       (async () => {
         const res = await getConversation(userDetails?._id, tokenData);
+        console.log("res",res)
+        //updated
+        dispatchEvent(setClickedUserDetails(res))
+        //updated
         setConversations(res);
       })();
     } catch (error) {

@@ -21,10 +21,15 @@ import ReportReason from "./ReportReason";
 import { setCommentDetails } from "../../../redux/features/commentSlice";
 import "./index.css";
 import {
+  getAnswers,
   questionDecVoting,
   questionVoting,
 } from "../../../helper/userQuestionHelper";
 import { setParticularAnswerDetails } from "../../../redux/features/particularAnswersSlice";
+import { answerDownVoting, answerVoting, } from "../../../helper/userAnswerHelper";
+
+
+
 
 function MainQuestion() {
   const [show, setShow] = useState(false);
@@ -60,7 +65,6 @@ function MainQuestion() {
           dispatch(setCommentDetails(comment.data));
           setQuestionData(res.data[0]);
           setAnswerVote(res.data[0].answerDetails);
-          dispatch(setParticularAnswerDetails(res.data[0].answerDetails));
         });
       } catch (error) {
         console.log(error);
@@ -68,17 +72,32 @@ function MainQuestion() {
     })();
   }, []);
 
-  const _id = questionData._id;
 
+
+
+  // geting all answers while page load 
+    async function getAnswer(){
+    const response =  await axios.get("/api/get-answer/" + id)
+        dispatch(setParticularAnswerDetails(response.data));
+    }
+    useEffect(()=>{
+      getAnswer()
+    },[])
+  
+console.log("particularAnswersDetails hree ",particularAnswersDetails)
+
+
+  const _id = questionData._id;
+  
   async function getUpdatedAnswer() {
     await axios
-      .post(`/api/question/${_id}`)
-      .then((res) => {
-        setQuestionData(res.data[0]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    .post(`/api/question/${_id}`)
+    .then((res) => {
+      setQuestionData(res.data[0]);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   //answer adding and geting
@@ -95,12 +114,14 @@ function MainQuestion() {
         },
       };
 
+
+
       await axios
-        .post("/api/answer", body, config)
+        .post("/api/answer", body, config)  
         .then(async (res) => {
           const id = res.data.data.question_id;
           await axios.get("/api/get-answer/" + id).then((response) => {
-            dispatch(setParticularAnswerDetails(response.data));
+            dispatch(setParticularAnswerDetails(response.data));    
 
             dispatch(setSingleQuestionDetails(response));
           });
@@ -138,9 +159,14 @@ function MainQuestion() {
   const { commentDetails } = useSelector((state) => state.comment);
 
 
+//get the quesiton details when the user enter the page 
+  useEffect(()=>{
+    const getSingleQuestion = axios.get(`/api/question/${id}`).then((response) =>{
+      dispatch(setSingleQuestionDetails(response.data));
 
+    })
+  },[])
 
-    
   ///quesiton upvoting and downvoting
   async function incVoting(question_id) {
     try {
@@ -153,8 +179,8 @@ function MainQuestion() {
       console.log(error);
     }
   }
-
   async function decVoting(question_id) {
+    console.log(question_id)
     try {
       const data = await questionDecVoting(question_id, tokenData);
       const getSingleQuestion = await axios.get(`/api/question/${id}`);
@@ -167,9 +193,29 @@ function MainQuestion() {
     }
   }
 
-  // const questionDetail = { ...questionData, vote };
 
-  // const { voteCount } = useSelector((state) => state.vote);
+
+  ///answer voting and downVoting 
+
+    async function handleAnswerVoting(aId)  {
+      try {
+        const votRes = await  answerVoting(aId,tokenData);
+       const getAnswer =  await axios.get("/api/get-answer/" + id)
+        dispatch(setParticularAnswerDetails(getAnswer.data));
+      } catch (error) {
+       console.log(error)
+      }
+    }
+    async function handleAnswerDownVoting(aId)  {
+      try {
+        const votRes = await  answerDownVoting(aId,tokenData);
+        const getAnswer =  await axios.get("/api/get-answer/" + id)
+
+        dispatch(setParticularAnswerDetails(getAnswer.data));
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
 
 
@@ -334,11 +380,12 @@ function MainQuestion() {
             {particularAnswersDetails?.length} Answers
           </p>
           {particularAnswersDetails?.map((_q) => (
+          
             <div key={_q?._id} className="all-questions-container">
               <div className="all-questions-left col-md-2">
                 <div className="all-options">
                   <span
-                    // onClick={() => answerVoting(_q._id)}
+                    onClick={() => handleAnswerVoting(_q._id)}
                     className="arrow"
                   >
                     <svg
@@ -351,9 +398,9 @@ function MainQuestion() {
                       <path d="M2 25h32L18 9 2 25Z"></path>
                     </svg>
                   </span>
-
-                  {/* <p className="arrow">{_q?.vote ? _q.vote : "0"}</p> */}
-                  <span className="arrow">
+                  {_q?.vote?.length ? _q?.vote?.length : "0"}
+                  <span className="arrow" 
+                  onClick={()=>handleAnswerDownVoting(_q._id)}>
                     <svg
                       aria-hidden="true"
                       className="svg-icon iconArrowDownLg"
@@ -381,7 +428,7 @@ function MainQuestion() {
               <div className="author-answer">
                 <small>{new Date(_q?.created_at).toLocaleString()}</small>
                 <div className="auth-details">
-                  <Avatar src={_q?.user?.photo} />
+                  <Avatar src={_q?.user?.imageUrl} />
                   <p>
                     {" "}
                     {_q?.user?.firstName

@@ -100,5 +100,5 @@ module.exports = {
   getProfileData,
   updateUserDetails,
   getUserProfile,
-  getUserQuestions
+  getUserQuestions,
 };

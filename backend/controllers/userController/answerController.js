@@ -24,27 +24,12 @@ const answerAdd = async (req, res) => {
     });
 };
 
-const getAnswerByQId = (req, res) => {
+const getAnswerByQId = async(req, res) => {
   const id = req.params.id;
-  AnswerDB.find({ question_id: id }).then((response) => {
+  const response = await AnswerDB.find({ question_id: id })
     res.status(200).json(response);
-  });
 };
 
-const increaseAnswerVote = (req, res) => {
-  try {
-    const id = req.params.aid;
-    const answerVote = req.body.answerVote;
-    AnswerDB.findByIdAndUpdate(
-      id,
-      { $set: { vote: answerVote } },
-      { upsert: true }
-    ).then((response) => {
-      res.status(200).json(response);
-    });
-  } catch (error) {
-  }
-};
 
 const getParticularAnswer = async (req, res) => {
   const id = req.params.qid;
@@ -56,9 +41,64 @@ const getParticularAnswer = async (req, res) => {
   }
 };
 
+// addming answer vote 
+const voteAnswer = async (req, res) => {
+  const aId = req.body.aId;;
+  const objectId = res.locals._id;
+  const userId = objectId.toString();
+  try {
+    const answer = await AnswerDB.findById(aId);
+    if(answer.vote.filter((like)=> like === userId).length > 0){
+      return res.status(400).json({ error: "Already voted" });
+    }
+    answer.vote.unshift(userId);
+    await answer.save();
+    res.status(200).json(answer.vote);
+    
+  } catch (error) {
+    res.status(500).json({ error })
+    }
+}
+
+
+///decresing  answer vote 
+const downVoteAnswer = async (req, res) => {
+  const aId = req.body.aId;;
+  const objectId = res.locals._id;
+  const userId = objectId.toString();
+  try {
+    const answer = await AnswerDB.findById(aId);
+    if(answer.vote.filter((like)=> like === userId).length === 0){
+      return res.status(400).json({ error: "Answer has not been voted" });
+    }
+    const removeIndex = answer.vote.map((like)=>like === userId).indexOf(userId);
+
+    answer.vote.splice(removeIndex, 1);
+    await answer.save();
+    
+  } catch (error) {
+    cosnole.log(error)
+    res.status(500).json({ error })
+    }
+}
+
+
+//get answers for a single questions 
+const getQuestionAnswers = async (req, res) => {
+  try {
+    const answers = await AnswerDB.find({question_id:req.params.id})
+    res.status(200).json(answers)
+  } catch (error) {
+    res.status(500).json({ error})
+  }
+}
+
+
 module.exports = {
   answerAdd,
   getAnswerByQId,
-  increaseAnswerVote,
+  voteAnswer,
+  downVoteAnswer,
   getParticularAnswer,
+  getQuestionAnswers,
 };

@@ -1,9 +1,9 @@
 const { object } = require("joi");
 const mongoose = require("mongoose");
 const answerSchema = new mongoose.Schema({
-    question_id : {
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Questions",
+    question_id: {
+        type: String,
+        required: true,
     },
     answer:String,
     created_at:{
@@ -11,7 +11,13 @@ const answerSchema = new mongoose.Schema({
         default:Date.now(),
     },
     vote:Number,
-    user:Object,
+    user: Object,
+
+    vote:     [{
+    
+        type: String,
+        
+    }],
     comment_id:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Comments",

@@ -48,7 +48,6 @@ export default function UserProfile() {
   );
     const { singleQuestiondata } = useSelector((state)=>state.singleQuestion)
 
-    console.log("singlequestiondata ",singleQuestiondata.data)
 
   const handleFileInput = (e) => {
     const file = e.target.files[0];
@@ -119,14 +118,18 @@ export default function UserProfile() {
     }
   }, []);
 
-
 //get answers
   useEffect(()=>{
     (async ()=>{
-      const answers = await getAnswers(userProfileQuestionsDetails[0]._id)
+      const answers = await getAnswers(userProfileQuestionsDetails[0]?._id)
       dispatch(setSingleQuestionDetails(answers));
     })()
   },[])
+
+
+  
+
+
 
 
   let defaultUrl =
@@ -306,14 +309,7 @@ export default function UserProfile() {
                             </Link>
                             <div className="del-btn">
                               <div class=" d-md-flex justify-content-md-end  ">
-                                {/* <a
-                                role="button"
-                                aria-pressed="true"
-                                onClick={() =>
-                                  handleQuestionDelete(question._id)
-                                }
-                              > */}
-                                {/* </a> */}
+                              
                                 <FaTrashAlt
                                   style={{ cursor: "pointer" }}
                                   onClick={() =>

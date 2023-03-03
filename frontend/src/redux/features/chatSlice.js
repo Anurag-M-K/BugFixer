@@ -3,14 +3,17 @@ import { createSlice } from "@reduxjs/toolkit";
 export const chatSlice = createSlice ({
     name:"chat",
     initialState:{
-        chatDetails:[]
+        chatDetails:[],
+        conversation:[],
     },
     reducers:{
         setChatDetails:(state,action)=>{
-            console.log("slice for chat ",action.payload)
             state.chatDetails = action.payload;
+        },
+        setConversations:(state,action)=>{
+            state.conversation = action.payload;
         }
     }
 })
 
-export const {setChatDetails} = chatSlice.actions
+export const {setChatDetails ,setConversation} = chatSlice.actions

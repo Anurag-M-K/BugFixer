@@ -19,8 +19,10 @@ const {
 const {
   answerAdd,
   getAnswerByQId,
-  increaseAnswerVote,
+  downVoteAnswer,
+  voteAnswer,
   getParticularAnswer,
+  getQuestionAnswers,
 } = require("../controllers/userController/answerController");
 const {
   commentAdd,
@@ -36,7 +38,7 @@ const {
 } = require("../controllers/userController/userProfileController");
 const {
   getUsersDetails,
-  getUser,
+
 } = require("../controllers/adminController/adminUsersDetailsController");
 const { verifyJWT } = require("../middleware/authMiddleware");
 const {
@@ -47,7 +49,7 @@ const {
   getHotQuestions
 } = require("../controllers/userController/homePageRightSideController");
 const { getAllUsers } = require("../controllers/userController/userMessageController");
-const { getAllMessagedUsers } = require("../controllers/userController/userChatController");
+const { getAllMessagedUsers ,  getUser, } = require("../controllers/userController/userChatController");
 
 router.post("/userSignup", userSignup);
 router.post("/userLogin", userLogin);
@@ -62,9 +64,7 @@ router.get("/get-answer/:id", getAnswerByQId);
 router.get("/getUserProfile", verifyJWT, getUserProfile);
 router.post("/profile/:id", updateProfileController);
 router.get("/profileData", getProfileData);
-// router.get('/getImage',verifyJWT,getImage)
 router.put("/update-user",verifyJWT, updateUserDetails);
-// router.get('/getUserDetails/:data_id',getUserDataForProfileUpdate)
 router.delete("/question-delete/:qid", verifyJWT, deleteUserQuestion);
 router.get("/get-user-questions", verifyJWT, getUserQuestions);
 
@@ -75,7 +75,6 @@ router.post("/vote-increment",verifyJWT, incrementVote);
 router.get("/get-vote/:qid", getVotes);
 router.post("/question-report/:qid", reportQuestion);
 
-router.put("/answer-voting/:aid", increaseAnswerVote);
 router.get("/answer/:qid", getParticularAnswer);
 
 router.get("/getUser/:friendId", verifyJWT, getUser);
@@ -87,5 +86,8 @@ router.get("/get-all-users",verifyJWT , getAllUsers)
 
 
 router.get("/allMessages",getAllMessagedUsers)
+router.post("/vote-answer",verifyJWT, voteAnswer)
+router.post("/downvote-answer",verifyJWT, downVoteAnswer)
+router.get("/get-question-answers/:id",verifyJWT,getQuestionAnswers)
 
 module.exports = router;

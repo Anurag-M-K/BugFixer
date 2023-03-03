@@ -4,11 +4,11 @@ import { createSlice } from "@reduxjs/toolkit";
 export const clickedUserSlice = createSlice({
     name:"clickedUser",
     initialState:{
-        clidkedUserDetails:[]
+        clickedUserDetails:[]
     },
     reducers:{
         setClickedUserDetails : (state,action)=>{
-            state.clidkedUserDetails = action.payload;
+            state.clickedUserDetails = action.payload;
         }
     }
 })
