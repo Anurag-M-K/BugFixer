@@ -93,6 +93,19 @@ const getQuestionAnswers = async (req, res) => {
   }
 }
 
+///deleting answer from view question page in userside
+const deleteAnswer = async (req, res) => {
+  const id = req.body.aId
+  try {
+    await AnswerDB.findByIdAndDelete(id);
+    res.status(200).json({
+      status: true,
+    });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+};
+
 
 module.exports = {
   answerAdd,
@@ -101,4 +114,5 @@ module.exports = {
   downVoteAnswer,
   getParticularAnswer,
   getQuestionAnswers,
+  deleteAnswer
 };

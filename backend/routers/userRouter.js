@@ -23,6 +23,7 @@ const {
   voteAnswer,
   getParticularAnswer,
   getQuestionAnswers,
+  deleteAnswer
 } = require("../controllers/userController/answerController");
 const {
   commentAdd,
@@ -89,5 +90,6 @@ router.get("/allMessages",getAllMessagedUsers)
 router.post("/vote-answer",verifyJWT, voteAnswer)
 router.post("/downvote-answer",verifyJWT, downVoteAnswer)
 router.get("/get-question-answers/:id",verifyJWT,getQuestionAnswers)
+router.delete("/delete-answer",verifyJWT , deleteAnswer)
 
 module.exports = router;

@@ -165,4 +165,5 @@
   }
   .all-questions-container{
     display: flex;
+    max-width: 603px; 
   }

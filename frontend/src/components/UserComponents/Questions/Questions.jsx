@@ -50,7 +50,7 @@ dispatch(filterQuestionDetails([val]))
       <div className="container-fluid questions pt-4">
         <div className="row" style={{ margin: "0 8%" }}>
           <div
-            className="questions--LeftSidebar col-md-2 border"
+            className="questions--LeftSidebar col-md-2 border col-sm-12 col-lg-2"
             style={{ fontSize: "14px", overflowY: "scroll",backgroundColor:"" }}
           >
             <LeftSidebar />

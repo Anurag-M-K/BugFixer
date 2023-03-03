@@ -87,7 +87,6 @@ const HomePage = () => {
             {/* data Developer header starts */}
             <div class="homePage--innerDiv--plain"></div>
 
-            {/* Stack Overflow reach started */}
             <div className="homePage--innerDiv--reach">
               {details.map((det) => {
                 return (

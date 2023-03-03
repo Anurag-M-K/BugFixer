@@ -14,7 +14,7 @@ export const answerVoting =async (aId,tokenData) => {
         })
         return answerVoting.data
     } catch (error) {
-        toast.error(error.message)
+        toast.error(error.response.data.error    )
         console.error(error);
     }
 }
@@ -30,9 +30,24 @@ export const answerDownVoting =async (aId,tokenData) => {
         })
         return answerDownVoting.data
     } catch (error) {
-        toast.error(error.message)
+        toast.error(error.response.data.error)
         console.error(error);
     }
 }
 
 
+export const deleteAnswer = async(tokenData, aId)=>{
+    try {
+        const deleteAnswer = await instance({
+            url:"/api/delete-answer",
+            method:"DELETE",
+            data:{aId:aId},
+            headers:{
+                Authorization:tokenData
+            }
+        })
+        return deleteAnswer.data
+    } catch (error) {
+        console.log(error)
+    }
+}

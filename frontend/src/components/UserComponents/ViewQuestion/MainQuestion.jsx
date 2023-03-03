@@ -19,14 +19,16 @@ import { setSingleQuestionDetails } from "../../../redux/features/singleQuestion
 import { useLocation } from "react-router-dom";
 import ReportReason from "./ReportReason";
 import { setCommentDetails } from "../../../redux/features/commentSlice";
-import "./index.css";
 import {
   getAnswers,
   questionDecVoting,
   questionVoting,
 } from "../../../helper/userQuestionHelper";
 import { setParticularAnswerDetails } from "../../../redux/features/particularAnswersSlice";
-import { answerDownVoting, answerVoting, } from "../../../helper/userAnswerHelper";
+import { answerDownVoting, answerVoting, deleteAnswer, } from "../../../helper/userAnswerHelper";
+import { BiTrashAlt } from 'react-icons/bi';
+import "./index.css";
+
 
 
 
@@ -84,7 +86,6 @@ function MainQuestion() {
       getAnswer()
     },[])
   
-console.log("particularAnswersDetails hree ",particularAnswersDetails)
 
 
   const _id = questionData._id;
@@ -99,6 +100,8 @@ console.log("particularAnswersDetails hree ",particularAnswersDetails)
       console.log(err);
     });
   }
+
+
 
   //answer adding and geting
   const handleSubmit = async () => {
@@ -217,6 +220,41 @@ console.log("particularAnswersDetails hree ",particularAnswersDetails)
       }
     }
 
+
+    ///deleting answer
+    const answerDelete = async(aId)=>{
+      try {
+        swal({
+          title: "Are you sure?",
+          text: "are you sure you want to delete this answer?",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((deleteQuestion) => {
+          if (deleteQuestion) {
+             deleteAnswer(tokenData,aId).then((res)=>{
+              axios.get("/api/get-answer/" + id).then((getAnswer) => {
+
+                dispatch(setParticularAnswerDetails(getAnswer.data));
+              })
+
+               
+             });
+           
+                  swal("Answer deleted successfully !", {
+              icon: "success",
+            });
+          } else {
+            swal("Canceled");
+          }
+        });
+        
+      } catch (error) {
+        console.log(error)
+      }
+      }
+      
 
 
   return (
@@ -411,6 +449,7 @@ console.log("particularAnswersDetails hree ",particularAnswersDetails)
                       <path d="M2 11h32L18 27 2 11Z"></path>
                     </svg>
                   </span>
+                  <BiTrashAlt onClick={()=>answerDelete(_q._id)} style={{ marginBottom:"10px",height:"15px",cursor:"pointer"}}/>
                   <Bookmark />
                   <History />
                 </div>
