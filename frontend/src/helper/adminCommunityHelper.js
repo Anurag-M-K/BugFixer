@@ -37,3 +37,22 @@ export const deleteCommunity = async(communityId , adminToken)=>{
   } catch (error) {
   }
 }
+export const updateCommunity = async(values,filteredId, adminToken)=>{
+  console.log(values,filteredId, adminToken)
+  try {
+    const updateCommunity = await instance({
+      url:"/admin/edit-community",
+      method:"PUT",
+      data:{values,
+        filteredId, 
+        adminToken
+      },
+      headers:{
+      Authorization:adminToken
+      }
+    })
+    return updateCommunity.data
+  } catch (error) {
+    console.error(error)
+  }
+}

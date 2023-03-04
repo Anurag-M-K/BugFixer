@@ -30,8 +30,10 @@ const deleteCommunity = async(req,res)=>{
     } catch (error) {
     }
 }
+
+
 module.exports = {
     addingCommunityPosts,
     getAllCommunityPosts,
-    deleteCommunity
+    deleteCommunity,
 }

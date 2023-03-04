@@ -9,7 +9,6 @@ import { Route ,Routes } from 'react-router-dom';
 import AdminCommunityPage from "../pages/admin/AdminCommunityPage";
 import QuestionManagePage from '../pages/admin/QuestionManagePage'
 import TagsAddPage from "../pages/admin/TagsAddPage";
-// import AdminLayout from '../Layout/AdminLayout'
 
 
 function AdminRouter() {
@@ -20,7 +19,6 @@ function AdminRouter() {
     {/* {loading && <Spinner />} */}
       <Routes>
           <Route exact path="/admin-login" element={ <AdminPrivateRoute><AdminLoginPage /></AdminPrivateRoute>} />
-          {/* <Route element={<AdminLayout/>}> */}
           <Route exact path="/admin-dashboard" element={<AdminPrivateRoute><AdminDashboard /></AdminPrivateRoute>} />
           <Route exact path="/user-manage" element={<AdminPrivateRoute><UserManagePage /></AdminPrivateRoute>} />
           <Route exact path="/reported-question-manage" element={<AdminPrivateRoute><AdminQuestionPage/></AdminPrivateRoute>} />
@@ -28,7 +26,6 @@ function AdminRouter() {
           <Route exact path="/question-manage" element={<AdminPrivateRoute><QuestionManagePage/></AdminPrivateRoute>} />
           <Route exact path="/tag-manage" element={<AdminPrivateRoute><TagsAddPage/></AdminPrivateRoute>} />
           
-          {/* </Route> */}
       </Routes>
     </>
   );

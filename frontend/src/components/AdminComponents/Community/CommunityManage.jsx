@@ -6,10 +6,11 @@ import styled from "styled-components";
 import { getAllCommunityPosts ,deleteCommunity } from "../../../helper/adminCommunityHelper";
 import { setCommunityPosts } from "../../../redux/features/communityPostsSlice";
 import AddCommunityDataModal from "./AddCommunityDataModal";
-import { BiTrashAlt } from 'react-icons/bi'
+import { BiTrashAlt } from 'react-icons/bi';
 import "./CommunityManage.css";
 import { toast } from "react-hot-toast";
 import Navbar from "../AdminDashboard/Navbar";
+import EditCommunityModal from "./EditCommunityModal";
 
 function CommunityManage() {
   const dispatch = useDispatch();
@@ -27,7 +28,6 @@ function CommunityManage() {
     }
   }, []);
 
-// useEffect(()=>{
 
   const handleDeleteCommunity = async(commmunityId)=>{
       try {
@@ -39,8 +39,9 @@ function CommunityManage() {
         console.log(error)
       }
   }
-// },[])
 
+
+  
   return (
     <div>
       <Section className="bg-black" style={{ backGroundColor: "black" }}>
@@ -57,7 +58,16 @@ function CommunityManage() {
 
               <Card key={index} className="community-card bg-dark">
                 <div className="coll-md-12 d-flex justify-content-end">< div>
-                  <BiTrashAlt onClick={()=>handleDeleteCommunity(post._id)} style={{width:"25px",height:"25px",cursor:"pointer",color:"red"}}/>
+                <div className="community-butons d-flex">
+<div className="edit-btn">
+  
+                <EditCommunityModal  postId={post._id}  style={{cursor:"pointer"}}/>
+</div>  
+<div className="delete-btn">
+
+                  <BiTrashAlt onClick={()=>handleDeleteCommunity(post._id)} style={{width:"20px",height:"20px",cursor:"pointer",color:"red"}}/>
+</div>
+                </div>
                 </div></div>
                 <Card.Body>
                   <Card.Title className="text-center">

@@ -167,3 +167,6 @@
     display: flex;
     max-width: 603px; 
   }
+  .answer-vote{
+    padding-left: 9px;
+  }

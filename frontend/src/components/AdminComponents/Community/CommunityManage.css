@@ -20,3 +20,9 @@
     align-items: center;
     /* margin-top: 50px; */
 }
+
+
+.edit-btn{
+    width: 28px;
+    padding-top: 1px;
+}

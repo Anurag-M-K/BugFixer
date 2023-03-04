@@ -10,6 +10,7 @@ const UserQuestions = () => {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;
   }
 
+  console.log("questionDetails ",questionDetails)
   return (
     <>
       {questionDetails?.map((questionData) => {

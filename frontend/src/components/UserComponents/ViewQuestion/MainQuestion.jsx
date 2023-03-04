@@ -437,7 +437,10 @@ function MainQuestion() {
                       <path d="M2 25h32L18 9 2 25Z"></path>
                     </svg>
                   </span>
+                  <span className="answer-vote">
+
                   {_q?.vote?.length ? _q?.vote?.length : "0"}
+                  </span>
                   <span className="arrow" 
                   onClick={()=>handleAnswerDownVoting(_q._id)}>
                     <svg
