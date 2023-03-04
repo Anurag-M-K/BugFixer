@@ -1,16 +1,20 @@
 import React, { useEffect } from 'react'
-import {  useNavigate } from 'react-router-dom'
+import {  useNavigate ,useLocation} from 'react-router-dom'
 
 export default function PrivateRoute({children}) {
+  const location = useLocation()
   const navigate = useNavigate()
   useEffect(()=>{
     if(localStorage.getItem('userToken')){
-     
-      return navigate("/home") 
+     if(location.pathname === '/user/profile'){
+       return navigate("/user/profile")
+     }else if (location.pathname === '/user/home'){
 
+       return navigate("/user/home") 
+     }
   
     }else{
-    return navigate('/login-page')
+    return navigate('/user/login-page')
     }
     
   },[])

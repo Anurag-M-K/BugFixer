@@ -14,6 +14,7 @@ import { setCommunityPosts } from "../../../redux/features/communityPostsSlice";
 import { getAllCommunityPosts } from "../../../helper/adminCommunityHelper";
 import { getTags } from "../../../helper/adminTagHelper";
 import { setTags } from "../../../redux/features/tagSlice";
+import { getAllTags } from "../../../helper/homePageRightSideHelper";
 
 
 
@@ -22,8 +23,7 @@ export default function Analytics() {
   const [questions,setQuestions] = useState([]);
   const { posts } = useSelector((state) => state.communityPosts);
   const { allTags } = useSelector((state)=>state.tag)
-
-
+  const { adminToken } = useSelector((state) => state.admin)
   const dispatch = useDispatch()
   useEffect(() => {
     axios.defaults.baseURL = "http://localhost:8060";
@@ -63,10 +63,12 @@ export default function Analytics() {
 
   useEffect(()=>{
     (async()=>{
-      const tags = await getTags(adminToken)
+      const tags = await getAllTags(adminToken)
+      console.log("tags ",tags);
       dispatch(setTags(tags))
     })()
   },[])
+
   return (
 
     <Section>
@@ -101,7 +103,7 @@ export default function Analytics() {
       <div className="analytic ">
         <div className="content">
           <h5>Tags</h5>
-          <h2>{allTags[0].tags?.length}</h2>
+          {/* <h2>{allTags[0].tags?.length}</h2> */}
         </div>
         <div className="logo">
           <FiActivity />

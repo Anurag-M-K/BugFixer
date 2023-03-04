@@ -19,7 +19,7 @@ function Header() {
   const hndleLogout = ()=>{
     toast.success("Logout successfully")
     localStorage.clear()
-    navigate('/login-page')
+    navigate('/user/login-page')
     message.success("logout successfully")    
   }
   
@@ -34,7 +34,7 @@ function Header() {
           Authorization:tokenData,
         }
       }).then(()=>{
-      navigate('/profile')
+      navigate('/user/profile')
     })
     } catch (error) {
       toast.error('Network Error..!');
@@ -50,7 +50,7 @@ function Header() {
     <nav className="app navbar navbar-expand-lg navbar-light bg-light px-5">
 
 
-          <><span onClick={() => navigate('/home')} className="navbar-brand">
+          <><span onClick={() => navigate('/user/home')} className="navbar-brand">
       <img src='https://res.cloudinary.com/dmvxmurxw/image/upload/v1674187605/logo4_g8zbar.png' alt="" width="160px" />
     </span><button
 
@@ -67,24 +67,24 @@ function Header() {
         <ul className="navbar-nav mr-auto">
 
           <li className="nav-item mx-4 active">
-            <Link to={'/community'} className="nav-link">
+            <Link to={'/user/community'} className="nav-link">
               <span>Community</span>  <span className="sr-only">(current)</span>
             </Link>
 
           </li>
           <li className="nav-item mr-4">
-            <Link to="/messenger" className="nav-link">
+            <Link to="/user/messenger" className="nav-link">
               chat
             </Link>
           </li>
           <li className="nav-item mr-4">
-            <span onClick={() => navigate("/home")} className="nav-link">
+            <span onClick={() => navigate("/user/home")} className="nav-link">
               Questions
             </span>
           </li>
 
           <li className="nav-item">
-            <Link to="/team" className="nav-link">
+            <Link to="/user/team" className="nav-link">
             </Link>
           </li>
         </ul>
@@ -106,7 +106,7 @@ function Header() {
             </>
           ) : (
             <>
-              <Link to="/login-page" className="nav-link">
+              <Link to="/user/login-page" className="nav-link">
                 <button
                   className="btn btn-outline-primary my-sm-0 btn-sm px-3"
                   type="submit"
@@ -115,7 +115,7 @@ function Header() {
                   Log in
                 </button>
               </Link>
-              <Link to="/signup-page" className="nav-link">
+              <Link to="/user/signup-page" className="nav-link">
                 <button
                   className="btn btn-primary my-sm-0 btn-sm px-3"
                   type="submit"

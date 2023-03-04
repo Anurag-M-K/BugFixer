@@ -10,38 +10,32 @@ import Test from '../pages/user/Test'
 import UserEditProfilePage from "../pages/user/UserEditProfilePage";
 import Otp from "../components/UserComponents/Signup/Otp";
 import CommunityHomePage from "../pages/Community/CommunityHomePage";
-import { Route ,Routes,BrowserRouter as Router } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { Route ,Routes } from 'react-router-dom';
 import ViewQuestionPage from "../pages/user/ViewQuestionPage";
 import Messenger from "../components/Community/Messenger/Messenger";
 import SingleCommunityPage from "../pages/Community/SingleCommunityPage";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
-// import SearchBar from "../components/Community/Messenger/SearchBar";
 
 function UserRoute(){
-    const { loading } = useSelector((state) => state.alerts);
 
   return (
     <>
-        {/* {loading && <Spinner />} */}
     <Routes>
           <Route exact path="/home" element={ <Private> <Test /> </Private> }/>
           <Route exact path="/login-page" element={<Private> <Login /> </Private> } />
           <Route exact path="/signup-page" element={<Signup />}   />
           <Route exact path="/add-question" element={<Private><AddQuestionPage /></Private>} />
           <Route exact path="/question" element={<Private><ViewQuestion /></Private>} />
-          <Route exact path="/" element={<SuperHome/>}/>
-          <Route exact path="/home" element={<Test/>} />
+          <Route exact path="" element={<SuperHome/>}/>
           <Route exact path="/profile" element={<Private><UserProfilePage/></Private>} />
           <Route exact path="/edit-profile" element={<Private><UserEditProfilePage/></Private>} />
           <Route exact path='/otp-page' element={<Otp/>} />
           <Route exact path='/view-question' element={<Private><ViewQuestionPage/></Private>} />
           <Route exact path="/messenger" element={<Private><Messenger/></Private>}/>
-          {/* <Route exact path='/search' element={<SearchBar/>} /> */}
           <Route exact path="/page" element={<CommunityHomePage/>}/>
           <Route exact path="/community" element={<CommunityHomePage/>}/>
           <Route exact path="/single-community/:id" element={<SingleCommunityPage/>}/>
-          <Route path="*" element={<ErrorPage/>}/>
+          <Route path="/*" element={<ErrorPage />} />
           </Routes>
   </>
   )

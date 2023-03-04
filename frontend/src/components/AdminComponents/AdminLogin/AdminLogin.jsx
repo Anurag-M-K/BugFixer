@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import "./AdminLogin.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../../../redux/features/alertSlice";
-import {
-  setAdminDetails,
-} from "../../../redux/features/adminSlice";
+import { setAdminDetails } from "../../../redux/features/adminSlice";
 import { useNavigate } from "react-router-dom";
-import { setAdminToken  } from "../../../redux/features/adminTokenSlice";
+import { setAdminToken } from "../../../redux/features/adminTokenSlice";
 import toast, { Toaster } from "react-hot-toast";
+import DOMPurify from "dompurify";
+import "./AdminLogin.css";
 
 function AdminLogin() {
   const navigate = useNavigate();
@@ -19,30 +18,32 @@ function AdminLogin() {
     setData({ ...data, [input.name]: input.value });
   };
 
-  const { loading } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       dispatch(showLoading());
-      setTimeout(async () => {
-        const url = "http://localhost:8060/admin/admin-login";
 
-        dispatch(hideLoading());
+      const url = "http://localhost:8060/admin/admin-login";
 
-        const { data: res } = await axios.post(url, data)
-          localStorage.setItem("AdminToken", res.data);
-          try {
-            dispatch(setAdminToken(res.data));
-            dispatch(setAdminDetails(data));
-            navigate("/admin-dashboard");
-          } catch (error) {
-            toast.error("Check your username and password")
-          }
-        }, 800);
+      dispatch(hideLoading());
+
+      const sanitizedData = {
+        username: DOMPurify.sanitize(data.username),
+        password: DOMPurify.sanitize(data.password),
+      };
+      const { data: res } = await axios.post(url, sanitizedData);
+      localStorage.setItem("AdminToken", res.data);
+      dispatch(setAdminToken(res.data));
+      try {
+        dispatch(setAdminDetails(data));
+        navigate("/admin/admin-dashboard");
+      } catch (error) {
+        toast.error("Check your username and password");
+      }
     } catch (error) {
+      console.log("error in adin lihin jnfuhd ", error);
       dispatch(hideLoading());
       if (
         error.response &&
@@ -86,19 +87,19 @@ function AdminLogin() {
                 <p className="error-show">{error}</p>
               </div>
             )}
-            
-           
-              <button className="btn " style={{ backgroundColor: "#243b55", }}>Submit</button>
 
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-         
+            <button className="btn " style={{ backgroundColor: "#243b55" }}>
+              Submit
+            </button>
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
           </form>
         </div>
       </div>
-      <Toaster/>
+      <Toaster />
     </div>
   );
 }

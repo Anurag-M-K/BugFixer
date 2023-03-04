@@ -8,6 +8,7 @@ export const adminSlice = createSlice({
     },
     reducers:{
         setAdminDetails : (state,response)=>{
+            console.log("from admin slice ",response.payload)
             state.adminDetails = response.payload
         }
     }

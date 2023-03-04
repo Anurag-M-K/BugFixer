@@ -8,7 +8,8 @@ export const tagSlice  = createSlice({
     },
     reducers:{
         setTags:(state,action)=>{
-            state.allTags = action.payload
+            console.log("from slice tag ",action.payload)
+             state.allTags = action.payload
 
         }
     }

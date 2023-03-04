@@ -39,7 +39,7 @@ const RelatedQuestion = () => {
                   className="mr-2"
                 />
               </div>
-              <Link className="mt-2" to={`/question?id=${title?._id}`}>{title?.title ? title?.title : "" }</Link>
+              <Link className="mt-2" to={`/user/question?id=${title?._id}`}>{title?.title ? title?.title : "" }</Link>
             </div>
           ) })} 
       </div>

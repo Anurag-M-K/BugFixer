@@ -52,7 +52,7 @@ export default function Sidebar() {
 const handleLogout =(e)=>{
   // e.preventDefault();
   localStorage.removeItem("AdminToken")
-  navigate('/admin-login')
+  navigate('/admin/admin-login')
   message.success("Logout successfully")
 }
 
@@ -83,7 +83,7 @@ const handleLogout =(e)=>{
                 onClick={() => setCurrentLink(1)}
               >
                 <a onClick={()=>{
-                    navigate('/admin-Dashboard')
+                    navigate('/admin/admin-Dashboard')
                   }} >
                   <div ><MdSpaceDashboard style={{width:"25px"}} /></div>
                   <span className="buttonsDashboard"  > Dashboard</span>
@@ -94,7 +94,7 @@ const handleLogout =(e)=>{
                 onClick={() => setCurrentLink(2)}
               >
                 <a onClick={()=>{
-                    navigate('/user-manage')
+                    navigate('/admin/user-manage')
                   }}>
 <div><HiUsers style={{width:"25px"}} /></div>
                   <span className="buttonsDashboard"   > Users</span>
@@ -105,7 +105,7 @@ const handleLogout =(e)=>{
                 onClick={() => setCurrentLink(3)}
               >
                 <a onClick={()=>{
-                  navigate('/reported-question-manage')
+                  navigate('/admin/reported-question-manage')
                 }}>
                  <div> <FaAddressCard style={{width:"25px"}} /></div>
                   <span className="buttonsDashboard" > Reported Questions</span>
@@ -116,7 +116,7 @@ const handleLogout =(e)=>{
                 onClick={() => setCurrentLink(4)}
               >
                 <a onClick={()=>{
-                  navigate("/admin-community")
+                  navigate("/admin/admin-community")
                 }}>
                  <div> <GiTwirlCenter style={{width:"25px"}} /></div>
                   <span className="buttonsDashboard" > Community</span>
@@ -127,7 +127,7 @@ const handleLogout =(e)=>{
                 onClick={() => setCurrentLink(5)}
               >
                 <a onClick={()=>{
-                  navigate("/question-manage")
+                  navigate("/admin/question-manage")
                 }}>
                  <div> <BsFillChatTextFill style={{width:"25px"}} /></div>
                   <span className="buttonsDashboard" > Questions</span>
@@ -138,7 +138,7 @@ const handleLogout =(e)=>{
                 onClick={() => setCurrentLink(5)}
               >
                 <a onClick={()=>{
-                  navigate("/tag-manage")
+                  navigate("/admin/tag-manage")
                 }}>
                   <div><AiOutlineTag style={{width:"25px"}} /></div>
                   <span className="buttonsDashboard" > Tags</span>
@@ -161,7 +161,7 @@ const handleLogout =(e)=>{
               onClick={() => setCurrentLink(1)}
             >
               <a onClick={()=>{
-                    navigate('/admin-Dashboard')
+                    navigate('/admin/admin-Dashboard')
                   }}>
               <div ><MdSpaceDashboard style={{width:"20px"}} /></div>
                 <span> Dashboard</span>
@@ -172,7 +172,7 @@ const handleLogout =(e)=>{
               onClick={() => setCurrentLink(2)}
             >
               <a onClick={()=>{
-                    navigate('/user-manage')
+                    navigate('/admin/user-manage')
                   }}>
                  <div><HiUsers style={{width:"20px"}} /></div>
                   <span className="buttonsDashboard"   > Users</span>
@@ -183,7 +183,7 @@ const handleLogout =(e)=>{
               onClick={() => setCurrentLink(3)}
             >
                <a onClick={()=>{
-                  navigate('/reported-question-manage')
+                  navigate('/admin/reported-question-manage')
                 }}>
                  <div> <FaAddressCard style={{width:"20px"}} /></div>
                   <span className="buttonsDashboard" > Questions</span>
@@ -194,7 +194,7 @@ const handleLogout =(e)=>{
               onClick={() => setCurrentLink(4)}
             >
               <a onClick={()=>{
-                  navigate("/admin-community")
+                  navigate("/admin/admin-community")
                 }}>
                 <div><GiTwirlCenter style={{width:"20px"}} /></div>
                 <span> Community</span>
@@ -205,7 +205,7 @@ const handleLogout =(e)=>{
               onClick={() => setCurrentLink(5)}
             >
               <a onClick={()=>{
-                  navigate("/tag-manage")
+                  navigate("/admin/tag-manage")
                 }}>
               <div><AiOutlineTag style={{width:"25px"}} /></div>
                   <span className="buttonsDashboard" > Tags</span>
@@ -216,7 +216,7 @@ const handleLogout =(e)=>{
               onClick={() => setCurrentLink(6)}
             >
               <a nClick={()=>{
-                  navigate('/reported-question-manage')
+                  navigate('/admin/reported-question-manage')
                 }}>
               <div> <FaAddressCard style={{width:"25px"}} /></div>
                   <span className="buttonsDashboard" > Reported Questions</span>

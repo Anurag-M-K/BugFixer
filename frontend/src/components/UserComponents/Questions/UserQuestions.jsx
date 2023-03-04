@@ -28,7 +28,7 @@ const UserQuestions = () => {
               <small>12 views</small>
             </div>
             <div className="right">
-              <Link to={`/question?id=${questionData?._id}`}>
+              <Link to={`/user/question?id=${questionData?._id}`}>
                 <h5 className="que font-weight-normal">
                   {questionData?.title}
                 </h5>

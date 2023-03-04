@@ -36,7 +36,7 @@ const RightSidebar = () => {
           className="card-body border-bottom"
           style={{ backgroundColor: "rgb(251, 243, 213)" }}
         >
-          {meta.map((content) => {
+          {/* {meta.map((content) => {
             return (
               <div className="d-flex">
                 <i
@@ -46,7 +46,7 @@ const RightSidebar = () => {
                 <p>{content}</p>
               </div>
             );
-          })}
+          })} */}
         </div>
       </div>
       {/* Blog card ends */}

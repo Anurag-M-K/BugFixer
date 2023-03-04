@@ -51,7 +51,7 @@ dispatch(filterQuestionDetails([val]))
         <div className="row" style={{ margin: "0 8%" }}>
           <div
             className="questions--LeftSidebar col-md-2 border col-sm-12 col-lg-2"
-            style={{ fontSize: "14px",fontSize: "14px",
+            style={{ fontSize: "14px",
             height: "627px",
             paddingTop: "13px" }}
           >
@@ -68,7 +68,7 @@ dispatch(filterQuestionDetails([val]))
                 </h2>
                 <input className="searchInput" type="text" placeholder="search..." onChange={event => {setSearchTerm(event.target.value)}} />
                 
-                <Link to='/add-question'><button
+                <Link to='/user/add-question'><button
                   className="btn btn-primary btn-small"
                   style={{ fontSize: "14px" }}
                 >

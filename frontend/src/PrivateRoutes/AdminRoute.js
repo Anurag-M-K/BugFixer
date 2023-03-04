@@ -5,9 +5,9 @@ export default function AdminPrivateRoute({children}) {
     const navigate = useNavigate();
 useEffect(()=>{
     if(localStorage.getItem('AdminToken')){
-        return navigate('/admin-dashboard')
+        return navigate('/admin/admin-dashboard')
     }else{
-        return navigate('/admin-login')
+        return navigate('/admin/admin-login')
     }
 },[])
  return children

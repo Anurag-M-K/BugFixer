@@ -7,6 +7,8 @@ import { setToken, setUserDetails } from "../../../redux/features/userSlice";
 import gLogo from '../Images/g.png'
 import {  hideLoading, showLoading } from "../../../redux/features/alertSlice";
 import toast , {Toaster} from "react-hot-toast";
+import DOMPurify from 'dompurify';
+
 
 
 
@@ -27,19 +29,22 @@ function Login() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const url = "/api/userLogin";
+    const sanitizedData = {
+      email: DOMPurify.sanitize(data.email),
+      password: DOMPurify.sanitize(data.password),
+    }
+
 		try {
-      // dispatch(showLoading())
-			const url = "/api/userLogin";
-      // dispatch(hideLoading())  
-			const { data: res } = await axios.post(url, data);
+			const { data: res } = await axios.post(url, sanitizedData);
 			localStorage.setItem("userToken", res.data);
       
       toast.success("login successfull")
       try {
         dispatch(setUserDetails(res.user))
         dispatch(setToken(res.data))
-        navigate("/home");
-
+        navigate("/user/home");
+        
         
       } catch (error) {
         console.log(error.message);

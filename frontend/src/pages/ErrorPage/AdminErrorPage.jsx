@@ -23,7 +23,7 @@ function ErrorPage() {
 		
 		<p>the page you are looking for not avaible!</p>
 		
-		<Link to="/user/home" className="link_404">Go to Home</Link>
+		<Link to="/admin/admin-login" className="link_404">Go to Home</Link>
 	</div>
 		</div>
 		</div>
