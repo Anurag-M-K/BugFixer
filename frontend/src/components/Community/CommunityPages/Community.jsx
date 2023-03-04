@@ -24,7 +24,7 @@ useEffect(()=>{
 
     dispatch(setCommunityPosts(posts));
   })
-},[])
+},[posts])
 
 
   const handleJoinCommunity = async (post)=>{

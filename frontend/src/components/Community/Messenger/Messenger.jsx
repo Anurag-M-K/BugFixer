@@ -61,7 +61,7 @@ function Messenger() {
         const res = await getConversation(userDetails?._id, tokenData);
         console.log("res",res)
         //updated
-        dispatchEvent(setClickedUserDetails(res))
+        // dispatchEvent(setClickedUserDetails(res))
         //updated
         setConversations(res);
       })();

@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import ViewQuestionPage from "../pages/user/ViewQuestionPage";
 import Messenger from "../components/Community/Messenger/Messenger";
 import SingleCommunityPage from "../pages/Community/SingleCommunityPage";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 // import SearchBar from "../components/Community/Messenger/SearchBar";
 
 function UserRoute(){
@@ -40,6 +41,7 @@ function UserRoute(){
           <Route exact path="/page" element={<CommunityHomePage/>}/>
           <Route exact path="/community" element={<CommunityHomePage/>}/>
           <Route exact path="/single-community/:id" element={<SingleCommunityPage/>}/>
+          <Route path="*" element={<ErrorPage/>}/>
           </Routes>
   </>
   )

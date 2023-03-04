@@ -80,7 +80,7 @@ dispatch(filterQuestionDetails([val]))
             <div className="d-flex justify-content-between">
               <p style={{ fontSize: "16px" }}>{ questions?.length} questions</p>
              
-              <button
+              {/* <button
                 className="btn border"
                 style={{
                   color: "rgb(122, 167, 199)",
@@ -88,7 +88,7 @@ dispatch(filterQuestionDetails([val]))
                 }}
               >
                 <i className="fas fa-sort-amount-up-alt"></i> Filter
-              </button>
+              </button> */}
             </div>
             <hr />
             {/* Users Questionsadded */}

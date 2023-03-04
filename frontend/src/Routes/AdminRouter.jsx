@@ -27,6 +27,7 @@ function AdminRouter() {
           <Route exact path="/admin-community" element={<AdminPrivateRoute><AdminCommunityPage/></AdminPrivateRoute>} />
           <Route exact path="/question-manage" element={<AdminPrivateRoute><QuestionManagePage/></AdminPrivateRoute>} />
           <Route exact path="/tag-manage" element={<AdminPrivateRoute><TagsAddPage/></AdminPrivateRoute>} />
+          
           {/* </Route> */}
       </Routes>
     </>

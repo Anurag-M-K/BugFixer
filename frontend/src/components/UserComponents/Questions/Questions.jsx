@@ -51,7 +51,9 @@ dispatch(filterQuestionDetails([val]))
         <div className="row" style={{ margin: "0 8%" }}>
           <div
             className="questions--LeftSidebar col-md-2 border col-sm-12 col-lg-2"
-            style={{ fontSize: "14px", overflowY: "scroll",backgroundColor:"" }}
+            style={{ fontSize: "14px",fontSize: "14px",
+            height: "627px",
+            paddingTop: "13px" }}
           >
             <LeftSidebar />
           </div>

@@ -331,8 +331,8 @@ export default function UserProfile() {
                       </MDBCardBody>
                     );
                     })}
-                <h4 className="ms-3">Answers</h4>
                 {singleQuestiondata?.data?.map((answers)=>{
+                <h4 className="ms-3">Answers</h4>
                 
                   return (
 
