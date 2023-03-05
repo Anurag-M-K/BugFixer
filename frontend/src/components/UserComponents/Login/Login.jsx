@@ -10,11 +10,6 @@ import toast , {Toaster} from "react-hot-toast";
 import DOMPurify from 'dompurify';
 
 
-
-
-
-
-
 function Login() {
   const navigate = useNavigate()
   const [data, setData] = useState({   email: "", password: "" });

@@ -1,6 +1,5 @@
 import React from "react";
 import "./Footer.scss";
-// import logo from "../Images/download.png";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -14,7 +13,6 @@ const Footer = () => {
                 <img  alt="" />
               </div>
 
-              {/* STACK OVERFLOW stacks started */}
               {footerContent.map((content) => {
                 return (
                   <>

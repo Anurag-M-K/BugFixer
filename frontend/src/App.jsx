@@ -6,8 +6,8 @@ import ErrorPage from './pages/ErrorPage/ErrorPage'
 function App() {
   return (
     <Routes>
-      <Route exact path="/admin*" element={<AdminRouter />} />
-      <Route exact path="/user*" element={<UserRoute />} />
+      <Route exact path="/admin/*" element={<AdminRouter />} />
+      <Route exact path="/*" element={<UserRoute />} />
       <Route path="/*" element={<ErrorPage />} />
     </Routes>
   );

@@ -1,16 +1,14 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserUpdatedDetails } from "../../../redux/features/userUpdatedSlice";
 import toast, { Toaster } from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { setUserDetails } from "../../../redux/features/userSlice";
 import { updateUserProfile ,getUserDetails } from '../../../helper/UserProfileHelper'
-import {useFormik} from 'formik'
+import {useFormik} from 'formik';
 
 function ProfileUpdate({ userDetails }) {
   const [show, setShow] = useState(false);
@@ -19,12 +17,7 @@ function ProfileUpdate({ userDetails }) {
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
   const { tokenData } = useSelector((state)=>state.user)
-
-
- 
- 
   const id = userDetails._id;
-
   
   const onSubmit = async (values) => {
     try {
@@ -34,7 +27,7 @@ function ProfileUpdate({ userDetails }) {
       toast.success("Profile updated");
           dispatch(setUserDetails(datas.response));
           setUsetData(datas);
-          navigate("/home")
+          navigate("/user/home")
     } catch (error) {
       console.log("error from catch error ", error);
     }
@@ -49,10 +42,6 @@ function ProfileUpdate({ userDetails }) {
     },
     onSubmit
   });
-
-
-
-
 
   return (
     <>

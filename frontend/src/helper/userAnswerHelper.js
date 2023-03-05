@@ -53,3 +53,19 @@ export const deleteAnswer = async(tokenData, aId)=>{
     
     }
 }
+
+export const acceptAnswer = async( aId,tokenData)=>{
+    try {
+        const acceptAnswer = await instance({
+            url:"/api/accept-answer",
+            method:"POST",
+            data:{aId:aId},
+            headers:{
+                Authorization:tokenData
+            }
+        })
+        return acceptAnswer.data
+    } catch (error) {
+        console.log(error)
+    }
+}

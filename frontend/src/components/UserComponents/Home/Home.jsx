@@ -1,12 +1,11 @@
 import React from "react";
-import "./HomePage.scss";
 import secure from "../Images/secure.png";
 import search from "../Images/search.png"
 import LineImg from "../Images/line.png";
 import blue from "../Images/blue.png";
 import yellow from "../Images/yellow.png";
-
 import { Link, useNavigate } from "react-router-dom";
+import "./HomePage.scss";
 
 const HomePage = () => {
   const navigate = useNavigate()
@@ -42,7 +41,7 @@ const HomePage = () => {
                   Find the best answer to your technical question, help others
                   answer theirs
                 </p>
-                <button  onClick={()=>navigate('/community')}
+                <button  onClick={()=>navigate('/user/community')}
                   type="button"
                   className="homePage--innerDiv--box--find--btn btn"
                 >

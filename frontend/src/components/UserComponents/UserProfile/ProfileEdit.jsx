@@ -6,29 +6,20 @@ import "./ProfileEdit.css";
 function ProfileEdit() {
   const { userDetails } = useSelector((state) => state.user);
 
-
-
-const [userData, setUserData] = useState({
-  firstName:"",
-  phone:"",
-  email:"",
-  password:""
-})
-
-
-
-
+  const [userData, setUserData] = useState({
+    firstName: "",
+    phone: "",
+    email: "",
+    password: "",
+  });
 
   const [previewSource, setPreviewSource] = useState();
   const [fileInputState, setFileInpuyState] = useState("");
   const [selectedFle, setSelectedFile] = useState("");
 
-
-
-
   const handleFileInput = (e) => {
     const file = e.target.files[0];
-    
+
     previewFile(file);
   };
 
@@ -40,16 +31,12 @@ const [userData, setUserData] = useState({
     };
   };
 
-  const handleChange = event=>{
-setUserData({
- ...setUserData,
-  [event.target.name]:event.target.value
-});
-  }
-
-
-
-
+  const handleChange = (event) => {
+    setUserData({
+      ...setUserData,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -57,16 +44,12 @@ setUserData({
     uploadImage(previewSource);
   };
 
-
-
-
-
-  const userId = userDetails._id
+  const userId = userDetails._id;
   const uploadImage = async (base64EncodedImage) => {
     try {
       await fetch(`http://localhost:80/api/profile/${userId}`, {
         method: "POST",
-        body: JSON.stringify({ data: base64EncodedImage, userData,userId}),
+        body: JSON.stringify({ data: base64EncodedImage, userData, userId }),
         headers: { "Content-type": "application/json" },
       }).then((responseData) => {
         console.log(JSON.stringify(responseData, null, 4));

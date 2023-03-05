@@ -23,7 +23,8 @@ const {
   voteAnswer,
   getParticularAnswer,
   getQuestionAnswers,
-  deleteAnswer
+  deleteAnswer,
+  acceptingAnswer
 } = require("../controllers/userController/answerController");
 const {
   commentAdd,
@@ -91,5 +92,6 @@ router.post("/vote-answer",verifyJWT, voteAnswer)
 router.post("/downvote-answer",verifyJWT, downVoteAnswer)
 router.get("/get-question-answers/:id",verifyJWT,getQuestionAnswers)
 router.delete("/delete-answer",verifyJWT , deleteAnswer)
+router.post("/accept-answer",verifyJWT, acceptingAnswer)
 
 module.exports = router;

@@ -19,13 +19,14 @@ import { setSingleQuestionDetails } from "../../../redux/features/singleQuestion
 import { useLocation } from "react-router-dom";
 import ReportReason from "./ReportReason";
 import { setCommentDetails } from "../../../redux/features/commentSlice";
+import { FiCheck } from 'react-icons/fi'
 import {
   getAnswers,
   questionDecVoting,
   questionVoting,
 } from "../../../helper/userQuestionHelper";
 import { setParticularAnswerDetails } from "../../../redux/features/particularAnswersSlice";
-import { answerDownVoting, answerVoting, deleteAnswer, } from "../../../helper/userAnswerHelper";
+import { answerDownVoting, answerVoting, deleteAnswer, acceptAnswer } from "../../../helper/userAnswerHelper";
 import { BiTrashAlt } from 'react-icons/bi';
 import "./index.css";
 
@@ -257,7 +258,34 @@ function MainQuestion() {
       }
       
 
+      ///answer accepting 
+      const acceptingAnswer =async (aid)=>{
+        console.log("toke data ",tokenData)
+        try {
+          swal({
+            title:"Are you sure?",
+            text:"Are you sure this answer is accepted?",
+            icon:"Warning",
+            buttons:true,
+            dangerMode:true,
+          })
+          .then((accept)=>{
+            if(accept){
+              acceptAnswer(aid,tokenData).then((res)=>{
+                axios.get("/api/get-answer/" + id).then((getAnswer) => {
+                  dispatch(setParticularAnswerDetails(getAnswer.data));
+                })
+              })
+          }
+          })
+          
+        } catch (error) {
+          console.log(error)
+        }
+      }
 
+
+      console.log("particularanswer ",particularAnswersDetails)
   return (
     <div className="main col-xl-12">
       <div className="main-container">
@@ -452,6 +480,12 @@ function MainQuestion() {
                     >
                       <path d="M2 11h32L18 27 2 11Z"></path>
                     </svg>
+                  <div>
+                 
+                  <FiCheck className="tickmark" style={{ color: _q[0]?.accepted === true ? "grey" : "green" }} onClick={() => acceptingAnswer(_q._id)} />
+  
+
+                  </div>
                   </span>
                  {_q.user._id === userDetails._id && <BiTrashAlt onClick={()=>answerDelete(_q._id)} style={{ marginBottom:"10px",height:"15px",cursor:"pointer"}}/>}
              

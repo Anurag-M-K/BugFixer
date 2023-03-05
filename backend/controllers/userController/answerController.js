@@ -114,6 +114,32 @@ const deleteAnswer = async (req, res) => {
 };
 
 
+
+
+
+const acceptingAnswer = async (req, res) => {
+  try {
+    const objectId = res.locals._id;
+    const userId = objectId.toString();
+    const id = req.body.aId
+
+    const answer = await AnswerDB.findById(id)
+    if(answer.accepted === false){
+      answer.accepted = true;
+      await answer.acceptedBy.addToSet(userId);
+      await answer.save();
+      res.status(200).json(answer)
+    } else {
+      await answer.acceptedBy.addToSet(userId);
+      await answer.save();
+      return res.status(200)
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(500).json()
+  }
+}
+
 module.exports = {
   answerAdd,
   getAnswerByQId,
@@ -121,5 +147,6 @@ module.exports = {
   downVoteAnswer,
   getParticularAnswer,
   getQuestionAnswers,
-  deleteAnswer
+  deleteAnswer,
+  acceptingAnswer
 };

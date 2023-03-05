@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; //quills css important
 import { useNavigate } from "react-router-dom";
@@ -6,25 +6,22 @@ import "./Question.css";
 import { TagsInput } from "react-tag-input-component";
 import { useSelector } from "react-redux";
 import Editor from "react-quill/lib/toolbar";
-import  { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { addQuestion } from "../../../helper/userQuestionHelper";
-// import 'react-toastify/dist/ReactToastify.css';
 
 function Question() {
-
   const [loading, setLoading] = useState(false);
-  const {userDetails} = useSelector(state=>state.user);
+  const { userDetails } = useSelector((state) => state.user);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [tag, setTag] = useState([]);
   const navigate = useNavigate();
-  const { tokenData } = useSelector((state)=>state.user)
+  const { tokenData } = useSelector((state) => state.user);
 
-  const notify = () =>  toast.success("Question added successfully!",{
-    position:"top-right"
-  });
-  
-
+  const notify = () =>
+    toast.success("Question added successfully!", {
+      position: "top-right",
+    });
 
   var toolbarOptions = [
     ["bold", "italic", "underline", "strike"], // toggled buttons
@@ -53,7 +50,7 @@ function Question() {
       matchVisual: false,
     },
   };
- 
+
   const handleQuill = (value) => {
     setBody(value);
   };
@@ -62,8 +59,8 @@ function Question() {
     e.preventDefault();
     setLoading(true);
     if (title == "" || body == "") {
-      toast.error("question cant be null")
-    }else{
+      toast.error("question cant be null");
+    } else {
       const bodyJSON = {
         title: title,
         body: body,
@@ -71,13 +68,11 @@ function Question() {
         user: userDetails,
       };
 
-        
-     await addQuestion(tokenData,bodyJSON)
-    notify("question added successfully");
-    navigate("/home");
-  }
-};
-
+      await addQuestion(tokenData, bodyJSON);
+      notify("question added successfully");
+      navigate("/user/home");
+    }
+  };
 
   try {
     return (
@@ -116,7 +111,7 @@ function Question() {
                     onChange={handleQuill}
                     className="react-quill"
                     theme="snow"
-                    type='text'
+                    type="text"
                   />
                 </div>
               </div>
@@ -127,17 +122,22 @@ function Question() {
                     Add upto 5 tags to describe what your question is about
                   </small>
                   <TagsInput
-                  value={tag}
-                  onChange={setTag}
-                  name="fruits"
-                  placeHolder="enter add new tag" />
-                    {/* <ToastContainer/> */}
+                    value={tag}
+                    onChange={setTag}
+                    name="fruits"
+                    placeHolder="enter add new tag"
+                  />
                 </div>
               </div>
             </div>
           </div>
-          <button type="submit" onClick={handleSubmit} className="button btn btn-primary">
-Add question          </button>
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className="button btn btn-primary"
+          >
+            Add question{" "}
+          </button>
         </div>
       </div>
     );

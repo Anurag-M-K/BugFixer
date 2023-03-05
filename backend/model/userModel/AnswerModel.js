@@ -22,6 +22,15 @@ const answerSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"Comments",
     },
+    accepted:{
+        type:Boolean,
+        default:false,
+    },
+    acceptedBy:[{
+        type:String,
+        unique:true,
+    }],
+
      
 })
 

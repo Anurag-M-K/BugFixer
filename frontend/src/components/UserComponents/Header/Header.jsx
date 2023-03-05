@@ -8,24 +8,18 @@ import { useState } from "react";
 import toast,{Toaster} from 'react-hot-toast'
 
 function Header() {
-
-
   const {userDetails} = useSelector(state=> state.user)
-
   const [username, setUsername] = useState('');
   const {tokenData} = useSelector(state=> state.user)
   const navigate = useNavigate()
-  
   const hndleLogout = ()=>{
     toast.success("Logout successfully")
     localStorage.clear()
     navigate('/user/login-page')
     message.success("logout successfully")    
   }
-  
   const showProfile =async ()=>{
     try {
-      
       const id = userDetails._id
       await axios({
         url:'/api/getUserProfile',
@@ -42,9 +36,6 @@ function Header() {
       
     }
   }
-
-  
- 
 
   return (
     <nav className="app navbar navbar-expand-lg navbar-light bg-light px-5">
@@ -120,18 +111,11 @@ function Header() {
                   className="btn btn-primary my-sm-0 btn-sm px-3"
                   type="submit"
                 >
-
                   Sign Up
                 </button>
               </Link>
             </>
-
           )}
-
-
-
-          {/* <ToastContainer/> */}
-
         </form>
         <Toaster />
       </div></>

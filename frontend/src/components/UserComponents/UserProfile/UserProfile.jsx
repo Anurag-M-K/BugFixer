@@ -287,11 +287,6 @@ export default function UserProfile() {
               <MDBCol md="6 col-md-12">
                 <MDBCard className="mb-4 mb-md-0">
                 {userProfileQuestionsDetails?.map((question) => {
-                  // <MDBCardText  className="mb-4">
-                  //   <span className="text-primary  font-italic me-1">
-                  //     Questions
-                  //   </span>{" "}
-                  // </MDBCardText>;
                   return (
                       <MDBCardBody key={question._id}>
                         <>

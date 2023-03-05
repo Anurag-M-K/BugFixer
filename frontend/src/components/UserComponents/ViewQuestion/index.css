@@ -99,11 +99,6 @@
    
   }
   
-  /* .ql-syntax {
-    display: flex;
-    width: 90%;
-    overflow: hidden;
-  } */
   pre {
     display: flex;
     width: 600px;
@@ -169,4 +164,8 @@
   }
   .answer-vote{
     padding-left: 9px;
+  }
+  .tickmark{
+    cursor: pointer;
+    
   }

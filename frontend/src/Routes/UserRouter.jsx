@@ -21,20 +21,20 @@ function UserRoute(){
   return (
     <>
     <Routes>
-          <Route exact path="/home" element={ <Private> <Test /> </Private> }/>
-          <Route exact path="/login-page" element={<Private> <Login /> </Private> } />
-          <Route exact path="/signup-page" element={<Signup />}   />
-          <Route exact path="/add-question" element={<Private><AddQuestionPage /></Private>} />
-          <Route exact path="/question" element={<Private><ViewQuestion /></Private>} />
-          <Route exact path="" element={<SuperHome/>}/>
-          <Route exact path="/profile" element={<Private><UserProfilePage/></Private>} />
-          <Route exact path="/edit-profile" element={<Private><UserEditProfilePage/></Private>} />
-          <Route exact path='/otp-page' element={<Otp/>} />
-          <Route exact path='/view-question' element={<Private><ViewQuestionPage/></Private>} />
-          <Route exact path="/messenger" element={<Private><Messenger/></Private>}/>
-          <Route exact path="/page" element={<CommunityHomePage/>}/>
-          <Route exact path="/community" element={<CommunityHomePage/>}/>
-          <Route exact path="/single-community/:id" element={<SingleCommunityPage/>}/>
+          <Route exact path="/user/home" element={ <Private> <Test /> </Private> }/>
+          <Route exact path="/user/login-page" element={<Private> <Login /> </Private> } />
+          <Route exact path="/user/signup-page" element={<Signup />}   />
+          <Route exact path="/user/add-question" element={<Private><AddQuestionPage /></Private>} />
+          <Route exact path="/user/question" element={<Private><ViewQuestion /></Private>} />
+          <Route exact path="/" element={<SuperHome/>}/>
+          <Route exact path="/user/profile" element={<Private><UserProfilePage/></Private>} />
+          <Route exact path="/user/edit-profile" element={<Private><UserEditProfilePage/></Private>} />
+          <Route exact path='/user/otp-page' element={<Otp/>} />
+          <Route exact path='/userview-question' element={<Private><ViewQuestionPage/></Private>} />
+          <Route exact path="/user/messenger" element={<Private><Messenger/></Private>}/>
+          <Route exact path="/user/page" element={<CommunityHomePage/>}/>
+          <Route exact path="/user/community" element={<CommunityHomePage/>}/>
+          <Route exact path="/user/single-community/:id" element={<SingleCommunityPage/>}/>
           <Route path="/*" element={<ErrorPage />} />
           </Routes>
   </>
