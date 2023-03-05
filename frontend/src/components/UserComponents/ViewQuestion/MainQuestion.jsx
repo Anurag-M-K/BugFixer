@@ -117,9 +117,6 @@ function MainQuestion() {
           "Content-type": "application/json",
         },
       };
-
-
-
       await axios
         .post("/api/answer", body, config)  
         .then(async (res) => {
@@ -200,7 +197,6 @@ function MainQuestion() {
 
 
   ///answer voting and downVoting 
-
     async function handleAnswerVoting(aId)  {
       try {
         const votRes = await  answerVoting(aId,tokenData);
@@ -480,13 +476,13 @@ function MainQuestion() {
                     >
                       <path d="M2 11h32L18 27 2 11Z"></path>
                     </svg>
+                  </span>
                   <div>
                  
-                  <FiCheck className="tickmark" style={{ color: _q[0]?.accepted === true ? "grey" : "green" }} onClick={() => acceptingAnswer(_q._id)} />
+                  <FiCheck className="tickmark" style={{ color: _q[0]?.accepted === true ? "grey" : "green" , marginBottom:"10px",height:"15px",cursor:"pointer"}} onClick={() => acceptingAnswer(_q._id)} />
   
 
                   </div>
-                  </span>
                  {_q.user._id === userDetails._id && <BiTrashAlt onClick={()=>answerDelete(_q._id)} style={{ marginBottom:"10px",height:"15px",cursor:"pointer"}}/>}
              
                 </div>

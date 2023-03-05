@@ -1,5 +1,7 @@
 const { response } = require("express");
 const AnswerDB = require("../../model/userModel/AnswerModel");
+const {User } = require("../../model/userModel/userModel")
+const questoinDB = require("../../model/userModel/Question")
 
 const answerAdd = async (req, res) => {
   const answerData = new AnswerDB({
@@ -8,14 +10,23 @@ const answerAdd = async (req, res) => {
     user: req.body.user,
   });
 
-  await answerData
-    .save()
-    .then((doc) => {
-      res.status(201).send({
-        status: true,
-        data: doc,
-      });
+  //updating users reputation y adding 10 points for answering
+  const user = await User.findByIdAndUpdate(answerData.user._id,
+    {
+      $inc:{reputation: 10}
+    },
+    {
+      new: true,
     })
+
+    await answerData
+      .save()
+      .then((doc) => {
+        res.status(201).send({
+          status: true,
+          data: doc,
+        });
+      })
     .catch((err) => {
       res.status(201).send({
         status: true,
@@ -48,11 +59,18 @@ const voteAnswer = async (req, res) => {
   const userId = objectId.toString();
   try {
     const answer = await AnswerDB.findById(aId);
+    console.log("answer found ",answer)
     if(answer.vote.filter((like)=> like === userId).length > 0){
       return res.status(400).json({ error: "Already voted" });
     }
     answer.vote.unshift(userId);
     await answer.save();
+
+    //increase users reputation by 1 points on every upvote of the answer
+    const user = await User.findByIdAndUpdate(answer.user._id)
+    user.reputation +=1;
+    await user.save();
+
     res.status(200).json(answer.vote);
     
   } catch (error) {
@@ -116,7 +134,7 @@ const deleteAnswer = async (req, res) => {
 
 
 
-
+//acceoting answer by question owner 
 const acceptingAnswer = async (req, res) => {
   try {
     const objectId = res.locals._id;
@@ -124,15 +142,20 @@ const acceptingAnswer = async (req, res) => {
     const id = req.body.aId
 
     const answer = await AnswerDB.findById(id)
-    if(answer.accepted === false){
-      answer.accepted = true;
-      await answer.acceptedBy.addToSet(userId);
-      await answer.save();
-      res.status(200).json(answer)
-    } else {
-      await answer.acceptedBy.addToSet(userId);
-      await answer.save();
-      return res.status(200)
+    const question =await questoinDB.findById(answer.question_id)
+    if(question.user._id === userId ){
+      if(answer.accepted === false){
+        answer.accepted = true;
+        
+        //updating answered users reputation by 15 points
+       const user = await User.findById(answer.user._id)
+       user.reputation += 15;
+       await user.save();
+        await answer.save();
+        res.status(200).json(answer)
+      } 
+    }else{
+      res.status(400).json({message:"You are not allowed to accept this answer"})
     }
   } catch (error) {
     console.log(error)

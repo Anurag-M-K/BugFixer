@@ -26,10 +26,7 @@ const answerSchema = new mongoose.Schema({
         type:Boolean,
         default:false,
     },
-    acceptedBy:[{
-        type:String,
-        unique:true,
-    }],
+   
 
      
 })

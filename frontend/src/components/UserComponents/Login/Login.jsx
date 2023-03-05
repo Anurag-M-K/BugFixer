@@ -152,7 +152,7 @@ function Login() {
                     <img src={gLogo} alt="" width="20px" className="mr-1" />
                     Google
                   </button></div>
-                  <Link to={'/signup-page'} >
+                  <Link to={'/user/signup-page'} >
           <h6 className="createAcc">Create new Account</h6></Link> 
         </form>
         <Toaster/>

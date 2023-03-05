@@ -80,7 +80,7 @@ const navigate = useNavigate()
         
         
         dispatch(setUserDetails(res,res.data.OTP))
-        navigate("/otp-page")
+        navigate("/user/otp-page")
       })
     } catch (error) {
       if(error.response && error.response.status >= 400 && 
@@ -321,7 +321,7 @@ const navigate = useNavigate()
                   </button>
                 
               
-                <Link to={"/login-page"}><h6 className="alreadyAcc" >Already have an account?</h6></Link>
+                <Link to={"/user/login-page"}><h6 className="alreadyAcc" >Already have an account?</h6></Link>
                 </form>
               </div>
               {/* Signup form Ends */}

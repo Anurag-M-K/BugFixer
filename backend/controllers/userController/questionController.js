@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { findByIdAndDelete } = require("../../model/userModel/Question");
 const QuestionDB = require("../../model/userModel/Question");
+const {User} = require("../../model/userModel/userModel")
 
 const questionAdd = async (req, res) => {
   const questoinData = new QuestionDB({
@@ -164,24 +165,30 @@ const particularQuestion = async (req, res) => {
   }
 };
 
-const incrementVote = async (req, res) => {
-  const qid = req.body.question_id;
-  const objectId = res.locals._id;
-  const userId = objectId.toString();
+  const incrementVote = async (req, res) => {
+    const qid = req.body.question_id;
+    const objectId = res.locals._id;
+    const userId = objectId.toString();
 
-  try {
-    const question = await QuestionDB.findById(qid);
+    try {
+      const question = await QuestionDB.findById(qid);
+      
+      if (question.vote.filter((like) => like === userId).length > 0) {
+        return res.status(400).json({ message: "Question already voted" });
+      }
+      question.vote.unshift(userId);
+      await question.save();
 
-    if (question.vote.filter((like) => like === userId).length > 0) {
-      return res.status(400).json({ message: "Question already voted" });
+      //increase users reputation by 5 points 
+      const user = await User.findById(question.user._id)
+      user.reputation += 5;
+      await user.save();
+
+      res.json(question.vote);
+    } catch (error) {
+      res.status(500).send("Server error");
     }
-    question.vote.unshift(userId);
-    await question.save();
-    res.json(question.vote);
-  } catch (error) {
-    res.status(500).send("Server error");
-  }
-};
+  };
 
 const decreaseVote = async (req, res) => {
   const qid = req.body.question_id;
@@ -200,6 +207,12 @@ const removeIndex = question.vote.map(like => like === userId).indexOf(userId);
     question.vote.splice(removeIndex,1)
 
     await question.save();
+
+      //decrease users reputation by 2 points 
+      const user = await User.findById(question.user._id)
+      console.log("user ",user)
+      user.reputation -= 2;
+      await user.save();
 
     res.json(question.vote);
   } catch (error) {

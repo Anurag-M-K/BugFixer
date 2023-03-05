@@ -25,7 +25,7 @@ function Otp() {
     if (verifyOtp === otp) {
       axios.post("/api/otpVerifying", { email: email }).then((response) => {});
       toast.success("Otp verified");
-      navigate("/login-page");
+      navigate("/user/login-page");
     } else {
       toast.error("Otp wrong");
     }
