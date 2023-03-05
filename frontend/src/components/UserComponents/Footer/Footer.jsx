@@ -8,60 +8,59 @@ const Footer = () => {
       <footer class="footer text-lg-start bg-dark text-muted py-5">
         <section class="">
           <div class="container text-md-start mt-5">
-            <div class="row mt-3">
+            <div key={Footer.id} class="row mt-3">
               <div class="col-md-2 col-lg-4 col-xl-3 mx-auto mb-4 ">
                 <img  alt="" />
               </div>
-
               {footerContent.map((content) => {
                 return (
                   <>
-                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 footer--content">
+                    <div key={content.header} className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 footer--content">
                       <h6 class="text-uppercase fw-bold mb-4">
                         {content.header}
                       </h6>
                       <p>
-                        <Link to="/jobs" class="text-reset">
+                        <Link to="/jobs" className="text-reset">
                           {content.con1}
                         </Link>
                       </p>
                       <p>
-                        <Link to="/jobs" class="text-reset">
+                        <Link to="/jobs" className="text-reset">
                           {content.con2}
                         </Link>
                       </p>
                       <p>
-                        <Link to="/developer" class="text-reset">
+                        <Link to="/developer" className="text-reset">
                           {content.con3}
                         </Link>
                       </p>
                       <p>
-                        <Link to="/salary" class="text-reset">
+                        <Link to="/salary" className="text-reset">
                           {content.con4}
                         </Link>
                       </p>
                       <p>
-                        <Link to="/salary" class="text-reset">
+                        <Link to="/salary" className="text-reset">
                           {content.con5}
                         </Link>
                       </p>
                       <p>
-                        <Link to="/salary" class="text-reset">
+                        <Link to="/salary" className="text-reset">
                           {content.con6}
                         </Link>
                       </p>
                       <p>
-                        <Link to="/salary" class="text-reset">
+                        <Link to="/salary" className="text-reset">
                           {content.con7}
                         </Link>
                       </p>
                       <p>
-                        <Link to="/salary" class="text-reset">
+                        <Link to="/salary" className="text-reset">
                           {content.con8}
                         </Link>
                       </p>
                       <p>
-                        <Link to="/salary" class="text-reset">
+                        <Link to="/salary" className="text-reset">
                           {content.con9}
                         </Link>
                       </p>
@@ -72,30 +71,30 @@ const Footer = () => {
               {/* STACK OVERFLOW stacks Ends */}
 
               {/* Social Links started */}
-              <div class="col-md-3 col-lg-2 col-xl-2 d-flex m-auto">
+              <div className="col-md-3 col-lg-2 col-xl-2 d-flex m-auto">
                 <p className="mx-4">
-                  <Link to="/" class="text-reset">
+                  <Link to="/" className="text-reset">
                     <i class="fas fa-id-card"></i>Blog
                   </Link>
                 </p>
                 <p>
-                  <Link to="/" class="text-reset  mx-4">
+                  <Link to="/" className="text-reset  mx-4">
                     <i class="fab fa-facebook-square"></i>Facebook
                   </Link>
                 </p>
                 <p>
-                  <Link to="/" class="text-reset  mx-3">
+                  <Link to="/" className="text-reset  mx-3">
                     <i class="fab fa-instagram-square"></i>Instagram
                   </Link>
                 </p>
                 <p>
-                  <Link to="/" class="text-reset  mx-4">
+                  <Link to="/" className="text-reset  mx-4">
                     <i class="fab fa-twitter-square"></i>Twitter
                   </Link>
                 </p>
                 <p>
-                  <Link to="/" class="text-reset mx-4">
-                    <i class="fab fa-linkedin"></i> LinkedIn
+                  <Link to="/" className="text-reset mx-4">
+                    <i className="fab fa-linkedin"></i> LinkedIn
                   </Link>
                 </p>
               </div>
@@ -105,9 +104,9 @@ const Footer = () => {
         </section>
 
         {/* Copyright Started */}
-        <div class="text-right bg-dark mr-5">
+        <div className="text-right bg-dark mr-5">
           © 2023 Copyright: {""}
-          <Link to="/" class="text-reset fw-bold">
+          <Link to="/" className="text-reset fw-bold">
             created by Anurag MK
           </Link>
         </div>

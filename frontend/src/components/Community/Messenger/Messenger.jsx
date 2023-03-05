@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Header from "../../UserComponents/Header/Header";
 import ChatOnline from "../ChatOnline/ChatOnline";
 import Conversation from "../Conversation/Conversation";
+import InputEmoji from 'react-input-emoji'
 import Message from "../Message/Message";
 import {
   getConversation,
@@ -12,7 +13,7 @@ import {
 import { io } from "socket.io-client";
 import "./Messenger.css";
 import SearchBar from "./SearchBar";
-import { setClickedUserDetails } from "../../../redux/features/chatLeftSideClickedUserSlice";
+// import { setClickedUserDetails } from "../../../redux/features/chatLeftSideClickedUserSlice";
 
 function Messenger() {
   const { userDetails } = useSelector((state) => state.user);
@@ -27,7 +28,6 @@ function Messenger() {
   const [ value , setValue ] = useState('')
   const { clidkedUserDetails } = useSelector((state) => state.clickedUser);
 
-  console.log("clikeduserDetails in messenger ",clidkedUserDetails)
 
 
   useEffect(() => {
@@ -69,7 +69,6 @@ function Messenger() {
       console.log(error);
     }
   }, []);
-  console.log("existing message check ",messages)
 
 
   //geting messages
@@ -121,12 +120,6 @@ function Messenger() {
 
 
 
-
-
-
-  //currrent chat upf]date  
-
-
   return (
     <>
       <Header />
@@ -162,12 +155,12 @@ function Messenger() {
                   ))}
                 </div>
                 <div className="chatBoxBottom">
-                  <textarea 
+                  <InputEmoji 
                     className="chatMessageInput"
-                    onChange={(e) => setNewMessage(e.target.value)}
+                    onChange={(value) => setNewMessage(value)}
                     value={newMessage}
                     placeholder="write Something...."
-                  ></textarea>
+                  />
                   <button onClick={handleSubmit} className="chatSubmitButton">
                     Send
                   </button>
