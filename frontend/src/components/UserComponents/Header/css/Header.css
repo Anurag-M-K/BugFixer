@@ -106,4 +106,7 @@ cursor: pointer;
  .headerBtn{
    cursor: pointer;
  }
- 
+ .user-logout-btn:hover{
+   width: 50px;
+   background-color:rgb(207, 198, 161);
+ }

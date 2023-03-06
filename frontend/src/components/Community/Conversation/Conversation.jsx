@@ -11,7 +11,6 @@ export default function Conversation({ conversation,messages }) {
   const dispatch = useDispatch();
   const { clidkedUserDetails } = useSelector((state) => state.clickedUser);
 
-  console.log("clikeduserDetails ",clidkedUserDetails)
     useEffect(() => {
     const friendId = conversation?.members?.find(
       (memberId) => memberId !== userDetails._id
@@ -30,9 +29,8 @@ export default function Conversation({ conversation,messages }) {
 
   
 
-  var sample = [user,[messages]]
+  // var sample = [user,[messages]]
 
-  console.log("sample ",sample)
 
   return (
     <>

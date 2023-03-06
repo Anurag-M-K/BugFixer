@@ -15,7 +15,8 @@ import ViewQuestionPage from "../pages/user/ViewQuestionPage";
 import Messenger from "../components/Community/Messenger/Messenger";
 import SingleCommunityPage from "../pages/Community/SingleCommunityPage";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
-
+import ReputationBadge from "../components/UserComponents/Header/ReputationBadge";
+  
 function UserRoute(){
 
   return (
@@ -33,6 +34,7 @@ function UserRoute(){
           <Route exact path='/userview-question' element={<Private><ViewQuestionPage/></Private>} />
           <Route exact path="/user/messenger" element={<Private><Messenger/></Private>}/>
           <Route exact path="/user/page" element={<CommunityHomePage/>}/>
+          <Route exact path="/user/repu" element={<ReputationBadge/>}/>
           <Route exact path="/user/community" element={<CommunityHomePage/>}/>
           <Route exact path="/user/single-community/:id" element={<SingleCommunityPage/>}/>
           <Route path="/*" element={<ErrorPage />} />

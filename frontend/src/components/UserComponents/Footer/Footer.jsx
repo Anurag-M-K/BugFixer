@@ -8,7 +8,7 @@ const Footer = () => {
       <footer class="footer text-lg-start bg-dark text-muted py-5">
         <section class="">
           <div class="container text-md-start mt-5">
-            <div key={Footer.id} class="row mt-3">
+            <div  class="row mt-3">
               <div class="col-md-2 col-lg-4 col-xl-3 mx-auto mb-4 ">
                 <img  alt="" />
               </div>

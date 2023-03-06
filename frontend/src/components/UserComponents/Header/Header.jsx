@@ -3,9 +3,13 @@ import "./css/Header.css";
 import axios from '../../../config/axiosInstance'
 import { Link, useNavigate } from "react-router-dom";
 import { message } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { useState } from "react";
-import toast,{Toaster} from 'react-hot-toast'
+import toast,{Toaster} from 'react-hot-toast';
+// import { CiLogout } from "react-icons/";
+import { GrLogout } from "react-icons/gr";
+import ReputationBadge from "./ReputationBadge";
+// import { HiBadgeCheck } from "react-icons/hi"; 
 
 function Header() {
   const {userDetails} = useSelector(state=> state.user)
@@ -75,24 +79,22 @@ function Header() {
           </li>
 
           <li className="nav-item">
-            <Link to="/user/team" className="nav-link">
-            </Link>
+           
           </li>
         </ul>
-        <form className="form-inline mx-2 my-lg-0 mr-5">
+       
 
-          <input
-            type="text"
-            className="form-control pr-5 pl-4 searchInput fas fa-search search"
-            aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-sm"
-            placeholder="Search..." />
 
           {userDetails?.firstName ? (
             <>
-              <span onClick={showProfile} className="ms-4 headerBtn"> {userDetails?.firstName}</span>
-
-              <button onClick={hndleLogout} className="btn btn-danger ms-2">Log Out </button>
+            <img onClick={showProfile}  style={{width:"36px",height:"36px", cursor:"pointer", borderRadius: "22px"}} src={userDetails.imageUrl ? userDetails?.imageUrl : "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"} alt="" />
+              <span onClick={showProfile} className="ms-3 me-3 headerBtn"> {userDetails?.firstName}</span>
+             
+<ReputationBadge/>
+<div  className=" " onClick={hndleLogout} style={{cursor:"pointer",borderRadius : "15px",width:"45px",paddingLeft:"8px"}}>
+<GrLogout />
+</div>
+           
 
             </>
           ) : (
@@ -116,7 +118,6 @@ function Header() {
               </Link>
             </>
           )}
-        </form>
         <Toaster />
       </div></>
         </nav>

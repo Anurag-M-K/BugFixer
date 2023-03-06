@@ -10,12 +10,11 @@ const UserQuestions = () => {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;
   }
 
-  console.log("questionDetails ",questionDetails)
   return (
     <>
       {questionDetails?.map((questionData) => {
         return (
-          <div
+          <div key={questionData._id}
             className="userQuestions d-flex border-bottom py-2"
             style={{ fontSize: "12px" }}
           >

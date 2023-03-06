@@ -33,6 +33,7 @@ import "./UserProfile.css";
 import "./ProfileEdit.css";
 import { Link } from "react-router-dom";
 import { setSingleQuestionDetails } from "../../../redux/features/singleQuestionSlice";
+import { SlBadge } from "react-icons/sl";
 
 export default function UserProfile() {
   const { userDetails } = useSelector((state) => state.user);
@@ -149,9 +150,17 @@ export default function UserProfile() {
                   className="rounded-circle"
                   style={{ width: "130px", height: "130px" }}
                   fluid
-                />
+                /> 
                 <p className="text-muted mt-2 mb-1">{userDetails?.job}</p>
                 <p className="text-muted mb-4">{userDetails?.company}</p>
+                <div className="pro-reputation">
+<div>
+  <h3><SlBadge/></h3>
+  </div>
+<h5 style={{    marginTop: "-16px"}} className="mb-3">{userDetails?.reputation}</h5>
+                  </div>  
+                
+                  
                 <div className="d-flex justify-content-center mb-2">
                   <ProfileUpdate
                     userDetails={userDetails}
@@ -231,7 +240,7 @@ export default function UserProfile() {
                       {userDetails?.firstName
                         ? userDetails?.firstName + " "
                         : ""}
-                      {userDetails?.lastName ? userDetails?.lastName : ""}
+                      {userDetails?.lastName ? userDetails?.lastName : ""} 
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>
