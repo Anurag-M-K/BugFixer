@@ -67,30 +67,34 @@ function Header() {
             </Link>
 
           </li>
-          <li className="nav-item mr-4">
-            <Link to="/user/messenger" className="nav-link">
-              chat
+          <li className="nav-item mx-4 active">
+            <Link to={'/user/messenger'} className="nav-link">
+              <span>chat</span>  <span className="sr-only">(current)</span>
             </Link>
+
           </li>
-          <li className="nav-item mr-4">
-            <span onClick={() => navigate("/user/home")} className="nav-link">
-              Questions
-            </span>
+          <li className="nav-item mx-4 active">
+            <Link to={'/user/home'} className="nav-link">
+              <span>Questions</span>  <span className="sr-only">(current)</span>
+            </Link>
+
           </li>
+         
+         
 
           <li className="nav-item">
            
           </li>
         </ul>
        
-
-
           {userDetails?.firstName ? (
             <>
-            <img onClick={showProfile}  style={{width:"36px",height:"36px", cursor:"pointer", borderRadius: "22px"}} src={userDetails.imageUrl ? userDetails?.imageUrl : "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"} alt="" />
+            <img className="img-header" onClick={showProfile}  style={{width:"36px",height:"36px", cursor:"pointer", borderRadius: "22px"}} src={userDetails.imageUrl ? userDetails?.imageUrl : "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"} alt="" />
+
+
               <span onClick={showProfile} className="ms-3 me-3 headerBtn"> {userDetails?.firstName}</span>
              
-<ReputationBadge/>
+<ReputationBadge className="badge"/>
 <div  className=" " onClick={hndleLogout} style={{cursor:"pointer",borderRadius : "15px",width:"45px",paddingLeft:"8px"}}>
 <GrLogout />
 </div>

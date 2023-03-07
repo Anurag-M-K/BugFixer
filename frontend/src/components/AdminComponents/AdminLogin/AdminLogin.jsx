@@ -13,12 +13,12 @@ function AdminLogin() {
   const navigate = useNavigate();
   const [data, setData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
 
-  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUserDetails } from "../../../redux/features/userSlice";
 import gLogo from '../Images/g.png'
-import {  hideLoading, showLoading } from "../../../redux/features/alertSlice";
 import toast , {Toaster} from "react-hot-toast";
 import DOMPurify from 'dompurify';
 
@@ -14,17 +13,19 @@ function Login() {
   const navigate = useNavigate()
   const [data, setData] = useState({   email: "", password: "" });
   const [error, setError] = useState("");
-
   const dispatch = useDispatch()
   const {loading} = useSelector(state=>state.alerts)
-
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = "/api/userLogin";
+    const url = "/api/userLogin";   
+    
+    //sanitizing input values
     const sanitizedData = {
       email: DOMPurify.sanitize(data.email),
       password: DOMPurify.sanitize(data.password),
@@ -39,11 +40,8 @@ function Login() {
         dispatch(setUserDetails(res.user))
         dispatch(setToken(res.data))
         navigate("/user/home");
-        
-        
       } catch (error) {
         console.log(error.message);
-        
       }      
 		} catch (error) {
 			if (
@@ -56,6 +54,7 @@ function Login() {
 			}
 		}
 	};
+
   return (
     <>
       <div
@@ -133,8 +132,6 @@ function Login() {
               />
             </div>
           </div>
-          {/* {error && <div  ><p className="error-show">{error}</p></div>} */}
-
          <button
             type="submit"
             className="btn btn-lg btn-block btn-sm text-light"
@@ -144,14 +141,7 @@ function Login() {
           >
             Login
           </button>
-        <div className="gbtn">
-          <button  
-                    type="submit"
-                    className="btn btn-block bg-light border "
-                  >
-                    <img src={gLogo} alt="" width="20px" className="mr-1" />
-                    Google
-                  </button></div>
+       
                   <Link to={'/user/signup-page'} >
           <h6 className="createAcc">Create new Account</h6></Link> 
         </form>

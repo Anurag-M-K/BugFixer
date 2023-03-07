@@ -5,21 +5,22 @@ import { useNavigate } from "react-router-dom";
 import "./Otp.css";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "../../../config/axiosInstance";
+
 function Otp() {
   const navigate = useNavigate();
-
   const [otp, setOtp] = useState("");
-
   const { userDetails } = useSelector((state) => state.user);
 
   const updateInput = (e) => {
     setOtp(e.target.value);
   };
 
-  console.log("otp ve ", userDetails.data);
+  console.log("otp ", userDetails.data);
 
   const email = userDetails.data.email;
   let verifyOtp = userDetails.data.OTP;
+
+  //verifying otp
   const checkOtp = (e) => {
     e.preventDefault();
     if (verifyOtp === otp) {

@@ -24,6 +24,7 @@ function ProfilePicAddModal() {
   const { userDetails } = useSelector((state) => state.user);
   const { tokenData } = useSelector((state) => state.user)
 
+  //handling fileinput and verifying file type
   const handleFileInput = (e) => {
     const file = e.target.files[0];
     if (file.type !== "image/jpeg" && file.type !== "image/png" && file.type !== "image/jpg"  ) {
@@ -42,6 +43,8 @@ function ProfilePicAddModal() {
     };
   };
 
+
+  //uploading profile image
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -71,6 +74,8 @@ function ProfilePicAddModal() {
       console.error(error);
     }
   };
+
+  //geting updated user details fromd database and updaitng redux
   useEffect(()=>{
     try {
       (async()=>{

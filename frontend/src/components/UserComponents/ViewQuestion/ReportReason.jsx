@@ -10,9 +10,10 @@ function ReportReason({ questionData }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [reportReason, setReportReason] = useState("");
-
   const qid = questionData._id;
   
+
+//question reporting and sending reason for reporting
   const handleReason = (event) => {
       setReportReason(event.target.value);
     };
@@ -28,9 +29,6 @@ function ReportReason({ questionData }) {
     ("/question")
     setShow(false)
   };
-
-
-
 
   return (
     <>

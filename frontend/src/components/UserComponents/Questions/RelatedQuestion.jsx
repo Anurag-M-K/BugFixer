@@ -4,12 +4,12 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getHotQuestions } from "../../../helper/homePageRightSideHelper";
 import toast from 'react-hot-toast'
-import { CoPresentOutlined } from "@mui/icons-material";
 
 const RelatedQuestion = () => {
   const [hotQuestions, setHotQuestions] = useState([]);
   const { tokenData } = useSelector((state) => state.user);
 
+  //geting all rightsid hot questins 
   useEffect(() => {
     (async () => {
       try {
@@ -23,15 +23,13 @@ const RelatedQuestion = () => {
     })();
   }, []);
 
-  console.log("hotQuestions ",hotQuestions)
-
   return (
     <>
       <div className="relatedQuestion">
         <h5 className="mt-5">Hot Network Questions</h5>
         {hotQuestions?.map((title) => {
           return ( 
-            <div className=" d-flex mt-3">
+            <div key={title._id} className=" d-flex mt-3">
               <div>
                 <img
                   alt=""

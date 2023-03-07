@@ -8,7 +8,7 @@ import scrollreveal from "scrollreveal";
 import { useDispatch, useSelector } from "react-redux";
 import toast,{Toaster} from 'react-hot-toast'
 import QuestionModal from './QusetionModal';
-import { getAllQuestionsDetails , getQuestions} from "../../../helper/adminQuestionHelper"; 
+import { getAllQuestionsDetails , getQuestions  ,deleteQuestion} from "../../../helper/adminQuestionHelper"; 
 import { setAdminQuestionDetails } from '../../../redux/features/adminQuestionSlice';
 import { BiTrashAlt } from 'react-icons/bi'
 
@@ -21,7 +21,7 @@ function AdminQuestion() {
   const { adminToken } = useSelector((state)=>state.adminToken)
   const { adminQuestionDetails } = useSelector((state)=>state.adminQuestion)
   
-  
+  //get all questions and update the redux
   useEffect(() => {
     (async ()=>{
       const questionsDetails = await getAllQuestionsDetails(adminToken)
@@ -33,7 +33,7 @@ function AdminQuestion() {
   }, []);
   
   
-
+//question deleting and geting from database and updating the redux
     const questionDelete = async(qid)=>{
       try {
         swal({
@@ -43,10 +43,9 @@ function AdminQuestion() {
     buttons: true,
     dangerMode: true,
   })
-  .then((deleteQuestion) => {
-    if (deleteQuestion) {
-      axios.defaults.baseURL = "http://localhost:80";
-       axios.delete("/admin/question-delete/"+qid).then(async(res)=>{
+  .then((deleteQuestionS) => {
+    if (deleteQuestionS) {
+        deleteQuestion(qid,adminToken).then(async(res)=>{
          const response =  await getQuestions(adminToken)
               dispatch(setAdminQuestionDetails(response))
           
@@ -64,12 +63,6 @@ function AdminQuestion() {
 }
 }
 
-
-
-
-console.log("questiondetails array ",adminQuestionDetails)
-
-  
     const columns = [
         {
       name: "Qusetion",

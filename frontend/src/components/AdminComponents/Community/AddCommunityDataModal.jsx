@@ -15,6 +15,8 @@ function AddCommunityDataModal() {
   const handleShow = () => setShow(true);
   const { adminToken } = useSelector((state) => state.adminToken);
   const dispatch = useDispatch()
+
+  //adding community posts , get all community posts and updating redux
   const onSubmit = (values) => {
     try {
       (async () => {

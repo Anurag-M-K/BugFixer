@@ -59,7 +59,6 @@ const voteAnswer = async (req, res) => {
   const userId = objectId.toString();
   try {
     const answer = await AnswerDB.findById(aId);
-    console.log("answer found ",answer)
     if(answer.vote.filter((like)=> like === userId).length > 0){
       return res.status(400).json({ error: "Already voted" });
     }
@@ -158,7 +157,6 @@ const acceptingAnswer = async (req, res) => {
       res.status(400).json({message:"You are not allowed to accept this answer"})
     }
   } catch (error) {
-    console.log(error)
     res.status(500).json()
   }
 }

@@ -12,9 +12,9 @@ function SearchBar() {
   const [filterData, setFilterData] = useState([]);
   const { userDetails } = useSelector((state)=>state.user)
   const [displayUsers, setDisplayUsers] = useState(true);
-
   const [displayBox, setDisplayBox] = useState(true);
 
+  //geting all users and updaing redux
   useEffect(() => {
     (async () => {
       const users = await getAllUsers(tokenData);
@@ -62,7 +62,7 @@ function SearchBar() {
               <div className="dataResult">
                 {filterData.slice(0, 15).map((value, key) => {
                   return (
-                    <a
+                    <a key={key._id}
                       className="dataItem"
                       onClick={() => onClickUser(value._id)}
                     >

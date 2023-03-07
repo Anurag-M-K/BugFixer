@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { addTag, getTags } from "../../../helper/adminTagHelper";
 import { setTags } from "../../../redux/features/tagSlice";
+
+
 function TagAddModal() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -17,7 +19,7 @@ function TagAddModal() {
   const [state, setState] = useState("");
 
 
-
+//adding tag and geting all tagsg and updating redux
   const onSubmit = (values) => {
     try {
       (async () => {

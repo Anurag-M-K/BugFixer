@@ -21,8 +21,8 @@ function AdminQuestion() {
   const { adminToken } = useSelector((state)=>state.adminToken);
   const { reportedQuestionDetails } = useSelector((state)=>state.reportedQuestion)
 
+  //get reported questions and updatin redux
   useEffect(() => {
-    
       axios.defaults.baseURL = "http://localhost:8060";
       axios.get("/admin/get-report-questions").then((response) => {
         setQuestions(response.data.data)
@@ -33,7 +33,7 @@ function AdminQuestion() {
     }, []);
 
 
-
+//delting reported question and updating redux
     const questionDelete = async(qid)=>{
 try {
   swal({

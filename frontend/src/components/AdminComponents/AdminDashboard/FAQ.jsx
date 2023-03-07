@@ -28,7 +28,7 @@ export default function FAQ() {
       <div className="faqs">
         {faqs.map((faq) => {
           return (
-            <div className="faq">
+            <div key={faq.text} className="faq">
               <div className="info">
                 {faq.icon}
                 <h4>{faq.text}</h4>

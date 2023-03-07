@@ -7,10 +7,6 @@ import {
   MDBCard,
   MDBCardText,
   MDBCardBody,
-  MDBCardImage,
-  MDBBtn,
-  MDBProgress,
-  MDBProgressBar,
   MDBIcon,
   MDBListGroup,
   MDBListGroupItem,
@@ -64,6 +60,7 @@ export default function UserProfile() {
     };
   };
 
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!previewSource) return;
@@ -97,6 +94,7 @@ export default function UserProfile() {
     }
   }, []);
 
+  //deleting questions and geting questions and updates redux
   const handleQuestionDelete = async (id) => {
     try {
       const deleteQuestionRsponse = await deleteQuestion(id, tokenData);
@@ -108,6 +106,7 @@ export default function UserProfile() {
     }
   };
 
+  //geting user details and updating redux
   useEffect(() => {
     try {
       (async () => {
@@ -126,12 +125,6 @@ export default function UserProfile() {
       dispatch(setSingleQuestionDetails(answers));
     })()
   },[])
-
-
-  
-
-
-
 
   let defaultUrl =
     "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp";

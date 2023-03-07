@@ -1,9 +1,8 @@
 import React from "react";
-import { Link,Navigate,useNavigate } from "react-router-dom";
-import Logo from "../Images/download.png";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import gLogo from "../Images/g.png";
 import { useState } from "react";
-import './Signup.css';
+import "./Signup.css";
 import axios from "../../../config/axiosInstance";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../../../redux/features/userSlice";
@@ -12,7 +11,7 @@ const info = [
   {
     icon: (
       <i
-      className="fas fa-question-circle text-primary mr-2"
+        className="fas fa-question-circle text-primary mr-2"
         style={{ fontSize: "20px", color: "rgb(10, 149, 255)" }}
       ></i>
     ),
@@ -21,7 +20,7 @@ const info = [
   {
     icon: (
       <i
-      className="fas fa-sort text-primary mr-2"
+        className="fas fa-sort text-primary mr-2"
         style={{ fontSize: "25px", color: "rgb(10, 149, 255)" }}
       ></i>
     ),
@@ -30,7 +29,7 @@ const info = [
   {
     icon: (
       <i
-      className="fas fa-tags text-primary mr-2"
+        className="fas fa-tags text-primary mr-2"
         style={{ fontSize: "20px", color: "rgb(10, 149, 255)" }}
       ></i>
     ),
@@ -39,7 +38,7 @@ const info = [
   {
     icon: (
       <i
-      className="fas fa-trophy text-primary mr-2"
+        className="fas fa-trophy text-primary mr-2"
         style={{ fontSize: "20px", color: "rgb(10, 149, 255)" }}
       ></i>
     ),
@@ -47,61 +46,56 @@ const info = [
   },
 ];
 
-
-
 const Signup = () => {
-  const [data , setData] = useState({
-    firstName:"",
-    lastName:"",
-    email:"",
-    phone:"",
-    password:""
+  const [data, setData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    password: "",
   });
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [error, setError] = useState("");
 
+  const handleChange = ({ currentTarget: input }) => {
+    setData({ ...data, [input.name]: input.value });
+  };
 
-const navigate = useNavigate()
-  const dispatch = useDispatch()
-
-  const [error,setError] = useState('')
-
-
-  const handleChange = ({currentTarget:input})=>{
-    setData({...data,[input.name]:input.value});
-  }
-
-
-  console.log(data.phone)
-  const handleSubmit = async(e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = '/api/userSignup'  ;
-      const {data:res}= await axios.post(url,data).then((res)=>{
-        
-        
-        dispatch(setUserDetails(res,res.data.OTP))
-        navigate("/user/otp-page")
-      })
+      const url = "/api/userSignup";
+      const { data: res } = await axios.post(url, data).then((res) => {
+        dispatch(setUserDetails(res, res.data.OTP));
+        navigate("/user/otp-page");
+      });
     } catch (error) {
-      if(error.response && error.response.status >= 400 && 
+      if (
+        error.response &&
+        error.response.status >= 400 &&
         error.response.status <= 500
-        ){
-          setError(error.response.data.message)
-          console.log()
-        }
+      ) {
+        setError(error.response.data.message);
+        console.log();
+      }
     }
-  }
-
+  };
 
   return (
     <>
       <div className="signupPage">
-        <section className="vh-100 bodySection">
+        <section className=" bodySection">
           <div className="container py-5">
             <div className="row d-flex align-items-center justify-content-center h-100">
               {/* left Side Stack Overflow community part started*/}
               <div className="col-md-8 col-lg-7 col-xl-6 ml-3">
-                <img src="https://res.cloudinary.com/dmvxmurxw/image/upload/v1674187605/logo4_g8zbar.png" alt="" width="250px" />
+                <img
+                  src="https://res.cloudinary.com/dmvxmurxw/image/upload/v1674187605/logo4_g8zbar.png"
+                  alt=""
+                  width="250px"
+                />
                 <h3 className="font-weight-normal my-3">
                   Join the Bugfixer community
                 </h3>
@@ -138,7 +132,7 @@ const navigate = useNavigate()
                   Sign up
                 </h2>
                 <p className="text-center pb-1">~~~~~~~~~~~</p>
-                <form onSubmit={handleSubmit} >  
+                <form onSubmit={handleSubmit}>
                   <div className="form-outline mb-4">
                     <label className="form-label" for="form1Example13">
                       Full Name
@@ -166,13 +160,12 @@ const navigate = useNavigate()
                         required
                         aria-label="Username"
                         aria-describedby="addon-wrapping"
-                      
                       />
                     </div>
                   </div>
                   <div className="form-outline mb-4">
                     <label className="form-label" for="form1Example23">
-                     Last Name
+                      Last Name
                     </label>
                     <div className="input-group flex-nowrap">
                       <div className="input-group-prepend">
@@ -184,7 +177,7 @@ const navigate = useNavigate()
                             backgroundColor: "rgba(242, 116, 13, 0.308)",
                           }}
                         >
-                           <i className="fas fa-user"></i>
+                          <i className="fas fa-user"></i>
                         </span>
                       </div>
                       <input
@@ -197,13 +190,12 @@ const navigate = useNavigate()
                         required
                         aria-label="Username"
                         aria-describedby="addon-wrapping"
-                      
                       />
                     </div>
                   </div>
                   <div className="form-outline mb-4">
                     <label className="form-label" for="form1Example23">
-                     Email
+                      Email
                     </label>
                     <div className="input-group flex-nowrap">
                       <div className="input-group-prepend">
@@ -216,8 +208,6 @@ const navigate = useNavigate()
                           }}
                         >
                           <i className="fas fa-envelope"></i>
-
-                          
                         </span>
                       </div>
                       <input
@@ -230,14 +220,13 @@ const navigate = useNavigate()
                         required
                         aria-label="Username"
                         aria-describedby="addon-wrapping"
-                      
                       />
                     </div>
                   </div>
 
                   <div className="form-outline mb-4">
                     <label className="form-label" for="form1Example23">
-                     Phone
+                      Phone
                     </label>
                     <div className="input-group flex-nowrap">
                       <div className="input-group-prepend">
@@ -249,9 +238,7 @@ const navigate = useNavigate()
                             backgroundColor: "rgba(242, 116, 13, 0.308)",
                           }}
                         >
-                          <i className="fas fa-envelope"></i>
-
-                          
+                          <i className="fas fa-mobile"></i>
                         </span>
                       </div>
                       <input
@@ -264,7 +251,6 @@ const navigate = useNavigate()
                         required
                         aria-label="Username"
                         aria-describedby="addon-wrapping"
-                      
                       />
                     </div>
                   </div>
@@ -295,46 +281,29 @@ const navigate = useNavigate()
                         required
                         aria-label="Username"
                         aria-describedby="addon-wrapping"
-                      
                       />
                     </div>
-                  </div >
-
-                 
-                          {error && <div  className="errorShow">{error} </div>}
-                 
-                  {/* <button
-                    type="submit"y
-                    className="btn btn-block text-light"
-                    style={{ backgroundColor: "rgb(10, 149, 255)" }}
-                  >
-                    Sign up
-                  </button> */}
-                  <button className="btn btn-block bg-primary border " type="submit">signup </button>
+                  </div>
+                    {error && <div className="errorShow">{error} </div>}
                   <button
+                    className="btn btn-block bg-primary border "
                     type="submit"
-                    className="btn btn-block bg-light border"
-                    >
-                
-                    <img src={gLogo} alt="" width="20px" className="mr-1" />
-                    Google
+                  >
+                    signup{" "}
                   </button>
-                
-              
-                <Link to={"/user/login-page"}><h6 className="alreadyAcc" >Already have an account?</h6></Link>
+                 
+
+                  <Link to={"/user/login-page"}>
+                    <h6 className="alreadyAcc">Already have an account?</h6>
+                  </Link>
                 </form>
               </div>
               {/* Signup form Ends */}
             </div>
           </div>
-          
         </section>
 
-
-
         {/* modal */}
-        
-
       </div>
     </>
   );

@@ -1,9 +1,6 @@
 const {User,validate} = require('../../model/userModel/userModel');
 const bcrypt = require('bcrypt');
-const SERVICE_SID = "VAe7de74dc8d7b15184be0cb6074e984c7"
-const ACCOUNT_SID  = "AC727f3bdadb360837a5a69a43a2fdd9d0"
-const AUTH_TOKEN = "de8cfc9307405b92922b6d38e23aae57"
-const Client = require('twilio')(ACCOUNT_SID,AUTH_TOKEN)
+const Client = require('twilio')(process.env.ACCOUNT_SID,process.env.AUTH_TOKEN)
 const nodemailer = require("nodemailer");
 
 

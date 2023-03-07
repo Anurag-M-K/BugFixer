@@ -8,7 +8,6 @@ export const communityPostsSlice = createSlice({
     },
     reducers:{
         setCommunityPosts:(state,action)=>{
-            console.log("from slice of posts ",action.payload)
             state.posts = action.payload;
         }
     }

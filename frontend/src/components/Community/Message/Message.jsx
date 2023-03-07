@@ -8,9 +8,6 @@ export default function Message({message,own}) {
  var newMessage = [];
  newMessage.push(message);
   const { userDetails } = useSelector((state)=>state.user)
-
-console.log("newMessage ",newMessage)
-console.log("newMessage ",newMessage[0].type)
   
   return (
     <div className={own ? "message own" : "message"}>
@@ -31,10 +28,6 @@ console.log("newMessage ",newMessage[0].type)
                   
                   )
                 } )}
-
-        {/* <p className="messageText">
-{message?.text}
-        </p> */}
       </div>
       <div className="messageBottom">{format(message?.createdAt)}</div>
     </div>

@@ -8,7 +8,6 @@ export const reportedQuestionsSlice = createSlice({
     },
     reducers:{
         setReportedQuestions:(state,action)=>{
-            console.log("from reported slice ",action.payload)
             state.reportedQuestionDetails = action.payload;
         }
     }

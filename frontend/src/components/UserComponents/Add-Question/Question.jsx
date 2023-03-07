@@ -4,10 +4,12 @@ import "react-quill/dist/quill.snow.css"; //quills css important
 import { useNavigate } from "react-router-dom";
 import "./Question.css";
 import { TagsInput } from "react-tag-input-component";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Editor from "react-quill/lib/toolbar";
 import { toast } from "react-toastify";
 import { addQuestion } from "../../../helper/userQuestionHelper";
+import { getUserDetails } from "../../../helper/UserProfileHelper";
+import { setUserDetails } from "../../../redux/features/userSlice";
 
 function Question() {
   const [loading, setLoading] = useState(false);
@@ -17,7 +19,7 @@ function Question() {
   const [tag, setTag] = useState([]);
   const navigate = useNavigate();
   const { tokenData } = useSelector((state) => state.user);
-
+  const dispatch = useDispatch()
   const notify = () =>
     toast.success("Question added successfully!", {
       position: "top-right",
@@ -69,6 +71,8 @@ function Question() {
       };
 
       await addQuestion(tokenData, bodyJSON);
+      const user = await getUserDetails(tokenData);
+      dispatch(setUserDetails(user.response));
       notify("question added successfully");
       navigate("/user/home");
     }

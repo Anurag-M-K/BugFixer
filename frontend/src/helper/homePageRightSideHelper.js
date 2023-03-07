@@ -2,7 +2,6 @@ import { toast } from "react-hot-toast";
 import instance from "../config/axiosInstance";
 
 export const getAllTags = async(tokenData)=>{
-    console.log('tokendata ',tokenData)
     try {
         const getAllTags = await instance({
             url:"/api/get-all-tags",

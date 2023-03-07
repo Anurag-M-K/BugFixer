@@ -19,20 +19,23 @@ import { setSingleQuestionDetails } from "../../../redux/features/singleQuestion
 import { useLocation } from "react-router-dom";
 import ReportReason from "./ReportReason";
 import { setCommentDetails } from "../../../redux/features/commentSlice";
-import { FiCheck } from 'react-icons/fi'
+import { FiCheck } from "react-icons/fi";
 import {
   getAnswers,
   questionDecVoting,
   questionVoting,
 } from "../../../helper/userQuestionHelper";
 import { setParticularAnswerDetails } from "../../../redux/features/particularAnswersSlice";
-import { answerDownVoting, answerVoting, deleteAnswer, acceptAnswer } from "../../../helper/userAnswerHelper";
-import { BiTrashAlt } from 'react-icons/bi';
+import {
+  answerDownVoting,
+  answerVoting,
+  deleteAnswer,
+  acceptAnswer,
+} from "../../../helper/userAnswerHelper";
+import { BiTrashAlt } from "react-icons/bi";
+import { getUserDetails } from "../../../helper/UserProfileHelper";
+import { setUserDetails } from "../../../redux/features/userSlice";
 import "./index.css";
-
-
-
-
 
 function MainQuestion() {
   const [show, setShow] = useState(false);
@@ -51,7 +54,7 @@ function MainQuestion() {
     (state) => state.particularAnswers
   );
 
-
+  //geting question id from url
   let location = useLocation();
   let params = new URLSearchParams(location.search);
   let id = params.get("id");
@@ -60,6 +63,7 @@ function MainQuestion() {
     setAnswer(value);
   };
 
+  //geting quesitons and comments updates state
   useEffect(() => {
     (async () => {
       try {
@@ -75,34 +79,29 @@ function MainQuestion() {
     })();
   }, []);
 
-
-
-
-  // geting all answers while page load 
-    async function getAnswer(){
-    const response =  await axios.get("/api/get-answer/" + id)
-        dispatch(setParticularAnswerDetails(response.data));
-    }
-    useEffect(()=>{
-      getAnswer()
-    },[])
-  
-
+  // geting all answers while page load
+  async function getAnswer() {
+    const response = await axios.get("/api/get-answer/" + id);
+    const user = await getUserDetails(tokenData);
+    dispatch(setUserDetails(user.response));
+    dispatch(setParticularAnswerDetails(response.data));
+  }
+  useEffect(() => {
+    getAnswer();
+  }, []);
 
   const _id = questionData._id;
-  
+
   async function getUpdatedAnswer() {
     await axios
-    .post(`/api/question/${_id}`)
-    .then((res) => {
-      setQuestionData(res.data[0]);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .post(`/api/question/${_id}`)
+      .then((res) => {
+        setQuestionData(res.data[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-
-
 
   //answer adding and geting
   const handleSubmit = async () => {
@@ -118,11 +117,13 @@ function MainQuestion() {
         },
       };
       await axios
-        .post("/api/answer", body, config)  
+        .post("/api/answer", body, config)
         .then(async (res) => {
           const id = res.data.data.question_id;
-          await axios.get("/api/get-answer/" + id).then((response) => {
-            dispatch(setParticularAnswerDetails(response.data));    
+          await axios.get("/api/get-answer/" + id).then(async (response) => {
+            const user = await getUserDetails(tokenData);
+            dispatch(setUserDetails(user.response));
+            dispatch(setParticularAnswerDetails(response.data));
 
             dispatch(setSingleQuestionDetails(response));
           });
@@ -159,20 +160,22 @@ function MainQuestion() {
 
   const { commentDetails } = useSelector((state) => state.comment);
 
-
-//get the quesiton details when the user enter the page 
-  useEffect(()=>{
-    const getSingleQuestion = axios.get(`/api/question/${id}`).then((response) =>{
-      dispatch(setSingleQuestionDetails(response.data));
-
-    })
-  },[])
+  //get the quesiton details when the user enter the page
+  useEffect(() => {
+    const getSingleQuestion = axios
+      .get(`/api/question/${id}`)
+      .then((response) => {
+        dispatch(setSingleQuestionDetails(response.data));
+      });
+  }, []);
 
   ///quesiton upvoting and downvoting
   async function incVoting(question_id) {
     try {
       const data = await questionVoting(question_id, tokenData);
       const getSingleQuestion = await axios.get(`/api/question/${id}`);
+      const user = await getUserDetails(tokenData);
+      dispatch(setUserDetails(user.response));
       dispatch(setSingleQuestionDetails(getSingleQuestion.data));
       setVoteRes(getSingleQuestion.data);
       toast.error(data.data.message);
@@ -181,10 +184,12 @@ function MainQuestion() {
     }
   }
   async function decVoting(question_id) {
-    console.log(question_id)
+    console.log(question_id);
     try {
       const data = await questionDecVoting(question_id, tokenData);
       const getSingleQuestion = await axios.get(`/api/question/${id}`);
+      const user = await getUserDetails(tokenData);
+      dispatch(setUserDetails(user.response));
       dispatch(setSingleQuestionDetails(getSingleQuestion.data));
       setVoteRes(getSingleQuestion.data);
 
@@ -194,94 +199,84 @@ function MainQuestion() {
     }
   }
 
-
-
-  ///answer voting and downVoting 
-    async function handleAnswerVoting(aId)  {
-      try {
-        const votRes = await  answerVoting(aId,tokenData);
-       const getAnswer =  await axios.get("/api/get-answer/" + id)
-        dispatch(setParticularAnswerDetails(getAnswer.data));
-      } catch (error) {
-       console.log(error)
-      }
+  ///answer voting and downVoting
+  async function handleAnswerVoting(aId) {
+    try {
+      const votRes = await answerVoting(aId, tokenData);
+      const getAnswer = await axios.get("/api/get-answer/" + id);
+      const user = await getUserDetails(tokenData);
+      dispatch(setUserDetails(user.response));
+      dispatch(setParticularAnswerDetails(getAnswer.data));
+    } catch (error) {
+      console.log(error);
     }
-    async function handleAnswerDownVoting(aId)  {
-      try {
-        const votRes = await  answerDownVoting(aId,tokenData);
-        const getAnswer =  await axios.get("/api/get-answer/" + id)
-
-        dispatch(setParticularAnswerDetails(getAnswer.data));
-      } catch (error) {
-        console.error(error);
-      }
+  }
+  async function handleAnswerDownVoting(aId) {
+    try {
+      const votRes = await answerDownVoting(aId, tokenData);
+      const getAnswer = await axios.get("/api/get-answer/" + id);
+      const user = await getUserDetails(tokenData);
+      dispatch(setUserDetails(user.response));
+      dispatch(setParticularAnswerDetails(getAnswer.data));
+    } catch (error) {
+      console.error(error);
     }
+  }
 
-
-    ///deleting answer
-    const answerDelete = async(aId)=>{
-      try {
-        swal({
-          title: "Are you sure?",
-          text: "are you sure you want to delete this answer?",
-          icon: "warning",
-          buttons: true,
-          dangerMode: true,
-        })
-        .then((deleteQuestion) => {
-          if (deleteQuestion) {
-             deleteAnswer(tokenData,aId).then((res)=>{
-              
-              axios.get("/api/get-answer/" + id).then((getAnswer) => {
-
-                dispatch(setParticularAnswerDetails(getAnswer.data));
-              })
-
-               
-             });
-           
-                  swal("Answer deleted successfully !", {
-              icon: "success",
+  ///deleting answer
+  const answerDelete = async (aId) => {
+    try {
+      swal({
+        title: "Are you sure?",
+        text: "are you sure you want to delete this answer?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((deleteQuestion) => {
+        if (deleteQuestion) {
+          deleteAnswer(tokenData, aId).then((res) => {
+            axios.get("/api/get-answer/" + id).then((getAnswer) => {
+              dispatch(setParticularAnswerDetails(getAnswer.data));
             });
-          } else {
-            swal("Canceled");
-          }
-        });
-        
-      } catch (error) {
-        console.log(error)
-      }
-      }
-      
+          });
 
-      ///answer accepting 
-      const acceptingAnswer =async (aid)=>{
-        console.log("toke data ",tokenData)
-        try {
-          swal({
-            title:"Are you sure?",
-            text:"Are you sure this answer is accepted?",
-            icon:"Warning",
-            buttons:true,
-            dangerMode:true,
-          })
-          .then((accept)=>{
-            if(accept){
-              acceptAnswer(aid,tokenData).then((res)=>{
-                axios.get("/api/get-answer/" + id).then((getAnswer) => {
-                  dispatch(setParticularAnswerDetails(getAnswer.data));
-                })
-              })
-          }
-          })
-          
-        } catch (error) {
-          console.log(error)
+          swal("Answer deleted successfully !", {
+            icon: "success",
+          });
+        } else {
+          swal("Canceled");
         }
-      }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  ///answer accepting
+  const acceptingAnswer = async (aid) => {
+    console.log("toke data ", tokenData);
+    try {
+      swal({
+        title: "Are you sure?",
+        text: "Are you sure this answer is accepted?",
+        icon: "Warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((accept) => {
+        if (accept) {
+          acceptAnswer(aid, tokenData).then((res) => {
+            axios.get("/api/get-answer/" + id).then((getAnswer) => {
+              dispatch(setParticularAnswerDetails(getAnswer.data));
+              z;
+            });
+          });
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-      console.log("particularanswer ",particularAnswersDetails)
   return (
     <div className="main col-xl-12">
       <div className="main-container">
@@ -443,7 +438,6 @@ function MainQuestion() {
             {particularAnswersDetails?.length} Answers
           </p>
           {particularAnswersDetails?.map((_q) => (
-          
             <div key={_q?._id} className="all-questions-container">
               <div className="all-questions-left col-md-2">
                 <div className="all-options">
@@ -462,11 +456,12 @@ function MainQuestion() {
                     </svg>
                   </span>
                   <span className="answer-vote">
-
-                  {_q?.vote?.length ? _q?.vote?.length : "0"}
+                    {_q?.vote?.length ? _q?.vote?.length : "0"}
                   </span>
-                  <span className="arrow" 
-                  onClick={()=>handleAnswerDownVoting(_q._id)}>
+                  <span
+                    className="arrow"
+                    onClick={() => handleAnswerDownVoting(_q._id)}
+                  >
                     <svg
                       aria-hidden="true"
                       className="svg-icon iconArrowDownLg"
@@ -478,13 +473,27 @@ function MainQuestion() {
                     </svg>
                   </span>
                   <div>
-                 
-                  <FiCheck className="tickmark" style={{ color: _q[0]?.accepted === true ? "grey" : "green" , marginBottom:"10px",height:"15px",cursor:"pointer"}} onClick={() => acceptingAnswer(_q._id)} />
-  
-
+                    <FiCheck
+                      className="tickmark"
+                      style={{
+                        color: _q[0]?.accepted === true ? "grey" : "green",
+                        marginBottom: "10px",
+                        height: "15px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => acceptingAnswer(_q._id)}
+                    />
                   </div>
-                 {_q.user._id === userDetails._id && <BiTrashAlt onClick={()=>answerDelete(_q._id)} style={{ marginBottom:"10px",height:"15px",cursor:"pointer"}}/>}
-             
+                  {_q.user._id === userDetails._id && (
+                    <BiTrashAlt
+                      onClick={() => answerDelete(_q._id)}
+                      style={{
+                        marginBottom: "10px",
+                        height: "15px",
+                        cursor: "pointer",
+                      }}
+                    />
+                  )}
                 </div>
               </div>
 

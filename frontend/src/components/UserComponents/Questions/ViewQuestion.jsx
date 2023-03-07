@@ -16,7 +16,7 @@ const ViewQuestions = () => {
 const [searchTerm , setSearchTerm] = useState('');
 
 
-
+//geting questions and updating redux
 useEffect(()=>{
   async function findQuestions(){
     await axios.get("/api/getQuestion").then(res => {
@@ -79,19 +79,9 @@ dispatch(filterQuestionDetails([val]))
             </div>
             <div className="d-flex justify-content-between">
               <p style={{ fontSize: "16px" }}>{ questions?.length} questions</p>
-             
-              {/* <button
-                className="btn border"
-                style={{
-                  color: "rgb(122, 167, 199)",
-                  backgroundColor: "rgb(225, 236, 244)",
-                }}
-              >
-                <i className="fas fa-sort-amount-up-alt"></i> Filter
-              </button> */}
+            
             </div>
             <hr />
-            {/* Users Questionsadded */}
             {/* <UserQuestions  /> */}
             <MainQuestion/>
 

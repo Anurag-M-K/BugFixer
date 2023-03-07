@@ -19,6 +19,7 @@ function AdminQuestion() {
   const [users, setUsers] = useState([]);
   const dispatch = useDispatch();
 
+  //geting users dertails and updating redux
   useEffect(() => {
     axios.defaults.baseURL = "http://localhost:8060";
     const data = axios
@@ -32,6 +33,7 @@ function AdminQuestion() {
       });
   }, []);
 
+  //blocking users 
   const userBlock = async (id) => {
     try {
       swal({
@@ -65,6 +67,7 @@ function AdminQuestion() {
     }
   };
 
+  //unblocking user 
   const userUnBlock = async (id) => {
     try {
       swal({

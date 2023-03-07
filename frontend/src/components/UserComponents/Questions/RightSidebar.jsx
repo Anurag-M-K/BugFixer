@@ -5,7 +5,6 @@ import RelatedTags from "./RelatedTags";
 const RightSidebar = () => {
   return (
     <>
-      {/* Blog card started */}
       <div className="card shadow-sm">
         <div
           className="card-header"
@@ -19,7 +18,7 @@ const RightSidebar = () => {
         >
           {blog.map((content) => {
             return (
-              <div className="d-flex">
+              <div key={content?.name} className="d-flex">
                 <i class="fas fa-pen mr-2"></i>
                 <p>{content}</p>
               </div>
@@ -36,27 +35,10 @@ const RightSidebar = () => {
           className="card-body border-bottom"
           style={{ backgroundColor: "rgb(251, 243, 213)" }}
         >
-          {/* {meta.map((content) => {
-            return (
-              <div className="d-flex">
-                <i
-                  class="far fa-comment-alt mr-2"
-                  style={{ color: "rgb(122, 167, 199)" }}
-                ></i>
-                <p>{content}</p>
-              </div>
-            );
-          })} */}
+       
         </div>
       </div>
-      {/* Blog card ends */}
-
-   
-
-      {/* Relative Tags part added */}
       <RelatedTags />
-
-      {/* Network Questions added */}
       <RelatedQuestion />
     </>
   );

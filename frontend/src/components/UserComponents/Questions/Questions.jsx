@@ -15,7 +15,7 @@ const Questions = () => {
 const [searchTerm , setSearchTerm] = useState('');
 
 
-
+//geting questions and updating question redux
 useEffect(()=>{
   async function findQuestions(){
     const res = await axios.get("/api/getQuestion")

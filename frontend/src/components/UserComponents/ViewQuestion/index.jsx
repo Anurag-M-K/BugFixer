@@ -15,7 +15,7 @@ const ViewQuestions = () => {
 const [searchTerm , setSearchTerm] = useState('');
 
 
-
+//findng questions and update redux
 useEffect(()=>{
   async function findQuestions(){
     await axios.get("/api/getQuestion").then(res => {

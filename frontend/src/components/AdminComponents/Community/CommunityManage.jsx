@@ -17,6 +17,8 @@ function CommunityManage() {
   const { posts } = useSelector((state) => state.communityPosts);
   const { adminToken } = useSelector((state)=>state.adminToken)
 
+
+  //get all community posts and updatin redux
   useEffect(() => {
     try {
       (async () => {
@@ -29,6 +31,7 @@ function CommunityManage() {
   }, []);
 
 
+  //deleting community  and geting community posts and updating redux
   const handleDeleteCommunity = async(commmunityId)=>{
       try {
         await deleteCommunity(commmunityId , adminToken)

@@ -20,47 +20,47 @@ const Footer = () => {
                         {content.header}
                       </h6>
                       <p>
-                        <Link to="/jobs" className="text-reset">
+                        <Link    className="text-reset">
                           {content.con1}
                         </Link>
                       </p>
                       <p>
-                        <Link to="/jobs" className="text-reset">
+                        <Link  className="text-reset">
                           {content.con2}
                         </Link>
                       </p>
                       <p>
-                        <Link to="/developer" className="text-reset">
+                        <Link  className="text-reset">
                           {content.con3}
                         </Link>
                       </p>
                       <p>
-                        <Link to="/salary" className="text-reset">
+                        <Link  className="text-reset">
                           {content.con4}
                         </Link>
                       </p>
                       <p>
-                        <Link to="/salary" className="text-reset">
+                        <Link  className="text-reset">
                           {content.con5}
                         </Link>
                       </p>
                       <p>
-                        <Link to="/salary" className="text-reset">
+                        <Link  className="text-reset">
                           {content.con6}
                         </Link>
                       </p>
                       <p>
-                        <Link to="/salary" className="text-reset">
+                        <Link  className="text-reset">
                           {content.con7}
                         </Link>
                       </p>
                       <p>
-                        <Link to="/salary" className="text-reset">
+                        <Link  className="text-reset">
                           {content.con8}
                         </Link>
                       </p>
                       <p>
-                        <Link to="/salary" className="text-reset">
+                        <Link  className="text-reset">
                           {content.con9}
                         </Link>
                       </p>
@@ -68,32 +68,32 @@ const Footer = () => {
                   </>
                 );
               })}
-              {/* STACK OVERFLOW stacks Ends */}
+              {/* bugfixer st Ends */}
 
               {/* Social Links started */}
               <div className="col-md-3 col-lg-2 col-xl-2 d-flex m-auto">
                 <p className="mx-4">
-                  <Link to="/" className="text-reset">
+                  <Link  className="text-reset">
                     <i class="fas fa-id-card"></i>Blog
                   </Link>
                 </p>
                 <p>
-                  <Link to="/" className="text-reset  mx-4">
+                  <Link  className="text-reset  mx-4">
                     <i class="fab fa-facebook-square"></i>Facebook
                   </Link>
                 </p>
                 <p>
-                  <Link to="/" className="text-reset  mx-3">
+                  <Link  className="text-reset  mx-3">
                     <i class="fab fa-instagram-square"></i>Instagram
                   </Link>
                 </p>
                 <p>
-                  <Link to="/" className="text-reset  mx-4">
+                  <Link  className="text-reset  mx-4">
                     <i class="fab fa-twitter-square"></i>Twitter
                   </Link>
                 </p>
                 <p>
-                  <Link to="/" className="text-reset mx-4">
+                  <Link  className="text-reset mx-4">
                     <i className="fab fa-linkedin"></i> LinkedIn
                   </Link>
                 </p>
@@ -106,7 +106,7 @@ const Footer = () => {
         {/* Copyright Started */}
         <div className="text-right bg-dark mr-5">
           © 2023 Copyright: {""}
-          <Link to="/" className="text-reset fw-bold">
+          <Link  className="text-reset fw-bold">
             created by Anurag MK
           </Link>
         </div>

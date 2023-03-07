@@ -64,7 +64,6 @@ export default function Analytics() {
   useEffect(()=>{
     (async()=>{
       const tags = await getAllTags(adminToken)
-      console.log("tags ",tags);
       dispatch(setTags(tags))
     })()
   },[])

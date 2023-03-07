@@ -17,6 +17,7 @@ function Tags() {
   const { adminToken } = useSelector((state)=>state.adminToken)
   const { allTags } = useSelector((state)=>state.tag)
 
+  //geting tags and updating redux
   useEffect(()=>{
     (async()=>{
       const tags = await getTags(adminToken)
@@ -24,7 +25,7 @@ function Tags() {
     })()
   },[])
 
-
+//deleting tags and geting tags  updating redux 
   const handleDeleteTag = async(tag)=>{
       try {
         await deleteTag(tag , adminToken)

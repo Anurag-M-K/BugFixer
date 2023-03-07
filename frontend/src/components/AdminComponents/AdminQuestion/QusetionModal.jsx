@@ -7,6 +7,9 @@ import ReactHtmlParser from "react-html-parser";
 function QuestionModal({row}) {
   const [lgShow, setLgShow] = useState(false);
   const [QuestionDetails,setQuestionDetails] = useState("")
+
+
+  //geting question details
   useEffect(() => {
     async function getQuestionDetails() {
       await axios
