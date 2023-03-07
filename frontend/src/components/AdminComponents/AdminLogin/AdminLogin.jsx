@@ -25,7 +25,7 @@ function AdminLogin() {
     try {
       dispatch(showLoading());
 
-      const url = "http://localhost:8060/admin/admin-login";
+      const url = `${import.meta.env.VITE_APP_BACKEND_URL}/admin/admin-login`;
 
       dispatch(hideLoading());
 

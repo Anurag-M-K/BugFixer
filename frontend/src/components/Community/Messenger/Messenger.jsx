@@ -28,7 +28,7 @@ function Messenger() {
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef(); //which is used for automatically scroll up when a message is send
-  const socket = useRef(io("ws://localhost:8080"));
+  const socket = useRef(io(import.meta.env.VITE_APP_SOCKET_URL));
   const [value, setValue] = useState("");
   const { clidkedUserDetails } = useSelector((state) => state.clickedUser);
   const [showMenu, setShowMenu] = useState(false);
@@ -38,7 +38,7 @@ function Messenger() {
   const videoRef = useRef();
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8080");
+    socket.current = io(import.meta.env.VITE_APP_SOCKET_URL);
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data?.senderId,

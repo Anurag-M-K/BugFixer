@@ -12,7 +12,7 @@ const LeftSidebar = () => {
         href="#list-item-1"
         style={{ fontSize: "12px" }}
       >
-        <i class="fas fa-home mr-2"></i>Home
+        <i className="fas fa-home mr-2"></i>Home
       </button>
       <button 
       onClick={()=>navigate('/user/community')}
@@ -20,7 +20,7 @@ const LeftSidebar = () => {
         href="#list-item-1"
         style={{ fontSize: "12px" }}
       >
-        <i class="fas fa-users mr-2"></i> Community
+        <i className="fas fa-users mr-2"></i> Community
       </button>
       <button
       onClick={()=>navigate('/user/home')}
@@ -28,7 +28,7 @@ const LeftSidebar = () => {
         href="#list-item-1"
         style={{ fontSize: "12px" }}
       >
-        <i class="fas fa-globe-asia mr-2"></i> Questions
+        <i className="fas fa-globe-asia mr-2"></i> Questions
       </button>
       <button
      
@@ -36,7 +36,7 @@ const LeftSidebar = () => {
         href="#list-item-1"
         style={{ fontSize: "12px" }}
       >
-        <i class="fas fa-hashtag mr-2"></i> Tags
+        <i className="fas fa-hashtag mr-2"></i> Tags
       </button>
       <button
      
@@ -44,7 +44,7 @@ const LeftSidebar = () => {
         href="#list-item-1"
         style={{ fontSize: "12px" }}
       >
-        <i class="fas fa-users-cog mr-2"></i> Users
+        <i className="fas fa-users-cog mr-2"></i> Users
       </button>
 
       {/* Collaborate card started */}

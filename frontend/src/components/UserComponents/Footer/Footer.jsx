@@ -5,18 +5,18 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <>
-      <footer class="footer text-lg-start bg-dark text-muted py-5">
-        <section class="">
-          <div class="container text-md-start mt-5">
-            <div  class="row mt-3">
-              <div class="col-md-2 col-lg-4 col-xl-3 mx-auto mb-4 ">
+      <footer className="footer text-lg-start bg-dark text-muted py-5">
+        <section className="">
+          <div className="container text-md-start mt-5">
+            <div  className="row mt-3">
+              <div className="col-md-2 col-lg-4 col-xl-3 mx-auto mb-4 ">
                 <img  alt="" />
               </div>
               {footerContent.map((content) => {
                 return (
                   <>
                     <div key={content.header} className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 footer--content">
-                      <h6 class="text-uppercase fw-bold mb-4">
+                      <h6 className="text-uppercase fw-bold mb-4">
                         {content.header}
                       </h6>
                       <p>
@@ -74,22 +74,22 @@ const Footer = () => {
               <div className="col-md-3 col-lg-2 col-xl-2 d-flex m-auto">
                 <p className="mx-4">
                   <Link  className="text-reset">
-                    <i class="fas fa-id-card"></i>Blog
+                    <i className="fas fa-id-card"></i>Blog
                   </Link>
                 </p>
                 <p>
                   <Link  className="text-reset  mx-4">
-                    <i class="fab fa-facebook-square"></i>Facebook
+                    <i className="fab fa-facebook-square"></i>Facebook
                   </Link>
                 </p>
                 <p>
                   <Link  className="text-reset  mx-3">
-                    <i class="fab fa-instagram-square"></i>Instagram
+                    <i className="fab fa-instagram-square"></i>Instagram
                   </Link>
                 </p>
                 <p>
                   <Link  className="text-reset  mx-4">
-                    <i class="fab fa-twitter-square"></i>Twitter
+                    <i className="fab fa-twitter-square"></i>Twitter
                   </Link>
                 </p>
                 <p>

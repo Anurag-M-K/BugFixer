@@ -26,7 +26,7 @@ export default function Analytics() {
   const { adminToken } = useSelector((state) => state.admin)
   const dispatch = useDispatch()
   useEffect(() => {
-    axios.defaults.baseURL = "http://localhost:8060";
+    axios.defaults.baseURL = import.meta.env.VITE_APP_BACKEND_URL;
     const data = axios
       .get("/admin/user-details")
       .then((response) => {

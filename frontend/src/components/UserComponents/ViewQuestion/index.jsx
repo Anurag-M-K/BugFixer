@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import LeftSidebar from "../Questions/LeftSidebar";
 import RightSidebar from "../Questions/RightSidebar";
 import Pagination from "../Questions/Pagination";
-import { Link } from "react-router-dom";
 import axios from "../../../config/axiosInstance";
 import {useDispatch}  from 'react-redux'
 import {filterQuestionDetails, setQuestionDetails} from '../../../redux/features/questionSlice'
@@ -40,7 +39,7 @@ dispatch(filterQuestionDetails([val]))
 
     return val
   }
-}).map((val,key)=>{
+}).map((val)=>{
     
   return val.title
 })
@@ -89,5 +88,6 @@ dispatch(filterQuestionDetails([val]))
     </>
   );
 };
+
 
 export default ViewQuestions;

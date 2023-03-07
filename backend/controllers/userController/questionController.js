@@ -90,6 +90,7 @@ const getQuestion = async (req, res) => {
 };
 
 const particularQuestion = async (req, res) => {
+  console.log("sdfsdfasd")
   try {
     QuestionDB.aggregate([
       {

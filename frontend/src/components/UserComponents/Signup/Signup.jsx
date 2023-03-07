@@ -66,7 +66,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "/api/userSignup";
+      const url = `/api/userSignup`;
       const { data: res } = await axios.post(url, data).then((res) => {
         dispatch(setUserDetails(res, res.data.OTP));
         navigate("/user/otp-page");
@@ -291,8 +291,6 @@ const Signup = () => {
                   >
                     signup{" "}
                   </button>
-                 
-
                   <Link to={"/user/login-page"}>
                     <h6 className="alreadyAcc">Already have an account?</h6>
                   </Link>

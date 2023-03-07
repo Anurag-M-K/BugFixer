@@ -7,7 +7,6 @@ export const commentSlice = createSlice({
     },
     reducers:{
         setCommentDetails:(state,action)=>{
-            console.log("slice for that ",action.payload)
             state.commentDetails = action.payload;
         }
     }

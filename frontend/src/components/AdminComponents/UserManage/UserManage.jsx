@@ -21,7 +21,7 @@ function AdminQuestion() {
 
   //geting users dertails and updating redux
   useEffect(() => {
-    axios.defaults.baseURL = "http://localhost:8060";
+    axios.defaults.baseURL = import.meta.env.VITE_APP_BACKEND_URL;
     const data = axios
       .get("/admin/user-details")
       .then((response) => {
@@ -59,7 +59,7 @@ function AdminQuestion() {
         }
       });
 
-      axios.defaults.baseURL = "http://localhost:8060";
+      axios.defaults.baseURL = import.meta.env.VITE_APP_BACKEND_URL;
   
    ;
     } catch (error) {
@@ -79,7 +79,7 @@ function AdminQuestion() {
       })
       .then((userUnblock) => {
         if (userUnblock) {
-          axios.defaults.baseURL = "http://localhost:8060";
+          axios.defaults.baseURL = import.meta.env.VITE_APP_BACKEND_URL;
            axios.put("/admin/unblock-user/" + id).then((res) => {
             toast.success("User unblocked");
             axios.get("/admin/user-details").then((response) => {

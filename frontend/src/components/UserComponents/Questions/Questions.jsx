@@ -4,7 +4,7 @@ import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
 import UserQuestions from "./UserQuestions";
 import Pagination from "./Pagination";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "../../../config/axiosInstance";
 import {useDispatch}  from 'react-redux'
 import {filterQuestionDetails, setQuestionDetails} from '../../../redux/features/questionSlice'
@@ -13,7 +13,7 @@ const Questions = () => {
   const dispatch = useDispatch()
   const [questions,setQuestions] = useState([]);
 const [searchTerm , setSearchTerm] = useState('');
-
+const navigate = useNavigate()
 
 //geting questions and updating question redux
 useEffect(()=>{
@@ -68,12 +68,12 @@ dispatch(filterQuestionDetails([val]))
                 </h2>
                 <input className="searchInput" type="text" placeholder="search..." onChange={event => {setSearchTerm(event.target.value)}} />
                 
-                <Link to='/user/add-question'><button
+                <button onClick={()=>navigate('/user/add-question')}
                   className="btn btn-primary btn-small"
                   style={{ fontSize: "14px" }}
                 >
                   Ask Question
-                </button></Link>
+                </button> 
               </div>
             </div>
             <div className="d-flex justify-content-between">

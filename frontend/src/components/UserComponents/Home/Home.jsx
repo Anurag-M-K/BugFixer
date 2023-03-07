@@ -73,7 +73,7 @@ const HomePage = () => {
                 For large orginations<i class="fas fa-dice-d20"></i>
                 </button> */}
                 <button type="button" className="btn btn-primary">
-                  For Small teams <i class="fas fa-user-friends"></i>
+                  For Small teams <i className="fas fa-user-friends"></i>
                 </button>
               </div>
             </div>
@@ -90,7 +90,7 @@ const HomePage = () => {
               {details.map((det) => {
                 return (
                   <>
-                    <div>
+                    <div key={det.reach}>
                       <h3>{det.reach}</h3>
                       <p>{det.detail1}</p>
                       <p>{det.detail2}</p>

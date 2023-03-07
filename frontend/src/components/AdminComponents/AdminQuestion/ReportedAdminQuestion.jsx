@@ -23,7 +23,7 @@ function AdminQuestion() {
 
   //get reported questions and updatin redux
   useEffect(() => {
-      axios.defaults.baseURL = "http://localhost:8060";
+      axios.defaults.baseURL = import.meta.env.VITE_APP_BACKEND_URL;
       axios.get("/admin/get-report-questions").then((response) => {
         setQuestions(response.data.data)
        dispatch(setReportedQuestions(response.data.data))

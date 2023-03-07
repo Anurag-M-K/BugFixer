@@ -16,6 +16,7 @@ const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
 
 
 const userSignup = async(req,res)=>{
+    console.log("user successfully")
     try {
         let Email = req.body.email;
         let mailDetails = {

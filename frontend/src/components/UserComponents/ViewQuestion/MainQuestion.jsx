@@ -1,9 +1,7 @@
 import {
   Bookmark,
-  CloseOutlined,
-  ConstructionOutlined,
+
   History,
-  Try,
 } from "@mui/icons-material";
 import { Avatar, Link } from "@mui/material";
 import axios from "../../../config/axiosInstance";
@@ -14,14 +12,13 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; //quills css important
 import ReactHtmlParser from "react-html-parser";
 import { useDispatch, useSelector } from "react-redux";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { setSingleQuestionDetails } from "../../../redux/features/singleQuestionSlice";
 import { useLocation } from "react-router-dom";
 import ReportReason from "./ReportReason";
 import { setCommentDetails } from "../../../redux/features/commentSlice";
 import { FiCheck } from "react-icons/fi";
 import {
-  getAnswers,
   questionDecVoting,
   questionVoting,
 } from "../../../helper/userQuestionHelper";
@@ -41,18 +38,18 @@ function MainQuestion() {
   const [show, setShow] = useState(false);
   const [answer, setAnswer] = useState([]);
   const [questionData, setQuestionData] = useState([]);
-  const { userDetails } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
-  var [vote, setVote] = useState(0);
+  // var [vote, setVote] = useState(0);
   var [answerVote, setAnswerVote] = useState([]);
   const dispatch = useDispatch();
   const { tokenData } = useSelector((state) => state.user);
-  const [voteResponse, setVoteResponse] = useState("");
+  // const [voteResponse,   ] = useState("");
   const [voteRes, setVoteRes] = useState("");
   const { singleQuestiondata } = useSelector((state) => state.singleQuestion);
   const { particularAnswersDetails } = useSelector(
     (state) => state.particularAnswers
-  );
+    );
+    const { userDetails } = useSelector((state) => state.user);
 
   //geting question id from url
   let location = useLocation();
@@ -63,18 +60,19 @@ function MainQuestion() {
     setAnswer(value);
   };
 
+  
   //geting quesitons and comments updates state
   useEffect(() => {
     (async () => {
       try {
-        await axios.get(`/api/question/${id}`).then(async (res) => {
+         axios.get(`/api/question/${id}`).then(async (res) => {
           const comment = await axios.get(`/api/comment/${id}`);
           dispatch(setCommentDetails(comment.data));
           setQuestionData(res.data[0]);
           setAnswerVote(res.data[0].answerDetails);
         });
       } catch (error) {
-        console.log(error);
+        console.log("error ",error);
       }
     })();
   }, []);
@@ -258,8 +256,8 @@ function MainQuestion() {
     try {
       swal({
         title: "Are you sure?",
-        text: "Are you sure this answer is accepted?",
-        icon: "Warning",
+        text: "Are you sure this answer is righ?",
+        icon: "success",
         buttons: true,
         dangerMode: true,
       }).then((accept) => {
@@ -267,9 +265,14 @@ function MainQuestion() {
           acceptAnswer(aid, tokenData).then((res) => {
             axios.get("/api/get-answer/" + id).then((getAnswer) => {
               dispatch(setParticularAnswerDetails(getAnswer.data));
-              z;
+              ;
             });
           });
+          swal("Answer accepted", {
+            icon: "success",
+          });
+        }else{
+          swal("Canceled");
         }
       });
     } catch (error) {
@@ -476,7 +479,7 @@ function MainQuestion() {
                     <FiCheck
                       className="tickmark"
                       style={{
-                        color: _q[0]?.accepted === true ? "grey" : "green",
+                        color: _q?.accepted === true ? "green" : "grey",
                         marginBottom: "10px",
                         height: "15px",
                         cursor: "pointer",

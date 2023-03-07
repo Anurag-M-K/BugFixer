@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const db = async () => {
   try {
     const connectionParams = {
-      useNewUrlParser: true,
+      useNewUrlParser: true,   
       useUnifiedTopology: true
     };
 

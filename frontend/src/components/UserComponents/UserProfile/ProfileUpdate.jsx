@@ -23,7 +23,6 @@ function ProfileUpdate({ userDetails }) {
   //user profile data updating and geting updated data and update redux
   const onSubmit = async (values) => {
     try {
-      axios.defaults.baseURL = "http://localhost:80";
       await updateUserProfile( values , tokenData)
       const datas =  await getUserDetails( tokenData)
       toast.success("Profile updated");
@@ -54,7 +53,7 @@ function ProfileUpdate({ userDetails }) {
       <Modal show={show} onHide={handleClose}>
         <form onSubmit={handleSubmit}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Edit your details </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">

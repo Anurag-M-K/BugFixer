@@ -89,7 +89,8 @@ function Header() {
        
           {userDetails?.firstName ? (
             <>
-            <img className="img-header" onClick={showProfile}  style={{width:"36px",height:"36px", cursor:"pointer", borderRadius: "22px"}} src={userDetails.imageUrl ? userDetails?.imageUrl : "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"} alt="" />
+            <img className="img-header" onClick={showProfile}  style={{width:"36px",height:"36px", cursor:"pointer", borderRadius: "22px"}}
+             src={userDetails.imageUrl ? userDetails?.imageUrl : "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"} alt="" />
 
 
               <span onClick={showProfile} className="ms-3 me-3 headerBtn"> {userDetails?.firstName}</span>
