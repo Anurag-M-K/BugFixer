@@ -69,8 +69,8 @@ dispatch(filterQuestionDetails([val]))
                 <input className="searchInput" type="text" placeholder="search..." onChange={event => {setSearchTerm(event.target.value)}} />
                 
                 <button onClick={()=>navigate('/user/add-question')}
-                  className="btn btn-primary btn-small"
-                  style={{ fontSize: "14px" }}
+                  className="btn btn-primary btn-small" 
+                  style={{ fontSize: "14px" ,width:"20vh",height:"6vh"}}
                 >
                   Ask Question
                 </button> 
@@ -78,16 +78,6 @@ dispatch(filterQuestionDetails([val]))
             </div>
             <div className="d-flex justify-content-between">
               <p style={{ fontSize: "16px" }}>{ questions?.length} questions</p>
-             
-              <button
-                className="btn border"
-                style={{
-                  color: "rgb(122, 167, 199)",
-                  backgroundColor: "rgb(225, 236, 244)",
-                }}
-              >
-                <i className="fas fa-sort-amount-up-alt"></i> Filter
-              </button>
             </div>
             <hr />
             <UserQuestions  />

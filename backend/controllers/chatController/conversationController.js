@@ -7,6 +7,15 @@ const conversation = async(req,res)=>{
         members : [req.body.userId, req.body.friendId]
     });
     try {
+        const conversation = await Conversation.findOne({
+            members : { $all : [req.body.userId, req.body.friendId]},
+        });
+
+        if(conversation){
+            return res.status(200).json(conversation)
+        }
+    
+        
         const savedConversation = await newConversation.save();
         res.status(200).json(savedConversation)
         

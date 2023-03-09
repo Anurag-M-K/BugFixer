@@ -63,11 +63,7 @@ dispatch(filterQuestionDetails([val]))
             className="questions--body col-md-7"
             style={{ fontSize: "12px" }}
           >
-            <div>
-              <div className="d-flex justify-content-between my-3">
-              
-              </div>
-            </div>
+           
            
             {/* <UserQuestions  /> */}
             <MainQuestion/>

@@ -110,9 +110,10 @@ cursor: pointer;
    width: 50px;
    background-color:rgb(207, 198, 161);
  }
- @media screen and(min-width:992px) {
-   .img-header,.badge{
+ @media screen and(max-width:992px) {
+   .img-header{
       display: none;
+
    }
    
  }

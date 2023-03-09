@@ -144,6 +144,9 @@
     align-items: center;
     padding-right: 15px;
     padding-left: 0;
+
+    justify-content: flex-start;
+    align-items: center;
   }
   p {
     font-size: 15px

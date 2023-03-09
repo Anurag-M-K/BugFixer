@@ -84,3 +84,9 @@
     cursor: pointer;
     margin-left: 10px;
   }
+@media screen and (max-width:576px) {
+    .chatOnline{
+        display: none;
+    }
+    
+}

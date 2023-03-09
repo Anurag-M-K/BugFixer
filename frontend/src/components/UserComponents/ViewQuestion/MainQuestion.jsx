@@ -307,7 +307,7 @@ function MainQuestion() {
                   flexDirection: "column",
                 }}
               >
-                <div className="col-md-12 side">
+                <div className="side">
                   <div className="upArrow">
                     <span className="arrow">
                       <svg
@@ -358,7 +358,7 @@ function MainQuestion() {
                   </div>
                 </div>
               </div>
-              <div className="col-md-10">
+              <div className="col-md-10" >
                 <div className="question-answer">
                   <p>{ReactHtmlParser(questionData?.body)}</p>
                   <div className="author">
@@ -422,6 +422,7 @@ function MainQuestion() {
                   </div>
                 </div>
               </div>
+             
             </div>
           </div>
         </div>

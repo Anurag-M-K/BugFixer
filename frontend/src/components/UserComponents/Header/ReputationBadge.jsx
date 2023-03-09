@@ -15,7 +15,7 @@ function ReputationBadge() {
   };
   return (
     <div>
-      <div style={{ margin: 0 , width:"40px",color:"red",cursor:"pointer"}} variant="contained" onClick={openPopover}>
+      <div style={{ margin: 0 , width:"40px",cursor:"pointer"}} variant="contained" onClick={openPopover}>
        {/* <HiOutlineBadgeCheck/> */}
        <SlBadge/> 
       </div>

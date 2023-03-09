@@ -33,7 +33,7 @@ function UserRoute(){
           <Route exact path='/user/otp-page' element={<Otp/>} />
           <Route exact path='/userview-question' element={<Private><ViewQuestionPage/></Private>} />
           <Route exact path="/user/messenger" element={<Private><Messenger/></Private>}/>
-          <Route exact path="/user/page" element={<CommunityHomePage/>}/>
+          <Route exact path="/user/page" element={<Private><CommunityHomePage/></Private>}/>
           <Route exact path="/user/repu" element={<ReputationBadge/>}/>
           <Route exact path="/user/community" element={<CommunityHomePage/>}/>
           <Route exact path="/user/single-community/:id" element={<SingleCommunityPage/>}/>

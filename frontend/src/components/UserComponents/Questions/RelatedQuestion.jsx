@@ -31,13 +31,8 @@ const RelatedQuestion = () => {
           return ( 
             <div key={title._id} className=" d-flex mt-3">
               <div>
-                <img
-                  alt=""
-                  width="15px"
-                  className="mr-2"
-                />
               </div>
-              <Link className="mt-2" to={`/user/question?id=${title?._id}`}>{title?.title ? title?.title : "" }</Link>
+              <Link className="mt-2" to={`/user/question?id=${title?._id}`}> <small> {title?.title ? title?.title : "" }</small></Link>
             </div>
           ) })} 
       </div>

@@ -6,10 +6,8 @@ import { message } from "antd";
 import {  useSelector } from "react-redux";
 import { useState } from "react";
 import toast,{Toaster} from 'react-hot-toast';
-// import { CiLogout } from "react-icons/";
 import { GrLogout } from "react-icons/gr";
 import ReputationBadge from "./ReputationBadge";
-// import { HiBadgeCheck } from "react-icons/hi"; 
 
 function Header() {
   const {userDetails} = useSelector(state=> state.user)
@@ -86,43 +84,51 @@ function Header() {
            
           </li>
         </ul>
-       
+        
+        <div>
+
+       <ul className="navbar-nav ">
+
+     
           {userDetails?.firstName ? (
+       
             <>
-            <img className="img-header" onClick={showProfile}  style={{width:"36px",height:"36px", cursor:"pointer", borderRadius: "22px"}}
-             src={userDetails.imageUrl ? userDetails?.imageUrl : "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"} alt="" />
+            <li className="nav-item active"><img className="img-header me-2 " onClick={showProfile}  style={{width:"36px",height:"36px", cursor:"pointer", borderRadius: "22px"}}
+             src={userDetails.imageUrl ? userDetails?.imageUrl : "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"} alt="" /></li>
 
 
-              <span onClick={showProfile} className="ms-3 me-3 headerBtn"> {userDetails?.firstName}</span>
+             <li className="nav-item active"> <span onClick={showProfile} className=" me-3 headerBtn"> {userDetails?.firstName}</span></li>
              
-<ReputationBadge className="badge"/>
-<div  className=" " onClick={hndleLogout} style={{cursor:"pointer",borderRadius : "15px",width:"45px",paddingLeft:"8px"}}>
+   <li className="nav-item active"><ReputationBadge className="badge"/></li>
+     <li className="nav-item active"><div   onClick={hndleLogout} style={{cursor:"pointer",borderRadius : "15px",width:"45px",paddingLeft:"8px"}}>
 <GrLogout />
-</div>
+</div></li>
            
 
             </>
           ) : (
             <>
-              <Link to="/user/login-page" className="nav-link">
-                <button
+              {/* < to="/user/login-()=>navigpage" className="nav-link"> */}
+                <button onClick={()=>navigate("/user/login-page")}
                   className="btn btn-outline-primary my-sm-0 btn-sm px-3"
                   type="submit"
                   style={{ backgroundColor: "#e3f2fd", color: "gray" }}
                 >
                   Log in
                 </button>
-              </Link>
-              <Link to="/user/signup-page" className="nav-link">
-                <button
-                  className="btn btn-primary my-sm-0 btn-sm px-3"
+              {/* </> */}
+              {/* <Link to="/user/signup-page" className="nav-link"> */}
+                <button onClick={()=>navigate("/user/signup-page")}
+                  className="btn btn-primary my-sm-0 btn-sm px-3 ms-2"
                   type="submit"
                 >
                   Sign Up
                 </button>
-              </Link>
+              {/* </Link> */}
             </>
           )}
+            </ul>
+        </div>
         <Toaster />
       </div></>
         </nav>

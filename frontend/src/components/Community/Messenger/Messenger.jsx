@@ -310,9 +310,23 @@ function Messenger() {
           </div>
         </div>
       </div>
-      +
+      
+
+
+      {/* <div className="row">
+     <div className="col-lg-3 col-sm-4"></div>
+     <div className="col-lg-6 col-sm-4"></div>
+     <div className="col-lg-3 col-sm-4 chatOnline"><div></div> */}
+
+
+
+
+
+
     </>
   );
+
+
 }
 
 export default Messenger;

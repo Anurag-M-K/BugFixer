@@ -22,11 +22,13 @@ function SearchBar() {
     })();
   }, []);
 
+  const allusers = allUsersDetails.filter((users)=> users._id !== userDetails._id)
+
   //filter username  logic
   const handleFilter = (event) => {
     setDisplayBox(true);
     const searchWord = event.target.value;
-    const newFIlter = allUsersDetails.filter((value) => {
+    const newFIlter = allusers.filter((value) => {
       return value.firstName.toLowerCase().includes(searchWord.toLowerCase());
     });
     setFilterData(newFIlter);
@@ -34,7 +36,7 @@ function SearchBar() {
 
   //get clicked user  details and create conversation 
   const onClickUser = (userId) => {
-    const filteredUserData = allUsersDetails.filter(
+    const filteredUserData = allusers.filter(
       (value) => value._id == userId
     );
     dispatch(setClickedUserDetails(filteredUserData));

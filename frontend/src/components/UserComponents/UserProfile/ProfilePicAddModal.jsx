@@ -67,8 +67,10 @@ function ProfilePicAddModal() {
         method: "POST",
         body: JSON.stringify({ data: base64EncodedImage, userId }),
         headers: { "Content-type": "application/json" },
+        
       }).then((responseData) => {
         console.log(JSON.stringify(responseData, null, 4));
+       
       });
     } catch (error) {
       console.error(error);

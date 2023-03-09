@@ -1,7 +1,7 @@
 .loginPage{
     width: 40%;
     margin: auto;
-    min-width: 450px;
+    min-width: 45vh;
 }
 .loginPage--form{
     background-color: rgba(185,185,183,0.233);
