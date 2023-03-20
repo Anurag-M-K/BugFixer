@@ -4,18 +4,16 @@ import { getUser } from "../../../helper/UsersChatHelper";
 import { setFriendData } from "../../../redux/features/friendDataSlice";
 import "./Conversation.css";
 
-export default function Conversation({ conversation,messages }) {
+export default function Conversation({ conversation,messages,clickedUserDetails }) {
   const { userDetails } = useSelector((state) => state.user);
   const { tokenData } = useSelector((state) => state.user);
   const [user, setUser] = useState(null);
   const dispatch = useDispatch();
-  const { clidkedUserDetails } = useSelector((state) => state.clickedUser);
 
     useEffect(() => {
     const friendId = conversation?.members?.find(
       (memberId) => memberId !== userDetails._id
     );
-
     try {
       (async () => {
         const res = await getUser(friendId, tokenData);

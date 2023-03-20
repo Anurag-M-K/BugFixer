@@ -41,10 +41,8 @@ function Header() {
 
   return (
     <nav className="app navbar navbar-expand-lg navbar-light bg-light px-5">
-
-
           <><span onClick={() => navigate('/user/home')} className="navbar-brand">
-      <img src='https://res.cloudinary.com/dmvxmurxw/image/upload/v1674187605/logo4_g8zbar.png' alt="" width="160px" />
+      <img style={{cursor:"pointer"}} src='https://res.cloudinary.com/dmvxmurxw/image/upload/v1674187605/logo4_g8zbar.png' alt="" width="160px" />
     </span><button
 
       className="navbar-toggler"

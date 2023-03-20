@@ -4,7 +4,7 @@ import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
 import UserQuestions from "./UserQuestions";
 import Pagination from "./Pagination";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import axios from "../../../config/axiosInstance";
 import {useDispatch}  from 'react-redux'
 import {filterQuestionDetails, setQuestionDetails} from '../../../redux/features/questionSlice'
@@ -15,6 +15,7 @@ const Questions = () => {
 const [searchTerm , setSearchTerm] = useState('');
 const navigate = useNavigate()
 
+console.log("qustions ",questions)
 //geting questions and updating question redux
 useEffect(()=>{
   async function findQuestions(){
@@ -27,23 +28,17 @@ useEffect(()=>{
   findQuestions()
 },[])
 
-
-
 questions.filter((val)=>{
   if(searchTerm == ""){
     return val
   }else if(val.title.toLowerCase().includes(searchTerm.toLowerCase())){
 dispatch(filterQuestionDetails([val]))
-
     return val
   }
-}).map((val,key)=>{
+}).map((val)=>{
     
   return val.title
 })
-
-
-
 
   return (
     <>

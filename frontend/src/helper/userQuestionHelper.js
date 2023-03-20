@@ -64,3 +64,18 @@ export const getAnswers = async (tokenData , id) => {
         console.error(error)
     }
 }
+
+export const getQuestion = async()=>{
+    try {
+        const getQuestion = await instance({
+            url:"/api/getQuestion",
+            method:"GET",
+            headers:{
+                Authorization:tokenData
+            }
+        })
+        return getQuestion.data
+    } catch (error) {
+        console.log(error)
+    }
+}

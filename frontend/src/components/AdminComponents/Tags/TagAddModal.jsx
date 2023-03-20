@@ -4,7 +4,6 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { addTag, getTags } from "../../../helper/adminTagHelper";
 import { setTags } from "../../../redux/features/tagSlice";
@@ -14,7 +13,7 @@ function TagAddModal() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const { adminToken } = useSelector((state) => state.adminToken);
+  const { adminDetails } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
   const [state, setState] = useState("");
 
@@ -23,14 +22,16 @@ function TagAddModal() {
   const onSubmit = (values) => {
     try {
       (async () => {
-        const data = await addTag(values, adminToken);
-        const tags = await getTags(adminToken);
+        const data = await addTag(values, adminDetails);
+        const tags = await getTags(adminDetails);
         setState(tags);
         dispatch(setTags(tags));
         toast.success("Tag added successfully");
       })();
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong. Please try again.");
+
     }
   };
 
@@ -41,9 +42,10 @@ function TagAddModal() {
     onSubmit,
   });
 
+
   useEffect(() => {
     (async () => {
-      const tags = await getTags(adminToken);
+      const tags = await getTags(adminDetails);
       setState(tags);
       dispatch(setTags(tags));
     })();

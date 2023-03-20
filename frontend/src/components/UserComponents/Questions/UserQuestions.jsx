@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./UserQuestions.scss";
 import ReactHtmlParser from "react-html-parser";
 import { Link } from "react-router-dom";
@@ -19,11 +19,10 @@ const UserQuestions = () => {
             style={{ fontSize: "12px" }}
           >
             <div className="left text-muted mr-3">
-              <p className="">votes: {questionData?.vote.length} </p>
+              <p>votes: {questionData?.vote.length ?  questionData?.vote.length : "0"} </p>
               <br />
-              <p className="">Answers:{questionData?.answerDetails.length} </p>
+              <p>Answers:{questionData?.answerDetails.length ? questionData?.answerDetails.length : "0"} </p>
               <br />
-
               <small>12 views</small>
             </div>
             <div className="right">

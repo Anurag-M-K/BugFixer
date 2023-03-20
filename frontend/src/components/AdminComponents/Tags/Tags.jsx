@@ -1,73 +1,86 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import TagAddModal from "./TagAddModal";
-import { getTags  ,deleteTag } from "../../../helper/adminTagHelper";
-import './Tags.css'
+import { getTags, deleteTag } from "../../../helper/adminTagHelper";
 import { setTags } from "../../../redux/features/tagSlice";
-import { BiTrashAlt } from 'react-icons/bi'
+import { BiTrashAlt } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import Navbar from "../AdminDashboard/Navbar";
-
+import "./Tags.css";
 
 function Tags() {
   const dispatch = useDispatch();
-  const { adminToken } = useSelector((state)=>state.adminToken)
-  const { allTags } = useSelector((state)=>state.tag)
-
+  const { adminDetails } = useSelector((state) => state.admin);
+  const { allTags } = useSelector((state) => state.tag);
+  
   //geting tags and updating redux
-  useEffect(()=>{
-    (async()=>{
-      const tags = await getTags(adminToken)
-      dispatch(setTags(tags))
-    })()
-  },[])
+  useEffect(() => {
+    try {
+      
+      (async () => {
+        const tags = await getTags(adminDetails);
+        dispatch(setTags(tags));
+      })();
+    } catch (error) {
+      console.log(error)
+      toast.error("Something went wrong. Please try again.");
 
-//deleting tags and geting tags  updating redux 
-  const handleDeleteTag = async(tag)=>{
-      try {
-        await deleteTag(tag , adminToken)
-        const tags = await getTags(adminToken)
-      dispatch(setTags(tags))
-        toast.success("Deleted successfully")
-      } catch (error) {
-        console.log(error)
-      }
-  }
+    }
+  }, []);
+
+  //deleting tags and geting tags  updating redux
+  const handleDeleteTag = async (tag) => {
+    try {
+      await deleteTag(tag, adminDetails);
+      const tags = await getTags(adminDetails);
+      dispatch(setTags(tags));
+      toast.success("Deleted successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong. Please try again.");
+
+    }
+  };
 
   return (
-    <div style={{height:"100vh"}}>
+    <div style={{ height: "100vh" }}>
       <Section className="bg-black" style={{ backGroundColor: "black" }}>
-        <Navbar/>
+        <Navbar />
         <div className="add-data-btn">
           <div className="add-data-btn ">
-            <TagAddModal/>
+            <TagAddModal />
           </div>
         </div>
         <div className="tag-card-container">
-          <CardGroup >
-    {allTags[0]?.tags?.map((tag,index)=>{
-      return(
-<>
-        <div className="tag-card">
-      <Card  className="community-card-tag bg-dark">
-        <div className="coll-md-12 d-flex justify-content-end">< div>
-                  <BiTrashAlt onClick={()=>handleDeleteTag(tag)} style={{width:"25px",height:"25px",cursor:"pointer",color:"red"}}/>
-                </div></div>
-                <Card.Body className="card-body-tags">
-                  <Card.Title key={index} className="text-center">
-                    {tag}
-                  </Card.Title>
-                </Card.Body>
-               
-              </Card>
-            </div>
-</>
-              )
-              })}
-           
+          <CardGroup>
+            {allTags[0]?.tags?.map((tag, index) => {
+              return (
+                  <div key={index} className="tag-card">
+                    <Card className="community-card-tag bg-dark">
+                      <div className="coll-md-12 d-flex justify-content-end">
+                        <div>
+                          <BiTrashAlt
+                            onClick={() => handleDeleteTag(tag)}
+                            style={{
+                              width: "25px",
+                              height: "25px",
+                              cursor: "pointer",
+                              color: "red",
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <Card.Body className="card-body-tags">
+                        <Card.Title className="text-center">{tag}</Card.Title>
+                      </Card.Body>
+                    </Card>
+                  </div>
+                
+              );
+            })}
           </CardGroup>
         </div>
       </Section>

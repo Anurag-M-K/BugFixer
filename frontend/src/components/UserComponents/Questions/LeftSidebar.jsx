@@ -50,8 +50,8 @@ const LeftSidebar = () => {
       {/* Collaborate card started */}
       <div className="card text-left m-0 p-0">
         <div className="card-body">
-          <p>
-            <b>Bug fixer for Teams -</b>Collaborate and share knowledge with a
+         
+            <b>Bug fixer for Teams - </b> <p>  Collaborate and share knowledge with a
             private group.
           </p>
           <img src={Qimg} alt="IMG" width="120px" />

@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const verifyJWT = (req, res, next) => {
   const adminToken = req.headers.authorization;
+  console.log("adminToken", adminToken);
 
   jwt.verify(adminToken, "adminSecret", (err, decoded) => {
     if (err){

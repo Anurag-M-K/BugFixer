@@ -16,14 +16,14 @@ const RightSidebar = () => {
           className="card-body"
           style={{ backgroundColor: "rgb(251, 243, 213)" }}
         >
-          {blog.map((content) => {
-            return (
-              <div key={content?.name} className="d-flex">
-                <i class="fas fa-pen mr-2"></i>
-                <p>{content}</p>
-              </div>
-            );
-          })}
+        {blog.map((content, index) => {
+  return (
+    <div key={`content-${index}`} className="d-flex">
+      <i className="fas fa-pen mr-2"></i>
+      <p>{content.title}</p>
+    </div>
+  );
+})}
         </div>
         <div
           className="card-header"

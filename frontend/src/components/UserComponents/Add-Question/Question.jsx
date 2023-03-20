@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { addQuestion } from "../../../helper/userQuestionHelper";
 import { getUserDetails } from "../../../helper/UserProfileHelper";
 import { setUserDetails } from "../../../redux/features/userSlice";
+import { hideLoading, showLoading } from "../../../redux/features/alertSlice";
 
 function Question() {
   const [loading, setLoading] = useState(false);
@@ -70,8 +71,10 @@ function Question() {
         user: userDetails,
       };
 
+      dispatch(showLoading())
       await addQuestion(tokenData, bodyJSON);
       const user = await getUserDetails(tokenData);
+      dispatch(hideLoading())
       dispatch(setUserDetails(user.response));
       notify("question added successfully");
       navigate("/user/home");

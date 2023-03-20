@@ -60,7 +60,9 @@ router.post("/question", verifyJWT, questionAdd);
 router.post("/answer", answerAdd);
 router.post("/comment/:id", commentAdd);
 router.get("/comment/:id", getComment);
+
 router.get("/getQuestion", getQuestion);
+
 router.get("/question/:id", particularQuestion);
 router.get("/get-answer/:id", getAnswerByQId);
 router.get("/getUserProfile", verifyJWT, getUserProfile);

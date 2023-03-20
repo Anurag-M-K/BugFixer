@@ -17,7 +17,7 @@ function EditCommunityModal(postId) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const { adminToken } = useSelector((state) => state.adminToken);
+  const { adminDetails } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.communityPosts);
 
@@ -31,7 +31,7 @@ function EditCommunityModal(postId) {
         const data = await updateCommunity(
           values,
           filteredPosts[0]._id,
-          adminToken
+          adminDetails
         );
         const posts = await getAllCommunityPosts();
         dispatch(setCommunityPosts(posts));

@@ -11,19 +11,19 @@ let mailTransporter = nodemailer.createTransport({
         pass:"nuofbwxshkmukqbc",
     },
 });
+
 const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
 
 
 
 const userSignup = async(req,res)=>{
-    console.log("user successfully")
     try {
         let Email = req.body.email;
         let mailDetails = {
             from :"anuragmk10@gmail.com",
             to:Email,
             subject:"Bugfixer",
-            html:`<p> YOUR OTP FOR REGISTRATION IN bugfixerE IS ${OTP}</P>`,
+            html:`<p> YOUR OTP FOR REGISTRATION IN bugfixer IS ${OTP}</P>`,
         };
         mailTransporter.sendMail(mailDetails,function(err,data){
             if(err){
@@ -53,7 +53,6 @@ const userSignup = async(req,res)=>{
 }
 
 const otpVerify = (req,res)=>{
-    console.log("email ",req.body)
     const email = req.body.email;
 try {
     User.findOneAndUpdate({email:email},{$set:{verified:1}}).then((response)=>{

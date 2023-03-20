@@ -3,6 +3,8 @@ const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const userLogin = async (req, res) => {
   try {
+    console.log("here in login in page ")
+    console.log(req.body)
     const { error } = validate(req.body[0]);
     if (error)
     return res.status(400).send({ message: error.details[0].message });

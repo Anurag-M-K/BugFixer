@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../../../redux/features/alertSlice";
 import { setAdminDetails } from "../../../redux/features/adminSlice";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,6 @@ function AdminLogin() {
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -33,22 +33,19 @@ import { BiTrashAlt } from "react-icons/bi";
 import { getUserDetails } from "../../../helper/UserProfileHelper";
 import { setUserDetails } from "../../../redux/features/userSlice";
 import "./index.css";
+import { hideLoading, showLoading } from "../../../redux/features/alertSlice";
 
 function MainQuestion() {
   const [show, setShow] = useState(false);
   const [answer, setAnswer] = useState([]);
   const [questionData, setQuestionData] = useState([]);
   const [comment, setComment] = useState("");
-  // var [vote, setVote] = useState(0);
   var [answerVote, setAnswerVote] = useState([]);
   const dispatch = useDispatch();
   const { tokenData } = useSelector((state) => state.user);
-  // const [voteResponse,   ] = useState("");
   const [voteRes, setVoteRes] = useState("");
   const { singleQuestiondata } = useSelector((state) => state.singleQuestion);
-  const { particularAnswersDetails } = useSelector(
-    (state) => state.particularAnswers
-    );
+  const { particularAnswersDetails } = useSelector((state) => state.particularAnswers);
     const { userDetails } = useSelector((state) => state.user);
 
   //geting question id from url
@@ -65,6 +62,7 @@ function MainQuestion() {
   useEffect(() => {
     (async () => {
       try {
+        
          axios.get(`/api/question/${id}`).then(async (res) => {
           const comment = await axios.get(`/api/comment/${id}`);
           dispatch(setCommentDetails(comment.data));
@@ -72,6 +70,7 @@ function MainQuestion() {
           setAnswerVote(res.data[0].answerDetails);
         });
       } catch (error) {
+
         console.log("error ",error);
       }
     })();
@@ -114,16 +113,19 @@ function MainQuestion() {
           "Content-type": "application/json",
         },
       };
+      dispatch(showLoading())
       await axios
         .post("/api/answer", body, config)
         .then(async (res) => {
+          dispatch(hideLoading())
           const id = res.data.data.question_id;
           await axios.get("/api/get-answer/" + id).then(async (response) => {
             const user = await getUserDetails(tokenData);
+
             dispatch(setUserDetails(user.response));
             dispatch(setParticularAnswerDetails(response.data));
 
-            dispatch(setSingleQuestionDetails(response));
+            // dispatch(setSingleQuestionDetails(response));
           });
           toast.success("Answer added successfully");
 
@@ -145,7 +147,9 @@ function MainQuestion() {
         comment: comment,
         user: userDetails,
       };
+      dispatch(showLoading())
       await axios.post(`/api/comment/${qid}`, body).then(async (res) => {
+        dispatch(hideLoading())
         const comment = await axios.get(`/api/comment/${qid}`);
         dispatch(setCommentDetails(comment.data));
         setComment("");
@@ -360,7 +364,8 @@ function MainQuestion() {
               </div>
               <div className="col-md-10" >
                 <div className="question-answer">
-                  <p>{ReactHtmlParser(questionData?.body)}</p>
+                  
+                    <p style={{width:"30vw" , overflowY:"hidden"}}>{ReactHtmlParser(questionData?.body)}</p>
                   <div className="author">
                     <small>
                       asked{new Date(questionData?.created_at).toLocaleString()}
@@ -502,7 +507,7 @@ function MainQuestion() {
               </div>
 
               <div
-                className="question-answer col-md-10 col-sm-6  "
+                className="question-answer col-md-10   "
                 style={{
                   display: "flex",
                   justifyContent: " space-evenly",

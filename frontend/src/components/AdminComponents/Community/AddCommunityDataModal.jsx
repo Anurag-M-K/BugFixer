@@ -13,14 +13,14 @@ function AddCommunityDataModal() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const { adminToken } = useSelector((state) => state.adminToken);
+  const { adminDetails } = useSelector((state) => state.admin);
   const dispatch = useDispatch()
 
   //adding community posts , get all community posts and updating redux
   const onSubmit = (values) => {
     try {
       (async () => {
-        const data = await addCommunityPosts(values, adminToken);
+        const data = await addCommunityPosts(values, adminDetails);
         const posts = await getAllCommunityPosts();
         dispatch(setCommunityPosts(posts));
         toast.success("Post added successfully");

@@ -15,7 +15,7 @@ import EditCommunityModal from "./EditCommunityModal";
 function CommunityManage() {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.communityPosts);
-  const { adminToken } = useSelector((state)=>state.adminToken)
+  const { adminDetails } = useSelector((state)=>state.admin)
 
 
   //get all community posts and updatin redux
@@ -30,11 +30,11 @@ function CommunityManage() {
     }
   }, []);
 
-
+console.log("adminToken: " + adminDetails);
   //deleting community  and geting community posts and updating redux
   const handleDeleteCommunity = async(commmunityId)=>{
       try {
-        await deleteCommunity(commmunityId , adminToken)
+        await deleteCommunity(commmunityId , adminDetails)
         const posts = await getAllCommunityPosts();
         dispatch(setCommunityPosts(posts));
         toast.success("Deleted successfully")

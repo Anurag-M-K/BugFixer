@@ -18,13 +18,13 @@ function AdminQuestion() {
     
   const [questions, setQuestions] = useState([]);
   const dispatch = useDispatch();
-  const { adminToken } = useSelector((state)=>state.adminToken)
+  const { adminDetails } = useSelector((state)=>state.admin)
   const { adminQuestionDetails } = useSelector((state)=>state.adminQuestion)
   
   //get all questions and update the redux
   useEffect(() => {
     (async ()=>{
-      const questionsDetails = await getAllQuestionsDetails(adminToken)
+      const questionsDetails = await getAllQuestionsDetails(adminDetails)
       dispatch(setAdminQuestionDetails(questionsDetails))
 
       setQuestions(questionsDetails)
@@ -45,8 +45,8 @@ function AdminQuestion() {
   })
   .then((deleteQuestionS) => {
     if (deleteQuestionS) {
-        deleteQuestion(qid,adminToken).then(async(res)=>{
-         const response =  await getQuestions(adminToken)
+        deleteQuestion(qid,adminDetails).then(async(res)=>{
+         const response =  await getQuestions(adminDetails)
               dispatch(setAdminQuestionDetails(response))
           
       })

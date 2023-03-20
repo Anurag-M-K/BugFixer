@@ -28,7 +28,7 @@ function Messenger() {
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef(); //which is used for automatically scroll up when a message is send
-  const socket = useRef(io(import.meta.env.VITE_APP_SOCKET_URL));
+  const socket = useRef();
   const [value, setValue] = useState("");
   const { clidkedUserDetails } = useSelector((state) => state.clickedUser);
   const [showMenu, setShowMenu] = useState(false);
@@ -36,16 +36,28 @@ function Messenger() {
   const [videoFile, setVideoFile] = useState(null);
   const imageRef = useRef();
   const videoRef = useRef();
+  const { clickedUserDetails } = useSelector((state) => state.clickedUser);
 
+
+  useEffect(()=>{
+socket.current = io(import.meta.env.VITE_APP_SOCKET_URL)
+  },[])
+
+
+///geting message from socket server (on) 
   useEffect(() => {
-    socket.current = io(import.meta.env.VITE_APP_SOCKET_URL);
-    socket.current.on("getMessage", (data) => {
-      setArrivalMessage({
-        sender: data?.senderId,
-        text: data?.text,
-        createdAt: Date.now(),
+    try {
+      socket.current = io(import.meta.env.VITE_APP_SOCKET_URL);
+      socket.current.on("getMessage", (data) => {
+        setArrivalMessage({
+          sender: data?.senderId,
+          text: data?.text,
+          createdAt: Date.now(),
+        });
       });
-    });
+    } catch (error) {
+      console.log(error)
+    }
   }, []);
 
   useEffect(() => {
@@ -56,7 +68,9 @@ function Messenger() {
 
   useEffect(() => {
     socket.current.emit("addUser", userDetails._id);
-    socket.current.on("getUsers", (users) => {});
+    socket.current.on("getUsers", (users) => {
+      console.log("users ",users)
+    });
   }, [userDetails]);
 
   //geting existing conversations
@@ -81,34 +95,38 @@ function Messenger() {
     } catch (error) {
       console.log(error);
     }
-  }, [currentChat]);
+  }, [currentChat,messages]);
 
   const handleSubmit = async () => {
-    // e.preventDefault();
-    const message = {
-      conversationId: currentChat._id,
-      sender: userDetails._id,
-      text: newMessage,
-      type: "text",
-    };
-
-    //sending messages to socket server
-    const recieverId = currentChat?.members?.find(
-      (member) => member !== userDetails._id
-    );
-    socket.current.emit("sendMessage", {
-      senderId: userDetails._id,
-      recieverId,
-      text: newMessage,
-    });
-
-    //sending messages to database
-    const res = await postMessages(message);
-    setMessages([...messages, res]);
-    setNewMessage("");
+    try {
+      const message = {
+        conversationId: currentChat._id,
+        sender: userDetails._id,
+        text: newMessage,
+        type: "text",
+      };
+  
+      //sending messages to socket server
+      const recieverId = currentChat?.members?.find(
+        (member) => member !== userDetails._id
+      );
+      socket.current.emit("sendMessage", {
+        senderId: userDetails._id,
+        recieverId,
+        text: newMessage,
+      });
+  
+      //sending messages to database
+      const res = await postMessages(message);
+      setMessages([...messages, res]);
+      setNewMessage("");
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   useEffect(() => {
+    console.log("6");
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
@@ -181,7 +199,7 @@ function Messenger() {
             >
               {conversations?.map((c) => (
                 <div onClick={() => setCurrentChat(c)}>
-                  <Conversation messages={messages} conversation={c} />
+                  <Conversation messages={messages} conversation={c} clickedUserDetails={clickedUserDetails} />
                 </div>
               ))}
             </div>
@@ -291,10 +309,6 @@ function Messenger() {
                     style={{ display: "none" }}
                     ref={imageRef}
                   />
-
-                  {/* <button onClick={handleSubmit} className="chatSubmitButton">
-                    Send
-                  </button> */}
                 </div>
               </>
             ) : (

@@ -18,7 +18,7 @@ function AdminQuestion() {
     
   const [questions, setQuestions] = useState([]);
   const dispatch = useDispatch();
-  const { adminToken } = useSelector((state)=>state.adminToken);
+  const { adminDetails } = useSelector((state)=>state.admin);
   const { reportedQuestionDetails } = useSelector((state)=>state.reportedQuestion)
 
   //get reported questions and updatin redux
@@ -45,7 +45,7 @@ try {
   })
   .then((deleteQuestion) => {
     if (deleteQuestion) {
-       deleteReportedQuestion(qid,adminToken).then((res)=>{
+       deleteReportedQuestion(qid,adminDetails).then((res)=>{
 
          axios.get("/admin/get-report-questions").then((response) => {
            setQuestions(response.data.data)

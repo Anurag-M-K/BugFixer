@@ -68,7 +68,7 @@ export default function UserProfile() {
   };
   const uploadImage = async (base64EncodedImage) => {
     try {
-      await fetch(`http://localhost:80/api/profile/${userId}`, {
+      await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/profile/${userId}`, {
         method: "POST",
         body: JSON.stringify({ data: base64EncodedImage, userData, userId }),
         headers: { "Content-type": "application/json" },

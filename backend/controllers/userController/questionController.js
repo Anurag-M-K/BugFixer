@@ -173,12 +173,12 @@ const particularQuestion = async (req, res) => {
 
     try {
       const question = await QuestionDB.findById(qid);
-      
-      if (question.vote.filter((like) => like === userId).length > 0) {
-        return res.status(400).json({ message: "Question already voted" });
-      }
-      question.vote.unshift(userId);
-      await question.save();
+  
+        if (question.vote.filter((like) => like === userId).length > 0) {
+          return res.status(400).json({ message: "Question already voted" });
+        }
+        question.vote.unshift(userId);
+        await question.save();
 
       //increase users reputation by 5 points 
       const user = await User.findById(question.user._id)

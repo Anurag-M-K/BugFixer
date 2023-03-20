@@ -15,7 +15,6 @@ const ViewQuestions = () => {
   const [questions,setQuestions] = useState([]);
 const [searchTerm , setSearchTerm] = useState('');
 
-
 //geting questions and updating redux
 useEffect(()=>{
   async function findQuestions(){

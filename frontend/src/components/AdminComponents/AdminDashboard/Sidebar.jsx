@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { MdSpaceDashboard } from "react-icons/md";
-import { RiDashboard2Fill } from "react-icons/ri";
-import { FaAddressCard, FaTaxi } from "react-icons/fa";
+import { FaAddressCard } from "react-icons/fa";
 import { GiTwirlCenter } from "react-icons/gi";
 import { BsFillChatTextFill } from "react-icons/bs";
-import { IoSettings } from "react-icons/io5";
-import { FiLogOut } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
-import scrollreveal from "scrollreveal";
-import {Link, useNavigate} from 'react-router-dom'
+// import scrollreveal from "scrollreveal";
+import { useNavigate} from 'react-router-dom'
 import { HiUsers } from "react-icons/hi";
 import {message} from 'antd';
 import { AiOutlineTag } from "react-icons/ai";
-import './Sidebar.css'
+import { RiLogoutCircleRLine } from "react-icons/ri";
+import './Sidebar.css';
+
+
 export default function Sidebar() {
   const navigate = useNavigate()
   const [currentLink, setCurrentLink] = useState(1);
@@ -22,35 +22,33 @@ export default function Sidebar() {
   const html = document.querySelector("html");
   html.addEventListener("click", () => setNavbarState(false));
 
-  useEffect(() => {
-    const sr = scrollreveal({
-      origin: "left",
-      distance: "80px",
-      duration: 1000,
-      reset: false,
-    });
+  // useEffect(() => {
+  //   const sr = scrollreveal({
+  //     origin: "left",
+  //     distance: "80px",
+  //     duration: 1000,
+  //     reset: false,
+  //   });
 
-    sr.reveal(
-      `
-          .brand,
-          .links>ul>li:nth-of-type(1),
-      .links>ul>li:nth-of-type(2),
-      .links>ul>li:nth-of-type(3),
-      .links>ul>li:nth-of-type(4),
-      .links>ul>li:nth-of-type(5),
-      .links>ul>li:nth-of-type(6),
-      .logout
-      `,
-      {
-        opacity: 0,
-        interval: 300,
-      }
-    );
-  }, []);
+  //   sr.reveal(
+  //     ` .brand,
+  //         .links>ul>li:nth-of-type(1),
+  //     .links>ul>li:nth-of-type(2),
+  //     .links>ul>li:nth-of-type(3),
+  //     .links>ul>li:nth-of-type(4),
+  //     .links>ul>li:nth-of-type(5),
+  //     .links>ul>li:nth-of-type(6),
+  //     .logout
+  //     `,
+  //     {
+  //       opacity: 0,
+  //       interval: 300,
+  //     }
+  //   );
+  // }, []);
 
 //logout function
 const handleLogout =(e)=>{
-  // e.preventDefault();
   localStorage.removeItem("AdminToken")
   navigate('/admin/admin-login')
   message.success("Logout successfully")
@@ -150,7 +148,7 @@ const handleLogout =(e)=>{
         </div>
         <div className="logoumt">
             {/* <FiLogOut /> */}
-            <button  onClick={handleLogout} className="logout btn btn-secondary">Logout</button>
+            <RiLogoutCircleRLine style={{color:"#fff",fontSize: "24px"}} onClick={handleLogout}  values="Logout"/>
         </div>
       </Section>
       <ResponsiveNav state={navbarState} className={navbarState ? "show" : ""}>
@@ -220,6 +218,17 @@ const handleLogout =(e)=>{
                 }}>
               <div> <FaAddressCard style={{width:"25px"}} /></div>
                   <span className="buttonsDashboard" > Reported Questions</span>
+              </a>
+            </li>
+            <li
+              className={currentLink === 6 ? "active" : "none"}
+              onClick={() => setCurrentLink(6)}
+            >
+              <a onClick={()=>{
+                  navigate('/admin/reported-question-manage')
+                }}>
+              <div> <RiLogoutCircleRLine style={{width:"25px",color:"white",cursor:"pointer"}} /></div>
+                  <span  onClick={handleLogout} className="buttonsDashboard" > Logout</span>
               </a>
             </li>
           </ul>

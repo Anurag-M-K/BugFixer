@@ -14,6 +14,8 @@ function SearchBar() {
   const [displayUsers, setDisplayUsers] = useState(true);
   const [displayBox, setDisplayBox] = useState(true);
 
+
+
   //geting all users and updaing redux
   useEffect(() => {
     (async () => {
@@ -39,6 +41,7 @@ function SearchBar() {
     const filteredUserData = allusers.filter(
       (value) => value._id == userId
     );
+    console.log(filteredUserData);
     dispatch(setClickedUserDetails(filteredUserData));
     setDisplayUsers(false);
     setDisplayBox(false);

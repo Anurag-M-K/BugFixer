@@ -15,7 +15,6 @@ function ProfilePicAddModal() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
   const [previewSource, setPreviewSource] = useState();
   const [fileInputState, setFileInpuyState] = useState("");
@@ -63,7 +62,7 @@ function ProfilePicAddModal() {
   const uploadImage = async (base64EncodedImage) => {
     console.log(" ", base64EncodedImage);
     try {
-      await fetch(`http://localhost:8060/api/profile/${userId}`, {
+      await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/profile/${userId}`, {
         method: "POST",
         body: JSON.stringify({ data: base64EncodedImage, userId }),
         headers: { "Content-type": "application/json" },

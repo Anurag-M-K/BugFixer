@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { getHotQuestions } from "../../../helper/homePageRightSideHelper";
 import toast from 'react-hot-toast'
 
@@ -25,7 +24,7 @@ const RelatedQuestion = () => {
 
   return (
     <>
-      <div className="relatedQuestion">
+      {/* <div className="relatedQuestion">
         <h5 className="mt-5">Hot Network Questions</h5>
         {hotQuestions?.map((title) => {
           return ( 
@@ -35,7 +34,7 @@ const RelatedQuestion = () => {
               <Link className="mt-2" to={`/user/question?id=${title?._id}`}> <small> {title?.title ? title?.title : "" }</small></Link>
             </div>
           ) })} 
-      </div>
+      </div> */}
     </>
   );
 };

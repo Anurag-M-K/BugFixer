@@ -14,9 +14,7 @@ function Otp() {
   const updateInput = (e) => {
     setOtp(e.target.value);
   };
-
   console.log("otp ", userDetails.data);
-
   const email = userDetails.data.email;
   let verifyOtp = userDetails.data.OTP;
 

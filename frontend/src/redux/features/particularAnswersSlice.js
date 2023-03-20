@@ -9,7 +9,6 @@ export const particularAnswersSlice = createSlice({
     },
     reducers:{
         setParticularAnswerDetails:(state,action)=>{
-            console.log("action form partijvuolar answer ",action.payload)
             state.particularAnswersDetails = action.payload
         }
     }

@@ -1,12 +1,11 @@
 import React from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import gLogo from "../Images/g.png";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./Signup.css";
 import axios from "../../../config/axiosInstance";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../../../redux/features/userSlice";
-
+import { showLoading , hideLoading }  from '../../../redux/features/alertSlice'
 const info = [
   {
     icon: (

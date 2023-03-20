@@ -10,8 +10,6 @@ function ReputationBadge() {
   const { userDetails} = useSelector((state)=>state.user)
   const openPopover = (event) => {
     setAnchor(event.currentTarget);
-
-    
   };
   return (
     <div>

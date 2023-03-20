@@ -9,6 +9,11 @@ export default function Message({message,own}) {
  newMessage.push(message);
   const { userDetails } = useSelector((state)=>state.user)
   
+const showImage= ()=>{
+  console.log("first")
+
+}
+
   return (
     <div className={own ? "message own" : "message"}>
       <div className="messageTop">
@@ -22,7 +27,7 @@ export default function Message({message,own}) {
                           <>
                           
                   {message?.type ==="text" && <span>{message.text ? message.text : ""}</span>}
-                  {message?.type ==="image" &&<div className={own ? "message own" : "message "}   > <img  style={{width:"175px",height:"175px"}} src={message.text}></img></div>}
+                  {message?.type ==="image" &&<div className={own ? "message own" : "message "}   > <img onClick={showImage} style={{width:"175px",height:"175px",cursor:"pointer"}} src={message.text}></img></div>}
                   {message?.type ==="video" && <video src={message.text} controls></video>}
                           </>
                   

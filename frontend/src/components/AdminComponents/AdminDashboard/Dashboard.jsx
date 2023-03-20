@@ -1,13 +1,19 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import Analytics from "./Analytics";
-// import Earnings from "./Earnings";
 import FAQ from "./FAQ";
 import Navbar from "./Navbar";
-// import Profile from "./Profile";
-// import Transfers from "./Transfers";
 import scrollreveal from "scrollreveal";
+import { useDispatch } from "react-redux";
+import { setAdminDetails } from "../../../redux/features/adminSlice";
+
+
 export default function Dashboard() {
+  const dispatch = useDispatch()
+  const token = localStorage.getItem('AdminToken');
+  dispatch(setAdminDetails  (token))
+
+
   useEffect(() => {
     const sr = scrollreveal({
       origin: "bottom",
