@@ -16,6 +16,8 @@ import Messenger from "../components/Community/Messenger/Messenger";
 import SingleCommunityPage from "../pages/Community/SingleCommunityPage";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import ReputationBadge from "../components/UserComponents/Header/ReputationBadge";
+import ForgotPassword from "../components/UserComponents/ForgotPassword/ForgotPassword";
+import NewPassword from "../components/UserComponents/ForgotPassword/NewPassword";
   
 function UserRoute(){
 
@@ -37,6 +39,8 @@ function UserRoute(){
           <Route exact path="/user/repu" element={<ReputationBadge/>}/>
           <Route exact path="/user/community" element={<CommunityHomePage/>}/>
           <Route exact path="/user/single-community/:id" element={<SingleCommunityPage/>}/>
+          <Route exact path="/forgot-password" element={<ForgotPassword/>} />
+          <Route exact path="/password-reset/:id" element={<NewPassword/>} />
           <Route path="/*" element={<ErrorPage />} />
           </Routes>
   </>

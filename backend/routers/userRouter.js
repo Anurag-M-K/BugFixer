@@ -52,6 +52,7 @@ const {
 } = require("../controllers/userController/homePageRightSideController");
 const { getAllUsers } = require("../controllers/userController/userMessageController");
 const { getAllMessagedUsers ,  getUser, } = require("../controllers/userController/userChatController");
+const { passwordResetPost ,verifyLink ,addingNewPassword} = require("../controllers/userController/passwordResetController");
 
 router.post("/userSignup", userSignup);
 router.post("/userLogin", userLogin);
@@ -60,9 +61,7 @@ router.post("/question", verifyJWT, questionAdd);
 router.post("/answer", answerAdd);
 router.post("/comment/:id", commentAdd);
 router.get("/comment/:id", getComment);
-
 router.get("/getQuestion", getQuestion);
-
 router.get("/question/:id", particularQuestion);
 router.get("/get-answer/:id", getAnswerByQId);
 router.get("/getUserProfile", verifyJWT, getUserProfile);
@@ -88,5 +87,8 @@ router.post("/downvote-answer",verifyJWT, downVoteAnswer)
 router.get("/get-question-answers/:id",verifyJWT,getQuestionAnswers)
 router.delete("/delete-answer",verifyJWT , deleteAnswer)
 router.post("/accept-answer",verifyJWT, acceptingAnswer)
+router.post("/password-reset",passwordResetPost)
+router.get("/:id",verifyLink)
+router.post("/password-reset/:id",addingNewPassword)
 
 module.exports = router;

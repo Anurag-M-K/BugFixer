@@ -68,6 +68,7 @@ const Signup = () => {
       const url = `/api/userSignup`;
       const { data: res } = await axios.post(url, data).then((res) => {
         dispatch(setUserDetails(res, res.data.OTP));
+        
         navigate("/user/otp-page");
       });
     } catch (error) {
@@ -133,7 +134,7 @@ const Signup = () => {
                 <p className="text-center pb-1">~~~~~~~~~~~</p>
                 <form onSubmit={handleSubmit}>
                   <div className="form-outline mb-4">
-                    <label className="form-label" for="form1Example13">
+                    <label className="form-label" htmlFor="input-field">
                       Full Name
                     </label>
                     <div className="input-group flex-nowrap">
@@ -163,7 +164,7 @@ const Signup = () => {
                     </div>
                   </div>
                   <div className="form-outline mb-4">
-                    <label className="form-label" for="form1Example23">
+                    <label className="form-label" htmlFor="input-field">
                       Last Name
                     </label>
                     <div className="input-group flex-nowrap">
@@ -193,7 +194,7 @@ const Signup = () => {
                     </div>
                   </div>
                   <div className="form-outline mb-4">
-                    <label className="form-label" for="form1Example23">
+                    <label className="form-label" htmlFor="input-field">
                       Email
                     </label>
                     <div className="input-group flex-nowrap">
@@ -224,7 +225,7 @@ const Signup = () => {
                   </div>
 
                   <div className="form-outline mb-4">
-                    <label className="form-label" for="form1Example23">
+                    <label className="form-label" htmlFor="input-field">
                       Phone
                     </label>
                     <div className="input-group flex-nowrap">
@@ -254,7 +255,7 @@ const Signup = () => {
                     </div>
                   </div>
                   <div className="form-outline mb-4">
-                    <label className="form-label" for="form1Example23">
+                    <label className="form-label" htmlFor="input-field">
                       Password
                     </label>
                     <div className="input-group flex-nowrap">

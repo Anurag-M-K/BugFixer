@@ -482,7 +482,8 @@ function MainQuestion() {
                     </svg>
                   </span>
                   <div>
-                    <FiCheck
+                  
+                  {questionData?.user?._id == userDetails?._id ?  <FiCheck
                       className="tickmark"
                       style={{
                         color: _q?.accepted === true ? "green" : "grey",
@@ -491,7 +492,8 @@ function MainQuestion() {
                         cursor: "pointer",
                       }}
                       onClick={() => acceptingAnswer(_q._id)}
-                    />
+                    /> :""}
+                   
                   </div>
                   {_q.user._id === userDetails._id && (
                     <BiTrashAlt

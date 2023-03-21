@@ -143,6 +143,7 @@ function Login() {
             Login
           </button>
        
+         <Link to={'/forgot-password'}> <p className="createAcc" >Forgot password?</p></Link>
                   <Link to={'/user/signup-page'} >
           <h6 className="createAcc">Create new Account</h6></Link> 
         </form>

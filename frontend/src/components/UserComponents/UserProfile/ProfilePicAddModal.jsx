@@ -8,6 +8,7 @@ import "./ProfileEdit.css";
 import toast, { Toaster } from "react-hot-toast";
 import { getUserDetails } from "../../../helper/UserProfileHelper";
 import { setUserDetails } from "../../../redux/features/userSlice";
+import { hideLoading, showLoading } from "../../../redux/features/alertSlice";
 
 function ProfilePicAddModal() {
   const [show, setShow] = useState(false);
@@ -62,12 +63,16 @@ function ProfilePicAddModal() {
   const uploadImage = async (base64EncodedImage) => {
     console.log(" ", base64EncodedImage);
     try {
+      dispatch(showLoading())
       await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/profile/${userId}`, {
         method: "POST",
         body: JSON.stringify({ data: base64EncodedImage, userId }),
         headers: { "Content-type": "application/json" },
         
-      }).then((responseData) => {
+      }).then(async(responseData) => {
+        dispatch(hideLoading())
+        const user = await getUserDetails(tokenData)
+        dispatch(setUserDetails(user?.response))
         console.log(JSON.stringify(responseData, null, 4));
        
       });
@@ -76,7 +81,7 @@ function ProfilePicAddModal() {
     }
   };
 
-  //geting updated user details fromd database and updaitng redux
+  // geting updated user details fromd database and updaitng redux
   useEffect(()=>{
     try {
       (async()=>{
