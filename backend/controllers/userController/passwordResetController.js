@@ -8,7 +8,7 @@ const passwordResetPost = async(req,res)=>{
         if(!user)
         return res.status(409).send({message:"User with given email does not exist!"})
 
-        const url = `http://localhost:5173/password-reset/${user._id}`
+        const url = `${process.env.FRONTEND_URL}/password-reset/${user._id}`
         console.log(url)
         await sendEmail(user.email , "Password reset",url)
         res.status(200).send({message:"Reset password link is send to your email"})
@@ -33,10 +33,8 @@ const verifyLink = async(req,res)=>{
 }
 
 const addingNewPassword = async(req,res)=>{
-    console.log("req.parmas  ",req.params)
     try {
         const user = await User.findOne({_id:req.params.id});
-        console.log("usern ",user)
         if(!user) return res.status(400).send({message:"Invalid link"})
         if(!user.verified) user.verified = true;
         const salt = await bcrypt.genSalt(Number(process.env.SALT));

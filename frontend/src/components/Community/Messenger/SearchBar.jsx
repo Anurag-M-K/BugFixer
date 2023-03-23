@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAllUsersDetails } from "../../../redux/features/userSlice";
 import { createConversation, getAllUsers } from "../../../helper/UsersChatHelper";
 import { setClickedUserDetails } from "../../../redux/features/chatLeftSideClickedUserSlice";
+import { toast } from "react-hot-toast";
 
 function SearchBar() {
   const { tokenData, allUsersDetails } = useSelector((state) => state.user);
@@ -18,10 +19,16 @@ function SearchBar() {
 
   //geting all users and updaing redux
   useEffect(() => {
-    (async () => {
-      const users = await getAllUsers(tokenData);
-      dispatch(setAllUsersDetails(users));
-    })();
+    try {
+      
+      (async () => {
+        const users = await getAllUsers(tokenData);
+        dispatch(setAllUsersDetails(users));
+      })();
+    } catch (error) {
+      console.log(error)
+      toast.error("server connection failed")
+    }
   }, []);
 
   const allusers = allUsersDetails.filter((users)=> users._id !== userDetails._id)
@@ -41,7 +48,6 @@ function SearchBar() {
     const filteredUserData = allusers.filter(
       (value) => value._id == userId
     );
-    console.log(filteredUserData);
     dispatch(setClickedUserDetails(filteredUserData));
     setDisplayUsers(false);
     setDisplayBox(false);

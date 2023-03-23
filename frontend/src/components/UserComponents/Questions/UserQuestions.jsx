@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import "./UserQuestions.scss";
 import ReactHtmlParser from "react-html-parser";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Pagination from "./Pagination";
 
 const UserQuestions = () => {
   const { questionDetails } = useSelector((state) => state.question);
+  const [ postsPerPage , setPostsPerPage] = useState(5)
+  const [ currentPage , setCurrentPage ] = useState(1)
   function truncate(str, n) {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;
   }
 
+  //seting pagination 
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = questionDetails.slice(indexOfFirstPost , indexOfLastPost)
+
+  //change page
+  const paginate = (pageNumber)=> setCurrentPage(pageNumber)
   return (
     <>
-      {questionDetails?.map((questionData) => {
+      {currentPosts?.map((questionData) => {
         return (
           <div key={questionData._id}
             className="userQuestions d-flex border-bottom py-2"
@@ -136,6 +146,13 @@ const UserQuestions = () => {
           </div>
         );
       })}
+      <div className="pagination">
+
+<div>
+
+        <Pagination  postsPerPage={postsPerPage} totalPosts={questionDetails.length} paginate={paginate} />
+</div>
+      </div>
     </>
   );
 };

@@ -242,7 +242,7 @@ const Signup = () => {
                         </span>
                       </div>
                       <input
-                        type="number"
+                        type="tel"
                         className="form-control"
                         placeholder="Phone"
                         name="phone"

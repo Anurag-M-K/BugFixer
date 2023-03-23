@@ -10,7 +10,7 @@ function NewPassword() {
 	const [error, setError] = useState("");
 	const param = useParams();
     const navigate = useNavigate()
-	const url = `http://localhost:8060/api/password-reset/${param.id}`;
+	const url = `${import.meta.env.VITE_APP_BACKEND_URL}/api/password-reset/${param.id}`;
 
     useEffect(() => {
 		const verifyUrl = async () => {

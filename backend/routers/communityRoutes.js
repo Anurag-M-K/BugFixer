@@ -7,4 +7,4 @@ router.post("/add-community-posts",addingCommunityPosts)
 router.get("/get-community-posts",getAllCommunityPosts)
 router.delete("/community-delete",verifyJWT , deleteCommunity)
 
-module.exports = router;
+module.exports = router; 

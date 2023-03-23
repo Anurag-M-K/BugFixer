@@ -2,6 +2,7 @@ const { User } = require("../../model/userModel/userModel")
 
 
 const getAllUsers = async(req,res)=>{
+    console.log("hello")
     try {
         const users = await User.find()
         res.status(200).json(users)

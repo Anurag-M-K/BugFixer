@@ -180,7 +180,7 @@ function MainQuestion() {
       dispatch(setUserDetails(user.response));
       dispatch(setSingleQuestionDetails(getSingleQuestion.data));
       setVoteRes(getSingleQuestion.data);
-      toast.error(data.data.message);
+      // toast.error(data.data.message);
     } catch (error) {
       console.log(error);
     }
@@ -195,7 +195,7 @@ function MainQuestion() {
       dispatch(setSingleQuestionDetails(getSingleQuestion.data));
       setVoteRes(getSingleQuestion.data);
 
-      toast.error(data.data.message);
+      // toast.error(data.data.message);
     } catch (error) {
       console.log(error);
     }
@@ -311,6 +311,7 @@ function MainQuestion() {
                   flexDirection: "column",
                 }}
               >
+                {userDetails?._id !== questionData?.user?._id ? 
                 <div className="side">
                   <div className="upArrow">
                     <span className="arrow">
@@ -361,7 +362,64 @@ function MainQuestion() {
                     <History />
                   </div>
                 </div>
+: 
+
+
+
+
+
+<div className="side">
+<div className="upArrow">
+  <span className="arrow">
+    <svg
+      type="submit"
+      onClick={()=>toast.error("you cant vote your own question")}
+      aria-hidden="true"
+      className="svg-icon iconArrowUpLg"
+      width="36"
+      height="36"
+      viewBox="0 0 36 36"
+    >
+      <path d="M2 25h32L18 9 2 25Z"></path>
+    </svg>
+  </span>
+</div>
+<div className="vote">
+  <p className="arrow pe-2">
+    {singleQuestiondata[0]?.vote?.length
+      ? singleQuestiondata[0]?.vote?.length
+      : "0"}
+  </p>
+</div>
+<div className="downArrow">
+  <span className="arrow">
+    <svg
+      type="submit"
+      onClick={()=>toast.error("you cant downVote your own question")}
+      aria-hidden="true"
+      className="svg-icon iconArrowDownLg"
+      width="36"
+      height="36"
+      viewBox="0 0 36 36"
+    >
+      <path d="M2 11h32L18 27 2 11Z"></path>
+    </svg>
+  </span>
+</div>
+<div className="report">
+  <small>
+    <ReportReason questionData={questionData} />
+  </small>
+</div>
+<div className="bookmark">
+  <Bookmark />
+</div>
+<div className="history">
+  <History />
+</div>
+</div>}
               </div>
+              
               <div className="col-md-10" >
                 <div className="question-answer">
                   

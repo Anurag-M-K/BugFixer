@@ -187,7 +187,7 @@ const particularQuestion = async (req, res) => {
 
       res.json(question.vote);
     } catch (error) {
-      res.status(500).send("Server error");
+      res.status(500).json({message:"Server error"});
     }
   };
 

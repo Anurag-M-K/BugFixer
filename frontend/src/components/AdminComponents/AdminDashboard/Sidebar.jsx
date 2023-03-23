@@ -80,7 +80,7 @@ const handleLogout =(e)=>{
                 className={currentLink === 1 ? "active" : "none"}
                 onClick={() => setCurrentLink(1)}
               >
-                <a onClick={()=>{
+                <a  onClick={()=>{
                     navigate('/admin/admin-Dashboard')
                   }} >
                   <div ><MdSpaceDashboard style={{width:"25px"}} /></div>

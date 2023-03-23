@@ -77,7 +77,7 @@ dispatch(filterQuestionDetails([val]))
             <hr />
             <UserQuestions  />
 
-            <Pagination />
+          
           </div>
 
           <div

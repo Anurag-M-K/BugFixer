@@ -197,8 +197,9 @@ socket.current = io(import.meta.env.VITE_APP_SOCKET_URL)
               className="card-scroll"
               style={{ height: "407px", overflowY: "scroll" }}
             >
-              {conversations?.map((c) => (
-                <div onClick={() => setCurrentChat(c)}>
+              {conversations?.map((c, index) => (
+               
+                <div key={index} onClick={() => setCurrentChat(c)}>
                   <Conversation messages={messages} conversation={c} clickedUserDetails={clickedUserDetails} />
                 </div>
               ))}
