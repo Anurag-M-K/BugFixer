@@ -1,6 +1,7 @@
 const Message = require("../../model/Message/Message")
 
 const message = async(req,res)=>{
+    console.log(req.body);
  
         const newMessage = new Message(req.body.message)
  

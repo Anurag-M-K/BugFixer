@@ -3,7 +3,6 @@ import "./Questions.scss";
 import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
 import UserQuestions from "./UserQuestions";
-import Pagination from "./Pagination";
 import {  useNavigate } from "react-router-dom";
 import axios from "../../../config/axiosInstance";
 import {useDispatch}  from 'react-redux'

@@ -211,7 +211,7 @@ const removeIndex = question.vote.map(like => like === userId).indexOf(userId);
 
       //decrease users reputation by 2 points 
       const user = await User.findById(question.user._id)
-      user.reputation -= 2;
+      user.reputation -= 7;
       await user.save();
 
     res.json(question.vote);

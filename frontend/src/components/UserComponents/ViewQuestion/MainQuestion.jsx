@@ -47,15 +47,20 @@ function MainQuestion() {
   const { singleQuestiondata } = useSelector((state) => state.singleQuestion);
   const { particularAnswersDetails } = useSelector((state) => state.particularAnswers);
     const { userDetails } = useSelector((state) => state.user);
+    const { hotQuestionDetails } = useSelector(state=>state.hotQuestion)
 
-  //geting question id from url
-  let location = useLocation();
-  let params = new URLSearchParams(location.search);
-  let id = params.get("id");
+    //geting question id from url
+    let location = useLocation();
+    let params = new URLSearchParams(location.search);
+    let id = params.get("id");
+    
+    const handleQuill = (value) => {
+      setAnswer(value);
+    };
+    useEffect(()=>{
 
-  const handleQuill = (value) => {
-    setAnswer(value);
-  };
+      setQuestionData(hotQuestionDetails)
+    },[hotQuestionDetails])
 
   
   //geting quesitons and comments updates state
@@ -110,7 +115,7 @@ function MainQuestion() {
       };
       const config = {
         headers: {
-          "Content-type": "application/json",
+          Authorization : tokenData,
         },
       };
       dispatch(showLoading())
@@ -186,7 +191,7 @@ function MainQuestion() {
     }
   }
   async function decVoting(question_id) {
-    console.log(question_id);
+    console.log(question_id);z
     try {
       const data = await questionDecVoting(question_id, tokenData);
       const getSingleQuestion = await axios.get(`/api/question/${id}`);
@@ -504,12 +509,15 @@ function MainQuestion() {
           >
             {particularAnswersDetails?.length} Answers
           </p>
+    
           {particularAnswersDetails?.map((_q) => (
+            
             <div key={_q?._id} className="all-questions-container">
+              {_q?.user?._id == userDetails?._id ? 
               <div className="all-questions-left col-md-2">
                 <div className="all-options">
                   <span
-                    onClick={() => handleAnswerVoting(_q._id)}
+                   style={{cursor:'pointer'}}
                     className="arrow"
                   >
                     <svg
@@ -526,6 +534,67 @@ function MainQuestion() {
                     {_q?.vote?.length ? _q?.vote?.length : "0"}
                   </span>
                   <span
+                    className="arrow"
+                    style={{cursor:'pointer'}}
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-icon iconArrowDownLg"
+                      width="36"
+                      height="36"
+                      viewBox="0 0 36 36"
+                    >
+                      <path d="M2 11h32L18 27 2 11Z"></path>
+                    </svg>
+                  </span>
+                  <div>
+                  
+                  {questionData?.user?._id == userDetails?._id ?  <FiCheck
+                      className="tickmark"
+                      style={{
+                        color: _q?.accepted === true ? "green" : "grey",
+                        marginBottom: "10px",
+                        height: "15px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => acceptingAnswer(_q._id)}
+                    /> :""}
+                   
+                  </div>
+                  {_q.user._id === userDetails._id && (
+                    <BiTrashAlt
+                      onClick={() => answerDelete(_q._id)}
+                      style={{
+                        marginBottom: "10px",
+                        height: "15px",
+                        cursor: "pointer",
+                      }}
+                    />
+                  )}
+                </div>
+              </div>
+              : <div className="all-questions-left col-md-2">
+                <div className="all-options">
+                  <span
+                    onClick={() => handleAnswerVoting(_q._id)}
+                    className="arrow"
+                    style={{cursor:'pointer'}}
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-icon iconArrowUpLg"
+                      width="36"
+                      height="36"
+                      viewBox="0 0 36 36"
+                    >
+                      <path d="M2 25h32L18 9 2 25Z"></path>
+                    </svg>
+                  </span>
+                  <span className="answer-vote" >
+                    {_q?.vote?.length ? _q?.vote?.length : "0"}
+                  </span>
+                  <span
+                  style={{cursor:'pointer'}}
                     className="arrow"
                     onClick={() => handleAnswerDownVoting(_q._id)}
                   >
@@ -564,7 +633,7 @@ function MainQuestion() {
                     />
                   )}
                 </div>
-              </div>
+              </div>}
 
               <div
                 className="question-answer col-md-10   "

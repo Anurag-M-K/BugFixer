@@ -58,7 +58,7 @@ router.post("/userSignup", userSignup);
 router.post("/userLogin", userLogin);
 router.post("/otpVerifying", otpVerify);
 router.post("/question", verifyJWT, questionAdd);
-router.post("/answer", answerAdd);
+router.post("/answer",verifyJWT, answerAdd);
 router.post("/comment/:id", commentAdd);
 router.get("/comment/:id", getComment);
 router.get("/getQuestion", getQuestion);

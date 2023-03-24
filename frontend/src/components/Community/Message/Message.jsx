@@ -22,14 +22,14 @@ const showImage= ()=>{
           src={own && userDetails?.imageUrl ? userDetails.imageUrl : friendData?.imageUrl}
           alt=""
         />
-                      {newMessage.map((message, id) =>{
+                      {newMessage.map((message) =>{
                         return (
-                          <>
+                          <div key={message._id}>
                           
                   {message?.type ==="text" && <span>{message.text ? message.text : ""}</span>}
-                  {message?.type ==="image" &&<div className={own ? "message own" : "message "}   > <img onClick={showImage} style={{width:"175px",height:"175px",cursor:"pointer"}} src={message.text}></img></div>}
+                  {message?.type ==="image" &&<div className={own ? "message own" : "message"}   > <img onClick={showImage} style={{width:"175px",height:"175px",cursor:"pointer"}} src={message.text}></img></div>}
                   {message?.type ==="video" && <video src={message.text} controls></video>}
-                          </>
+                          </div>
                   
                   )
                 } )}

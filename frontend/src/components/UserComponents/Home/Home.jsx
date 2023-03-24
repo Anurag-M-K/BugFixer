@@ -84,7 +84,7 @@ const HomePage = () => {
               Every has a data <span> Developer</span> tab open to BugFixer
             </h1>
             {/* data Developer header starts */}
-            <div class="homePage--innerDiv--plain"></div>
+            <div className="homePage--innerDiv--plain"></div>
 
             <div className="homePage--innerDiv--reach">
               {details.map((det) => {

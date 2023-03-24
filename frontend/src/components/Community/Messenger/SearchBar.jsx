@@ -3,9 +3,10 @@ import "./Searchbar.css";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { setAllUsersDetails } from "../../../redux/features/userSlice";
-import { createConversation, getAllUsers } from "../../../helper/UsersChatHelper";
+import { createConversation, getAllUsers, getConversation } from "../../../helper/UsersChatHelper";
 import { setClickedUserDetails } from "../../../redux/features/chatLeftSideClickedUserSlice";
 import { toast } from "react-hot-toast";
+import { setConversationDetails } from "../../../redux/features/conversationSlice";
 
 function SearchBar() {
   const { tokenData, allUsersDetails } = useSelector((state) => state.user);
@@ -14,7 +15,6 @@ function SearchBar() {
   const { userDetails } = useSelector((state)=>state.user)
   const [displayUsers, setDisplayUsers] = useState(true);
   const [displayBox, setDisplayBox] = useState(true);
-
 
 
   //geting all users and updaing redux
@@ -31,7 +31,7 @@ function SearchBar() {
     }
   }, []);
 
-  const allusers = allUsersDetails.filter((users)=> users._id !== userDetails._id)
+  const allusers = allUsersDetails?.filter((users)=> users._id !== userDetails._id)
 
   //filter username  logic
   const handleFilter = (event) => {
@@ -44,14 +44,16 @@ function SearchBar() {
   };
 
   //get clicked user  details and create conversation 
-  const onClickUser = (userId) => {
+  const onClickUser = async(userId) => {
     const filteredUserData = allusers.filter(
       (value) => value._id == userId
     );
     dispatch(setClickedUserDetails(filteredUserData));
     setDisplayUsers(false);
     setDisplayBox(false);
-    createConversation(userDetails._id,filteredUserData[0]._id)
+    await createConversation(userDetails._id,filteredUserData[0]._id)
+    const allConversation = await getConversation(userDetails._id,tokenData)
+    dispatch(setConversationDetails(allConversation))
     }
 
   return (

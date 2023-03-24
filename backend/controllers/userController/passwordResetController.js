@@ -9,7 +9,6 @@ const passwordResetPost = async(req,res)=>{
         return res.status(409).send({message:"User with given email does not exist!"})
 
         const url = `${process.env.FRONTEND_URL}/password-reset/${user._id}`
-        console.log(url)
         await sendEmail(user.email , "Password reset",url)
         res.status(200).send({message:"Reset password link is send to your email"})
     } catch (error) {
@@ -20,7 +19,6 @@ const passwordResetPost = async(req,res)=>{
 
 
 const verifyLink = async(req,res)=>{
-    console.log(req.params.id)
     try {
         const user = await User.findOne({_id:req.params.id});
         if(!user) return res.status(400).send({message:"Invalid Link"})

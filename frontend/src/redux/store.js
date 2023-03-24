@@ -24,6 +24,8 @@ import { friendDataSlice } from "./features/friendDataSlice";
 import  { clickedUserSlice }  from "./features/chatLeftSideClickedUserSlice";
 import { particularAnswersSlice } from "./features/particularAnswersSlice";
 import { completeAnswerSlice } from "./features/completeAnswerSlice";
+import {conversationSlice} from "./features/conversationSlice";
+import {hotQuestionSlice} from "./features/hotQuestionSlice";
 
 
 const persistConfig = {
@@ -55,6 +57,8 @@ const reducer = combineReducers({
     clickedUser:clickedUserSlice.reducer,
     particularAnswers:particularAnswersSlice.reducer,
     answer:completeAnswerSlice.reducer,
+    conversation:conversationSlice.reducer,
+    hotQuestion:hotQuestionSlice.reducer,
     
 
 

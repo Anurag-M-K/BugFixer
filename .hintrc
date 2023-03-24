@@ -13,6 +13,7 @@
           "overflow-x: clip"
         ]
       }
-    ]
+    ],
+    "detect-css-reflows/layout": "off"
   }
 }

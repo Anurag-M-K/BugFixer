@@ -37,7 +37,7 @@ function Messenger() {
   const imageRef = useRef();
   const videoRef = useRef();
   const { clickedUserDetails } = useSelector((state) => state.clickedUser);
-
+const { conversationDetails } = useSelector(state=>state.conversation)
 
   useEffect(()=>{
 socket.current = io(import.meta.env.VITE_APP_SOCKET_URL)
@@ -78,6 +78,7 @@ socket.current = io(import.meta.env.VITE_APP_SOCKET_URL)
     try {
       (async () => {
         const res = await getConversation(userDetails?._id, tokenData);
+        
         setConversations(res);
       })();
     } catch (error) {
@@ -126,7 +127,6 @@ socket.current = io(import.meta.env.VITE_APP_SOCKET_URL)
   };
 
   useEffect(() => {
-    console.log("6");
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
@@ -159,7 +159,7 @@ socket.current = io(import.meta.env.VITE_APP_SOCKET_URL)
         data
       );
       const message = {
-        senderId: userDetails._id,
+        sender: userDetails._id,
         text: res.data.secure_url,
         conversationId: currentChat._id,
         type: type,
@@ -185,6 +185,7 @@ socket.current = io(import.meta.env.VITE_APP_SOCKET_URL)
       console.log("error wile uploading to cloudinary ", error);
     }
   };
+  console.log(messages)
 
   return (
     <>
@@ -197,7 +198,7 @@ socket.current = io(import.meta.env.VITE_APP_SOCKET_URL)
               className="card-scroll"
               style={{ height: "407px", overflowY: "scroll" }}
             >
-              {conversations?.map((c, index) => (
+              {conversationDetails?.map((c, index) => (
                
                 <div key={index} onClick={() => setCurrentChat(c)}>
                   <Conversation messages={messages} conversation={c} clickedUserDetails={clickedUserDetails} />
@@ -297,7 +298,7 @@ socket.current = io(import.meta.env.VITE_APP_SOCKET_URL)
                     placeholder="write Something...."
                   />
                   <GrSend
-                    style={{ marginLeft: "1em" }}
+                    style={{ marginLeft: "-10em",cursor:"pointer" }}
                     onClick={() =>
                       newMessage !== "" ? handleSubmit() : UploadFile()
                     }
@@ -321,7 +322,7 @@ socket.current = io(import.meta.env.VITE_APP_SOCKET_URL)
         </div>
         <div className="chatOnline">
           <div className="chatOnlineWrapper">
-            <ChatOnline />
+            {/* <ChatOnline /> */}
           </div>
         </div>
       </div>
