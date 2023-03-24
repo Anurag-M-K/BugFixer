@@ -122,9 +122,9 @@ function MainQuestion() {
       await axios
         .post("/api/answer", body, config)
         .then(async (res) => {
-          dispatch(hideLoading())
           const id = res.data.data.question_id;
           await axios.get("/api/get-answer/" + id).then(async (response) => {
+            dispatch(hideLoading())
             const user = await getUserDetails(tokenData);
 
             dispatch(setUserDetails(user.response));
@@ -185,13 +185,13 @@ function MainQuestion() {
       dispatch(setUserDetails(user.response));
       dispatch(setSingleQuestionDetails(getSingleQuestion.data));
       setVoteRes(getSingleQuestion.data);
-      // toast.error(data.data.message);
+      toast.error(data.data.message);
     } catch (error) {
       console.log(error);
     }
   }
   async function decVoting(question_id) {
-    console.log(question_id);z
+    console.log(question_id);
     try {
       const data = await questionDecVoting(question_id, tokenData);
       const getSingleQuestion = await axios.get(`/api/question/${id}`);
@@ -200,7 +200,7 @@ function MainQuestion() {
       dispatch(setSingleQuestionDetails(getSingleQuestion.data));
       setVoteRes(getSingleQuestion.data);
 
-      // toast.error(data.data.message);
+      toast.error(data.data.message);
     } catch (error) {
       console.log(error);
     }

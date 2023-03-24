@@ -4,25 +4,49 @@ import ReactHtmlParser from "react-html-parser";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Pagination from "./Pagination";
+import ReactPaginate from "react-paginate";
 
 const UserQuestions = () => {
   const { questionDetails } = useSelector((state) => state.question);
-  const [ postsPerPage , setPostsPerPage] = useState(5)
+  const [ postsPerPage ] = useState(5)
   const [ currentPage , setCurrentPage ] = useState(1)
   function truncate(str, n) {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;
   }
+  const max =10
 
   //seting pagination 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const startPage = Math.max(1,currentPage- Math.floor(max/2))
+  const endPage = Math.min(questionDetails.length , startPage+max-1)
   const currentPosts = questionDetails.slice(indexOfFirstPost , indexOfLastPost)
 
   //change page
   const paginate = (pageNumber)=> setCurrentPage(pageNumber)
+
+
+
+///////////////////////////////////////////////////
+  const [itemOffset, setItemOffset] = useState(0);
+
+  const endOffset = itemOffset + postsPerPage;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentItems = questionDetails.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(questionDetails.length / postsPerPage);
+
+
+// Invoke when user click to request another page.
+const handlePageClick = (event) => {
+  const newOffset = (event.selected * postsPerPage) % questionDetails?.length;
+  console.log(
+    `User requested page number ${event.selected}, which is offset ${newOffset}`
+  );
+  setItemOffset(newOffset);
+};
   return (
     <>
-      {currentPosts?.map((questionData) => {
+      {currentItems?.map((questionData) => {
         return (
           <div key={questionData._id}
             className="userQuestions d-flex border-bottom py-2"
@@ -150,7 +174,26 @@ const UserQuestions = () => {
 
 <div>
 
-        <Pagination  postsPerPage={postsPerPage} totalPosts={questionDetails.length} paginate={paginate} />
+        {/* <Pagination  endPage={endPage} startPage={startPage} postsPerPage={postsPerPage} totalPosts={questionDetails.length} paginate={paginate} /> */}
+        <ReactPaginate
+        breakLabel="..."
+        nextLabel="next"
+        pageRangeDisplayed={1}
+        pageCount={pageCount}
+        onPageChange={handlePageClick}
+        renderOnZeroPageCount={null}
+        breakClassName={'page-item'}
+ breakLinkClassName={'page-link'}
+ containerClassName={'pagination'}
+ pageClassName={'page-item'}
+ pageLinkClassName={'page-link'}
+ previousClassName={'page-item'}
+ previousLinkClassName={'page-link'}
+ nextClassName={'page-item'}
+ nextLinkClassName={'page-link'}
+ activeClassName={'active'}
+        
+        />
 </div>
       </div>
     </>

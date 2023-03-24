@@ -40,6 +40,7 @@ function SearchBar() {
     const newFIlter = allusers.filter((value) => {
       return value.firstName.toLowerCase().includes(searchWord.toLowerCase());
     });
+    event.target.value = ""
     setFilterData(newFIlter);
   };
 
